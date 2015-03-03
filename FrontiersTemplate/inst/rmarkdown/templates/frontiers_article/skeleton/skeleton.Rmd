@@ -1,0 +1,38 @@
+---
+title: "Reproducible research for clonal organisms"
+author:
+  - name: Zhian Kamvar
+    affiliation: '1'
+  - name: Jonah Brooks
+    affiliation: '2'
+  - name: Niklaus Grünwald
+    affiliation: '1,3'
+    email: grunwaln@science.oregonstate.edu
+affiliation:
+  - id: '1'
+    department: Botany and Plant Pathology
+    institution: Oregon State University
+    city: Corvallis
+    state: OR
+    country: USA
+  - id: '2' 
+    department: College of Electrical Engineering and Computer Science
+    institution: Oregon State University
+    city: Corvallis
+    state: OR
+    country: USA
+  - id: '3' 
+    department: Horticultural Crops Research Laboratory
+    institution: USDA-Agricultural Research Service
+    city: Corvallis
+    state: OR
+    country: USA
+output: FrontiersTemplate::frontiers_article
+csl: frontiersinSCNS.cls
+bibliography: test.BIB
+---
+
+
+# Introduction {-}
+
+Fancy reference [@Neuro2013]
