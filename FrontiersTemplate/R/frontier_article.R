@@ -1,10 +1,13 @@
 #' @export
 frontiers_article <- function(includes = NULL,
                               keep_tex = TRUE){
-  template <- system.file("rmarkdown/templates/frontier_article/resources/template.tex", package = "FrontiersTemplate")
+  template <- system.file("rmarkdown", "templates", "frontiers_article", 
+                          "resources", "template.tex", 
+                          package = "FrontiersTemplate")
   base <- rmarkdown::pdf_document(template = template,
                                   keep_tex = keep_tex,
-                                  includes = includes)
+                                  includes = includes,
+                                  highlight = "tango")
   
   # Mostly copied from knitr::render_sweave
   base$knitr$opts_knit$out.format <- "sweave"

@@ -28,7 +28,7 @@ affiliation:
     state: OR
     country: USA
 output: FrontiersTemplate::frontiers_article
-csl: frontiersinSCNS.cls
+csl: frontiers.csl
 bibliography: test.BIB
 ---
 
