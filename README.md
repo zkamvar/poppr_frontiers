@@ -8,6 +8,7 @@ This repository will contain the writeup for the frontiers article for the impro
     - moving away from standalone programs and into R.
 - Population genetics packages in R
 - The lack of tools for analysis of clonal populations and population hierarchies
+    - poppr formally implements hierarchies
 - Improvements to poppr since its inception
 
 ## Poppr's improvements
@@ -15,7 +16,7 @@ This repository will contain the writeup for the frontiers article for the impro
 Note that when we talk about the improvements to poppr, we are talking about the improvements after version 1.0.
 
 - Formal methods to deal with hierarchical levels.
-- Multilocus genotype flexibility
+- Multilocus genotype flexibility (different word, maybe)
     - Collapsing by genetic distance (addressing issues with sequencing error)
     - Expanding by Psex value (addressing issues with too few markers)
     - user-defined version
