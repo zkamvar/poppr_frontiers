@@ -12,14 +12,15 @@ This repository will contain the writeup for the frontiers article for the impro
 
 ## Poppr's improvements
 
-Note that when we talk about the improvements to poppr, we are talking about the improvments after version 1.0.
+Note that when we talk about the improvements to poppr, we are talking about the improvements after version 1.0.
 
 - Formal methods to deal with hierarchical levels.
 - Multilocus genotype flexibility
     - Collapsing by genetic distance (addressing issues with sequencing error)
-    - Expanding by psex value (addressing issues with too few markers)
+    - Expanding by Psex value (addressing issues with too few markers)
     - user-defined version
+- Psex
 - Bootstrapping of any genetic distance measure for individuals and populations. 
 - Index of association for genomic data (windowing, random sampling of loci, whole-genome)
 - Parallelization
-
+- Any new graphing? Like curve of loci vs. coverage?
