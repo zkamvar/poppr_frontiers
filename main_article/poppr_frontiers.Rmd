@@ -42,7 +42,8 @@ bibliography: test.BIB
 
 # Introduction {-}
 
-Fancy reference [@Neuro2013]
+Multiple references get a semi-colon [@Gene2012; @Neuro2013]. References that
+are simply mentioned, such as @Neurobot2013, are cited without square braces.
 
 ```{r}
 library("poppr")
