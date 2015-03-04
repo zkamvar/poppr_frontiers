@@ -24,4 +24,5 @@ Note that when we talk about the improvements to poppr, we are talking about the
 - Bootstrapping of any genetic distance measure for individuals and populations. 
 - Index of association for genomic data (windowing, random sampling of loci, whole-genome)
 - Parallelization
-- Any new graphing? Like curve of loci vs. coverage?
+- Genotype accumulation curve
+- implementation of loops in MSN for analysis with graph-walking algorithms (in igraph)
