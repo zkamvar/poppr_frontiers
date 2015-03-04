@@ -17,35 +17,45 @@
 \usepackage{url,lineno}
 \linenumbers
 
+% amsmath package, useful for mathematical formulas
+\usepackage{amsmath}
+% amssymb package, useful for mathematical symbols
+\usepackage{amssymb}
+
+% hyperref package, useful for hyperlinks
+\usepackage{hyperref}
+
+% graphicx package, useful for including eps and pdf graphics
+% include graphics with the command \includegraphics
+\usepackage{graphicx}
+
+% Sweave(-like)
+\usepackage{fancyvrb}
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{fontshape=sl}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{}
+\DefineVerbatimEnvironment{Scode}{Verbatim}{fontshape=sl}
+\newenvironment{Schunk}{}{}
+\DefineVerbatimEnvironment{Code}{Verbatim}{}
+\DefineVerbatimEnvironment{CodeInput}{Verbatim}{fontshape=sl}
+\DefineVerbatimEnvironment{CodeOutput}{Verbatim}{}
+\newenvironment{CodeChunk}{}{}
+
+% cite package, to clean up citations in the main text. Do not remove.
+\usepackage{cite}
+
+\usepackage{color}
+
+% Use doublespacing - comment out for single spacing
+%\usepackage{setspace}
+%\doublespacing
+
+
+
+
 % Leave a blank line between paragraphs instead of using \\
 
 
 \def\keyFont{\fontsize{8}{11}\helveticabold }
-% \def\firstAuthorLast{Sample {et~al.}} %use et al only if is more than 1 author
-% % \def\Authors{First Author\,$^{1,*}$, Co-Author\,$^{2}$ and Co-Author\,$^2$}
-% % Affiliations should be keyed to the author's name with superscript numbers and be listed as follows: Laboratory, Institute, Department, Organization, City, State abbreviation (USA, Canada, Australia), and Country (without detailed address information such as city zip codes or street names).
-% % If one of the authors has a change of address, list the new address below the correspondence details using a superscript symbol and use the same symbol to indicate the author in the author list.
-% % \def\Address{$^{1}$Laboratory X, Institute X, Department X, Organization X, City X , State XX (only USA, Canada and Australia), Country X \\
-% % $^{2}$Laboratory X, Institute X, Department X, Organization X, City X , State XX (only USA, Canada and Australia), Country X  }
-% % The Corresponding Author should be marked with an asterisk
-% % Provide the exact contact address (this time including street name and city zip code) and email of the corresponding author
-% \def\corrAuthor{corresponding Author}
-% \def\corrAddress{Laboratory X, Institute X, Department X, Organization X, Street X, City X , State XX (only USA, Canada and Australia), Zip Code, X Country X}
-% \def\corrEmail{email@uni.edu}
-
-
-
-% \begin{document}
-% \onecolumn
-% \firstpage{1}
-
-% \title[Running Title]{Article Title}
-% \author[\firstAuthorLast ]{\Authors}
-% \address{}
-% \correspondance{}
-% \extraAuth{}% If there are more than 1 corresponding author, comment this line and uncomment the next one.
-% %\extraAuth{corresponding Author2 \\ Laboratory X2, Institute X2, Department X2, Organization X2, Street X2, City X2 , State XX2 (only USA, Canada and Australia), Zip Code2, X2 Country X2, email2@uni2.edu}
-% \topic{}% If your article is part of a Research Topic, please indicate here which.
 
 %% ** EDIT HERE **
 %% PLEASE INCLUDE ALL MACROS BELOW
@@ -82,8 +92,8 @@ $endfor$
 
 $body$
 
-\bibliographystyle{frontiersinSCNS}
-\bibliography{Frontiers_LaTeX_Templates/test.bib}
+% \bibliographystyle{frontiersinSCNS}
+% \bibliography{Frontiers_LaTeX_Templates/test.BIB}
 
 \end{document}
 
