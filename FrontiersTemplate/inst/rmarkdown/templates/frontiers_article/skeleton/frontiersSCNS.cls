@@ -494,7 +494,7 @@
     \vspace{4.5\p@}
     {\helveticabold\fontsize{12}{15}\selectfont\raggedright \@author \par}%
         \vspace{4\p@}
-    {\helvetica\fontsize{12}{12}\selectfont\raggedright\slshape\@address \Address \\ \par}%
+    {\helvetica\fontsize{12}{12}\selectfont\raggedright\slshape\@address \Address \par}%
       \vspace{6\p@}
   {\helvetica\fontsize{12}{10}\selectfont\raggedright {Correspondence*:\\ }\@correspondance \corrAuthor \\ \corrAddress, \corrEmail \par}
         \vspace{4\p@}
