@@ -40,18 +40,69 @@ bibliography: test.BIB
 ---
 
 
+\begin{abstract}
+
+Understanding the dynamics of plant pathogen populations is imperative to
+understanding what management strategies are important. With the advent of more
+advanced and cheaper sequencing technologies, obtaining genomic sequences for
+representative populations has been easier than ever before. This in combination
+with a move towards more reproducible research has lead researchers to move away
+from traditional stand alone programs for population genetic analysis to modular
+programs such as R, which has a vibrant community of contributers submitting
+packages tailored for several analyses, including population genetics. The R
+package poppr was released to specifically address issues surrounding analysis
+of clonal populations and has recently implemented several tools that better
+facilitate the analysis of clonal populations across different levels of
+hierarchies, implementing multilocus genotype definitions and the index of
+association for reduced representation genomic data, and modular bootstrapping
+of any genetic distance.
+
+\tiny
+ \keyFont{ \section{Keywords:} clonality population genetics bootstrap open source}
+\end{abstract}
+
+
 # Introduction {-}
 
 Multiple references get a semi-colon [@Gene2012; @Neuro2013]. References that
 are simply mentioned, such as @Neurobot2013, are cited without square braces.
 
-```{r}
-library("poppr")
-data(Pinf)
-x <- genotype_curve(Pinf, quiet = TRUE)
-```
+- Rise in popularity of reproducible methods
+    - shitty standalone programs 
+- Packages available in R
+    - Previous lack of tools for clonal populations, still lack of tools for genomic data sets
+        - How do you deal with clones?
+        - How do you detect linkage? 
+        - How do you know if you've sampled enough?
+
+# Materials and Methods {-}
+
+## Additions {-}
+
+- Psex
+- Bootstrapping for individuals or populations for any genetic distance
+- MLG clustering
+- Index of Association for genomic sequences
+- Parallelization
+- Genotype Accumulation Curve
+- Matching Ties in Minimum Spanning networks (Cite ramorum paper)
+
+# Results {-}
+
+## Speed {-}
+
+## Community Acceptance {-}
+
+- articles that have cited poppr
+- hierarchical methods have been ported to adegenet
+
+# Discussion {-}
+
+- loops in graphs allow for analysis of population structure via graph walking algorithms in igraph
+- bootstrapping methods encourage future developers to write distance implementations in common format
+- moving towards open source, modular tools is the direction that population genetics and plant pathology needs to go. 
 
 
-# results {-}
+
 
 blah blah blah

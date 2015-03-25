@@ -101,6 +101,27 @@
 \topic{}% If your article is part of a Research Topic, please indicate here which.
 \maketitle
 
+\begin{abstract}
+
+Understanding the dynamics of plant pathogen populations is imperative to
+understanding what management strategies are important. With the advent of more
+advanced and cheaper sequencing technologies, obtaining genomic sequences for
+representative populations has been easier than ever before. This in combination
+with a move towards more reproducible research has lead researchers to move away
+from traditional stand alone programs for population genetic analysis to modular
+programs such as R, which has a vibrant community of contributers submitting
+packages tailored for several analyses, including population genetics. The R
+package poppr was released to specifically address issues surrounding analysis
+of clonal populations and has recently implemented several tools that better
+facilitate the analysis of clonal populations across different levels of
+hierarchies, implementing multilocus genotype definitions and the index of
+association for reduced representation genomic data, and modular bootstrapping
+of any genetic distance.
+
+\tiny
+ \keyFont{ \section{Keywords:} clonality population genetics bootstrap open source}
+\end{abstract}
+
 \section*{Introduction}\label{introduction}
 \addcontentsline{toc}{section}{Introduction}
 
@@ -108,33 +129,93 @@ Multiple references get a semi-colon (OtherAuthor and Coauthor, 2012;
 LastName1 et al., 2013). References that are simply mentioned, such as
 Author4 and Author5 (2013), are cited without square braces.
 
-\begin{CodeChunk}
-\begin{CodeInput}
-library("poppr")
-\end{CodeInput}
-\begin{CodeOutput}
-Loading required package: adegenet
-Loading required package: ade4
-   ==========================
-    adegenet 1.4-3 is loaded
-   ==========================
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Rise in popularity of reproducible methods
 
- - to start, type '?adegenet'
- - to browse adegenet website, type 'adegenetWeb()'
- - to post questions/comments: adegenet-forum@lists.r-forge.r-project.org
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    shitty standalone programs
+  \end{itemize}
+\item
+  Packages available in R
 
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Previous lack of tools for clonal populations, still lack of tools
+    for genomic data sets
 
-This is poppr version 1.1.4. To get started, type package?poppr
-\end{CodeOutput}
-\begin{CodeInput}
-data(Pinf)
-x <- genotype_curve(Pinf, quiet = TRUE)
-\end{CodeInput}
+    \begin{itemize}
+    \itemsep1pt\parskip0pt\parsep0pt
+    \item
+      How do you deal with clones?
+    \item
+      How do you detect linkage?
+    \item
+      How do you know if you've sampled enough?
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
 
-\includegraphics{poppr_frontiers_files/figure-latex/unnamed-chunk-1-1} \end{CodeChunk}
+\section*{Materials and Methods}\label{materials-and-methods}
+\addcontentsline{toc}{section}{Materials and Methods}
 
-\section*{results}\label{results}
-\addcontentsline{toc}{section}{results}
+\subsection*{Additions}\label{additions}
+\addcontentsline{toc}{subsection}{Additions}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Psex
+\item
+  Bootstrapping for individuals or populations for any genetic distance
+\item
+  MLG clustering
+\item
+  Index of Association for genomic sequences
+\item
+  Parallelization
+\item
+  Genotype Accumulation Curve
+\item
+  Matching Ties in Minimum Spanning networks (Cite ramorum paper)
+\end{itemize}
+
+\section*{Results}\label{results}
+\addcontentsline{toc}{section}{Results}
+
+\subsection*{Speed}\label{speed}
+\addcontentsline{toc}{subsection}{Speed}
+
+\subsection*{Community Acceptance}\label{community-acceptance}
+\addcontentsline{toc}{subsection}{Community Acceptance}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  articles that have cited poppr
+\item
+  hierarchical methods have been ported to adegenet
+\end{itemize}
+
+\section*{Discussion}\label{discussion}
+\addcontentsline{toc}{section}{Discussion}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  loops in graphs allow for analysis of population structure via graph
+  walking algorithms in igraph
+\item
+  bootstrapping methods encourage future developers to write distance
+  implementations in common format
+\item
+  moving towards open source, modular tools is the direction that
+  population genetics and plant pathology needs to go.
+\end{itemize}
 
 blah blah blah
 
