@@ -28,12 +28,13 @@
 \ProcessOptions
 
 % Load all necessary packages
-\RequirePackage{inputenc,crop,graphicx,amsmath,array,color,amssymb,flushend,stfloats,amsthm,chngpage,times,datetime,parskip,epstopdf}
+\RequirePackage{crop,graphicx,amsmath,array,color,amssymb,flushend,stfloats,amsthm,chngpage,times,datetime,parskip,epstopdf}
 \def\helvetica{\fontfamily{phv}\selectfont}
 \def\helveticaitalic{\fontfamily{phv}\itshape\selectfont}
 \def\helveticabold{\fontfamily{phv}\bfseries\selectfont}
 \def\helveticabolditalic{\fontfamily{phv}\bfseries\itshape\selectfont}
 \usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[utf8]{inputenc}
 
 \newcommand\@ptsize{0}
 
