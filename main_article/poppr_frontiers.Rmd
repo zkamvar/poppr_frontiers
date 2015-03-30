@@ -77,6 +77,10 @@ are simply mentioned, such as @wilson2014best, are cited without square braces.
 
 # Materials and Methods {-}
 
+## Clone correction {-}
+
+As highlighted in previous work, clone correction is an important part of population genetic analysis of organisms that have cryptic growth or are known to produce asexual propagules [@kamvar2014poppr; @milgroom1996recombination; @grunwald2003analysis]. 
+ 
  - Clone correction based on genetic distance
     - reduced representation data (GBS)
     - consistent clones with one or two highly variable loci (Cooke example)
