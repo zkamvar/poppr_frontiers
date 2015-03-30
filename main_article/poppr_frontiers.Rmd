@@ -77,6 +77,25 @@ are simply mentioned, such as @wilson2014best, are cited without square braces.
 
 # Materials and Methods {-}
 
+ - Clone correction based on genetic distance
+    - reduced representation data (GBS)
+    - consistent clones with one or two highly variable loci (Cooke example)
+    - nearest neighbor; farthest neighbor; average neighbor
+ - Index of Association
+    - Invented for small number of markers
+    - Methods of $\bar{r}_d$ for large number of markers:
+      - sliding window (could be a fast way to detect linkage)
+      - random sampling of x loci (creates a distribution of $\bar{r}_d$)
+ - Bootstrapping genetic distance
+    - Matrix algebra makes it easy to calculate genetic distance in R (with alleles in columns).
+    - Alleles in columns makes it hard to bootstrap (alleles are not independent units).
+ - Population Stratification
+    - Necessary for analyses of factorial sampling [@everhart2014fine] or hierarchical sampling [@linde2002population]
+    - Implementation in StrataG and Hierfstat loosely defined.
+    - Solution in S4 classes: strict definition.
+    - adopted by larger community
+    
+
 ## Additions {-}
 
 - Psex

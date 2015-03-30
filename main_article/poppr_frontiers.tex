@@ -163,6 +163,64 @@ cited without square braces.
 \section*{Materials and Methods}\label{materials-and-methods}
 \addcontentsline{toc}{section}{Materials and Methods}
 
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Clone correction based on genetic distance
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    reduced representation data (GBS)
+  \item
+    consistent clones with one or two highly variable loci (Cooke
+    example)
+  \item
+    nearest neighbor; farthest neighbor; average neighbor
+  \end{itemize}
+\item
+  Index of Association
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Invented for small number of markers
+  \item
+    Methods of \(\bar{r}_d\) for large number of markers:
+  \item
+    sliding window (could be a fast way to detect linkage)
+  \item
+    random sampling of x loci (creates a distribution of \(\bar{r}_d\))
+  \end{itemize}
+\item
+  Bootstrapping genetic distance
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Matrix algebra makes it easy to calculate genetic distance in R
+    (with alleles in columns).
+  \item
+    Alleles in columns makes it hard to bootstrap (alleles are not
+    independent units).
+  \end{itemize}
+\item
+  Population Stratification
+
+  \begin{itemize}
+  \itemsep1pt\parskip0pt\parsep0pt
+  \item
+    Necessary for analyses of factorial sampling (Everhart and Scherm,
+    2014) or hierarchical sampling (Linde et al., 2002)
+  \item
+    Implementation in StrataG and Hierfstat loosely defined.
+  \item
+    Solution in S4 classes: strict definition.
+  \item
+    adopted by larger community
+  \end{itemize}
+\end{itemize}
+
 \subsection*{Additions}\label{additions}
 \addcontentsline{toc}{subsection}{Additions}
 
@@ -219,6 +277,14 @@ cited without square braces.
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
+
+Everhart, S., and Scherm, H. (2014). Fine-scale genetic structure of
+monilinia fructicola during brown rot epidemics within individual peach
+tree canopies. \emph{Phytopathology}.
+
+Linde, C., Zhan, J., and McDonald, B. (2002). Population structure of
+mycosphaerella graminicola: From lesions to continents.
+\emph{Phytopathology} 92, 946--955.
 
 Wilson, G., Aruliah, D., Brown, C. T., Hong, N. P. C., Davis, M., Guy,
 R. T., Haddock, S. H., Huff, K. D., Mitchell, I. M., Plumbley, M. D., et
