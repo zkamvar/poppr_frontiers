@@ -36,7 +36,7 @@ affiliation:
     country: USA
 output: FrontiersTemplate::frontiers_article
 csl: frontiers.csl
-bibliography: test.BIB
+bibliography: citations.bib
 ---
 
 
@@ -64,8 +64,8 @@ of any genetic distance.
 
 # Introduction {-}
 
-Multiple references get a semi-colon [@Gene2012; @Neuro2013]. References that
-are simply mentioned, such as @Neurobot2013, are cited without square braces.
+Multiple references get a semi-colon [@wilson2014best; @wilson2014best]. References that
+are simply mentioned, such as @wilson2014best, are cited without square braces.
 
 - Rise in popularity of reproducible methods
     - shitty standalone programs 
@@ -105,4 +105,4 @@ are simply mentioned, such as @Neurobot2013, are cited without square braces.
 
 
 
-blah blah blah
+# References {-}
