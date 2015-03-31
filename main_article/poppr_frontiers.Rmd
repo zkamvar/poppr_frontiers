@@ -96,6 +96,21 @@ method for collapsing unique multilocus genotypes determined by naive string
 comparison into multilocus lineages utilizing any genetic distance given three
 different clustering algorithms: farthest neighbor, nearest neighbor, and
 average neighbor [citation needed]. 
+
+## Index of association {-}
+
+The index of association ($I_A$)is a measure of multilocus linkage
+disequilibrium that is most often used to detect clonal reproduction within
+organisms that have the ability to reproduce via sexual or asexual processes
+[brown1980; maynard1993; @milgroom1996recombination]. It was standardized in
+2001 as $\bar{r}_d$ by agapow 2001 to address the issue of scaling with
+increasing number of loci. When this metric came out, it was utilized for
+dominant and co-dominant markers such as AFLPs, SNP panels, and microsatellite
+markers. Unfortunately, it would be erroneous and wasteful to apply the index of
+association to large numbers of markers as chances of linkage are expected to go
+up, weakening the any true signal of clonal reproduction present in the data.
+For this reason, we have devised two approaches for addressing using the index
+of association for large numbers of markers
  
  - Clone correction based on genetic distance
     - reduced representation data (GBS)

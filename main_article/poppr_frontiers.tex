@@ -169,7 +169,39 @@ cited without square braces.
 As highlighted in previous work, clone correction is an important part
 of population genetic analysis of organisms that have cryptic growth or
 are known to produce asexual propagules (Kamvar et al., 2014; Milgroom,
-1996; Grünwald et al., 2003).
+1996; Grünwald et al., 2003). This method removes bias that would
+otherwise affect metrics that rely on allele frequencies. It was
+initially designed for data with only a handful of markers. With the
+advent of large-scale sequencing and reduced- representation libraries,
+it has become easier to sequence tens of thousands of markers from
+hundreds of individuals (Elshire et al., 2011; Davey et al., 2011; Davey
+and Blaxter, 2010). With this number of markers, the genetic resolution
+is much greater, but the chance of genotyping error is also greatly
+increased (Mastretta-Yanes et al., 2014). Taking this and somatic
+mutation into account, it would be impossible to separate true clones
+from independent individuals by just comparing what multilocus genotypes
+are different. We provide a transparent method for collapsing unique
+multilocus genotypes determined by naive string comparison into
+multilocus lineages utilizing any genetic distance given three different
+clustering algorithms: farthest neighbor, nearest neighbor, and average
+neighbor {[}citation needed{]}.
+
+\subsection*{Index of association}\label{index-of-association}
+\addcontentsline{toc}{subsection}{Index of association}
+
+The index of association (\(I_A\))is a measure of multilocus linkage
+disequilibrium that is most often used to detect clonal reproduction
+within organisms that have the ability to reproduce via sexual or
+asexual processes (brown1980; maynard1993; Milgroom, 1996). It was
+standardized in 2001 as \(\bar{r}_d\) by agapow 2001 to address the
+issue of scaling with increasing number of loci. When this metric came
+out, it was utilized for dominant and co-dominant markers such as AFLPs,
+SNP panels, and microsatellite markers. Unfortunately, it would be
+erroneous and wasteful to apply the index of association to large
+numbers of markers as chances of linkage are expected to go up,
+weakening the any true signal of clonal reproduction present in the
+data. For this reason, we have devised two approaches for addressing
+using the index of association for large numbers of markers
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
@@ -286,6 +318,21 @@ are known to produce asexual propagules (Kamvar et al., 2014; Milgroom,
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
 
+Davey, J. W., and Blaxter, M. L. (2010). RADSeq: Next-generation
+population genetics. \emph{Briefings in Functional Genomics} 9,
+416--423.
+doi:\href{http://dx.doi.org/10.1093/bfgp/elq031}{10.1093/bfgp/elq031}.
+
+Davey, J. W., Hohenlohe, P. A., Etter, P. D., Boone, J. Q., Catchen, J.
+M., and Blaxter, M. L. (2011). Genome-wide genetic marker discovery and
+genotyping using next-generation sequencing. \emph{Nature Reviews
+Genetics} 12, 499--510.
+
+Elshire, R. J., Glaubitz, J. C., Sun, Q., Poland, J. A., Kawamoto, K.,
+Buckler, E. S., and Mitchell, S. E. (2011). A robust, simple
+genotyping-by-sequencing (gBS) approach for high diversity species.
+\emph{PloS one} 6, e19379.
+
 Everhart, S., and Scherm, H. (2014). Fine-scale genetic structure of
 monilinia fructicola during brown rot epidemics within individual peach
 tree canopies. \emph{Phytopathology}.
@@ -302,6 +349,11 @@ clonal, and/or sexual reproduction. \emph{PeerJ} 2, e281.
 Linde, C., Zhan, J., and McDonald, B. (2002). Population structure of
 mycosphaerella graminicola: From lesions to continents.
 \emph{Phytopathology} 92, 946--955.
+
+Mastretta-Yanes, A., Zamudio, S., Jorgensen, T. H., Arrigo, N., Alvarez,
+N., Pi{ñ}ero, D., and Emerson, B. C. (2014). Gene duplication,
+population genomics, and species-level differentiation within a tropical
+mountain shrub. \emph{Genome biology and evolution} 6, 2611--2624.
 
 Milgroom, M. G. (1996). Recombination and the multilocus structure of
 fungal populations. \emph{Annual Review of Phytopathology} 34, 457--477.
