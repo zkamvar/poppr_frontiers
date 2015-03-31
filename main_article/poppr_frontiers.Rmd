@@ -79,7 +79,23 @@ are simply mentioned, such as @wilson2014best, are cited without square braces.
 
 ## Clone correction {-}
 
-As highlighted in previous work, clone correction is an important part of population genetic analysis of organisms that have cryptic growth or are known to produce asexual propagules [@kamvar2014poppr; @milgroom1996recombination; @grunwald2003analysis]. 
+As highlighted in previous work, clone correction is an important part of
+population genetic analysis of organisms that have cryptic growth or are known
+to produce asexual propagules [@kamvar2014poppr; @milgroom1996recombination;
+@grunwald2003analysis]. This method removes bias that would otherwise affect
+metrics that rely on allele frequencies. It was initially designed for data with
+only a handful of markers. With the advent of large-scale sequencing and
+reduced- representation libraries, it has become easier to sequence tens of
+thousands of markers from hundreds of individuals [@elshire2011robust;
+@davey2011genome; @davey2010rad]. With this number of markers, the genetic
+resolution is much greater, but the chance of genotyping error is also greatly
+increased [@mastretta2014gene]. Taking this and somatic mutation into account,
+it would be impossible to separate true clones from independent individuals by
+just comparing what multilocus genotypes are different. We provide a transparent
+method for collapsing unique multilocus genotypes determined by naive string
+comparison into multilocus lineages utilizing any genetic distance given three
+different clustering algorithms: farthest neighbor, nearest neighbor, and
+average neighbor [citation needed]. 
  
  - Clone correction based on genetic distance
     - reduced representation data (GBS)
