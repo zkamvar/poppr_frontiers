@@ -1,5 +1,15 @@
 # Frontiers Article for the updated poppr
 
+
+# INSTRUCTIONS FOR SETUP
+
+1. Open `poppr_frontiers.Rproj` in Rstudio.
+2. install the R packages **devtools** and **rmarkdown**
+3. run `devtools::install("FrontiersTemplate")` (This is based off of the [rticles](https://github.com/rstudio/rticles) package).
+4. Knit the file `main_article/poppr_frontiers.Rmd`
+
+********
+
 This repository will contain the writeup for the frontiers article for the improved version of poppr that includes Jonah Brooks as an author.
 
 ## What this article needs to highlight
