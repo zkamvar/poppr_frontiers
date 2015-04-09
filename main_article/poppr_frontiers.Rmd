@@ -7,7 +7,7 @@ author:
     etal: Kamvar
   - name: Jonah C. Brooks
     affiliation: '2'
-  - name: Niklaus J. G\"runwald
+  - name: Niklaus J. Grunwald
     affiliation: '1,3'
     email: grunwaln@science.oregonstate.edu
     institution: Horticultural Crops Research Laboratory USDA ARS
@@ -43,18 +43,20 @@ bibliography: citations.bib
 \begin{abstract}
 
 Understanding the dynamics of plant pathogen populations is imperative to
-understanding plant microbe interactions, adaptation of pathogens to hosts, reactive breeding and deployment of R genes and design of informed management strategies. With the advent of high throughput sequencing technologies, obtaining genomic sequences for
-representative populations has been easier than ever before. This in combination
-with a move towards more reproducible research has led researchers to move away
-from traditional stand alone programs for population genetic analysis to modular
-programs such as R, which has a vibrant community of contributers submitting
-packages tailored for several analyses, including population genetics. The R
-package poppr was released to specifically address issues surrounding analysis
-of clonal populations and has recently implemented several tools that better
-facilitate the analysis of clonal populations across different levels of
-hierarchies, implementing multilocus genotype definitions and the index of
-association for reduced representation genomic data, and modular bootstrapping
-of any genetic distance!
+understanding plant microbe interactions, adaptation of pathogens to hosts,
+reactive breeding and deployment of R genes and design of informed management
+strategies. With the advent of high throughput sequencing technologies,
+obtaining genomic sequences for representative populations has been easier than
+ever before. This in combination with a move towards more reproducible research
+has led researchers to move away from traditional stand alone programs for
+population genetic analysis to modular programs such as R, which has a vibrant
+community of contributers submitting packages tailored for several analyses,
+including population genetics. The R package poppr was released to specifically
+address issues surrounding analysis of clonal populations and has recently
+implemented several tools that better facilitate the analysis of clonal
+populations across different levels of hierarchies, implementing multilocus
+genotype definitions and the index of association for reduced representation
+genomic data, and modular bootstrapping of any genetic distance!
 
 \tiny
  \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, open source}
@@ -66,9 +68,20 @@ of any genetic distance!
 - Rise in popularity of reproducible methods | Should this go in discussion? It is one great advantage of using R!
     - shitty standalone programs 
 
-Most computational tools for population genetics are based on concepts developed for sexual model organisms. Populations that reproduce clonally or are polyploid are thus difficult to characterize using classical population genetic tools.   
+Most computational tools for population genetics are based on concepts developed
+for sexual model organisms. Populations that reproduce clonally or are polyploid
+are thus difficult to characterize using classical population genetic tools.
 
-The research community using the R statistical and computing language [@R] has developed a plethora of new resources for population genetic analysis [@pegas; @Jombart_2008]. Recently, we introduced the R package *poppr* specifically developed for analysis of clonal populations [@kamvar2014poppr]. *Poppr* prvisouly introduced several novel features including the ability to conduct a hierarchical analysis across unlimited hierarchies, test for linkage association, graph minimum spanning networks or provide bootstrap support for Bruvi's distance in resulting trees. In its first iteration *poppr* was appropriate fro traditional markers systems, but not ideally suited to population genomic data resulting from high throughput sequencing methods. 
+The research community using the R statistical and computing language [@R] has
+developed a plethora of new resources for population genetic analysis [@pegas;
+@Jombart_2008]. Recently, we introduced the R package *poppr* specifically
+developed for analysis of clonal populations [@kamvar2014poppr]. *Poppr*
+prvisouly introduced several novel features including the ability to conduct a
+hierarchical analysis across unlimited hierarchies, test for linkage
+association, graph minimum spanning networks or provide bootstrap support for
+Bruvi's distance in resulting trees. In its first iteration *poppr* was
+appropriate fro traditional markers systems, but not ideally suited to
+population genomic data resulting from high throughput sequencing methods.
 
 - Packages available in R
     - Previous lack of tools for clonal populations, still lack of tools for genomic data sets
@@ -97,10 +110,11 @@ thousands of markers from hundreds of individuals [@elshire2011robust;
 resolution is much greater, but the chance of genotyping error is also greatly
 increased [@mastretta2014gene]. Taking this and somatic mutation into account,
 it would be impossible to separate true clones from independent individuals by
-just comparing what multilocus genotypes are different. We introduce a a new transparent method for collapsing unique multilocus genotypes determined by naive string
-comparison into multilocus lineages utilizing any genetic distance given three
-different clustering algorithms: farthest neighbor, nearest neighbor, and
-average neighbor [citation needed]. 
+just comparing what multilocus genotypes are different. We introduce a a new
+transparent method for collapsing unique multilocus genotypes determined by
+naive string comparison into multilocus lineages utilizing any genetic distance
+given three different clustering algorithms: farthest neighbor, nearest
+neighbor, and average neighbor [citation needed].
 
 ## Index of association {-}
 
@@ -110,9 +124,13 @@ organisms that have the ability to reproduce via sexual or asexual processes
 [brown1980; maynard1993; @milgroom1996recombination]. It was standardized in
 2001 as $\bar{r}_d$ by [@Agapow_2001] to address the issue of scaling with
 increasing number of loci. This metric is typically applied to traditional
-dominant and co-dominant markers such as AFLPs, SNPs, or microsatellite
-markers. With the advent of high throughput sequencing, SNP data is now available in in a genome-wide context and in very large matrices including thousands of SNPs. Thus, the likelihood of finding mutations within two individuals of a given clone increases and tools are needed for defining clone boundaries. For this reason, we  devised two approaches using the index of association for large numbers of markers
-typical for population genomic studies.
+dominant and co-dominant markers such as AFLPs, SNPs, or microsatellite markers.
+With the advent of high throughput sequencing, SNP data is now available in in a
+genome-wide context and in very large matrices including thousands of SNPs.
+Thus, the likelihood of finding mutations within two individuals of a given
+clone increases and tools are needed for defining clone boundaries. For this
+reason, we  devised two approaches using the index of association for large
+numbers of markers typical for population genomic studies.
 
  - Clone correction based on genetic distance
     - reduced representation data (GBS)
