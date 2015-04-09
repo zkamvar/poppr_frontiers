@@ -54,7 +54,7 @@ of clonal populations and has recently implemented several tools that better
 facilitate the analysis of clonal populations across different levels of
 hierarchies, implementing multilocus genotype definitions and the index of
 association for reduced representation genomic data, and modular bootstrapping
-of any genetic distance.
+of any genetic distance!
 
 \tiny
  \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, open source}
