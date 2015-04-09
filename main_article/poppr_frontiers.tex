@@ -72,7 +72,7 @@
   \def\Authors{
   Zhian N. Kamvar\,\textsuperscript{1},
   Jonah C. Brooks\,\textsuperscript{2},
-  Niklaus J. Grunwald\,\textsuperscript{1,3*}}
+  Niklaus J. G"runwald\,\textsuperscript{1,3*}}
 % \\
 \def\Address{
   \textsuperscript{1} Botany and Plant Pathology, Oregon State University,  Corvallis,  OR,  USA\\
@@ -84,7 +84,7 @@
   \def\firstAuthorLast{Kamvar {et~al.}}
   
   
-  \def\corrAuthor{Niklaus J. Grunwald}\def\corrAddress{Horticultural Crops Research Laboratory USDA ARS\\3420 NW Orchard Ave.\\Corvallis, OR, 97330}\def\corrEmail{\href{mailto:grunwaln@science.oregonstate.edu}{\nolinkurl{grunwaln@science.oregonstate.edu}}}
+  \def\corrAuthor{Niklaus J. G"runwald}\def\corrAddress{Horticultural Crops Research Laboratory USDA ARS\\3420 NW Orchard Ave.\\Corvallis, OR, 97330}\def\corrEmail{\href{mailto:grunwaln@science.oregonstate.edu}{\nolinkurl{grunwaln@science.oregonstate.edu}}}
   
 
 
@@ -92,7 +92,8 @@
 \onecolumn
 \firstpage{1}
 
-\title[Reproducible clones]{Reproducible research for clonal organisms}
+\title[Reproducible clones]{NEED BETTER TITLE highlighting wht is new \textbar{} Reproducible
+research for clonal organisms}
 \author[\firstAuthorLast]{\Authors}
 \address{}
 \correspondance{}
@@ -119,26 +120,45 @@ association for reduced representation genomic data, and modular bootstrapping
 of any genetic distance.
 
 \tiny
- \keyFont{ \section{Keywords:} clonality population genetics bootstrap open source}
+ \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, open source}
 \end{abstract}
 
 \section*{Introduction}\label{introduction}
 \addcontentsline{toc}{section}{Introduction}
 
-Multiple references get a semi-colon (Wilson et al., 2014, 2014).
-References that are simply mentioned, such as Wilson et al. (2014), are
-cited without square braces.
-
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  Rise in popularity of reproducible methods
+  Rise in popularity of reproducible methods \textbar{} Should this go
+  in discussion? It is one great advantage of using R!
 
   \begin{itemize}
   \itemsep1pt\parskip0pt\parsep0pt
   \item
     shitty standalone programs
   \end{itemize}
+\end{itemize}
+
+Most computational tools for population genetics are based on concepts
+developed for sexual model organisms. Populations that reproduce
+clonally or are polyploid are thus difficult to characterize using
+classical population genetic tools.
+
+The research community using the R statistical and computing language
+(RCoreTeam, 2013) has developed a plethora of new resources for
+population genetic analysis (Paradis, 2010; Jombart, 2008). Recently, we
+introdcued the R package \emph{poppr} specifically developed for
+analysis of clonal populations (Kamvar et al., 2014). \emph{Poppr}
+prvisouly introduced several novel features including the ability to
+conduct a hierarchical analysis across unlimited hierarchies, test for
+linkage assocition, graph minimum spanning networks or provide boostrap
+support for Bruvi's distance in resulting trees. In its first iteration
+\emph{poppr} was appropriate fro tradiational markers systems, but not
+ideally suited to population genomic data resulting from high throughput
+sequencing methods.
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
 \item
   Packages available in R
 
@@ -160,11 +180,19 @@ cited without square braces.
   \end{itemize}
 \end{itemize}
 
+Multiple references get a semi-colon (Wilson et al., 2014, 2014).
+References that are simply mentioned, such as Wilson et al. (2014), are
+cited without square braces.
+
 \section*{Materials and Methods}\label{materials-and-methods}
 \addcontentsline{toc}{section}{Materials and Methods}
 
 \subsection*{Clone correction}\label{clone-correction}
 \addcontentsline{toc}{subsection}{Clone correction}
+
+\subsection{Zhian, please start producing figs and tables to frame the
+gist of the paper
+\ldots{}}\label{zhian-please-start-producing-figs-and-tables-to-frame-the-gist-of-the-paper}
 
 As highlighted in previous work, clone correction is an important part
 of population genetic analysis of organisms that have cryptic growth or
@@ -180,8 +208,8 @@ is much greater, but the chance of genotyping error is also greatly
 increased (Mastretta-Yanes et al., 2014). Taking this and somatic
 mutation into account, it would be impossible to separate true clones
 from independent individuals by just comparing what multilocus genotypes
-are different. We provide a transparent method for collapsing unique
-multilocus genotypes determined by naive string comparison into
+are different. We introdcue a a new transparent method for collapsing
+unique multilocus genotypes determined by naive string comparison into
 multilocus lineages utilizing any genetic distance given three different
 clustering algorithms: farthest neighbor, nearest neighbor, and average
 neighbor {[}citation needed{]}.
@@ -189,19 +217,20 @@ neighbor {[}citation needed{]}.
 \subsection*{Index of association}\label{index-of-association}
 \addcontentsline{toc}{subsection}{Index of association}
 
-The index of association (\(I_A\))is a measure of multilocus linkage
+The index of association (\(I_A\)) is a measure of multilocus linkage
 disequilibrium that is most often used to detect clonal reproduction
 within organisms that have the ability to reproduce via sexual or
 asexual processes (brown1980; maynard1993; Milgroom, 1996). It was
-standardized in 2001 as \(\bar{r}_d\) by agapow 2001 to address the
-issue of scaling with increasing number of loci. When this metric came
-out, it was utilized for dominant and co-dominant markers such as AFLPs,
-SNP panels, and microsatellite markers. Unfortunately, it would be
-erroneous and wasteful to apply the index of association to large
-numbers of markers as chances of linkage are expected to go up,
-weakening the any true signal of clonal reproduction present in the
-data. For this reason, we have devised two approaches for addressing
-using the index of association for large numbers of markers
+standardized in 2001 as \(\bar{r}_d\) by (Agapow and Burt, 2001) to
+address the issue of scaling with increasing number of loci. This metric
+is typically applied to traditional dominant and co-dominant markers
+such as AFLPs, SNPs, or microsatellite markers. With the advent of high
+throughput sequencing, SNP data is now availabe in in a genome-wide
+context and in very large matrices including thousands of SNPs. Thus,
+the likelihood of finding mutations within two individuals of a given
+clone increases and tools are needed for defining clone boundaries. For
+this reason, we devised two approaches using the index of association
+for large numbers of markers typical for population genomic studies.
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
@@ -318,6 +347,10 @@ using the index of association for large numbers of markers
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
 
+Agapow, P.-M., and Burt, A. (2001). Indices of multilocus linkage
+disequilibrium. \emph{Molecular Ecology Notes} 1, 101--102.
+doi:\href{http://dx.doi.org/10.1046/j.1471-8278.2000.00014.x}{10.1046/j.1471-8278.2000.00014.x}.
+
 Davey, J. W., and Blaxter, M. L. (2010). RADSeq: Next-generation
 population genetics. \emph{Briefings in Functional Genomics} 9,
 416--423.
@@ -342,6 +375,10 @@ Analysis of genotypic diversity data for populations of microorganisms.
 \emph{Phytopathology} 93, 738--46. Available at:
 \url{http://apsjournals.apsnet.org/doi/abs/10.1094/PHYTO.2003.93.6.738}.
 
+Jombart, T. (2008). Adegenet: a R package for the multivariate analysis
+of genetic markers. \emph{Bioinformatics} 24, 1403--1405.
+doi:\href{http://dx.doi.org/10.1093/bioinformatics/btn129}{10.1093/bioinformatics/btn129}.
+
 Kamvar, Z. N., Tabima, J. F., and Gr{ü}nwald, N. J. (2014). Poppr: An r
 package for genetic analysis of populations with clonal, partially
 clonal, and/or sexual reproduction. \emph{PeerJ} 2, e281.
@@ -357,6 +394,12 @@ mountain shrub. \emph{Genome biology and evolution} 6, 2611--2624.
 
 Milgroom, M. G. (1996). Recombination and the multilocus structure of
 fungal populations. \emph{Annual Review of Phytopathology} 34, 457--477.
+
+Paradis, E. (2010). Pegas: an R package for population genetics with an
+integrated--modular approach. \emph{Bioinformatics} 26, 419--420.
+
+RCoreTeam (2013). R: A Language and Environment for Statistical
+Computing. Available at: \url{http://www.R-project.org/}.
 
 Wilson, G., Aruliah, D., Brown, C. T., Hong, N. P. C., Davis, M., Guy,
 R. T., Haddock, S. H., Huff, K. D., Mitchell, I. M., Plumbley, M. D., et
