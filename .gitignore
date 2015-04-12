@@ -2,4 +2,6 @@
 .Rhistory
 .RData
 *.pdf
-*.html
+main_article/*.html
+README.html
+LETTER.html
