@@ -56,7 +56,7 @@ address issues surrounding analysis of clonal populations and has recently
 implemented several tools that better facilitate the analysis of clonal
 populations across different levels of hierarchies, implementing multilocus
 genotype definitions and the index of association for reduced representation
-genomic data, and modular bootstrapping of any genetic distance!
+genomic data, and modular bootstrapping of any genetic distance.
 
 \tiny
  \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, open source}
@@ -76,12 +76,14 @@ The research community using the R statistical and computing language [@R] has
 developed a plethora of new resources for population genetic analysis [@pegas;
 @Jombart_2008]. Recently, we introduced the R package *poppr* specifically
 developed for analysis of clonal populations [@kamvar2014poppr]. *Poppr*
-prvisouly introduced several novel features including the ability to conduct a
+previously introduced several novel features including the ability to conduct a
 hierarchical analysis across unlimited hierarchies, test for linkage
 association, graph minimum spanning networks or provide bootstrap support for
-Bruvi's distance in resulting trees. In its first iteration *poppr* was
-appropriate fro traditional markers systems, but not ideally suited to
-population genomic data resulting from high throughput sequencing methods.
+Bruvo's distance in resulting trees. In its first iteration, *poppr* was
+appropriate for traditional markers systems, but not ideally suited to
+population genomic data resulting from high throughput sequencing methods as
+increases in the number of markers decreased the ability to distinguish clonal
+genotypes due to higher chance to detect somatic mutations or genotyping error.
 
 - Packages available in R
     - Previous lack of tools for clonal populations, still lack of tools for genomic data sets
