@@ -8,6 +8,14 @@
 3. run `devtools::install("FrontiersTemplate")` (This is based off of the [rticles](https://github.com/rstudio/rticles) package).
 4. Knit the file `main_article/poppr_frontiers.Rmd`
 
+# Files and Directories
+
+ - Frontiers\_LaTeX\_Templates - original template from Frontiers
+ - FrontiersTemplate - Rmarkdown template based off of http://github.com/rstudio/rticles
+ - images - where visualizations are stored for the time being
+ - main_article - where the paper is written
+ - Rscripts - various R scripts
+
 ********
 
 This repository will contain the writeup for the frontiers article for the improved version of poppr that includes Jonah Brooks as an author.
