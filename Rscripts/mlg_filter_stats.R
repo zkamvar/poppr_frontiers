@@ -3,7 +3,7 @@ getNames <- function(n){
 }
 
 getSims <- function(z = 1, n = 10, snps = 1e6, strucrat = c(0.25, 0.75), 
-                    clone = TRUE, err = 0.1, ...){
+                    clone = TRUE, err = 0.1, n.cores = 4, ...){
   lam <- sample(strucrat, 1)
   if (lam == 1){
     perc <- 1
@@ -13,7 +13,7 @@ getSims <- function(z = 1, n = 10, snps = 1e6, strucrat = c(0.25, 0.75),
 
   n <- sample(rpois(1000, lambda = n), 1)
   the_names <- getNames(n)
-  res <- glSim(n, n.snp.nonstruc = snps*perc, n.snp.struc = snps*(1-perc), ...)
+  res <- glSim(n, n.snp.nonstruc = snps*perc, n.snp.struc = snps*(1-perc), n.cores = n.cores, ...)
   if (clone){
     clones <- sample(n, replace = TRUE)
     the_names <- paste(the_names[clones], 1:n, sep = ".")
@@ -31,7 +31,7 @@ getSims <- function(z = 1, n = 10, snps = 1e6, strucrat = c(0.25, 0.75),
     }
   } 
 
-  res <- new("genlight", mat, ploidy = 2, ind.names = the_names)
+  res <- new("genlight", mat, ploidy = 2, ind.names = the_names, n.cores = n.cores)
   return(res)
 }
 
@@ -147,64 +147,58 @@ HTML_collapse <- function(measure, x, treefun, distfun, fstats, destdir = NULL, 
 }
 
 
-for (i in names(fstats)){
-  HTML_collapse(measure = i, x = x, treefun = "upgma", 
-                distfun = "bruvo.dist", fstats = fstats, destdir = "images", 
-                replen = ssr, loss = FALSE)  
-  HTML_collapse(measure = i, x = x, treefun = "nj", 
-                distfun = "bruvo.dist", fstats = fstats, destdir = "images", 
-                replen = ssr, loss = FALSE)  
-}
+# Uncomment to regenerate plots
+# 
+# for (i in names(fstats)){
+#   HTML_collapse(measure = i, x = x, treefun = "upgma", 
+#                 distfun = "bruvo.dist", fstats = fstats, destdir = "images", 
+#                 replen = ssr, loss = FALSE)  
+#   HTML_collapse(measure = i, x = x, treefun = "nj", 
+#                 distfun = "bruvo.dist", fstats = fstats, destdir = "images", 
+#                 replen = ssr, loss = FALSE)  
+# }
 
+#
+#
+#
+# SIMULATED DATA
 # 
 # 
-# desc <- "An exploration of collapsing MLGs using UPGMA"
-# saveHTML({
-#   for (i in unique(fstats$average$thresholds)){
-#     z <- filter_stats(x, bruvo.dist, replen = ssr, loss = FALSE, threshold = i, stats = "MLGS")
-#     color_mlg_tree(x, pitree, z$average)
-#     add.scale.bar()
-#     title(paste("Threshold:", round(i, 3), "MLG:", length(unique(z$average))))
-#   }
-# }, img.name = "UPGMA", imgdir = "upgma", htmlfile = "UPGMA.html", 
-# autobrowse = FALSE, title = "mlg.filter option average", 
-# description = desc)
-# desc <- "An exploration of collapsing MLGs using Nearest Neighbor"
-# saveHTML({
-#   for (i in unique(fstats$nearest$thresholds)){
-#     z <- filter_stats(x, bruvo.dist, replen = ssr, loss = FALSE, threshold = i, stats = "MLGS")
-#     color_mlg_tree(x, pitree, z$nearest)
-#     add.scale.bar()
-#     title(paste("Threshold:", round(i, 3), "MLG:", length(unique(z$nearest))))
-#   }
-# }, img.name = "NN", imgdir = "nn", htmlfile = "NN.html", 
-# autobrowse = FALSE, title = "mlg.filter option nearest", 
-# description = desc)
-# desc <- "An exploration of collapsing MLGs using Farthest Neighbor"
-# saveHTML({
-#   for (i in unique(fstats$farthest$thresholds)){
-#     z <- filter_stats(x, bruvo.dist, replen = ssr, loss = FALSE, threshold = i, stats = "MLGS")
-#     color_mlg_tree(x, pitree, z$farthest)
-#     add.scale.bar()
-#     title(paste("Threshold:", round(i, 3), "MLG:", length(unique(z$farthest))))
-#   }
-# }, img.name = "FN", imgdir = "fn", htmlfile = "FN.html", 
-# autobrowse = FALSE, title = "mlg.filter option farthest", 
-# description = desc)
-
-
-x <- lapply(1:10, getSims, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = TRUE)
-y <- lapply(1:10, getSims, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = FALSE)
+# 
+# 
+x <- lapply(1:10, getSims, n = 20, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = TRUE, n.cores = 4)
+y <- lapply(1:10, getSims, n = 20, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = FALSE, n.cores = 4)
+# x <- getSims(n = 200, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = TRUE, n.cores = 4)
+# y <- getSims(n = 200, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = FALSE, n.cores = 4)
 x <- do.call("rbind", c(x, y))
-x <- x[sample(nInd(x), nInd(x)/2)]
+x <- x[sample(nInd(x), nInd(x)/5)]
 fstats <- filter_stats(x, bitwise.dist, plot = TRUE)
 
 
 trueclones <- duplicated(substr(indNames(x), start = 1, stop = 10))
 thresh     <- duplicated(mlg.filter(x, distance = bitwise.dist, 
-                                    threshold = 0.2, algo = "a"))
+                                    threshold = fstats$farthest$thresholds[sum(trueclones)]+  .Machine$double.eps^0.5, 
+                                    algo = "f"))
 table(thresh, trueclones)
 
+the_tree <- upgma(bitwise.dist(x))
+clones <- substr(the_tree$tip.label[thresh], start = 1, stop = 10)
+clones <- lapply(clones, grep, the_tree$tip.label)
+edgelist <- length(which.edge(the_tree, the_tree$tip.label))
+edgecols <- rep("black", edgelist)
+for (i in clones){
+  edgecols[which.edge(the_tree, the_tree$tip.label[i])] <- "red"
+}
+plot.phylo(the_tree, edge.color = edgecols, adj = 0, label.offset = 0.001)
+
+
+#
+#
+# RAD seq data - no reference
+# 
+# from DOI: 10.1111/1755-0998.12291
+#
+#
 plinklist <- list(m3 = character(0), m4 = character(0), m10 = character(0), def = character(0))
 plinklist[["m4"]] <- "2R/PopSamples/data.out/PopSamples_m4/Popsouts_Rselec/out.replicates/plink.raw"
 
@@ -224,7 +218,7 @@ for (i in names(plinklist)){
   show(barb)
   fstats <- filter_stats(barb, bitwise.dist, plot = TRUE)
   title(paste(i, "SNPS:", nLoc(barb)))
-  minthresh  <- fstats$average$thresholds[10]
+  minthresh  <- fstats$average$thresholds[10] + .Machine$double.eps^0.5
   abline(v = minthresh, lty = 2)
   thresh     <- mlg.filter(barb, distance = bitwise.dist, algorithm = "a", 
                            threshold = minthresh)
@@ -242,5 +236,8 @@ par(mfrow = c(1, 1))
 
 defupgma <- phangorn::upgma(bitwise.dist(barb))
 z <- filter_stats(barb, bitwise.dist, threshold = minthresh, stats = "MLGS")
-color_mlg_tree(barb, defupgma, z$farthest)
+barbnames <- vapply(strsplit(indNames(barb), "_"), "[[", character(1), 1)
+dupes <- barbnames[duplicated(barbnames)]
+thecols <- ifelse(barbnames %in% dupes, "red", "black")
+color_mlg_tree(barb, defupgma, z$farthest, tip.color = thecols)
 axisPhylo(1)
