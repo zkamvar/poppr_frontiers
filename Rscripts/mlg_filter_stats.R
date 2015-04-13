@@ -43,27 +43,60 @@ getSims <- function(z = 1, n = 10, snps = 1e6, strucrat = c(0.25, 0.75),
 
 
 filter_stats <- function(x, distance = bitwise.dist, threshold = 1, 
-                         stats = "All", missing = "ignore", plot = FALSE, ...){
-  f <- mlg.filter(x, threshold, missing, algorithm = "f", distance = distance, stats = stats, ...)
-  a <- mlg.filter(x, threshold, missing, algorithm = "a", distance = distance, stats = stats, ...)
-  n <- mlg.filter(x, threshold, missing, algorithm = "n", distance = distance, stats = stats, ...)
+                         stats = "All", missing = "ignore", plot = FALSE, nclone = NULL, ...){
+  distmat <- distance(x, ...)
+  f <- mlg.filter(x, threshold, missing, algorithm = "f", distance = distmat, 
+                  stats = stats, ...)
+  a <- mlg.filter(x, threshold, missing, algorithm = "a", distance = distmat, 
+                  stats = stats, ...)
+  n <- mlg.filter(x, threshold, missing, algorithm = "n", distance = distmat, 
+                  stats = stats, ...)
   fanlist <- list(farthest = f, average = a, nearest = n)
   if (stats == "All"){
     for (i in names(fanlist)){
       names(fanlist[[i]]) <- c("MLG", "thresholds", "mat", "size")
     }
     if (plot){
-      xdist <- distance(x, ...)
-      upper <- round(max(xdist), digits = 1)
-      plot(x = c(upper, 0), y = c(ifelse(is.genind(x), mlg(x, quiet = TRUE), nInd(x)), 1), type = "n",
-           ylab = "Number of Multilocus Lineages",
-           xlab = "Genetic Distance Cutoff")
-      points(x = rev(a[[2]]), y = 1:length(a[[2]]))
-      points(x = rev(f[[2]]), y = 1:length(f[[2]]), col = "blue")
-      points(x = rev(n[[2]]), y = 1:length(n[[2]]), col = "red")    
+      plot_filter_stats(x, fanlist, distmat, nclone)
     }
   }
   return(fanlist)
+}
+
+plot_filter_stats <- function(x, fstats, distmat, nclone = NULL){
+  upper <- round(max(distmat), digits = 1)
+  ylims <- c(ifelse(is.genind(x), mlg(x, quiet = TRUE), nInd(x)), 1)
+  plot(x = c(upper, 0), y = ylims, type = "n",
+       ylab = "Number of Multilocus Lineages",
+       xlab = "Genetic Distance Cutoff")
+  a <- fstats$average$thresholds
+  n <- fstats$nearest$thresholds
+  f <- fstats$farthest$thresholds
+  points(x = rev(a), y = 1:length(a))
+  points(x = rev(f), y = 1:length(f), col = "blue")
+  points(x = rev(n), y = 1:length(n), col = "red") 
+  if (!is.null(nclone)){
+    abline(v = a[1 + length(a) - nclone] + .Machine$double.eps^0.5, lty = 2)
+    abline(v = f[1 + length(f) - nclone] + .Machine$double.eps^0.5, lty = 2, 
+           col = "blue")
+    abline(v = n[1 + length(n) - nclone] + .Machine$double.eps^0.5, lty = 2, 
+           col = "red")
+    abline(h = nclone)
+    text(upper, nclone, labels = paste0("n = ", nclone), 
+         adj = c(1, -0.5))
+    legend("topright", 
+           legend = c("Nearest Neighbor", "UPGMA", "Farthest Neighbor"), 
+           col = c("red", "black", "blue"), 
+           pch = 1, 
+           lty = 2,
+           title = "Clustering Method")
+  } else {
+    legend("topright", 
+           legend = c("Nearest Neighbor", "UPGMA", "Farthest Neighbor"), 
+           col = c("red", "black", "blue"), 
+           pch = 1, 
+           title = "Clustering Method")    
+  }
 }
 
 color_mlg_tree <- function(x, tree, newmlgs, ...){
@@ -142,10 +175,17 @@ infdat <- read.table(text = infdat, head = TRUE)
 pinf <- df2genind(infdat[-c(1,2)], sep = "/", ploidy = 3, ind.names = infdat[[1]], pop = infdat[[2]])
 ssr <- c(3,3,2,3,3,2,2,3,3,3,3,3)
 x <- as.genclone(pinf)
-fstats <- filter_stats(x, bruvo.dist, plot = TRUE, replen = ssr, loss = FALSE)
+
+fstats <- filter_stats(x, bruvo.dist, plot = TRUE, replen = ssr, loss = FALSE, nclone = 18)
 title(main = expression(paste(italic("P. infestans"), " reference isolates (12 SSR loci)")))
-legend("topright", legend = c("Nearest Neighbor", "UPGMA", "Farthest Neighbor"), 
-       col = c("red", "black", "blue"), pch = 1, title = "Clustering Method")
+# # 
+# tiff(filename = "images/pinf_cluster.tiff", width = 85, height = 68, units = "mm", res = 1200, pointsize = 6)
+# fstats <- filter_stats(x, bruvo.dist, plot = TRUE, replen = ssr, loss = FALSE, nclone = 18)
+# title(main = expression(paste(italic("P. infestans"), " reference isolates (12 SSR loci)")))
+# dev.off()
+
+# legend("topright", legend = c("Nearest Neighbor", "UPGMA", "Farthest Neighbor"), 
+#        col = c("red", "black", "blue"), pch = 1, title = "Clustering Method")
 #' The plot above shows how multilocus genotypes collapse under differing 
 #' algorithms over genetic distance. 
 #' 
@@ -194,10 +234,11 @@ y <- lapply(1:10, getSims, n = 20, snps = 1e4, strucrat = 1, ploidy = 2, err = 0
 #' For analysis, $\frac{1}{5}$th of the pooled samples will be kept.
 x <- do.call("rbind", c(x, y))
 x <- x[sample(nInd(x), nInd(x)/5)]
-fstats <- filter_stats(x, bitwise.dist, plot = TRUE)
 trueclones <- duplicated(substr(indNames(x), start = 1, stop = 10))
+fstats <- filter_stats(x, bitwise.dist, plot = TRUE, nclone = sum(!trueclones))
+
 thresh     <- duplicated(mlg.filter(x, distance = bitwise.dist, 
-                                    threshold = fstats$farthest$thresholds[sum(trueclones)]+  .Machine$double.eps^0.5, 
+                                    threshold = fstats$farthest$thresholds[sum(trueclones)] + .Machine$double.eps^0.5, 
                                     algo = "f"))
 table(thresh, trueclones)
 #' 
@@ -229,7 +270,7 @@ plinklist[["def"]] <- "2R/PopSamples/data.out/PopSamples_def/Popsouts_Rselec/out
 plinklist[["m3"]]  <- "2R/PopSamples/data.out/PopSamples_m3/Popsouts_Rselec/out.replicates/plink.raw"
 plinklist[["m10"]] <- "2R/PopSamples/data.out/PopSamples_m10/Popsouts_Rselec/out.replicates/plink.raw"
 
-par(mfrow = c(2, 2))
+
 
 contlist   <- plinklist # Contingency tables
 threshlist <- plinklist # Threshold stats
@@ -250,16 +291,16 @@ threshlist <- plinklist # Threshold stats
 for (i in names(plinklist)){
   barb <- read.PLINK(paste(RAD_data_dir, plinklist[[i]], sep = "/"))
   show(barb)
-  fstats <- filter_stats(barb, bitwise.dist, plot = TRUE)
+  fstats <- filter_stats(barb, bitwise.dist, plot = TRUE, nclone = nInd(barb) - 10)
   title(paste(i, "SNPS:", nLoc(barb)))
   minthresh  <- fstats$average$thresholds[10] + .Machine$double.eps^0.5
-  nearthresh  <- fstats$nearest$thresholds[10] + .Machine$double.eps^0.5
-  farthresh  <- fstats$farthest$thresholds[10] + .Machine$double.eps^0.5
-  abline(v = minthresh, lty = 2)
-  abline(v = nearthresh, lty = 2, col = "red")
-  abline(v = farthresh, lty = 2, col = "blue")
-  legend("topright", legend = c("Nearest Neighbor", "UPGMA", "Farthest Neighbor"), 
-         col = c("red", "black", "blue"), pch = 1, title = "Clustering Method")
+#   nearthresh  <- fstats$nearest$thresholds[10] + .Machine$double.eps^0.5
+#   farthresh  <- fstats$farthest$thresholds[10] + .Machine$double.eps^0.5
+#   abline(v = minthresh, lty = 2)
+#   abline(v = nearthresh, lty = 2, col = "red")
+#   abline(v = farthresh, lty = 2, col = "blue")
+#   legend("topright", legend = c("Nearest Neighbor", "UPGMA", "Farthest Neighbor"), 
+#          col = c("red", "black", "blue"), pch = 1, title = "Clustering Method")
   thresh     <- mlg.filter(barb, distance = bitwise.dist, algorithm = "a", 
                            threshold = minthresh)
   trueclones <- vapply(strsplit(indNames(barb), "_"), "[[", character(1), 1)
@@ -275,7 +316,7 @@ print(contlist)
 for (i in threshlist){
   plot(diff(i), log = "y")
 }
-par(mfrow = c(1, 1))
+
 #' No such luck.
 #' 
 #' Now, we are plotting the tree where 10 samples are collapsed via average
@@ -287,6 +328,7 @@ par(mfrow = c(1, 1))
 #' connecting branches are colored red. The duplicated samples have red labels
 #+ fig.width = 10, fig.height = 20
 defupgma <- phangorn::upgma(bitwise.dist(barb))
+
 z <- filter_stats(barb, bitwise.dist, threshold = minthresh, stats = "MLGS")
 barbnames <- vapply(strsplit(indNames(barb), "_"), "[[", character(1), 1)
 dupes <- barbnames[duplicated(barbnames)]
