@@ -1,6 +1,6 @@
 ---
-title: "NEED BETTER TITLE highlighting wht is new | Reproducible research for clonal organisms"
-runtitle: "Reproducible clones"
+title: "Efficient tools for analyzing genome-wide data of clonal organisms"
+runtitle: "Efficient clones"
 author:
   - name: Zhian N. Kamvar
     affiliation: '1'
@@ -96,6 +96,13 @@ Multiple references get a semi-colon [@wilson2014best; @wilson2014best]. Referen
 
 # Materials and Methods {-}
 
+In *poppr* version 1.1, a new S4 object was defined to expand the genind object
+of *adegenet*. The genclone object formalized the definitions of multilocus
+genotypes and population hierarchies by adding two slots called mlg and
+hierarchy that carried a numeric vector and a data frame, respectively. These
+new slots allow for increased efficiency and ease of use by allowing these
+metadata to travel with the genetic data.
+
 ## Clone correction {-}
 
 ## Zhian, please start producing figs and tables to frame the gist of the paper ...
@@ -116,7 +123,11 @@ just comparing what multilocus genotypes are different. We introduce a a new
 transparent method for collapsing unique multilocus genotypes determined by
 naive string comparison into multilocus lineages utilizing any genetic distance
 given three different clustering algorithms: farthest neighbor, nearest
-neighbor, and average neighbor [citation needed].
+neighbor, and UPGMA (average neighbor) [citation needed].
+
+
+
+
 
 ## Index of association {-}
 

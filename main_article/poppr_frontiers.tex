@@ -92,8 +92,7 @@
 \onecolumn
 \firstpage{1}
 
-\title[Reproducible clones]{NEED BETTER TITLE highlighting wht is new \textbar{} Reproducible
-research for clonal organisms}
+\title[Efficient clones]{Efficient tools for analyzing genome-wide data of clonal organisms}
 \author[\firstAuthorLast]{\Authors}
 \address{}
 \correspondance{}
@@ -156,7 +155,9 @@ linkage association, graph minimum spanning networks or provide
 bootstrap support for Bruvo's distance in resulting trees. In its first
 iteration, \emph{poppr} was appropriate for traditional markers systems,
 but not ideally suited to population genomic data resulting from high
-throughput sequencing methods.
+throughput sequencing methods as increases in the number of markers
+decreased the ability to distinguish clonal genotypes due to higher
+chance to detect somatic mutations or genotyping error.
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
@@ -188,6 +189,14 @@ cited without square braces.
 \section*{Materials and Methods}\label{materials-and-methods}
 \addcontentsline{toc}{section}{Materials and Methods}
 
+In \emph{poppr} version 1.1, a new S4 object was defined to expand the
+genind object of \emph{adegenet}. The genclone object formalized the
+definitions of multilocus genotypes and population hierarchies by adding
+two slots called mlg and hierarchy that carried a numeric vector and a
+data frame, respectively. These new slots allow for increased efficiency
+and ease of use by allowing these metadata to travel with the genetic
+data.
+
 \subsection*{Clone correction}\label{clone-correction}
 \addcontentsline{toc}{subsection}{Clone correction}
 
@@ -212,8 +221,8 @@ from independent individuals by just comparing what multilocus genotypes
 are different. We introduce a a new transparent method for collapsing
 unique multilocus genotypes determined by naive string comparison into
 multilocus lineages utilizing any genetic distance given three different
-clustering algorithms: farthest neighbor, nearest neighbor, and average
-neighbor {[}citation needed{]}.
+clustering algorithms: farthest neighbor, nearest neighbor, and UPGMA
+(average neighbor) {[}citation needed{]}.
 
 \subsection*{Index of association}\label{index-of-association}
 \addcontentsline{toc}{subsection}{Index of association}
