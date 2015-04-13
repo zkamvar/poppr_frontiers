@@ -164,7 +164,26 @@ genome-wide context and in very large matrices including thousands of SNPs.
 Thus, the likelihood of finding mutations within two individuals of a given
 clone increases and tools are needed for defining clone boundaries. For this
 reason, we  devised two approaches using the index of association for large
-numbers of markers typical for population genomic studies.
+numbers of markers typical for population genomic studies. 
+
+The first approach is a sliding window approach that would utilize the position
+of markers in the genome to calculate $\bar{r}_d$ among any number of SNPs found
+within the windowed region. It is important that this calculation utilize
+$\bar{r}_d$ as the number of loci will be different within each window
+[@Agapow_2001]. This approach would be suited for a quick calculation of linkage
+disequilibrium across the genome that can detect potential hotspots of LD that
+could be investigated further with more computationally intensive methods
+assuming that the number of samples << the number of loci.
+
+A sliding window approach would not be good for utilizing $\bar{r}_d$ as a test
+for clonal reproduction as it would necessarily focus on loci within a short
+section of the genome that may or may not be recombining. A remedy for this is
+to randomly sample $m$ loci, calculate $\bar{r}_d$ and repeat $r$ times,
+creating a distribution of expected values of $\bar{r}_d$. 
+
+As the data for this would be stored in a genlight object, which stores genetic
+information in bits, the calculations of $\bar{r}_d$ are performed in
+parallelized C code for efficiency [@Jombart_2008].
 
  - Clone correction based on genetic distance
     - reduced representation data (GBS)
@@ -219,11 +238,17 @@ ssr    <- c(3, 3, 2, 3, 3, 2, 2, 3, 3, 3, 3, 3)
 x      <- as.genclone(pinf)
 fstats <- filter_stats(x, bruvo.dist, plot = TRUE, replen = ssr, loss = FALSE, nclone = 18)
 title(main = expression(paste(italic("P. infestans"), " reference isolates (12 SSR loci)")))
+thresh18 <- fstats$average$thresholds[nInd(x) - 18] + .Machine$double.eps^0.5
+z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, loss = FALSE, stats = "MLGS")
+```
+```{r, pinf_tree, echo = FALSE, message = FALSE, fig.height = 10, fig.width = 5}
+pinfupgma <- upgma(bruvo.dist(x, replen = ssr, loss = FALSE))
+color_mlg_tree(x, pinfupgma, z)
+axisPhylo(3)
 ```
 ```{r pinf_table, echo = FALSE, message = FALSE, results='asis'}
 library("xtable")
-thresh18 <- fstats$average$thresholds[nInd(x) - 18] + .Machine$double.eps^0.5
-z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, loss = FALSE, stats = "MLGS")
+
 res <- table(pop(x), z, dnn = NULL)
 res[res == 0] <- "."
 print.xtable(xtable(res, align = rep("c", ncol(res) + 1)), comment = FALSE)
