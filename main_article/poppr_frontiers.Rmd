@@ -105,8 +105,6 @@ metadata to travel with the genetic data.
 
 ## Clone correction {-}
 
-## Zhian, please start producing figs and tables to frame the gist of the paper ...
-
 As highlighted in previous work, clone correction is an important part of
 population genetic analysis of organisms that have cryptic growth or are known
 to produce asexual propagules [@kamvar2014poppr; @milgroom1996recombination;
@@ -141,6 +139,15 @@ trees based off of genetic distance. This algorithm will cluster by creating a
 representative sample per cluster and joining clusters if these representative
 samples are closer than the given threshold.
 
+### *P. infestans* {-}
+
+*Phytophthora infestans* is the causal agent of potato late blight originating
+from Mexico and spread to Europe in the mid 19th century [@goss2014irish; cooke].
+*P. infestans* reproduces both clonally and sexually. The clonal lineages of *P.
+infestans* have been formally defined into 18 separate clonal lineages using
+various molecular methods. We utilize these data to show how the `mlg.filter`
+function collapses multilocus genotypes with Bruvo's distance assuming a genome
+addition model [@bruvo2004simple]. 
 
 
 ## Index of association {-}
@@ -189,6 +196,38 @@ numbers of markers typical for population genomic studies.
 - Matching Ties in Minimum Spanning networks (Cite ramorum paper)
 
 # Results {-}
+
+## Clonal identification {-}
+
+### *P. infestans* {-}
+
+The three algorithms were able to detect 18 multilocus lineages at different
+distances (Fig. 1). Contingency tables between the described multilocus
+genotypes and the genotypes defined by distance show that most of the 18
+lineages were resolved, except for US-8, which is polytomic (Table 1).
+
+```{r, pinf_data, echo = FALSE, message = FALSE}
+source("../Rscripts/my_functions.R")
+library('poppr')
+library('ape')
+library('phangorn')
+library('animation')
+infdat <- RCurl::getURL("https://raw.githubusercontent.com/grunwaldlab/phytophthora_id/master/shiny-server/www/genoid_infestans/reduced_database.txt.csv")
+infdat <- read.table(text = infdat, head = TRUE)
+pinf   <- df2genind(infdat[-c(1,2)], sep = "/", ploidy = 3, ind.names = infdat[[1]], pop = infdat[[2]])
+ssr    <- c(3, 3, 2, 3, 3, 2, 2, 3, 3, 3, 3, 3)
+x      <- as.genclone(pinf)
+fstats <- filter_stats(x, bruvo.dist, plot = TRUE, replen = ssr, loss = FALSE, nclone = 18)
+title(main = expression(paste(italic("P. infestans"), " reference isolates (12 SSR loci)")))
+```
+```{r pinf_table, echo = FALSE, message = FALSE, results='asis'}
+library("xtable")
+thresh18 <- fstats$average$thresholds[nInd(x) - 18] + .Machine$double.eps^0.5
+z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, loss = FALSE, stats = "MLGS")
+res <- table(pop(x), z, dnn = NULL)
+res[res == 0] <- "."
+print.xtable(xtable(res, align = rep("c", ncol(res) + 1)), comment = FALSE)
+```
 
 ## Speed {-}
 
