@@ -125,7 +125,21 @@ naive string comparison into multilocus lineages utilizing any genetic distance
 given three different clustering algorithms: farthest neighbor, nearest
 neighbor, and UPGMA (average neighbor) [citation needed].
 
-
+The clustering algorithms act on a distance matrix that is either provided by
+the user or generated via a function that will calculate a distance from
+genclone objects such as `bruvo.dist`, which will calculate Bruvo's distance at
+any level of ploidy. All algorithms have been implemented in C and utilize the
+open MP framework for optional parallel processing. Default is the conservative
+farthest neighbor algorithm, which will only cluster samples together only if
+all samples in the cluster are at a distance less than the given threshold. By
+contrast, the nearest neighbor algorithm will have a chaining effect that will
+cluster samples akin to adding links on a chain where a sample can be included
+in a cluster if all of the samples have at least one connection below a given
+threshold. The UPGMA, or average neighbor clustering algorithm is the one most
+familiar to biologists as it is often used to generate preliminary ultra-metric
+trees based off of genetic distance. This algorithm will cluster by creating a
+representative sample per cluster and joining clusters if these representative
+samples are closer than the given threshold.
 
 
 
