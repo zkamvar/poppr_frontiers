@@ -228,13 +228,7 @@ and returning the set of all edges included in the trees. Due to the way igraph
 has implemented Prim's algorithm, it is not possible to utilize this stategy,
 thus we have implemented a C function to walk through a distance matrix and
 minimum spanning tree to connect groups of nodes with edges of equal weight.
-These reticulate minimum spanning networks are very important for extremely
-clonal organisms where a minimum spanning tree would become a chain. The current
-implementation been successfuly used in analyses such as reconstruction of the
-*P. ramorum* outbreak in Curry County, OR [kamvar2015spatial]. Reticulated
-networks also allow for the addition of graph community detection algorithms
-such as the infomap algorithm, giving the user another tool to detect clonal or
-population structure [@rosvall2008maps].
+
 
 ## Additions {-}
 
@@ -256,6 +250,9 @@ The three algorithms were able to detect 18 multilocus lineages at different
 distances (Fig. 1). Contingency tables between the described multilocus
 genotypes and the genotypes defined by distance show that most of the 18
 lineages were resolved, except for US-8, which is polytomic (Table 1).
+
+
+> Nik, these are just to see how the figures look in the paper, the actual figures need to be uploaded separately, according to the frontiers specifications.
 
 ```{r, pinf_data, echo = FALSE, message = FALSE}
 source("../Rscripts/my_functions.R")
@@ -294,6 +291,16 @@ print.xtable(xtable(res, align = rep("c", ncol(res) + 1)), comment = FALSE)
 - hierarchical methods have been ported to adegenet
 
 # Discussion {-}
+
+
+Reticulate minimum spanning networks are very important for extremely clonal
+organisms where a minimum spanning tree would become a chain. The current
+implementation in poppr has been successfully used in analyses such as
+reconstruction of the *P. ramorum* outbreak in Curry County, OR
+[kamvar2015spatial]. Reticulated networks also allow for the addition of graph
+community detection algorithms such as the infomap algorithm, giving the user
+another tool to detect clonal or population structure [@rosvall2008maps].
+
 
 - loops in graphs allow for analysis of population structure via graph walking algorithms in igraph
 - bootstrapping methods encourage future developers to write distance implementations in common format
