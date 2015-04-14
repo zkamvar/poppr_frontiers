@@ -2,8 +2,47 @@ getNames <- function(n){
   vapply(1:n, function(x) paste(sample(letters, 10), collapse = ""), character(1))
 }
 
+# This will mutate a single allele in a random chromosome when given a SNPbin
+snp_mutator <- function(snpbin, rawchars = 2^(1:7)){
+  chrom <- sample(length(snpbin@snp), 1)
+  posi <- sample(length(snpbin@snp[[chrom]]) - 1, 1)
+  mutation <- sample(rawchars, 1)
+  orig <- as.integer(snpbin@snp[[chrom]][posi]) 
+  mutato <- as.raw(bitwXor(orig, mutation))
+  snpbin@snp[[chrom]][posi] <- mutato
+  return(snpbin)
+}
+
+# This will mutate nmutations in a SNPbin
+sample_mutator <- function(snpbin, mu, nLoc, rawchars = 2^(1:7)){
+  nmutations <- rpois(1, lambda = round(nLoc*mu))
+  for (i in seq(nmutations)){
+    snpbin <- snp_mutator(snpbin, rawchrs)
+  }
+  return(snpbin)
+}
+
+# This will mutate 
+pop_mutator <- function(glt, mu = 0.05){
+  rawchrs <- 2^(1:7)
+  glt@gen <- lapply(glt@gen, sample_mutator, mu, nLoc(glt), rawchrs)
+  return(glt)
+}
+
+
+NA_generator <- function(snpbin, nloc, na.perc = 0.01){
+  nas <- rpois(1, lambda = round(nloc*na.perc))
+  snpbin@NA.posi <- sample(nloc, nas)
+  return(snpbin)
+}
+
+pop_NA <- function(glt, na.perc = 0.01){
+  glt@gen <- lapply(glt@gen, NA_generator, nLoc(glt), na.perc)
+  return(glt)
+}
+
 getSims <- function(z = 1, n = 10, snps = 1e6, strucrat = c(0.25, 0.75), 
-                    clone = TRUE, err = 0.1, n.cores = 4, ...){
+                    clone = TRUE, err = 0.1, na.perc = 0.1, n.cores = 4, ...){
   lam <- sample(strucrat, 1)
   if (lam == 1){
     perc <- 1
@@ -20,18 +59,21 @@ getSims <- function(z = 1, n = 10, snps = 1e6, strucrat = c(0.25, 0.75),
     res <- res[clones]
     clones <- duplicated(clones)
   }
-  mat   <- as.matrix(res)
-  nerrs <- round(ncol(mat)*err)
-  for (i in seq(nrow(mat))){
-    mat[i, sample(ncol(mat), nerrs)] <- sample(c(0:2, NA), nerrs, replace = TRUE)
-  }
-  if (clone){
-    for (i in clones){
-      mat[i, sample(ncol(mat), nerrs)] <- sample(c(0:2, NA), nerrs, replace = TRUE)      
-    }
-  } 
-
-  res <- new("genlight", mat, ploidy = 2, ind.names = the_names, n.cores = n.cores)
+  res <- pop_mutator(res, err)
+  res <- pop_NA(res, na.perc = na.perc)
+  indNames(res) <- the_names
+#   mat   <- as.matrix(res)
+#   nerrs <- round(ncol(mat)*err)
+#   for (i in seq(nrow(mat))){
+#     mat[i, sample(ncol(mat), nerrs)] <- sample(c(0:2, NA), nerrs, replace = TRUE)
+#   }
+#   if (clone){
+#     for (i in clones){
+#       mat[i, sample(ncol(mat), nerrs)] <- sample(c(0:2, NA), nerrs, replace = TRUE)      
+#     }
+#   } 
+# 
+#   res <- new("genlight", mat, ploidy = 2, ind.names = the_names, n.cores = n.cores)
   return(res)
 }
 

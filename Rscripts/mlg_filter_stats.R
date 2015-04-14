@@ -71,8 +71,8 @@ print.table(tab, zero.print = ".") # contingency table for zero tolerance MLGs.
 #' clonal reproduction. 
 #' 
 set.seed(20150412)
-x <- lapply(1:10, getSims, n = 20, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = TRUE, n.cores = 4)
-y <- lapply(1:10, getSims, n = 20, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = FALSE, n.cores = 4)
+x <- lapply(1:10, getSims, n = 20, snps = 1e4, strucrat = 0.5, ploidy = 2, err = 0.1, na.perc = 0.09, clone = TRUE, n.cores = 4)
+y <- lapply(1:10, getSims, n = 20, snps = 1e4, strucrat = 0.5, ploidy = 2, err = 0.1, na.perc = 0.09, clone = FALSE, n.cores = 4)
 # x <- getSims(n = 200, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = TRUE, n.cores = 4)
 # y <- getSims(n = 200, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = FALSE, n.cores = 4)
 #'
