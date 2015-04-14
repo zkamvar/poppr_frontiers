@@ -206,8 +206,35 @@ parallelized bit level C code for efficiency [@Jombart_2008].
 
 ## Genotype Accumulation Curve {-}
 
-When working with clonal organisms, it is necessary to assess the power of your
-markers, especially when working with microsatellites. 
+Analysis of population genetics of clonal organisms often borrows from
+ecological methods such as analysis of diversity within populations
+[@milgroom1996recombination; @arnaud2007standardizing]. When choosing markers
+for analysis, it is important to make sure that the observed diversity in your
+sample will not appreciably increase if an additional marker is added
+[@arnaud2007standardizing]. This concept is analogous to a species accumulation
+curve, obtained by rarefaction. The genotype accumulation curve in *poppr* is
+implemented by randomly sampling $x$ loci and counting the number of observed
+MLGs. This repeated $r$ times for 1 locus up to $n-1$ loci, creating $n-1$
+distributions of observed MLGs.
+
+## Minimum Spanning Networks {-}
+
+Poppr introduced minimum spanning networks in it's original iteration that were
+based off of igraph's function minimum.spanning.tree. This algorithm would
+produce a minimum spanning tree, but with no reticulations, which is common and
+expected of clonal organisms. In other minimum spanning network programs,
+reticulation is obtained by caluclating the minimum spanning tree several times
+and returning the set of all edges included in the trees. Due to the way igraph
+has implemented Prim's algorithm, it is not possible to utilize this stategy,
+thus we have implemented a C function to walk through a distance matrix and
+minimum spanning tree to connect groups of nodes with edges of equal weight.
+These reticulate minimum spanning networks are very important for extremely
+clonal organisms where a minimum spanning tree would become a chain. The current
+implementation been successfuly used in analyses such as reconstruction of the
+*P. ramorum* outbreak in Curry County, OR [kamvar2015spatial]. Reticulated
+networks also allow for the addition of graph community detection algorithms
+such as the infomap algorithm, giving the user another tool to detect clonal or
+population structure [@rosvall2008maps].
 
 ## Additions {-}
 

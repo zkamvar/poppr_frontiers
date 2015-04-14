@@ -354,8 +354,39 @@ performed in parallelized bit level C code for efficiency (Jombart,
 Curve}\label{genotype-accumulation-curve}
 \addcontentsline{toc}{subsection}{Genotype Accumulation Curve}
 
-When working with clonal organisms, it is necessary to assess the power
-of your markers, especially when working with microsatellites.
+Analysis of population genetics of clonal organisms often borrows from
+ecological methods such as analysis of diversity within populations
+(Milgroom, 1996; Arnaud-Hanod et al., 2007). When choosing markers for
+analysis, it is important to make sure that the observed diversity in
+your sample will not appreciably increase if an additional marker is
+added (Arnaud-Hanod et al., 2007). This concept is analogous to a
+species accumulation curve, obtained by rarefaction. The genotype
+accumulation curve in \emph{poppr} is implemented by randomly sampling
+\(x\) loci and counting the number of observed MLGs. This repeated \(r\)
+times for 1 locus up to \(n-1\) loci, creating \(n-1\) distributions of
+observed MLGs.
+
+\subsection*{Minimum Spanning Networks}\label{minimum-spanning-networks}
+\addcontentsline{toc}{subsection}{Minimum Spanning Networks}
+
+Poppr introduced minimum spanning networks in it's original iteration
+that were based off of igraph's function minimum.spanning.tree. This
+algorithm would produce a minimum spanning tree, but with no
+reticulations, which is common and expected of clonal organisms. In
+other minimum spanning network programs, reticulation is obtained by
+caluclating the minimum spanning tree several times and returning the
+set of all edges included in the trees. Due to the way igraph has
+implemented Prim's algorithm, it is not possible to utilize this
+stategy, thus we have implemented a C function to walk through a
+distance matrix and minimum spanning tree to connect groups of nodes
+with edges of equal weight. These reticulate minimum spanning networks
+are very important for extremely clonal organisms where a minimum
+spanning tree would become a chain. The current implementation been
+successfuly used in analyses such as reconstruction of the \emph{P.
+ramorum} outbreak in Curry County, OR. Reticulated networks also allow
+for the addition of graph community detection algorithms such as the
+infomap algorithm, giving the user another tool to detect clonal or
+population structure (Rosvall and Bergstrom, 2008).
 
 \subsection*{Additions}\label{additions}
 \addcontentsline{toc}{subsection}{Additions}
@@ -463,6 +494,10 @@ Agapow, P.-M., and Burt, A. (2001). Indices of multilocus linkage
 disequilibrium. \emph{Molecular Ecology Notes} 1, 101--102.
 doi:\href{http://dx.doi.org/10.1046/j.1471-8278.2000.00014.x}{10.1046/j.1471-8278.2000.00014.x}.
 
+Arnaud-Hanod, S., Duarte, C. M., Alberto, F., and Serr{ã}o, E. A.
+(2007). Standardizing methods to address clonality in population
+studies. \emph{Molecular Ecology} 16, 5115--5139.
+
 Bruvo, R., Michiels, N. K., D'Souza, T. G., and Schulenburg, H. (2004).
 A simple method for the calculation of microsatellite genotype distances
 irrespective of ploidy level. \emph{Molecular Ecology} 13, 2101--2106.
@@ -522,6 +557,10 @@ integrated--modular approach. \emph{Bioinformatics} 26, 419--420.
 
 RCoreTeam (2013). R: A Language and Environment for Statistical
 Computing. Available at: \url{http://www.R-project.org/}.
+
+Rosvall, M., and Bergstrom, C. T. (2008). Maps of random walks on
+complex networks reveal community structure. \emph{Proceedings of the
+National Academy of Sciences} 105, 1118--1123.
 
 Wilson, G., Aruliah, D., Brown, C. T., Hong, N. P. C., Davis, M., Guy,
 R. T., Haddock, S. H., Huff, K. D., Mitchell, I. M., Plumbley, M. D., et
