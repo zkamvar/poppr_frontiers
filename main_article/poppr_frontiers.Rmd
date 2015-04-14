@@ -183,7 +183,7 @@ creating a distribution of expected values of $\bar{r}_d$.
 
 As the data for this would be stored in a genlight object, which stores genetic
 information in bits, the calculations of $\bar{r}_d$ are performed in
-parallelized C code for efficiency [@Jombart_2008].
+parallelized bit level C code for efficiency [@Jombart_2008].
 
  - Clone correction based on genetic distance
     - reduced representation data (GBS)
@@ -203,6 +203,11 @@ parallelized C code for efficiency [@Jombart_2008].
     - Solution in S4 classes: strict definition.
     - adopted by larger community
     
+
+## Genotype Accumulation Curve {-}
+
+When working with clonal organisms, it is necessary to assess the power of your
+markers, especially when working with microsatellites. 
 
 ## Additions {-}
 
