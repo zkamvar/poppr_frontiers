@@ -229,6 +229,11 @@ has implemented Prim's algorithm, it is not possible to utilize this stategy,
 thus we have implemented a C function to walk through a distance matrix and
 minimum spanning tree to connect groups of nodes with edges of equal weight.
 
+## Bootstrapping {-}
+
+Calculating genetic distance for among samples and populations is very important
+method for assessing population differentiation through methods such as $F_{st}$,
+AMOVA, and Mantel tests. Of course, confidence in distance metrics is only related to the confidence of the markers. If a single 
 
 ## Additions {-}
 
