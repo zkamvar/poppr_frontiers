@@ -11,7 +11,7 @@ snp_mutator <- function(chrom, mutation = sample(2^(1:7), 1)){
 }
 
 # This will mutate nmutations in a SNPbin
-sample_mutator <- function(snpbin, mu, nLoc, rawchars = 2^(1:7)){
+sample_mutator <- function(snpbin, mu, nLoc, rawchars = 2^(0:7)){
   nmutations <- rpois(1, lambda = round(nLoc*mu))
   for (i in seq(nmutations)){
     chrom_index               <- sample(length(snpbin@snp), 1)
@@ -116,6 +116,15 @@ filter_stats <- function(x, distance = bitwise.dist, threshold = 1,
   }
   return(fanlist)
 }
+
+
+threshold_predictor <- function(thresholds, fraction = 0.5){
+  frac <- 1:round(length(thresholds)*fraction)
+  diffs <- diff(thresholds[frac])
+  diffmax <- which.max(diffs)
+  mean(thresholds[diffmax:(diffmax + 1)])
+}
+
 
 plot_filter_stats <- function(x, fstats, distmat, nclone = NULL){
   upper <- round(max(distmat), digits = 1)
