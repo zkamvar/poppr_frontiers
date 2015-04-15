@@ -71,8 +71,8 @@ print.table(tab, zero.print = ".") # contingency table for zero tolerance MLGs.
 #' clonal reproduction. 
 #' 
 set.seed(20150412)
-x <- lapply(1:10, getSims, n = 20, snps = 1e4, strucrat = 0.5, ploidy = 2, err = 0.1, na.perc = 0.09, clone = TRUE, n.cores = 4)
-y <- lapply(1:10, getSims, n = 20, snps = 1e4, strucrat = 0.5, ploidy = 2, err = 0.1, na.perc = 0.09, clone = FALSE, n.cores = 4)
+x <- lapply(1:10, getSims, n = 20, snps = 1e3, strucrat = 1, ploidy = 2, err = 0.05, na.perc = 0.21, clone = TRUE, n.cores = 4)
+y <- lapply(1:10, getSims, n = 20, snps = 1e3, strucrat = 1, ploidy = 2, err = 0.05, na.perc = 0.21, clone = FALSE, n.cores = 4)
 # x <- getSims(n = 200, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = TRUE, n.cores = 4)
 # y <- getSims(n = 200, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = FALSE, n.cores = 4)
 #'
@@ -81,11 +81,11 @@ x <- do.call("rbind", c(x, y))
 x <- x[sample(nInd(x), nInd(x)/5)]
 trueclones <- duplicated(substr(indNames(x), start = 1, stop = 10))
 fstats <- filter_stats(x, bitwise.dist, plot = TRUE, nclone = sum(!trueclones))
-
+the_threshold <- fstats$average$thresholds[sum(trueclones)] + .Machine$double.eps^0.5
 thresh     <- duplicated(mlg.filter(x, distance = bitwise.dist, 
-                                    threshold = fstats$farthest$thresholds[sum(trueclones)] + .Machine$double.eps^0.5, 
-                                    algo = "f"))
-table(thresh, trueclones)
+                                    threshold = the_threshold, 
+                                    algo = "a"))
+(threshtable <- table(thresh, trueclones))
 #' 
 #' The tabulation is a power analysis of how many true and false positives there
 #' are when collapsing at the threshold that gives the same number of known
@@ -103,11 +103,42 @@ for (i in clones){
 }
 plot.phylo(the_tree, edge.color = edgecols, adj = 0, label.offset = 0.001)
 axisPhylo(1)
-title("Random sequences with 10k SNPs and a 0.1 error rate")
+title("Random sequences with 1000 SNPs and a 0.21 error rate")
+#'
+#+ 20reps, cache = TRUE
+
+resarray <- array(data = integer(20*4), dim = c(2, 2, 20), 
+                  dimnames = c(dimnames(threshtable), NULL))
+for (i in 1:20){
+  set.seed(i)
+  samp1 <- lapply(1:10, getSims, n = 20, snps = 1e3, strucrat = 1, ploidy = 2, 
+                  err = 0.05, na.perc = 0.21, clone = TRUE, n.cores = 4)
+  samp2 <- lapply(1:10, getSims, n = 20, snps = 1e3, strucrat = 1, ploidy = 2, 
+                  err = 0.05, na.perc = 0.21, clone = FALSE, n.cores = 4)
+  samp <- do.call("rbind", c(samp1, samp2))
+  samp@ploidy <- rep(2L, nInd(samp))
+  samp <- samp[sample(nInd(samp), nInd(samp)/5)]
+  trueclones <- duplicated(substr(indNames(samp), start = 1, stop = 10))
+  fstats <- filter_stats(samp, bitwise.dist, plot = TRUE, nclone = sum(!trueclones))
+  the_threshold <- fstats$average$thresholds[sum(trueclones)] + .Machine$double.eps^0.5
+  thresh     <- duplicated(mlg.filter(samp, distance = bitwise.dist, 
+                                      threshold = the_threshold, 
+                                      algo = "a"))
+  resarray[, , i] <- table(thresh, trueclones)
+  resarray[, , i] <- sweep(resarray[, , i], 2, colSums(resarray[, , i]), "/")
+}
+#'
+#' Now we get to see how well we did.
+(res <- apply(resarray, 1:2, mean))
+#' 
+#' Basically, this says that we were able to detect ~ $`r signif(res[2, 2]*100,
+#' 3)`\%$ of the clones with a $`r signif(res[2, 1]*100, 3)`\%$ false positive
+#' rate.
+#' 
 #' ### RAD seq data
 #' 
-#' Note that this data has no reference and has a lot of error. There are 10
-#' technical replicates. Each file represents a different parameter used for
+#' Note that this data has no reference and has a lot of error. There are 10 
+#' technical replicates. Each file represents a different parameter used for 
 #' STACKS.
 plinklist <- list(m3 = character(0), m4 = character(0), m10 = character(0), def = character(0))
 plinklist[["m4"]]  <- "2R/PopSamples/data.out/PopSamples_m4/Popsouts_Rselec/out.replicates/plink.raw"
@@ -154,6 +185,7 @@ for (i in names(plinklist)){
   contlist[[i]] <- table(thresh, trueclones)
   threshlist[[i]] <- fstats$average$thresholds
 }
+#'
 #' Print the contingency tables and differences between threshold values to see
 #' if there is a large jump indicating a separation between replicates and 
 #' independent samples.
