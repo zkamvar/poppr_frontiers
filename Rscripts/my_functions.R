@@ -29,8 +29,8 @@ pop_mutator <- function(glt, mu = 0.05, samples = TRUE){
 }
 
 NA_zeromancer <- function(chrom, NA.posi, rawchars = 2^(0:7)){
-  nas <- ceiling(NA.posi/8)
-  zero_bits <- (NA.posi + 1) %% 8
+  nas <- ceiling(NA.posi/8) # Getting the location in the RAW vector
+  zero_bits <- NA.posi %% 8 # Getting the location of the locus in a RAW element.
   zero_bits[zero_bits == 0] <- 8
   
   for (i in seq(length(nas))){

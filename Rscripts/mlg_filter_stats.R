@@ -110,7 +110,7 @@ title("Random sequences with 1000 SNPs and a 0.21 error rate")
 resarray <- array(data = integer(20*4), dim = c(2, 2, 20), 
                   dimnames = c(dimnames(threshtable), NULL))
 for (i in 1:20){
-  set.seed(i)
+  set.seed(i) # setting seed for accuracy.
   samp1 <- lapply(1:10, getSims, n = 20, snps = 1e3, strucrat = 1, ploidy = 2, 
                   err = 0.05, na.perc = 0.21, clone = TRUE, n.cores = 4)
   samp2 <- lapply(1:10, getSims, n = 20, snps = 1e3, strucrat = 1, ploidy = 2, 
