@@ -3,41 +3,67 @@ getNames <- function(n){
 }
 
 # This will mutate a single allele in a random chromosome when given a SNPbin
-snp_mutator <- function(snpbin, rawchars = 2^(1:7)){
-  chrom <- sample(length(snpbin@snp), 1)
-  posi <- sample(length(snpbin@snp[[chrom]]) - 1, 1)
-  mutation <- sample(rawchars, 1)
-  orig <- as.integer(snpbin@snp[[chrom]][posi]) 
-  mutato <- as.raw(bitwXor(orig, mutation))
-  snpbin@snp[[chrom]][posi] <- mutato
-  return(snpbin)
+snp_mutator <- function(chrom, mutation = sample(2^(1:7), 1)){
+  posi        <- sample(length(chrom) - 1, 1) # sample chunk of 8 loci
+  orig        <- as.integer(chrom[posi])      # convert to integer
+  chrom[posi] <- as.raw(bitwXor(orig, mutation)) # Exclusive OR will flip the bit. 
+  return(chrom)
 }
 
 # This will mutate nmutations in a SNPbin
 sample_mutator <- function(snpbin, mu, nLoc, rawchars = 2^(1:7)){
   nmutations <- rpois(1, lambda = round(nLoc*mu))
   for (i in seq(nmutations)){
-    snpbin <- snp_mutator(snpbin, rawchrs)
+    chrom_index               <- sample(length(snpbin@snp), 1)
+    chrom                     <- snpbin@snp[[chrom_index]]
+    snpbin@snp[[chrom_index]] <- snp_mutator(chrom, sample(rawchars, 1))
   }
   return(snpbin)
 }
 
 # This will mutate 
-pop_mutator <- function(glt, mu = 0.05){
-  rawchrs <- 2^(1:7)
-  glt@gen <- lapply(glt@gen, sample_mutator, mu, nLoc(glt), rawchrs)
+pop_mutator <- function(glt, mu = 0.05, samples = TRUE){
+  rawchrs <- 2^(0:7)
+  glt@gen[samples] <- lapply(glt@gen[samples], sample_mutator, mu, nLoc(glt), rawchrs)
   return(glt)
 }
 
+NA_zeromancer <- function(chrom, NA.posi, rawchars = 2^(0:7)){
+  nas <- ceiling(NA.posi/8)
+  zero_bits <- (NA.posi + 1) %% 8
+  zero_bits[zero_bits == 0] <- 8
+  
+  for (i in seq(length(nas))){
+    eight_bit <- as.integer(chrom[nas[i]])
+    the_locus <- rawchars[zero_bits[i]]
+    # If the locus does not change in the OR, then there is a 1 and it needs to
+    # be changed to a zero with XOR.
+    if (eight_bit == bitwOr(eight_bit, the_locus)){
+      chrom[nas[i]] <- as.raw(bitwXor(eight_bit, the_locus))
+    }
+  }
+  return(chrom)
+}
 
-NA_generator <- function(snpbin, nloc, na.perc = 0.01){
+NA_generator <- function(snpbin, nloc, na.perc = 0.01, rawchars = 2^(0:7)){
   nas <- rpois(1, lambda = round(nloc*na.perc))
-  snpbin@NA.posi <- sample(nloc, nas)
+  NA.posi <- sort(sample(nloc, nas))
+  for (i in seq(length(snpbin@snp))){
+    snpbin@snp[[i]] <- NA_zeromancer(snpbin@snp[[i]], NA.posi, rawchars)
+  }
+  snpbin@NA.posi <- NA.posi
   return(snpbin)
 }
 
-pop_NA <- function(glt, na.perc = 0.01){
-  glt@gen <- lapply(glt@gen, NA_generator, nLoc(glt), na.perc)
+pop_NA <- function(glt, na.perc = 0.01, parallel = require('parallel'), n.cores = 2L){
+  rawchars <- 2^(0:7)
+  if (parallel){
+    glt@gen <- mclapply(glt@gen, NA_generator, nLoc(glt), na.perc, rawchars,
+                        mc.cores = getOption("mc.cores", n.cores))
+  } else {
+    glt@gen <- lapply(glt@gen, NA_generator, nLoc(glt), na.perc, rawchars)    
+  }
+
   return(glt)
 }
 
@@ -58,25 +84,17 @@ getSims <- function(z = 1, n = 10, snps = 1e6, strucrat = c(0.25, 0.75),
     the_names <- paste(the_names[clones], 1:n, sep = ".")
     res <- res[clones]
     clones <- duplicated(clones)
+    # res <- pop_mutator(res, err, clones)
   }
   res <- pop_mutator(res, err)
-  res <- pop_NA(res, na.perc = na.perc)
+  res <- pop_NA(res, na.perc = na.perc, n.cores = n.cores)
   indNames(res) <- the_names
-#   mat   <- as.matrix(res)
-#   nerrs <- round(ncol(mat)*err)
-#   for (i in seq(nrow(mat))){
-#     mat[i, sample(ncol(mat), nerrs)] <- sample(c(0:2, NA), nerrs, replace = TRUE)
-#   }
-#   if (clone){
-#     for (i in clones){
-#       mat[i, sample(ncol(mat), nerrs)] <- sample(c(0:2, NA), nerrs, replace = TRUE)      
-#     }
-#   } 
-# 
-#   res <- new("genlight", mat, ploidy = 2, ind.names = the_names, n.cores = n.cores)
   return(res)
 }
 
+binary_char_from_hex <- function(y){
+  vapply(y, function(x) paste(as.integer(rawToBits(x)), collapse=""), character(1))
+}
 
 filter_stats <- function(x, distance = bitwise.dist, threshold = 1, 
                          stats = "All", missing = "ignore", plot = FALSE, nclone = NULL, ...){
