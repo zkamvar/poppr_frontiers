@@ -203,6 +203,9 @@ parallelized bit level C code for efficiency [@Jombart_2008].
     - Solution in S4 classes: strict definition.
     - adopted by larger community
     
+## Population Strata and Hierarchies {-}
+
+Sampling for plant pathogens often 
 
 ## Genotype Accumulation Curve {-}
 
@@ -223,17 +226,31 @@ Poppr introduced minimum spanning networks in it's original iteration that were
 based off of igraph's function minimum.spanning.tree. This algorithm would
 produce a minimum spanning tree, but with no reticulations, which is common and
 expected of clonal organisms. In other minimum spanning network programs,
-reticulation is obtained by caluclating the minimum spanning tree several times
+reticulation is obtained by calculating the minimum spanning tree several times
 and returning the set of all edges included in the trees. Due to the way igraph
-has implemented Prim's algorithm, it is not possible to utilize this stategy,
+has implemented Prim's algorithm, it is not possible to utilize this strategy,
 thus we have implemented a C function to walk through a distance matrix and
 minimum spanning tree to connect groups of nodes with edges of equal weight.
 
 ## Bootstrapping {-}
 
 Calculating genetic distance for among samples and populations is very important
-method for assessing population differentiation through methods such as $F_{st}$,
-AMOVA, and Mantel tests. Of course, confidence in distance metrics is only related to the confidence of the markers. If a single 
+method for assessing population differentiation through methods such as
+$F_{st}$, AMOVA, and Mantel tests. Of course, confidence in distance metrics is
+only related to the confidence of the markers. Especially true with
+microsatellite markers, a single hyper-diverse locus can make a population
+appear to have more diversity based on genetic distance. Using a bootstrapping
+procedure of randomly sampling loci with replacement when calculating a distance
+matrix gives confidence in hierarchical clustering. Because genetic data in a
+genind object is represented as a matrix with samples in rows and alleles in
+columns, bootstrapping is a non-trivial task as all alleles in a single locus
+need to be sampled together. To remedy this, we have created an internal S4
+class called "bootgen", which extends the internal "gen" class from adegenet.
+This class can be created from any genind, genclone, or genpop object, and
+allows loci to be sampled with replacement. To further facilitate bootstrapping,
+a function called aboot ("any boot") is introduced that will bootstrap any
+genclone, genind, or genpop object with any genetic distance that can be
+calculated from it.
 
 ## Additions {-}
 
