@@ -67,8 +67,48 @@ pop_NA <- function(glt, na.perc = 0.01, parallel = require('parallel'), n.cores 
   return(glt)
 }
 
+crossover <- function(snpbin){
+  chr1 <- snpbin@snp[[1]]
+  chr2 <- snpbin@snp[[2]]
+  chrlen <- length(chr1)
+  cutpoint <- sample(2:(chrlen - 1), 1)
+  first <- 1:(cutpoint - 1)
+  last  <- cutpoint:chrlen
+  snpbin@snp[[1]] <- c(chr1[first], chr2[last])
+  snpbin@snp[[2]] <- c(chr2[first], chr1[last])
+  return(snpbin)
+}
+
+mate <- function(snpbin, ind1, ind2){
+  snpbin@gen[[ind1]] <- crossover(snpbin@gen[[ind1]])
+  snpbin@gen[[ind2]] <- crossover(snpbin@gen[[ind2]])
+  snpout <- snpbin@gen[[ind1]]
+  snpout@snp[[1]] <- snpbin@gen[[ind1]]@snp[[sample(1:2, 1)]]
+  snpout@snp[[2]] <- snpbin@gen[[ind2]]@snp[[sample(1:2, 1)]]
+  return(snpout)
+}
+
+random_mate <- function(glt, err){
+  mat_pair <- matrix(integer(1), nrow = nInd(glt), ncol = 2)
+  mat_pair[, 1] <- sample(nInd(glt), replace = TRUE)
+  mat_pair[, 2] <- sample(nInd(glt), replace = TRUE)
+  res <- apply(mat_pair, 1, function(x) mate(glt, x[1], x[2]))
+  glt@gen <- res
+  if (err > 0) glt <- pop_mutator(glt, err)
+  return(glt)
+}
+
+random_mate_gen <- function(glt, err = 5e-3, gen = 1){
+  for (i in seq(gen)){
+    glt <- random_mate(glt, err)
+  }
+  return(glt)
+}
+
+
 getSims <- function(z = 1, n = 10, snps = 1e6, strucrat = c(0.25, 0.75), 
-                    clone = TRUE, err = 0.1, na.perc = 0.1, n.cores = 4, ...){
+                    clone = TRUE, err = 0.1, na.perc = 0.1, n.cores = 4, 
+                    mate_gen = NULL, mate_err = 5e-3, ...){
   lam <- sample(strucrat, 1)
   if (lam == 1){
     perc <- 1
@@ -78,7 +118,11 @@ getSims <- function(z = 1, n = 10, snps = 1e6, strucrat = c(0.25, 0.75),
 
   n <- sample(rpois(1000, lambda = n), 1)
   the_names <- getNames(n)
-  res <- glSim(n, n.snp.nonstruc = snps*perc, n.snp.struc = snps*(1-perc), n.cores = n.cores, ...)
+  res <- glSim(n, n.snp.nonstruc = snps*perc, n.snp.struc = snps*(1-perc), 
+               n.cores = n.cores, ...)
+  if (!is.null(mate_gen)){
+    res <- random_mate_gen(res, mate_err, mate_gen)
+  }
   if (clone){
     clones <- sample(n, replace = TRUE)
     the_names <- paste(the_names[clones], 1:n, sep = ".")
@@ -86,8 +130,12 @@ getSims <- function(z = 1, n = 10, snps = 1e6, strucrat = c(0.25, 0.75),
     clones <- duplicated(clones)
     # res <- pop_mutator(res, err, clones)
   }
-  res <- pop_mutator(res, err)
-  res <- pop_NA(res, na.perc = na.perc, n.cores = n.cores)
+  if (err > 0){
+    res <- pop_mutator(res, err)    
+  }
+  if (na.perc > 0){
+    res <- pop_NA(res, na.perc = na.perc, n.cores = n.cores)    
+  }
   indNames(res) <- the_names
   return(res)
 }
