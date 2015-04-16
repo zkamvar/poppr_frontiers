@@ -205,7 +205,7 @@ parallelized bit level C code for efficiency [@Jombart_2008].
     
 ## Population Strata and Hierarchies {-}
 
-
+Assessments of population structure through methods such as hierarchical $F_{st}$ and AMOVA benefit greatly from multiple levels of population definition. Data structures for population genetic data mostly allow for only one level of hierarchical definition. 
 
 ## Genotype Accumulation Curve {-}
 
