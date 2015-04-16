@@ -205,7 +205,7 @@ parallelized bit level C code for efficiency [@Jombart_2008].
     
 ## Population Strata and Hierarchies {-}
 
-As plant pathogenic fungi and bacteria often have indeterminate growth and can be spread via anthropogenic means, it is necessary to hierarchically sample populations.
+
 
 ## Genotype Accumulation Curve {-}
 
