@@ -70,20 +70,21 @@ print.table(tab, zero.print = ".") # contingency table for zero tolerance MLGs.
 #' In addition, half of these populations will have undergone one generation of
 #' clonal reproduction. 
 #' 
-set.seed(20150412)
-x <- lapply(1:10, getSims, n = 20, snps = 1e3, strucrat = 1, ploidy = 2, err = 0.05, na.perc = 0.21, clone = TRUE, n.cores = 4)
-y <- lapply(1:10, getSims, n = 20, snps = 1e3, strucrat = 1, ploidy = 2, err = 0.05, na.perc = 0.21, clone = FALSE, n.cores = 4)
+set.seed(20150415)
+x <- lapply(1:10, getSims, n = 40, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, na.perc = 0.21, clone = TRUE, n.cores = 4, mate_gen = 20)
+y <- lapply(1:10, getSims, n = 40, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, na.perc = 0.21, clone = FALSE, n.cores = 4, mate_gen = 20)
 # x <- getSims(n = 200, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = TRUE, n.cores = 4)
 # y <- getSims(n = 200, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = FALSE, n.cores = 4)
 #'
 #' For analysis, $\frac{1}{5}$th of the pooled samples will be kept.
-x <- do.call("rbind", c(x, y))
-x <- x[sample(nInd(x), nInd(x)/5)]
-trueclones <- duplicated(substr(indNames(x), start = 1, stop = 10))
-fstats <- filter_stats(x, bitwise.dist, plot = TRUE, nclone = sum(!trueclones))
+z <- do.call("rbind", c(x, y))
+z <- z[sample(nInd(z), nInd(z)/5)]
+trueclones <- duplicated(substr(indNames(z), start = 1, stop = 10))
+fstats <- filter_stats(z, bitwise.dist, plot = TRUE)
 # the_threshold <- fstats$average$thresholds[sum(trueclones)] + .Machine$double.eps^0.5
 the_threshold <- threshold_predictor(fstats$average$thresholds)
-thresh     <- duplicated(mlg.filter(x, distance = bitwise.dist, 
+abline(v = the_threshold, lty = 2)
+thresh     <- duplicated(mlg.filter(z, distance = bitwise.dist, 
                                     threshold = the_threshold, 
                                     algo = "a"))
 (threshtable <- table(thresh, trueclones))
@@ -94,7 +95,7 @@ thresh     <- duplicated(mlg.filter(x, distance = bitwise.dist,
 #'
 #' Below is labelling a tree with known clones.
 #+ fig.width = 10, fig.height = 20
-the_tree <- upgma(bitwise.dist(x))
+the_tree <- upgma(bitwise.dist(z))
 clones <- substr(the_tree$tip.label[thresh], start = 1, stop = 10)
 clones <- lapply(clones, grep, the_tree$tip.label)
 edgelist <- length(which.edge(the_tree, the_tree$tip.label))
@@ -116,6 +117,7 @@ avarray   <- resarray
 samplist  <- lapply(1:nreps, function(x) list(samp = NULL, tree = NULL, 
                                               mlgs = NULL))
 Sys.time()
+
 for (i in 1:nreps){
   set.seed(i) # setting seed for accuracy.
   snps <- rpois(1, 1e3)
