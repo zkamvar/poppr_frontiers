@@ -173,6 +173,26 @@ threshold_predictor <- function(thresholds, fraction = 0.5){
   mean(thresholds[diffmax:(diffmax + 1)])
 }
 
+get_breaks <- function(thresholds){
+  diffs <- diff(thresholds)
+  breaks <- thresholds[-1] - (diffs/2)
+  return(breaks)
+}
+
+
+cont_table <- function(mlg, truth){
+  tab <- table(duplicated(mlg), duplicated(truth))
+  return(sweep(tab, 2, colSums(tab), "/"))
+}
+
+powercurve <- function(x, thresholds, truth, ...){
+  breaks <- c(0, get_thresh(thresholds))
+  funres <- integer(nInd(x))
+  mlg_matrix <- vapply(thresholds, function(i) mlg.filter(x, i, ...), funres)
+  restab <- apply(mlg_matrix, 2, cont_table, truth)
+  restab <- array(unlist(restab, use.names = FALSE), dim = c(2, 2, length(restab)))
+  return(restab)
+}
 
 plot_filter_stats <- function(x, fstats, distmat, nclone = NULL){
   upper <- round(max(distmat), digits = 1)

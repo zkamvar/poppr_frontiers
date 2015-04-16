@@ -46,15 +46,15 @@ head(rubi_all)
 library('poppr')
 library('ape')
 library('phangorn')
-rubi.gt <- extract.gt(rubi_all, element = "GT")
+rubi.gt <- extract.gt(rubi_all, element = "GT", mask = TRUE)
 rubi.gt[1:10, 1:10]
 rubi.gt[rubi.gt == "./."] <- NA
 rubi.gt[rubi.gt == "0/0"] <- 0
 rubi.gt[rubi.gt == "1/1"] <- 2
 rubi.gt[rubi.gt == "0/1"] <- 1
-rubi.gt <- rubi.gt[rubi_all@var.info$mask, ]
 mode(rubi.gt) <- "integer"
 rubi.gl <- new("genlight", t(rubi.gt), ind.names = colnames(rubi.gt))
+samplenames <- vapply(strsplit(indNames(rubi.gl), "_"), "[", "a", 1) 
 #'
 #' Now, we can look at a tree:
 #+ fig.width = 10, fig.height = 10
@@ -75,7 +75,35 @@ the_distance <- bitwise.dist(rubi.gl)
 mlgs <- mlg.filter(rubi.gl, threshold = the_threshold, dist = the_distance, 
                    algorithm = "n")
 color_mlg_tree(x = rubi.gl, tree = upgma(the_distance), newmlgs = mlgs)
-
+axisPhylo(1)
+#'
+#' Admittedly, this looks... scary, but recalling that there is a LOT of missing
+#' data, we might be able to trim out the isolates that have more than 25%
+#' missing and get a better rate of success. 
+allowed_missing <- round(nLoc(rubi.gl)*0.25)
+miss <- vapply(rubi.gl@gen, function(x) length(x@NA.posi), integer(1))
+rubi.nomiss <- rubi.gl[miss <= allowed_missing]
+sample.nomiss <- samplenames[miss <= allowed_missing]
+plot(rubi.nomiss)
+#' 
+#+ fig.width = 5, fig.height = 10
+plot(upgma(bitwise.dist(rubi.nomiss)))
+axisPhylo(1)
+#' 
+#' The tree looks beautiful (kinda)!
+#' 
+#' Here's an example of filtering based on nearest neighbor distance.
+#+ fig.width = 5, fig.height = 10
+fs <- filter_stats(rubi.nomiss, distance = bitwise.dist, plot = TRUE)
+(the_threshold <- threshold_predictor(fs$average$thresholds, fraction = 0.75))
+abline(v = the_threshold, lty = 2)
+the_distance <- bitwise.dist(rubi.nomiss)
+mlgs <- mlg.filter(rubi.nomiss, threshold = the_threshold, dist = the_distance, 
+                   algorithm = "a")
+color_mlg_tree(x = rubi.nomiss, tree = upgma(the_distance), newmlgs = mlgs)
+axisPhylo(1)
+table(duplicated(mlgs), duplicated(sample.nomiss))
+#' 
 #' ## Session Info
 #' 
 options(width = 100)
