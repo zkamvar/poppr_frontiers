@@ -133,7 +133,7 @@ for (i in 1:nreps){
   # the_threshold <- fstats$average$thresholds[sum(trueclones)] + .Machine$double.eps^0.5
   title(paste("seed:", i, "n:", nInd(samp), "snps:", snps))
   the_threshold <- threshold_predictor(fstats$average$thresholds)
-  the_distance  <- bitwise.dist(x)
+  the_distance  <- bitwise.dist(samp)
   z <- filter_stats(x = samp, distance = bitwise.dist, 
                     threshold = the_threshold, stats = "MLGs")
   abline(v = the_threshold, lty = 2)
@@ -254,3 +254,8 @@ dupes <- barbnames[duplicated(barbnames)]
 thecols <- ifelse(barbnames %in% dupes, "red", "black")
 color_mlg_tree(barb, defupgma, z$average, tip.color = thecols)
 axisPhylo(1)
+#'
+#' ## Session Info
+#' 
+options(width = 100)
+devtools::session_info()
