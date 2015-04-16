@@ -3,7 +3,7 @@
 #' 
 #' First, we need to load the vcfR package and source the functions I have
 #' written.
-devtools::install_github("knausb/vcfR@devel", build_vignettes = TRUE)
+# devtools::install_github("knausb/vcfR@devel", build_vignettes = TRUE)
 library("vcfR")
 source("my_functions.R")
 #' Now we read in the rubi data. Note that you must have the data in the folder
@@ -18,7 +18,7 @@ rubi <- read.vcf("../All_rubi.vcf", limit = 1e+10)
 #' I attempted to utilize scaffold 1, but it had < 200 variants, so I'm
 #' reading in the whole damn thing. 
 #+ message = FALSE
-rubi_all <- create_chrom(name = "rubi", rubi1)
+rubi_all <- create_chrom(name = "rubi", rubi)
 #'
 #' Now to plot the depth info. According to Brian's manual, this is necessary
 #' to determine if the depth in the INFO column is the same as the depth reported
@@ -43,6 +43,9 @@ head(rubi_all)
 #'
 #' ## Transferring to genlight object
 #' 
+library('poppr')
+library('ape')
+library('phangorn')
 rubi.gt <- extract.gt(rubi_all, element = "GT")
 rubi.gt[1:10, 1:10]
 rubi.gt[rubi.gt == "./."] <- NA
@@ -54,11 +57,25 @@ mode(rubi.gt) <- "integer"
 rubi.gl <- new("genlight", t(rubi.gt), ind.names = colnames(rubi.gt))
 #'
 #' Now, we can look at a tree:
-library('poppr')
-library('ape')
-library('phangorn')
+#+ fig.width = 10, fig.height = 10
+plot(rubi.gl)
+#'
+#+ fig.width = 5, fig.height = 10
 plot(upgma(bitwise.dist(rubi.gl)))
-axisPhylo(3)
+axisPhylo(1)
+#' 
+#' The tree looks beautiful (kinda)!
+#' 
+#' Here's an example of filtering based on nearest neighbor distance.
+#+ fig.width = 5, fig.height = 10
+fs <- filter_stats(rubi.gl, distance = bitwise.dist, plot = TRUE)
+(the_threshold <- threshold_predictor(fs$nearest$thresholds))
+abline(v = the_threshold, lty = 2)
+the_distance <- bitwise.dist(rubi.gl)
+mlgs <- mlg.filter(rubi.gl, threshold = the_threshold, dist = the_distance, 
+                   algorithm = "n")
+color_mlg_tree(x = rubi.gl, tree = upgma(the_distance), newmlgs = mlgs)
+
 #' ## Session Info
 #' 
 options(width = 100)
