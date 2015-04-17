@@ -72,7 +72,7 @@ $header-includes$
 $endfor$
 
 
-  \def\Authors{
+ \def\Authors{
 $for(author)$
   $author.name$\,\textsuperscript{$author.affiliation$$if(author.email)$*$endif$}$sep$,
 $endfor$
@@ -91,6 +91,7 @@ $endfor$
 
 
 \begin{document}
+% \inputencoding{utf8}
 \onecolumn
 \firstpage{1}
 

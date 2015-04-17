@@ -34,7 +34,10 @@
 \def\helveticabold{\fontfamily{phv}\bfseries\selectfont}
 \def\helveticabolditalic{\fontfamily{phv}\bfseries\itshape\selectfont}
 \usepackage[usenames,dvipsnames]{xcolor}
+%\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+%\usepackage[german]{babel}
+%\usepackage{lmodern}
 
 \newcommand\@ptsize{0}
 
