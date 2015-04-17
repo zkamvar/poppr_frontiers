@@ -185,7 +185,7 @@ trees based off of genetic distance. This algorithm will cluster by creating a
 representative sample per cluster and joining clusters if these representative
 samples are closer than the given threshold.
 
-### *P. infestans* {-}
+## *P. infestans* {-}
 
 *Phytophthora infestans* is the causal agent of potato late blight originating
 from Mexico and spread to Europe in the mid 19th century [@goss2014irish; cooke].
@@ -327,7 +327,7 @@ any genetic distance that can be calculated from it.
 
 ## Clonal identification {-}
 
-### *P. infestans* {-}
+## *P. infestans* {-}
 
 The three algorithms were able to detect 18 multilocus lineages at different
 distances (Fig. 1). Contingency tables between the described multilocus
