@@ -167,6 +167,7 @@ As the data for this would be stored in a genlight object, which stores genetic
 information in bits, the calculations of $\bar{r}_d$ are performed in
 parallelized bit level C code for efficiency [@Jombart_2008].
 
+<!--
  - Clone correction based on genetic distance
     - reduced representation data (GBS)
     - consistent clones with one or two highly variable loci (Cooke example)
@@ -184,7 +185,24 @@ parallelized bit level C code for efficiency [@Jombart_2008].
     - Implementation in StrataG and Hierfstat loosely defined.
     - Solution in S4 classes: strict definition.
     - adopted by larger community
-    
+-->
+
+## Population Strata and Hierarchies {-}
+
+Assessments of population structure through methods such as hierarchical
+$F_{st}$ and AMOVA benefit greatly from multiple levels of population definition
+[@linde2002population; @everhart2014fine]. With clonal organisms, basic practice
+has been to clone-censor data to avoid downward bias in diversity due to
+duplicated genotypes that may or may not represent different samples
+[@milgroom1996recombination]. Data structures for population genetic data mostly
+allow for only one level of hierarchical definition. The impetus was placed on
+the researchers to provide the population hierarchies for every step of the
+analysis. In poppr version 1.1, the hierarchy slot was introduced to allow
+unlimited population hierarchies or stratifications to travel with the data. In
+practice, it is stored as a data frame where each column represents a separate
+hierarchical level. The user could then define the population factor for the
+data by providing a hierarchical formula that would contain one or more levels
+from the hierarchy slot to be combined.
 
 ## Genotype Accumulation Curve {-}
 
@@ -213,7 +231,23 @@ minimum spanning tree to connect groups of nodes with edges of equal weight.
 
 ## Bootstrapping {-}
 
-Calculating genetic distance among samples within populations or subpopulations is crucial for assessing population differentiation with methods such as $F_{st}$, AMOVA, and Mantel tests. Of course, confidence in distance metrics is only related to the confidence of the markers. If a single 
+Calculating genetic distance for among samples and populations is very important
+method for assessing population differentiation through methods such as
+$F_{st}$, AMOVA, and Mantel tests. Confidence in distance metrics is related to
+the confidence in the markers to accurately represent the diversity of the data.
+Especially true with microsatellite markers, a single hyper-diverse locus can
+make a population appear to have more diversity based on genetic distance. Using
+a bootstrapping procedure of randomly sampling loci with replacement when
+calculating a distance matrix gives confidence in hierarchical clustering.
+Because genetic data in a genind object is represented as a matrix with samples
+in rows and alleles in columns, bootstrapping is a non-trivial task as all
+alleles in a single locus need to be sampled together. To remedy this, we have
+created an internal S4 class called "bootgen", which extends the internal "gen"
+class from adegenet. This class can be created from any genind, genclone, or
+genpop object, and allows loci to be sampled with replacement. To further
+facilitate bootstrapping, a function called aboot, which stands for "any boot",
+is introduced that will bootstrap any genclone, genind, or genpop object with
+any genetic distance that can be calculated from it.
 
 ## Additions {-}
 
@@ -268,6 +302,13 @@ res[res == 0] <- "."
 print.xtable(xtable(res, align = rep("c", ncol(res) + 1)), comment = FALSE)
 ```
 
+## Simulations {-}
+
+100 simulations were run. We found that across all methods, detection of
+duplicated samples had $\sim$ 97% true positive fraction and $\sim$ 2% false
+positive fraction indicating that this method is robust to simulated
+populations.
+
 ## Speed {-}
 
 ## Community Acceptance {-}
@@ -285,7 +326,11 @@ implementation in *poppr* has been successfully used in analyses such as
 reconstruction of the *P. ramorum* outbreak in Curry County, OR
 [kamvar2015spatial]. Reticulated networks also allow for the addition of graph
 community detection algorithms such as the infomap algorithm, giving the user
-another tool to detect clonal or population structure [@rosvall2008maps].
+another tool to detect clonal or population structure [@rosvall2008maps]. While
+it is possible to utilize these graph walking algorithms on non-reticulate
+minimum spanning trees, information that would be used by the walkers is not
+present in the graph and nodes that would truly be connected might be defined
+as separate communities.
 
 - loops in graphs allow for analysis of population structure via graph walking algorithms in igraph
 - bootstrapping methods encourage future developers to write distance implementations in common format
