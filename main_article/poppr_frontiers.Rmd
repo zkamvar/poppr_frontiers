@@ -56,8 +56,8 @@ We previously contributed the R package *poppr* specifically addressing issues w
 
 # Introduction {-}
 
-To paraphrase XXX, nothing make sense in the field of plant-microbe interactions
-in the absence of population genetics. Selection and drift act on alleles in a
+To paraphrase Dobzhansky, nothing in the field of plant-microbe interactions makes sense except
+in the light of population genetics. Selection and drift act on alleles in a
 population. Thus, a true understanding of how pathogens evolve and adapt to
 crops and fungicides, can only emerge in the context of population level
 phenomena given the genealogical or demographic history of populations. The
