@@ -57,10 +57,10 @@ We previously contributed the R package *poppr* specifically addressing issues w
 # Introduction {-}
 
 To paraphrase Dobzhansky, nothing in the field of plant-microbe interactions makes sense except
-in the light of population genetics. Selection and drift act on alleles in a
+in the light of population genetics. Genetic forces such as selection and drift act on alleles in a
 population. Thus, a true understanding of how pathogens evolve and adapt to
 crops and fungicides, can only emerge in the context of population level
-phenomena given the genealogical or demographic history of populations. The
+phenomena given the genealogical history of populations [@Mcdonald2002; @grunwald2011evolution]. The
 field of population genetics, in the era of whole genome resequencing, provides
 unprecedented power to describe the evolutionary history and population
 processes that drive coevolution between pathogens and hosts. This powerful
