@@ -1,6 +1,6 @@
 ---
-title: "Efficient tools for analyzing genome-wide data of clonal organisms"
-runtitle: "Efficient clones"
+title: "Tools for detection and analysis of clonal genotypes in genome-wide SNP data"
+runtitle: "Tool time"
 author:
   - name: Zhian N. Kamvar
     affiliation: '1'
@@ -323,9 +323,12 @@ res[res == 0] <- "."
 print.xtable(xtable(res, align = rep("c", ncol(res) + 1)), comment = FALSE)
 ```
 
-### Simulations {-}
+## Simulations {-}
 
-
+100 simulations were run. We found that across all methods, detection of
+duplicated samples had $\sim$ 97% true positive fraction and $\sim$ 2% false
+positive fraction indicating that this method is robust to simulated
+populations.
 
 ## Speed {-}
 
