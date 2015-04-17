@@ -57,10 +57,10 @@ We previously contributed the R package *poppr* specifically addressing issues w
 # Introduction {-}
 
 To paraphrase Dobzhansky, nothing in the field of plant-microbe interactions makes sense except
-in the light of population genetics. Genetic forces such as selection and drift act on alleles in a
+in the light of population genetics [@dobzhansky2013nothing]. Genetic forces such as selection and drift act on alleles in a
 population. Thus, a true understanding of how pathogens evolve and adapt to
 crops and fungicides, can only emerge in the context of population level
-phenomena given the genealogical history of populations [@Mcdonald2002; @grunwald2011evolution]. The
+phenomena given the genealogical history of populations [@Mcdonald2002; @grunwald2011evolution; @milgroom1989population]. The
 field of population genetics, in the era of whole genome resequencing, provides
 unprecedented power to describe the evolutionary history and population
 processes that drive coevolution between pathogens and hosts. This powerful
@@ -71,14 +71,14 @@ fungicide rotations that minimize emergence of resistance.
 Most computational tools for population genetics are based on concepts developed
 for sexual model organisms. Populations that reproduce clonally or are polyploid
 are thus difficult to characterize using classical population genetic tools
-because theoretical assumptions underlying the theory are violated. Yet, most
+because theoretical assumptions underlying the theory are violated. Yet, many
 plant pathogen populations are at least partially clonal if not completely
-clonal.  Thus, development of tools for analysis of clonal or polyploid
+clonal [@milgroom1996recombination; @anderson1995clonality].  Thus, development of tools for analysis of clonal or polyploid
 populations is needed.
 
 Genotyping by sequencing and whole genome resequencing provide the unprecedented
 ability to identify >1,000 single nucleotide polymorphisms (SNPs) in
-populations. Availability of these large SNP data sets provides new challenges
+populations [@elshire2011robust; @luikart2003power; @davey2011genome]. Availability of these large SNP data sets provides new challenges
 for data analysis. For example, it is not clear what a clone is in large SNP
 data where the chance of observing variation at a given SNP locus within
 independent samples of the same clone are substantial enough that novel tools
@@ -92,7 +92,7 @@ resequencing. Are two individuals that are identical for all observed SNPs
 different if one additional locus has  missing data?
 
 Another major issues with large SNP data is computational efficiency. Analyses
-that resample a data set, are iterative of rely on MCMC are computationally slow
+that resample a data set or rely on MCMC are computationally slow
 for large data and thus are preferentially implemented in a low level language
 such as C rather than in interpreted languages such as R.
 
