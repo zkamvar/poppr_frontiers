@@ -69,7 +69,7 @@
 
 
 
- \def\Authors{
+  \def\Authors{
   Zhian N. Kamvar\,\textsuperscript{1},
   Jonah C. Brooks\,\textsuperscript{2},
   Niklaus J. Grunwald\,\textsuperscript{1,3*}}
@@ -89,12 +89,10 @@
 
 
 \begin{document}
-% \inputencoding{utf8}
 \onecolumn
 \firstpage{1}
 
-\title[Tool time]{Tools for detection and analysis of clonal genotypes in genome-wide SNP
-data}
+\title[Novel tools for population genetics]{Novel tools for analyzing genome-wide data of clonal populations}
 \author[\firstAuthorLast]{\Authors}
 \address{}
 \correspondance{}
@@ -105,21 +103,11 @@ data}
 
 \begin{abstract}
 
-Understanding the dynamics of plant pathogen populations is imperative to
-understanding plant microbe interactions, adaptation of pathogens to hosts,
-reactive breeding and deployment of R genes and design of informed management
-strategies. With the advent of high throughput sequencing technologies,
-obtaining genomic sequences for representative populations has been easier than
-ever before. This in combination with a move towards more reproducible research
-has led researchers to move away from traditional stand alone programs for
-population genetic analysis to modular programs such as R, which has a vibrant
-community of contributers submitting packages tailored for several analyses,
-including population genetics. The R package poppr was released to specifically
-address issues surrounding analysis of clonal populations and has recently
-implemented several tools that better facilitate the analysis of clonal
-populations across different levels of hierarchies, implementing multilocus
-genotype definitions and the index of association for reduced representation
-genomic data, and modular bootstrapping of any genetic distance.
+To gain a detailed understanding of plant microbe interactions, adaptation of pathogens to hosts, develop reactive plant breeding programs, and to deploy R genes effectively, knowledge of the population dynamics and evolutionary history of populations is crucial. With the advent of high throughput sequencing technologies, obtaining genomic sequences for representative populations has become easier than ever before. A move towards open, reproducible science 
+has provided impetus for developing population genetic analysis tools in R. 
+We previously contributed the R package *poppr* specifically addressing issues with analysis of clonal populations. In this paper we provide several significant extensions to *poppr* with a focus on large, genome wide SNP data. Specifically,  we provide analyses across any level of hierarchies, a new function to define clone boundaries we call *clone\_caller* allowing for inspection and definition of what is a clonal lineage, and the index of association for reduced representation genomic data, and modular bootstrapping of any genetic distance.
+
+> I think it would be good to call our new MLG boundary algorithm something catchy like **clone caller** or **cloneR** or **MLG boundary** or **MLG SNPer**. Can't put my finger on it, but it is there somewhere hiding in plain sight ... **cloneBoundaryCaller**, **cloneCollapser**
 
 \tiny
  \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, open source}
@@ -128,10 +116,50 @@ genomic data, and modular bootstrapping of any genetic distance.
 \section*{Introduction}\label{introduction}
 \addcontentsline{toc}{section}{Introduction}
 
+To paraphrase XXX, nothing make sense in the field of plant-microbe
+interactions in the absence of population genetics. Selection and drift
+act on alleles in a population. Thus, a true understanding of how
+pathogens evolve and adapt to crops and fungicides, can only emerge in
+the context of population level phenomena given the genealogical or
+demographic history of populations. The field of population genetics, in
+the era of whole genome resequencing, provides unprecedented power to
+describe the evolutionary history and population processes that drive
+coevolution between pathogens and hosts. This powerful field thus
+critically enables effective deployment of R genes, design of pathogen
+informed plant resistance breeding programs, and implementation of
+fungicide rotations that minimize emergence of resistance.
+
 Most computational tools for population genetics are based on concepts
 developed for sexual model organisms. Populations that reproduce
 clonally or are polyploid are thus difficult to characterize using
-classical population genetic tools.
+classical population genetic tools because theoretical assumptions
+underlying the theory are violated. Yet, most plant pathogen populations
+are at least partially clonal if not completely clonal. Thus,
+development of tools for analysis of clonal or polyploid populations is
+needed.
+
+Genotyping by sequencing and whole genome resequencing provide the
+unprecedented ability to identify \textgreater{}1,000 single nucleotide
+polymorphisms (SNPs) in populations. Availability of these large SNP
+data sets provides new challenges for data analysis. For example, it is
+not clear what a clone is in large SNP data where the chance of
+observing variation at a given SNP locus within independent samples of
+the same clone are substantial enough that novel tools for definition of
+clone boundaries are required. With traditional marker data (e.g., SSR,
+AFLP) a clone was typically defined as a unique multilocus genotype
+(MLG). However, with large SNP data a measure of genetic distance is
+required to define the boundary of an MLG (e.g., clone) or the
+boundaries of a clonal lineage. Definition of a clone is further
+complicated by the presence of missing data that is typical for reduced
+representation libraries used in GBS or genome resequencing. Are two
+individuals that are identical for all observed SNPs different if one
+additional locus has missing data?
+
+Another major issues with large SNP data is computational efficiency.
+Analyses that resample a data set, are iterative of rely on MCMC are
+computationally slow for large data and thus are preferentially
+implemented in a low level language such as C rather than in interpreted
+languages such as R.
 
 The research community using the R statistical and computing language
 (RCoreTeam, 2013) has developed a plethora of new resources for
@@ -143,10 +171,20 @@ conduct a hierarchical analysis across unlimited hierarchies, test for
 linkage association, graph minimum spanning networks or provide
 bootstrap support for Bruvo's distance in resulting trees. In its first
 iteration, \emph{poppr} was appropriate for traditional markers systems,
-but not ideally suited to population genomic data resulting from high
-throughput sequencing methods as increases in the number of markers
-decreased the ability to distinguish clonal genotypes due to higher
-chance to detect somatic mutations or genotyping error.
+but not well suited to population genomic data resulting from high
+throughput sequencing methods. Here, we introduce \emph{poppr 1.1} which
+provides a significant update to \emph{poppr} including novel tools for
+analysis of clonal populations specifically for large SNP data.
+Significant novel tools include functions for calculating clone
+boundaries and collapsing individuals into user-specified clones based
+on genetic distance, sliding window analyses, genotype accumulation
+curves, reticulations in minimum spanning networks, and XXX.
+
+\begin{quote}
+Multiple references get a semi-colon (Wilson et al., 2014, 2014).
+References that are simply mentioned, such as Wilson et al. (2014), are
+cited without square braces.
+\end{quote}
 
 \section*{Materials and Methods}\label{materials-and-methods}
 \addcontentsline{toc}{section}{Materials and Methods}
@@ -200,8 +238,7 @@ genetic distance. This algorithm will cluster by creating a
 representative sample per cluster and joining clusters if these
 representative samples are closer than the given threshold.
 
-\subsubsection*{\texorpdfstring{\emph{P.
-infestans}}{P. infestans}}\label{p.-infestans}
+\subsubsection*{\emph{P. infestans}}\label{p.-infestans}
 \addcontentsline{toc}{subsubsection}{\emph{P. infestans}}
 
 \emph{Phytophthora infestans} is the causal agent of potato late blight
@@ -293,15 +330,15 @@ observed MLGs.
 \subsection*{Minimum Spanning Networks}\label{minimum-spanning-networks}
 \addcontentsline{toc}{subsection}{Minimum Spanning Networks}
 
-Poppr introduced minimum spanning networks in it's original iteration
-that were based off of igraph's function minimum.spanning.tree. This
-algorithm would produce a minimum spanning tree, but with no
-reticulations, which is common and expected of clonal organisms. In
-other minimum spanning network programs, reticulation is obtained by
-calculating the minimum spanning tree several times and returning the
-set of all edges included in the trees. Due to the way igraph has
-implemented Prim's algorithm, it is not possible to utilize this
-strategy, thus we have implemented a C function to walk through a
+\emph{Poppr} introduced minimum spanning networks in it's original
+iteration that were based off of igraph's function
+minimum.spanning.tree. This algorithm would produce a minimum spanning
+tree, but with no reticulations, which is common and expected of clonal
+organisms. In other minimum spanning network programs, reticulation is
+obtained by calculating the minimum spanning tree several times and
+returning the set of all edges included in the trees. Due to the way
+igraph has implemented Prim's algorithm, it is not possible to utilize
+this strategy, thus we have implemented a C function to walk through a
 distance matrix and minimum spanning tree to connect groups of nodes
 with edges of equal weight.
 
@@ -356,8 +393,7 @@ calculated from it.
 \subsection*{Clonal identification}\label{clonal-identification}
 \addcontentsline{toc}{subsection}{Clonal identification}
 
-\subsubsection*{\texorpdfstring{\emph{P.
-infestans}}{P. infestans}}\label{p.-infestans-1}
+\subsubsection*{\emph{P. infestans}}\label{p.-infestans-1}
 \addcontentsline{toc}{subsubsection}{\emph{P. infestans}}
 
 The three algorithms were able to detect 18 multilocus lineages at
@@ -418,6 +454,12 @@ simulated populations.
 \subsection*{Community Acceptance}\label{community-acceptance}
 \addcontentsline{toc}{subsection}{Community Acceptance}
 
+\begin{quote}
+This section is not appropraite for a results section. Should we mention
+that poppr has been accepted in the intro? In fat, we can `brag' that
+some poppr functions have now been ported into adegenet.
+\end{quote}
+
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
@@ -429,18 +471,18 @@ simulated populations.
 \section*{Discussion}\label{discussion}
 \addcontentsline{toc}{section}{Discussion}
 
-Reticulate minimum spanning networks are very important for extremely
-clonal organisms where a minimum spanning tree would become a chain. The
-current implementation in poppr has been successfully used in analyses
-such as reconstruction of the \emph{P. ramorum} outbreak in Curry
-County, OR {[}kamvar2015spatial{]}. Reticulated networks also allow for
-the addition of graph community detection algorithms such as the infomap
-algorithm, giving the user another tool to detect clonal or population
-structure (Rosvall and Bergstrom, 2008). While it is possible to utilize
-these graph walking algorithms on non-reticulate minimum spanning trees,
-information that would be used by the walkers is not present in the
-graph and nodes that would truly be connected might be defined as
-separate communities.
+Reticulate minimum spanning networks are very important for
+\emph{extremely???} clonal organisms where a minimum spanning tree would
+become a chain. The current implementation in \emph{poppr} has been
+successfully used in analyses such as reconstruction of the \emph{P.
+ramorum} outbreak in Curry County, OR {[}kamvar2015spatial{]}.
+Reticulated networks also allow for the addition of graph community
+detection algorithms such as the infomap algorithm, giving the user
+another tool to detect clonal or population structure (Rosvall and
+Bergstrom, 2008). While it is possible to utilize these graph walking
+algorithms on non-reticulate minimum spanning trees, information that
+would be used by the walkers is not present in the graph and nodes that
+would truly be connected might be defined as separate communities.
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
@@ -529,6 +571,11 @@ Computing. Available at: \url{http://www.R-project.org/}.
 Rosvall, M., and Bergstrom, C. T. (2008). Maps of random walks on
 complex networks reveal community structure. \emph{Proceedings of the
 National Academy of Sciences} 105, 1118--1123.
+
+Wilson, G., Aruliah, D., Brown, C. T., Hong, N. P. C., Davis, M., Guy,
+R. T., Haddock, S. H., Huff, K. D., Mitchell, I. M., Plumbley, M. D., et
+al. (2014). Best practices for scientific computing. \emph{PLoS biology}
+12, e1001745.
 
 
 \end{document}
