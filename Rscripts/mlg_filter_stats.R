@@ -63,12 +63,35 @@ print.table(tab, zero.print = ".") # contingency table for zero tolerance MLGs.
 #' This will create 20 populations with 20 samples and 10k SNPs. Each population
 #' will have:
 #' 
-#'  - n = 20
+#'  - n = 40
 #'  - 10,000 snps
 #'  - an error rate of 0.1
+#'  - 21% missing data
+#'  - 20 generations of mating
+#' 
+#' It is important that I define what "mating" is here. When I talk about 
+#' "mating", I have a function that will sample with replacement parental pairs.
+#' These pairs will first have a crossover event before meiosis and then single 
+#' chromosomes are randomly chosen from each parent and then randomly mutated to
+#' create the new offspring. Only one offspring per parent pair is created.
+#' 
+#' The functions that perform this are :
+#' 
+#'  - `random_mate_gen()`
+#'      - `random_mate()`
+#'          - `mate()`
+#'              - `crossover()`
+#'          - `pop_mutator()`
 #'  
-#' In addition, half of these populations will have undergone one generation of
-#' clonal reproduction. 
+#' This is to account for the fact that when glSim simulates populations, the
+#' terminal branches are EXTREMELY long. This scheme seems to make the branches
+#' a bit more realistic.
+#' 
+#' In addition, half of these populations will have undergone one generation of 
+#' clonal reproduction. Each sample has a unique 10 letter identification.
+#' Samples from clonal populations will have a number appended to the end. We
+#' will use the 10 letter identifier to detect clones.
+#' 
 #' 
 set.seed(20150415)
 x <- lapply(1:10, getSims, n = 40, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, na.perc = 0.21, clone = TRUE, n.cores = 4, mate_gen = 20)
@@ -76,17 +99,28 @@ y <- lapply(1:10, getSims, n = 40, snps = 1e4, strucrat = 1, ploidy = 2, err = 0
 # x <- getSims(n = 200, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = TRUE, n.cores = 4)
 # y <- getSims(n = 200, snps = 1e4, strucrat = 1, ploidy = 2, err = 0.1, clone = FALSE, n.cores = 4)
 #'
+#' The samples are then pooled.
+#' 
 #' For analysis, $\frac{1}{5}$th of the pooled samples will be kept.
+#'
+#' fstats gives the statistics from mlg.filter when the threshold is set to the
+#' maximum distance possible. Finding the largest difference between two
+#' threshold values in the upper 50% of the data serves as a rough prediction of
+#' the threshold at which clones should be collapsed.
 z <- do.call("rbind", c(x, y))
 z <- z[sample(nInd(z), nInd(z)/5)]
-trueclones <- duplicated(substr(indNames(z), start = 1, stop = 10))
-fstats <- filter_stats(z, bitwise.dist, plot = TRUE)
-# the_threshold <- fstats$average$thresholds[sum(trueclones)] + .Machine$double.eps^0.5
-the_threshold <- threshold_predictor(fstats$average$thresholds)
+
+trueclones    <- duplicated(substr(indNames(z), start = 1, stop = 10))
+fstats        <- filter_stats(z, bitwise.dist, plot = TRUE)
+(the_threshold <- threshold_predictor(fstats$average$thresholds))
+
 abline(v = the_threshold, lty = 2)
-thresh     <- duplicated(mlg.filter(z, distance = bitwise.dist, 
-                                    threshold = the_threshold, 
-                                    algo = "a"))
+#' 
+#' This predicted threshold is then used to compare the defined clones to the
+#' true clones as presented in a contingency table.
+thresh <- duplicated(mlg.filter(z, distance = bitwise.dist, 
+                                threshold = the_threshold, 
+                                algorithm = "a"))
 (threshtable <- table(thresh, trueclones))
 #' 
 #' The tabulation is a power analysis of how many true and false positives there
@@ -105,8 +139,13 @@ for (i in clones){
 }
 plot.phylo(the_tree, edge.color = edgecols, adj = 0, label.offset = 0.001)
 axisPhylo(1)
-title("Random sequences with 1000 SNPs and a 0.21 error rate")
-#'
+title("Random sequences with 10,000 SNPs and a 0.1 error rate")
+#' 
+#' #### Making lots of simulations
+#' 
+#' For these, we will simulate 1,000 markers for populations of 20 samples
+#' each. 
+#' 
 #+ 100reps, cache = TRUE, fig.show = "animate"
 nreps <- 100
 resarray <- array(data = integer(nreps*4), dim = c(2, 2, nreps), 
