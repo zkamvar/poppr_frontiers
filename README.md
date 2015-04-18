@@ -1,11 +1,13 @@
 # Frontiers Article for the updated poppr
 
 
-# INSTRUCTIONS FOR SETUP
+# INSTRUCTIONS FOR SETUP (**updated**)
 
 1. Open `poppr_frontiers.Rproj` in Rstudio.
-2. install the R packages **devtools** and **rmarkdown**
-3. run `devtools::install("FrontiersTemplate")` (This is based off of the [rticles](https://github.com/rstudio/rticles) package).
+2. Run `make boot`. This will do the following:
+    i. Install dependent packages.
+    ii. Install the version of poppr necessary for this.
+    iii. install the FrontiersTemplate.
 4. Knit the file `main_article/poppr_frontiers.Rmd`
 
 # Files and Directories
