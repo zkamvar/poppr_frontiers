@@ -134,6 +134,7 @@ References that are simply mentioned, such as @wilson2014best, are cited without
 square braces.
 
 -->
+
 # Materials and Methods {-}
 
 In *poppr* version 1.1, a new S4 object was defined to expand the genind object
@@ -179,16 +180,13 @@ trees based off of genetic distance. This algorithm will cluster by creating a
 representative sample per cluster and joining clusters if these representative
 samples are closer than the given threshold.
 
-## *P. infestans* {-}
+## Demonstration data: *P. infestans* {-}
 
-*Phytophthora infestans* is the causal agent of potato late blight originating
-from Mexico and spread to Europe in the mid 19th century [@goss2014irish; cooke].
-*P. infestans* reproduces both clonally and sexually. The clonal lineages of *P.
-infestans* have been formally defined into 18 separate clonal lineages using
-various molecular methods. We utilize these data to show how the `mlg.filter`
+We utilize these data from *Phytophthora infestans* to show how the `mlg.filter`
 function collapses multilocus genotypes with Bruvo's distance assuming a genome
-addition model [@bruvo2004simple]. 
-
+addition model [@bruvo2004simple].*P. infestans* is the causal agent of potato late blight originating from Mexico and spread to Europe in the mid 19th century [@goss2014irish; cooke].
+*P. infestans* reproduces both clonally and sexually. The clonal lineages of *P. infestans* have been formally defined into 18 separate clonal lineages using
+various molecular methods.  
 
 ## Index of association {-}
 
