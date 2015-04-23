@@ -120,7 +120,7 @@ association, graph minimum spanning networks or provide bootstrap support for
 Bruvo's distance in resulting trees. In its first iteration, *poppr* was
 appropriate for traditional markers systems, but not well suited to population
 genomic data resulting from high throughput sequencing methods. Here, we
-introduce *poppr 1.1* which provides a significant update to *poppr* including
+introduce *poppr 2.0* which provides a significant update to *poppr* including
 novel tools for analysis of clonal populations specifically for large SNP data.
 Significant novel tools include functions for calculating clone boundaries and
 collapsing individuals into user-specified clones based on genetic distance,
