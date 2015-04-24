@@ -4,7 +4,7 @@ inst_deps:
 	R --slave -e 'install.packages(c("adegenet", "ape", "phangorn", "pegas", "knitr", "rmarkdown", "animation", "devtools"), repos = "http://cran.at.r-project.org")'; \
 
 inst_poppr:
-	R --slave -e "install.packages('poppr_current.tar.gz', type = 'source', repos = NULL)"; \
+	R --slave -e "devtools::install_github('grunwaldlab/poppr')"; \
 
 build_template:
 	R --slave -e 'devtools::install("FrontiersTemplate/")'

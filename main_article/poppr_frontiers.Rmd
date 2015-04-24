@@ -184,9 +184,11 @@ samples are closer than the given threshold.
 
 We utilize these data from *Phytophthora infestans* to show how the `mlg.filter`
 function collapses multilocus genotypes with Bruvo's distance assuming a genome
-addition model [@bruvo2004simple].*P. infestans* is the causal agent of potato late blight originating from Mexico and spread to Europe in the mid 19th century [@goss2014irish; cooke].
-*P. infestans* reproduces both clonally and sexually. The clonal lineages of *P. infestans* have been formally defined into 18 separate clonal lineages using
-various molecular methods.  
+addition model [@bruvo2004simple].*P. infestans* is the causal agent of potato
+late blight originating from Mexico and spread to Europe in the mid 19th century
+[@goss2014irish; cooke]. *P. infestans* reproduces both clonally and sexually.
+The clonal lineages of *P. infestans* have been formally defined into 18
+separate clonal lineages using various molecular methods.
 
 ## Index of association {-}
 
@@ -322,7 +324,7 @@ any genetic distance that can be calculated from it.
 ## *P. infestans* {-}
 
 The three algorithms were able to detect 18 multilocus lineages at different
-distances (Fig. 1). Contingency tables between the described multilocus
+distance thresholds (Fig. 1). Contingency tables between the described multilocus
 genotypes and the genotypes defined by distance show that most of the 18
 lineages were resolved, except for US-8, which is polytomic (Table 1).
 
@@ -375,6 +377,8 @@ populations.
 - hierarchical methods have been ported to adegenet
 
 # Discussion {-}
+
+
 
 Reticulate minimum spanning networks are very important for *extremely???* clonal
 organisms where a minimum spanning tree would become a chain. The current
