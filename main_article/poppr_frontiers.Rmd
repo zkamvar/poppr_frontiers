@@ -101,14 +101,14 @@ defined as a unique multilocus genotype (MLG). However, with large SNP data a
 measure of genetic distance is required to define the boundary of an MLG (e.g.,
 clone) or the boundaries of a clonal lineage. Definition of a clone is further
 complicated by the presence of missing data that is typical for reduced
-representation libraries used in GBS or genome resequencing. Are two individuals
-that are identical for all observed SNPs different if one additional locus has
-missing data?
+representation libraries used in GBS or genome re-sequencing. Are two
+individuals that are identical for all observed SNPs different if one additional
+locus has missing data?
 
 Another major issues with large SNP data is computational efficiency. Analyses
-that resample a data set or rely on MCMC are computationally slow
-for large data and thus are preferentially implemented in a low level language
-such as C rather than in interpreted languages such as R.
+that resample a data set or rely on MCMC are computationally slow for large data
+and thus are preferentially implemented in a low level language such as C rather
+than in interpreted languages such as R.
 
 The research community using the R statistical and computing language [@R] has
 developed a plethora of new resources for population genetic analysis [@pegas;
@@ -117,15 +117,29 @@ developed for analysis of clonal populations [@kamvar2014poppr]. *Poppr*
 previously introduced several novel features including the ability to conduct a
 hierarchical analysis across unlimited hierarchies, test for linkage
 association, graph minimum spanning networks or provide bootstrap support for
-Bruvo's distance in resulting trees. In its first iteration, *poppr* was
-appropriate for traditional markers systems, but not well suited to population
-genomic data resulting from high throughput sequencing methods. Here, we
-introduce *poppr 2.0* which provides a significant update to *poppr* including
-novel tools for analysis of clonal populations specifically for large SNP data.
-Significant novel tools include functions for calculating clone boundaries and
-collapsing individuals into user-specified clones based on genetic distance,
-sliding window analyses, genotype accumulation curves, reticulations in minimum
-spanning networks, and XXX.
+Bruvo's distance in resulting trees. It was well received by the community,
+garnering 14 citations in its first year of publication.
+
+In version 1.1, to address difficulties with handling hierarchical and
+mutlilocus genotypic metadata, a new S4 object called "genclone" was defined to
+expand the genind object of *adegenet*. The genclone object formalized the
+definitions of multilocus genotypes and population hierarchies by adding two
+slots called mlg and hierarchy that carried a numeric vector and a data frame,
+respectively. These new slots allow for increased efficiency and ease of use by
+allowing these metadata to travel with the genetic data. The addition of the
+population hierarchies has proved to be advantageous enough that they have
+recently been adopted into the more central adegenet package [@Jombart_2008].
+
+In version 1, *poppr* was appropriate for traditional markers systems, but not
+well suited to population genomic data resulting from high throughput sequencing
+methods. The raw size of these data made it difficult to conduct traditional
+analyses. Here, we introduce *poppr 2.0*, which provides a significant update to
+*poppr* including novel tools for analysis of clonal populations specifically
+for large SNP data. Significant novel tools include functions for calculating
+clone boundaries and collapsing individuals into user-specified clones based on
+genetic distance, sliding window analyses, genotype accumulation curves,
+reticulations in minimum spanning networks, and bootstrapping for any genetic
+distance.
 
 <!--
 
