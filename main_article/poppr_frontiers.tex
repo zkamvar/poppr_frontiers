@@ -165,7 +165,7 @@ However, with large SNP data a measure of genetic distance is required
 to define the boundary of an MLG (e.g., clone) or the boundaries of a
 clonal lineage. Definition of a clone is further complicated by the
 presence of missing data that is typical for reduced representation
-libraries used in GBS or genome resequencing. Are two individuals that
+libraries used in GBS or genome re-sequencing. Are two individuals that
 are identical for all observed SNPs different if one additional locus
 has missing data?
 
@@ -182,16 +182,32 @@ analysis of clonal populations (Kamvar et al., 2014). \emph{Poppr}
 previously introduced several novel features including the ability to
 conduct a hierarchical analysis across unlimited hierarchies, test for
 linkage association, graph minimum spanning networks or provide
-bootstrap support for Bruvo's distance in resulting trees. In its first
-iteration, \emph{poppr} was appropriate for traditional markers systems,
-but not well suited to population genomic data resulting from high
-throughput sequencing methods. Here, we introduce \emph{poppr 2.0} which
-provides a significant update to \emph{poppr} including novel tools for
-analysis of clonal populations specifically for large SNP data.
-Significant novel tools include functions for calculating clone
-boundaries and collapsing individuals into user-specified clones based
-on genetic distance, sliding window analyses, genotype accumulation
-curves, reticulations in minimum spanning networks, and XXX.
+bootstrap support for Bruvo's distance in resulting trees. It was well
+received by the community, garnering 14 citations in its first year of
+publication.
+
+In version 1.1, to address difficulties with handling hierarchical and
+mutlilocus genotypic metadata, a new S4 object called ``genclone'' was
+defined to expand the genind object of \emph{adegenet}. The genclone
+object formalized the definitions of multilocus genotypes and population
+hierarchies by adding two slots called mlg and hierarchy that carried a
+numeric vector and a data frame, respectively. These new slots allow for
+increased efficiency and ease of use by allowing these metadata to
+travel with the genetic data. The addition of the population hierarchies
+has proved to be advantageous enough that they have recently been
+adopted into the more central adegenet package (Jombart, 2008).
+
+In version 1, \emph{poppr} was appropriate for traditional markers
+systems, but not well suited to population genomic data resulting from
+high throughput sequencing methods. The raw size of these data made it
+difficult to conduct traditional analyses. Here, we introduce
+\emph{poppr 2.0}, which provides a significant update to \emph{poppr}
+including novel tools for analysis of clonal populations specifically
+for large SNP data. Significant novel tools include functions for
+calculating clone boundaries and collapsing individuals into
+user-specified clones based on genetic distance, sliding window
+analyses, genotype accumulation curves, reticulations in minimum
+spanning networks, and bootstrapping for any genetic distance.
 
 \section*{Materials and Methods}\label{materials-and-methods}
 \addcontentsline{toc}{section}{Materials and Methods}
@@ -307,7 +323,7 @@ Hierarchies}\label{population-strata-and-hierarchies}
 
 Assessments of population structure through methods such as hierarchical
 \(F_{st}\) and AMOVA benefit greatly from multiple levels of population
-definition (Linde et al., 2002; Everhart and Scherm, 2014). With clonal
+definition (Linde et al., 2002; Everhart and Scherm, 2015). With clonal
 organisms, basic practice has been to clone-censor data to avoid
 downward bias in diversity due to duplicated genotypes that may or may
 not represent different samples (Milgroom, 1996). Data structures for
@@ -427,26 +443,26 @@ specifications.
 \centering
 \begin{tabular}{ccccccccccccccccccc}
   \hline
- & 1 & 3 & 5 & 8 & 9 & 10 & 12 & 13 & 15 & 17 & 19 & 20 & 23 & 24 & 25 & 27 & 28 & 29 \\ 
+ & 3 & 4 & 5 & 6 & 8 & 10 & 12 & 15 & 16 & 17 & 18 & 20 & 21 & 22 & 24 & 25 & 27 & 28 \\ 
   \hline
-B & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . \\ 
-  C & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  EU-13 & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  EU-4 & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  EU-8 & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . \\ 
-  EU-5 & . & . & . & . & . & . & 2 & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-8 & . & . & . & . & . & . & . & . & . & . & . & 1 & . & 2 & 1 & . & . & . \\ 
-  D.1 & 1 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  D.2 & 1 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-11 & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . & . & . & . \\ 
-  US-12 & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-14 & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . \\ 
-  US-17 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . \\ 
-  US-20 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 & . & . \\ 
-  US-21 & . & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . & . & . \\ 
-  US-22 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 \\ 
-  US-23 & . & . & . & 3 & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-24 & . & . & . & . & . & . & . & . & . & . & . & . & 3 & . & . & . & . & . \\ 
+B & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . \\ 
+  C & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . \\ 
+  D.1 & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . \\ 
+  D.2 & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . \\ 
+  EU-13 & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . \\ 
+  EU-4 & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . \\ 
+  EU-5 & . & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . & . & . \\ 
+  EU-8 & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-11 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 \\ 
+  US-12 & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-14 & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-17 & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . \\ 
+  US-20 & 2 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-21 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 & . \\ 
+  US-22 & . & . & . & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . \\ 
+  US-23 & . & . & . & . & . & . & . & 3 & . & . & . & . & . & . & . & . & . & . \\ 
+  US-24 & . & . & . & . & 3 & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-8 & . & . & 1 & 1 & . & 2 & . & . & . & . & . & . & . & . & . & . & . & . \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -545,13 +561,13 @@ Buckler, E. S., and Mitchell, S. E. (2011). A robust, simple
 genotyping-by-sequencing (gBS) approach for high diversity species.
 \emph{PloS one} 6, e19379.
 
-Everhart, S., and Scherm, H. (2014). Fine-scale genetic structure of
-monilinia fructicola during brown rot epidemics within individual peach
-tree canopies. \emph{Phytopathology}.
+Everhart, S., and Scherm, H. (2015). Fine-scale genetic structure of
+\emph{Monilinia fructicola} during brown rot epidemics within individual
+peach tree canopies. \emph{Phytopathology} 105, 542--549.
 
 Goss, E. M., Tabima, J. F., Cooke, D. E., Restrepo, S., Fry, W. E.,
 Forbes, G. A., Fieland, V. J., Cardenas, M., and Gr{ü}nwald, N. J.
-(2014). The irish potato famine pathogen phytophthora infestans
+(2014). The irish potato famine pathogen \emph{Phytophthora infestans}
 originated in central mexico rather than the andes. \emph{Proceedings of
 the National Academy of Sciences} 111, 8791--8796.
 
