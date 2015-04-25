@@ -151,13 +151,6 @@ square braces.
 
 # Materials and Methods {-}
 
-In *poppr* version 1.1, a new S4 object was defined to expand the genind object
-of *adegenet*. The genclone object formalized the definitions of multilocus
-genotypes and population hierarchies by adding two slots called mlg and
-hierarchy that carried a numeric vector and a data frame, respectively. These
-new slots allow for increased efficiency and ease of use by allowing these
-metadata to travel with the genetic data.
-
 ## Clone correction {-}
 
 As highlighted in previous work, clone correction is an important part of
@@ -198,11 +191,25 @@ samples are closer than the given threshold.
 
 We utilize these data from *Phytophthora infestans* to show how the `mlg.filter`
 function collapses multilocus genotypes with Bruvo's distance assuming a genome
-addition model [@bruvo2004simple].*P. infestans* is the causal agent of potato
+addition model [@bruvo2004simple]. *P. infestans* is the causal agent of potato
 late blight originating from Mexico and spread to Europe in the mid 19th century
 [@goss2014irish; cooke]. *P. infestans* reproduces both clonally and sexually.
 The clonal lineages of *P. infestans* have been formally defined into 18
-separate clonal lineages using various molecular methods.
+separate clonal lineages using a combination of various molecular methods
+including AFLP and microsatellite markers [cooke]. For these data, we used
+`mlg.filter` to detect all of the distance thresholds at which 18 multilocus
+lineages would be resolved. We the used these thresholds to define multilocus
+lineages and create contingency tables and dendrograms to determine how well the
+multilocus lineages were detected.
+
+## Simulated data {-}
+
+To detect clonal lineages utilizing genomic data, we utilized simulated data
+constructed using the `glSim` function in adegenet [@jombart2011adegenet]. Since
+this function would simulate panmictic populations with no error in genotype 
+calls, we wrote custom functions to randomly insert errors into the sequences
+given a probability. Clonality was simulated by randomly sampling genotypes with
+replacement before error and missing data generation. 
 
 ## Index of association {-}
 
@@ -335,7 +342,7 @@ any genetic distance that can be calculated from it.
 
 ## Clonal identification {-}
 
-## *P. infestans* {-}
+## Filtering *P. infestans* MLGs {-}
 
 The three algorithms were able to detect 18 multilocus lineages at different
 distance thresholds (Fig. 1). Contingency tables between the described multilocus
@@ -383,15 +390,7 @@ populations.
 
 ## Speed {-}
 
-## Community Acceptance {-}
-
-> This section is not appropraite for a results section. Should we mention that poppr has been accepted in the intro? In fat, we can 'brag' that some poppr functions have now been ported into adegenet.
-
-- articles that have cited poppr
-- hierarchical methods have been ported to adegenet
-
 # Discussion {-}
-
 
 
 Reticulate minimum spanning networks are very important for *extremely???* clonal
