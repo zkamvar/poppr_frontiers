@@ -159,11 +159,13 @@ Sys.time()
 
 for (i in 1:nreps){
   set.seed(i) # setting seed for accuracy.
-  snps <- rpois(1, 1e3)
-  samp1 <- lapply(1:10, getSims, n = 20, snps = snps, strucrat = 1, ploidy = 2, 
-                  err = 0.05, na.perc = 0.21, clone = TRUE, n.cores = 4)
-  samp2 <- lapply(1:10, getSims, n = 20, snps = snps, strucrat = 1, ploidy = 2, 
-                  err = 0.05, na.perc = 0.21, clone = FALSE, n.cores = 4)
+  snps <- rpois(1, 1e4)
+  samp1 <- getSims(n = 200, snps = snps, strucrat = 1, ploidy = 2, mate_gen = 10,
+                   err = 0.05, na.perc = 0.21, clone = TRUE, n.cores = 4,
+                   k = 10, pop.freq = rep(0.1, 10))
+  samp2 <- getSims(n = 200, snps = snps, strucrat = 1, ploidy = 2, mate_gen = 10,
+                  err = 0.05, na.perc = 0.21, clone = FALSE, n.cores = 4,
+                  k = 10, pop.freq = rep(0.1, 10))
   samp <- do.call("rbind", c(samp1, samp2))
   samp@ploidy <- rep(2L, nInd(samp))
   samp <- samp[sample(nInd(samp), nInd(samp)/5)]
