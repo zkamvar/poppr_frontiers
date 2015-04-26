@@ -143,7 +143,7 @@ title("Random sequences with 10,000 SNPs and a 0.1 error rate")
 #' 
 #' #### Making lots of simulations
 #' 
-#' For these, we will simulate 1,000 markers for populations of 20 samples
+#' For these, we will simulate 10,000 markers for populations of 200 samples
 #' each. 
 #' 
 #+ 100reps, cache = TRUE, fig.show = "animate"
@@ -160,18 +160,17 @@ Sys.time()
 for (i in 1:nreps){
   set.seed(i) # setting seed for accuracy.
   snps <- rpois(1, 1e4)
-  samp1 <- getSims(n = 200, snps = snps, strucrat = 1, ploidy = 2, mate_gen = 10,
-                   err = 0.05, na.perc = 0.21, clone = TRUE, n.cores = 4,
-                   k = 10, pop.freq = rep(0.1, 10))
-  samp2 <- getSims(n = 200, snps = snps, strucrat = 1, ploidy = 2, mate_gen = 10,
-                  err = 0.05, na.perc = 0.21, clone = FALSE, n.cores = 4,
-                  k = 10, pop.freq = rep(0.1, 10))
+  samp1 <- getSims(n = 200, snps = snps, strucrat = 0.5, ploidy = 2,
+                   err = 0.1, na.perc = 0.1, clone = TRUE, n.cores = 4,
+                   k = 10, pop.freq = rep(0.1, 10), alpha = 0.25)
+  samp2 <- getSims(n = 200, snps = snps, strucrat = 0.5, ploidy = 2,
+                  err = 0.1, na.perc = 0.1, clone = FALSE, n.cores = 4,
+                  k = 10, pop.freq = rep(0.1, 10), alpha = 0.25)
   samp <- do.call("rbind", c(samp1, samp2))
   samp@ploidy <- rep(2L, nInd(samp))
   samp <- samp[sample(nInd(samp), nInd(samp)/5)]
   trueclones <- duplicated(substr(indNames(samp), start = 1, stop = 10))
   fstats <- filter_stats(samp, bitwise.dist, plot = TRUE)
-  # the_threshold <- fstats$average$thresholds[sum(trueclones)] + .Machine$double.eps^0.5
   title(paste("seed:", i, "n:", nInd(samp), "snps:", snps))
   the_threshold <- threshold_predictor(fstats$average$thresholds)
   the_distance  <- bitwise.dist(samp)

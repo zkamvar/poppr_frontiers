@@ -212,14 +212,6 @@ spanning networks, and bootstrapping for any genetic distance.
 \section*{Materials and Methods}\label{materials-and-methods}
 \addcontentsline{toc}{section}{Materials and Methods}
 
-In \emph{poppr} version 1.1, a new S4 object was defined to expand the
-genind object of \emph{adegenet}. The genclone object formalized the
-definitions of multilocus genotypes and population hierarchies by adding
-two slots called mlg and hierarchy that carried a numeric vector and a
-data frame, respectively. These new slots allow for increased efficiency
-and ease of use by allowing these metadata to travel with the genetic
-data.
-
 \subsection*{Clone correction}\label{clone-correction}
 \addcontentsline{toc}{subsection}{Clone correction}
 
@@ -234,7 +226,7 @@ it has become easier to sequence tens of thousands of markers from
 hundreds of individuals (Elshire et al., 2011; Davey et al., 2011; Davey
 and Blaxter, 2010). With this number of markers, the genetic resolution
 is much greater, but the chance of genotyping error is also greatly
-increased (Mastretta-Yanes et al., 2014). Taking this and somatic
+increased (Mastretta-Yanes et al., 2015). Taking this and somatic
 mutation into account, it would be impossible to separate true clones
 from independent individuals by just comparing what multilocus genotypes
 are different. We introduce a a new transparent method for collapsing
@@ -268,13 +260,42 @@ infestans}}
 
 We utilize these data from \emph{Phytophthora infestans} to show how the
 \texttt{mlg.filter} function collapses multilocus genotypes with Bruvo's
-distance assuming a genome addition model (Bruvo et al., 2004).\emph{P.
+distance assuming a genome addition model (Bruvo et al., 2004). \emph{P.
 infestans} is the causal agent of potato late blight originating from
 Mexico and spread to Europe in the mid 19th century {[}Goss et al.
 (2014); cooke{]}. \emph{P. infestans} reproduces both clonally and
 sexually. The clonal lineages of \emph{P. infestans} have been formally
-defined into 18 separate clonal lineages using various molecular
-methods.
+defined into 18 separate clonal lineages using a combination of various
+molecular methods including AFLP and microsatellite markers {[}cooke{]}.
+For these data, we used \texttt{mlg.filter} to detect all of the
+distance thresholds at which 18 multilocus lineages would be resolved.
+We the used these thresholds to define multilocus lineages and create
+contingency tables and dendrograms to determine how well the multilocus
+lineages were detected.
+
+\subsection*{Simulated data}\label{simulated-data}
+\addcontentsline{toc}{subsection}{Simulated data}
+
+To detect clonal lineages utilizing genomic data, we utilized simulated
+data constructed using the \texttt{glSim} function in adegenet (Jombart
+and Ahmed, 2011). For the simulations, two diploid data sets were
+created, each with 10k SNPs (25\% structured into two groups) and 200
+samples with 10 ancestral populations of even sizes. Clones were created
+in one data set by marking each sample with a unique identifier and then
+randomly sampling with replacement. It is well documented that reduced-
+representation sequencing can introduce several erroneous calls and
+missing data (Mastretta-Yanes et al., 2015). To reflect this, we mutated
+SNPs at a rate of 10\% and inserted an average of 10\% missing data for
+each sample after clones were created, ensuring that no two sequences
+were alike. The number of mutations and missing data per sample was
+determined with a sampling from a poisson distribution with
+\(\lambda = 1000\). After pooling, 20\% of the data set was randomly
+sampled for analysis. Genetic distance was represented as the fraction
+of different sites between samples, counting missing data as equivalent
+in comparison. Since each data set would have varying distances between
+samples, the clonal boundary threshold was defined as the midpoint of
+the largest gap between two thresholds that collapsed less than 50\% of
+the data.
 
 \subsection*{Index of association}\label{index-of-association}
 \addcontentsline{toc}{subsection}{Index of association}
@@ -419,9 +440,9 @@ calculated from it.
 \subsection*{Clonal identification}\label{clonal-identification}
 \addcontentsline{toc}{subsection}{Clonal identification}
 
-\subsection*{\texorpdfstring{\emph{P.
-infestans}}{P. infestans}}\label{p.-infestans}
-\addcontentsline{toc}{subsection}{\emph{P. infestans}}
+\subsection*{\texorpdfstring{Filtering \emph{P. infestans}
+MLGs}{Filtering P. infestans MLGs}}\label{filtering-p.-infestans-mlgs}
+\addcontentsline{toc}{subsection}{Filtering \emph{P. infestans} MLGs}
 
 The three algorithms were able to detect 18 multilocus lineages at
 different distance thresholds (Fig. 1). Contingency tables between the
@@ -477,23 +498,6 @@ simulated populations.
 
 \subsection*{Speed}\label{speed}
 \addcontentsline{toc}{subsection}{Speed}
-
-\subsection*{Community Acceptance}\label{community-acceptance}
-\addcontentsline{toc}{subsection}{Community Acceptance}
-
-\begin{quote}
-This section is not appropraite for a results section. Should we mention
-that poppr has been accepted in the intro? In fat, we can `brag' that
-some poppr functions have now been ported into adegenet.
-\end{quote}
-
-\begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  articles that have cited poppr
-\item
-  hierarchical methods have been ported to adegenet
-\end{itemize}
 
 \section*{Discussion}\label{discussion}
 \addcontentsline{toc}{section}{Discussion}
@@ -584,6 +588,9 @@ Jombart, T. (2008). Adegenet: a R package for the multivariate analysis
 of genetic markers. \emph{Bioinformatics} 24, 1403--1405.
 doi:\href{http://dx.doi.org/10.1093/bioinformatics/btn129}{10.1093/bioinformatics/btn129}.
 
+Jombart, T., and Ahmed, I. (2011). Adegenet 1.3-1: New tools for the
+analysis of genome-wide sNP data. \emph{Bioinformatics} 27, 3070--3071.
+
 Kamvar, Z. N., Tabima, J. F., and Gr{ü}nwald, N. J. (2014). Poppr: An r
 package for genetic analysis of populations with clonal, partially
 clonal, and/or sexual reproduction. \emph{PeerJ} 2, e281.
@@ -596,10 +603,11 @@ Luikart, G., England, P. R., Tallmon, D., Jordan, S., and Taberlet, P.
 (2003). The power and promise of population genomics: From genotyping to
 genome typing. \emph{Nature Reviews Genetics} 4, 981--994.
 
-Mastretta-Yanes, A., Zamudio, S., Jorgensen, T. H., Arrigo, N., Alvarez,
-N., Pi{ñ}ero, D., and Emerson, B. C. (2014). Gene duplication,
-population genomics, and species-level differentiation within a tropical
-mountain shrub. \emph{Genome biology and evolution} 6, 2611--2624.
+Mastretta-Yanes, A., Arrigo, N., Alvarez, N., Jorgensen, T. H.,
+Pi{ñ}ero, D., and Emerson, B. (2015). Restriction site-associated dNA
+sequencing, genotyping error estimation and de novo assembly
+optimization for population genetic inference. \emph{Molecular ecology
+resources} 15, 28--41.
 
 McDonald, B. A., and Linde, C. (2002). The population genetics of plant
 pathogens and breeding strategies for durable resistance.

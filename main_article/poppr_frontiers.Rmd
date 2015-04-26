@@ -206,22 +206,22 @@ multilocus lineages were detected.
 
 To detect clonal lineages utilizing genomic data, we utilized simulated data
 constructed using the `glSim` function in adegenet [@jombart2011adegenet]. For
-the simulations, two diploid data sets were created, each with 10k SNPs and 200
-samples with 10 ancestral populations of even sizes. These populations were
-randomly "mated" by first simulating meiotic crossover and then randomly
-choosing one chromosome from two parents at random and then adding mutations to
-each at a rate $\mu = 5e^{-3}$. Clones were created in one data set by randomly
-sampling the data with replacement in half of the twenty populations and
-subsequently marked with unique identifiers. It is well documented that reduced-
-representation sequencing can introduce several erroneous calls and missing data
-[@mastretta2015restriction]. To reflect this, we mutated SNPs at a rate of 5%
-and inserted an average of 21% missing data for each sample after clones were
-created, ensuring that no two sequences were alike. After pooling, the 20% of
-the data set was randomly sampled for analysis. Genetic distance was represented
-as the fraction of different sites between samples, counting missing data as
-equivalent in comparison. Since each data set would have varying distances
-between samples, the clonal boundary threshold was defined as the midpoint of
-the largest gap between two thresholds that collapsed less than 50% of the data.
+the simulations, two diploid data sets were created, each with 10k SNPs (25%
+structured into two groups) and 200 samples with 10 ancestral populations of
+even sizes. Clones were created in one data set by marking each sample with a
+unique identifier and then randomly sampling with replacement. It is well
+documented that reduced- representation sequencing can introduce several
+erroneous calls and missing data [@mastretta2015restriction]. To reflect this,
+we mutated SNPs at a rate of 10% and inserted an average of 10% missing data for
+each sample after clones were created, ensuring that no two sequences were
+alike. The number of mutations and missing data per sample was determined with a
+sampling from a poisson distribution with $\lambda = 1000$. After pooling, 20%
+of the data set was randomly sampled for analysis. Genetic distance was
+represented as the fraction of different sites between samples, counting missing
+data as equivalent in comparison. Since each data set would have varying
+distances between samples, the clonal boundary threshold was defined as the
+midpoint of the largest gap between two thresholds that collapsed less than 50%
+of the data.
 
 ## Index of association {-}
 
