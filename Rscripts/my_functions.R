@@ -1,9 +1,9 @@
 getNames <- function(n){
-  vapply(1:n, function(x) paste(sample(letters, 10), collapse = ""), character(1))
+  vapply(1:n, function(x) paste(sample(letters, 10, replace = TRUE), collapse = ""), character(1))
 }
 
 # This will mutate a single allele in a random chromosome when given a SNPbin
-snp_mutator <- function(chrom, mutation = sample(2^(1:7), 1)){
+snp_mutator <- function(chrom, mutation = sample(2^(0:7), 1)){
   posi        <- sample(length(chrom) - 1, 1) # sample chunk of 8 loci
   orig        <- as.integer(chrom[posi])      # convert to integer
   chrom[posi] <- as.raw(bitwXor(orig, mutation)) # Exclusive OR will flip the bit. 
