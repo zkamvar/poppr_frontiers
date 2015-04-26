@@ -109,14 +109,16 @@ random_mate_gen <- function(glt, err = 5e-3, gen = 1){
 getSims <- function(z = 1, n = 10, snps = 1e6, strucrat = c(0.25, 0.75), 
                     clone = TRUE, err = 0.1, na.perc = 0.1, n.cores = 4, 
                     mate_gen = NULL, mate_err = 5e-3, ...){
-  lam <- sample(strucrat, 1)
-  if (lam == 1){
-    perc <- 1
-  } else {
-    perc <- ceiling(sample(rpois(1000, lambda = snps*lam), 1)/snps)    
-  }
+#   lam <- sample(strucrat, 1)
+#   if (lam == 1){
+#     perc <- 1
+#   } else {
+#     perc <- ceiling(sample(rpois(1000, lambda = snps*lam), 1)/snps)    
+#   }
 
-  n <- sample(rpois(1000, lambda = n), 1)
+  perc <- sample(strucrat, 1)
+
+  # n <- sample(rpois(1000, lambda = n), 1)
   the_names <- getNames(n)
   res <- glSim(n, n.snp.nonstruc = snps*perc, n.snp.struc = snps*(1-perc), 
                n.cores = n.cores, ...)
