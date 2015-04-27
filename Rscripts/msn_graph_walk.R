@@ -136,13 +136,16 @@ set.seed(goodSeed)
 MASTER <- get_layout(nf.msn$graph, LAYOUT = layout.fruchterman.reingold)
 plot_poppr_msn(for2nur, nf.msn, gad = 10, palette = thisPal, mlg = TRUE, 
                layfun = MASTER, nodebase = 1.75, vertex.label.font = 2,
-               quantiles = FALSE, #inds = unique(ramdat@mlg),
+               quantiles = FALSE, #inds = "none",
                vertex.label.color = "firebrick",
                mark.groups = nodeList[theClusts], 
                mark.border = names(nodeList)[theClusts],
                mark.col = transp(names(nodeList)[theClusts], 0.05),
                mark.expand = 2,
                mark.shape = 0)
+plot(clusts, nf.msn$graph, vertex.size = log(V(nf.msn$graph)$size, 1.75) + 3, 
+     vertex.label = NA, layout = MASTER)
+
 #' ### without ties
 #+ noties, fig.width = 10, fig.height = 10
 nf.msn <- nf.msn.noties
@@ -156,13 +159,15 @@ theClusts <- clust_cutoff(clusts, 3)
 goodSeed <- 6
 thisPal <- function(x) comparePal[nf.msn$populations]
 set.seed(goodSeed)
-MASTER <- get_layout(nf.msn$graph, LAYOUT = layout.fruchterman.reingold)
+MASTER <- get_layout(nf.msn$graph, LAYOUT = layout.auto)
 plot_poppr_msn(for2nur, nf.msn, gad = 10, palette = thisPal, mlg = TRUE, 
                layfun = MASTER, nodebase = 1.75, vertex.label.font = 2,
-               quantiles = FALSE, #inds = unique(ramdat@mlg),
+               quantiles = FALSE, #inds = "none",
                vertex.label.color = "firebrick",
                mark.groups = nodeList[theClusts], 
                mark.border = names(nodeList)[theClusts],
                mark.col = transp(names(nodeList)[theClusts], 0.05),
                mark.expand = 2,
                mark.shape = 0)
+plot(clusts, nf.msn$graph, vertex.size = log(V(nf.msn$graph)$size, 1.75) + 3, 
+     vertex.label = NA, layout = MASTER)
