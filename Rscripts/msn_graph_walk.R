@@ -15,6 +15,8 @@ devtools::install_github("zkamvar/Sudden_Oak_Death_in_Oregon_Forests/PramCurry")
 library("PramCurry")
 library("poppr")
 library("igraph")
+library("ggplot2")
+library("reshape2")
 data(for2nur)
 data(comparePal)
 #' 
@@ -121,9 +123,16 @@ members.noties <- match_communities(for2nur, clusts.noties, nf.msn.noties$graph)
 ties_table   <- table(members.ties, pop(for2nur))
 noties_table <- table(members.noties, pop(for2nur))
 table.value(ties_table, col.labels = popNames(for2nur))
-colSums(ties_table > 0)
 table.value(noties_table, col.labels = popNames(for2nur))
-colSums(noties_table > 0)
+#' 
+#' We can utilize the Shannon index to investigate entropy.
+#' 
+ent_table <- data.frame(noties = vegan::diversity(noties_table, MARGIN = 2),
+                        ties = vegan::diversity(ties_table, MARGIN = 2),
+                        population = popNames(for2nur))
+ggplot(melt(ent_table), aes(x = population, y = value, color = variable)) +
+  geom_point(position = "identity", size = 5) +
+  ylab("entropy") + PramCurry:::myTheme
 #'
 #' One other thing to look at is the sizes of the communities. With a clonal
 #' pathogen, we expect to see larger communities. 
@@ -234,6 +243,14 @@ noties.table <- table(members.noties, pop(hc))
 table.value(noties.table, col.labels = popNames(hc))
 #'
 #' A markded difference! Now onto the graphs!
+#' 
+#' We can examine the information contained within these tables:
+ent_table <- data.frame(noties = vegan::diversity(noties.table, MARGIN = 2),
+                        ties = vegan::diversity(ties.table, MARGIN = 2),
+                        population = popNames(hc))
+ggplot(melt(ent_table), aes(x = population, y = value, color = variable)) +
+  geom_point(position = "identity", size = 5) +
+  ylab("entropy") + PramCurry:::myTheme
 #' 
 #+ H3N2_msns, cache = TRUE, fig.width = 10, fig.height = 10
 set.seed(20150427)
