@@ -69,6 +69,14 @@ make_node_list <- function(clusts, pal, cutoff = 3){
 clust_cutoff <- function(clusts, cutoff = 3){
   table(clusts$membership) > 3
 }
+
+match_communities <- function(dat, comm, the_graph){
+  members <- membership(comm)
+  mlgs <- mlg.vector(dat)
+  graph_mlgs <- PramCurry::mlgFromString(V(the_graph)$label)
+  members[match(mlgs, graph_mlgs)]
+}
+
 #' 
 #' ### Data setup
 #' Conversion
@@ -97,23 +105,32 @@ nf.msn.ties <- bruvo.msn(for2nur, replen = newReps, include.ties = TRUE,
 #' it will send random walkers through the graph and see where they spend the
 #' most time. It considers edge weights and vertex weights. For vertex weights,
 #' we are setting them to be the number of samples in each vertex. 
-clusts.noties <- infomap.community(nf.msn.noties$graph, nb.trials = 1e3, 
+#+ community_detecting, cache = TRUE
+set.seed(20150427)
+clusts.noties <- infomap.community(nf.msn.noties$graph, nb.trials = 1e4, 
                                    v.weights = V(nf.msn.noties$graph)$size)
-clusts.ties <- infomap.community(nf.msn.ties$graph, nb.trials = 1e3, 
+set.seed(20150427)
+clusts.ties <- infomap.community(nf.msn.ties$graph, nb.trials = 1e4, 
                                  v.weights = V(nf.msn.ties$graph)$size)
 #'
 #' The membership of each sample is matched here. 
-members.ties <- clusts.ties$membership[match(mlg.vector(for2nur), mlgFromString(V(nf.msn.ties$graph)$label))]
-members.noties <- clusts.noties$membership[match(mlg.vector(for2nur), mlgFromString(V(nf.msn.noties$graph)$label))]
+members.ties <- match_communities(for2nur, clusts.ties, nf.msn.ties$graph)
+members.noties <- match_communities(for2nur, clusts.noties, nf.msn.noties$graph)
 #'
 #' Now, we are comparing the memberships vs. the populations
-table.value(table(members.ties, pop(for2nur)), col.labels = popNames(for2nur))
-table.value(table(members.noties, pop(for2nur)), col.labels = popNames(for2nur))
+ties_table   <- table(members.ties, pop(for2nur))
+noties_table <- table(members.noties, pop(for2nur))
+table.value(ties_table, col.labels = popNames(for2nur))
+colSums(ties_table > 0)
+table.value(noties_table, col.labels = popNames(for2nur))
+colSums(noties_table > 0)
 #'
 #' One other thing to look at is the sizes of the communities. With a clonal
 #' pathogen, we expect to see larger communities. 
 sizes(clusts.ties)
 sizes(clusts.noties)
+modularity(clusts.ties)
+modularity(clusts.noties)
 #'
 #' What we are seeing is that the reticulations allow for more genotypes to be
 #' clustered together because there are more meaningful connections. 
@@ -171,3 +188,66 @@ plot_poppr_msn(for2nur, nf.msn, gad = 10, palette = thisPal, mlg = TRUE,
                mark.shape = 0)
 plot(clusts, nf.msn$graph, vertex.size = log(V(nf.msn$graph)$size, 1.75) + 3, 
      vertex.label = NA, layout = MASTER)
+#' 
+#' H3N2 virus data 
+#' ===============
+#' 
+#' For this example, we will use the H3N2 viral data set from the adegenet
+#' package.
+data("H3N2")
+hc <- as.genclone(H3N2) # For faster calculation of MLGs
+strata(hc) <- other(hc)$x
+setPop(hc) <- ~year
+virusPal <- colorRampPalette(RColorBrewer::brewer.pal(n = nPop(hc), "Set1"))
+#' 
+#' First the distance needs to be calculated. For this, we will simply use a 
+#' dissimilarity distance.
+#+ H3N2_distance, cache = TRUE
+hdist <- diss.dist(hc, percent = TRUE)
+#' 
+#' Now we will calculate the two minimum spanning networks and walk the graphs.
+#+ H3N2_graph, cache = TRUE
+hmsn.noties <- poppr.msn(hc, distmat = hdist, showplot = FALSE, palette = virusPal)
+hmsn.ties <- poppr.msn(hc, distmat = hdist, showplot = FALSE, palette = virusPal, 
+                         include.ties = TRUE)
+set.seed(20150427)
+hmsn.communities.noties <- infomap.community(hmsn.noties$graph, 
+                                             v.weights = V(hmsn.noties$graph), 
+                                             nb.trials = 1e3)
+set.seed(20150427)
+hmsn.communities.ties <- infomap.community(hmsn.ties$graph, 
+                                           v.weights = V(hmsn.ties$graph), 
+                                           nb.trials = 1e3)
+#' 
+#' Let's compare these, shall we? First, let's look at the community sizes.
+#' Since there will be a lot of them, we can visualize them as barplots:
+plot(sizes(hmsn.communities.ties), main = "with reticulation")
+plot(sizes(hmsn.communities.noties), main = "without reticulation")
+#'
+#' Now we can take a look at the contingency tables:
+members.ties <- match_communities(hc, hmsn.communities.ties, hmsn.ties$graph)
+ties.table <- table(members.ties, pop(hc))
+table.value(ties.table, col.labels = popNames(hc))
+
+members.noties <- match_communities(hc, hmsn.communities.noties, hmsn.noties$graph)
+noties.table <- table(members.noties, pop(hc))
+table.value(noties.table, col.labels = popNames(hc))
+#'
+#' A markded difference! Now onto the graphs!
+#' 
+#+ H3N2_msns, cache = TRUE, fig.width = 10, fig.height = 10
+set.seed(20150427)
+HLAYOUT <- get_layout(hmsn.ties$graph)
+plot_poppr_msn(hc, hmsn.ties, layout = HLAYOUT, inds = "none", nodebase = 1.9,
+               gadj = 20, quantiles = FALSE)
+plot(hmsn.communities.ties, hmsn.ties$graph, 
+     vertex.size = log(V(hmsn.ties$graph)$size, 1.9) + 3, 
+     layout = HLAYOUT, vertex.label = NA)
+
+set.seed(20150427)
+HLAYOUT <- get_layout(hmsn.noties$graph)
+plot_poppr_msn(hc, hmsn.noties, layout = HLAYOUT, inds = "none", nodebase = 1.9,
+               gadj = 20, quantiles = FALSE)
+plot(hmsn.communities.noties, hmsn.noties$graph, 
+     vertex.size = log(V(hmsn.noties$graph)$size, 1.9) + 3, 
+     layout = HLAYOUT, vertex.label = NA)
