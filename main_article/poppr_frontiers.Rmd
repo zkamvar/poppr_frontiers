@@ -282,43 +282,54 @@ parallelized bit level C code for efficiency [@Jombart_2008].
 
 Assessments of population structure through methods such as hierarchical
 $F_{st}$ and AMOVA benefit greatly from multiple levels of population definition
-[@linde2002population; @everhart2014fine; @grunwald2006hierarchical]. With clonal organisms, basic practice
-has been to clone-censor data to avoid downward bias in diversity due to
-duplicated genotypes that may or may not represent different samples
-[@milgroom1996recombination]. Data structures for population genetic data mostly
-allow for only one level of hierarchical definition. The impetus was placed on
-the researchers to provide the population hierarchies for every step of the
-analysis. In poppr version 1.1, the hierarchy slot was introduced to allow
-unlimited population hierarchies or stratifications to travel with the data. In
-practice, it is stored as a data frame where each column represents a separate
-hierarchical level. The user could then define the population factor for the
-data by providing a hierarchical formula that would contain one or more levels
-from the hierarchy slot to be combined.
+[@linde2002population; @everhart2014fine; @grunwald2006hierarchical]. With
+clonal organisms, basic practice has been to clone-censor data to avoid downward
+bias in diversity due to duplicated genotypes that may or may not represent
+different samples [@milgroom1996recombination]. Data structures for population
+genetic data mostly allow for only one level of hierarchical definition. The
+impetus was placed on the researchers to provide the population hierarchies for
+every step of the analysis. In poppr version 1.1, the hierarchy slot was
+introduced to allow unlimited population hierarchies or stratifications to
+travel with the data. In practice, it is stored as a data frame where each
+column represents a separate hierarchical level. The user could then define the
+population factor for the data by providing a hierarchical formula that would
+contain one or more levels from the hierarchy slot to be combined.
 
 ## Genotype Accumulation Curve {-}
 
 Analysis of population genetics of clonal organisms often borrows from
 ecological methods such as analysis of diversity within populations
-[@milgroom1996recombination; @arnaud2007standardizing; @grunwald2003analysis]. When choosing markers
-for analysis, it is important to make sure that the observed diversity in your
-sample will not appreciably increase if an additional marker is added
-[@arnaud2007standardizing]. This concept is analogous to a species accumulation
-curve, obtained by rarefaction. The genotype accumulation curve in *poppr* is
-implemented by randomly sampling $x$ loci and counting the number of observed
-MLGs. This repeated $r$ times for 1 locus up to $n-1$ loci, creating $n-1$
-distributions of observed MLGs.
+[@milgroom1996recombination; @arnaud2007standardizing; @grunwald2003analysis].
+When choosing markers for analysis, it is important to make sure that the
+observed diversity in your sample will not appreciably increase if an additional
+marker is added [@arnaud2007standardizing]. This concept is analogous to a
+species accumulation curve, obtained by rarefaction. The genotype accumulation
+curve in *poppr* is implemented by randomly sampling $x$ loci and counting the
+number of observed MLGs. This repeated $r$ times for 1 locus up to $n-1$ loci,
+creating $n-1$ distributions of observed MLGs.
 
-## Minimum Spanning Networks {-}
+## Minimum Spanning Network Reticulation {-}
 
-*Poppr* introduced minimum spanning networks in it's original iteration that were
-based off of igraph's function minimum.spanning.tree. This algorithm would
-produce a minimum spanning tree, but with no reticulations, which is common and
-expected of clonal organisms. In other minimum spanning network programs,
-reticulation is obtained by calculating the minimum spanning tree several times
-and returning the set of all edges included in the trees. Due to the way igraph
-has implemented Prim's algorithm, it is not possible to utilize this strategy,
-thus we have implemented a C function to walk through a distance matrix and
-minimum spanning tree to connect groups of nodes with edges of equal weight.
+*Poppr* introduced minimum spanning networks in it's original iteration that
+were based off of igraph's function `minimum.spanning.tree` [@csardi2006igraph].
+This algorithm would produce a minimum spanning tree, but with no reticulations,
+which is common and expected of clonal organisms. In other minimum spanning
+network programs, reticulation is obtained by calculating the minimum spanning
+tree several times and returning the set of all edges included in the trees. Due
+to the way igraph has implemented Prim's algorithm, it is not possible to
+utilize this strategy, thus we have implemented a C function to walk through a
+distance matrix and minimum spanning tree to connect groups of nodes with edges
+of equal weight. To demonstrate the utility of minimum spanning network
+reticulation, we use clonal *Phytophthora ramorum* data from Nurseries and
+Oregon forests [@kamvar2014sudden]. Minimum spanning networks were created with
+and without reticulation using the *poppr* function `bruvo.msn`
+[@kamvar2014poppr]. To detect mlg clusters, the infoMAP community detection
+algorithm was applied with 10,000 trials as implemented in the R package
+`igraph` version 0.7.1 utilizing Bruvo's distance as edge weights and number of
+samples in each MLG as vertex weights [@csardi2006igraph; @rosvall2008map]. The
+number and size of resulting communities were compared along with the accuracy
+of prediction of an outlier group of MLGs derived from a single introduction
+event into Cape Sebastian, OR [kamvar2015spatial].
 
 ## Bootstrapping {-}
 
@@ -399,6 +410,11 @@ print.xtable(xtable(res, align = rep("c", ncol(res) + 1)), comment = FALSE)
 duplicated samples had $\sim$ 97% true positive fraction and $\sim$ 2% false
 positive fraction indicating that this method is robust to simulated
 populations.
+
+
+## Minimum Spanning Networks {-}
+
+We found that the infomap algorithm was able to find 
 
 ## Speed {-}
 
