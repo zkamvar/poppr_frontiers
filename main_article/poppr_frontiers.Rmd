@@ -71,9 +71,9 @@ of any genetic distance.
 To paraphrase Dobzhansky, nothing in the field of plant-microbe interactions
 makes sense except in the light of population genetics [@dobzhansky2013nothing].
 Genetic forces such as selection and drift act on alleles in a population. Thus,
-a true understanding of how pathogens evolve and adapt to crops and fungicides,
+a true understanding of how plant pathogens evolve and adapt to crops, fungicides, or other factors,
 can only emerge in the context of population level phenomena given the
-genealogical history of populations [@Mcdonald2002; @grunwald2011evolution;
+demographic history of populations [@Mcdonald2002; @grunwald2011evolution;
 @milgroom1989population]. The field of population genetics, in the era of whole
 genome resequencing, provides unprecedented power to describe the evolutionary
 history and population processes that drive coevolution between pathogens and
