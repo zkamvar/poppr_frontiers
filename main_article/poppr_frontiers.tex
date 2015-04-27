@@ -69,7 +69,7 @@
 
 
 
- \def\Authors{
+  \def\Authors{
   Zhian N. Kamvar\,\textsuperscript{1},
   Jonah C. Brooks\,\textsuperscript{2},
   Niklaus J. Grunwald\,\textsuperscript{1,3*}}
@@ -89,7 +89,6 @@
 
 
 \begin{document}
-% \inputencoding{utf8}
 \onecolumn
 \firstpage{1}
 
@@ -130,17 +129,18 @@ of any genetic distance.
 To paraphrase Dobzhansky, nothing in the field of plant-microbe
 interactions makes sense except in the light of population genetics
 (Dobzhansky, 1973). Genetic forces such as selection and drift act on
-alleles in a population. Thus, a true understanding of how pathogens
-evolve and adapt to crops and fungicides, can only emerge in the context
-of population level phenomena given the genealogical history of
-populations (McDonald and Linde, 2002; Grunwald and Goss, 2011; Milgroom
-et al., 1989). The field of population genetics, in the era of whole
-genome resequencing, provides unprecedented power to describe the
-evolutionary history and population processes that drive coevolution
-between pathogens and hosts. This powerful field thus critically enables
-effective deployment of R genes, design of pathogen informed plant
-resistance breeding programs, and implementation of fungicide rotations
-that minimize emergence of resistance.
+alleles in a population. Thus, a true understanding of how plant
+pathogens evolve and adapt to crops, fungicides, or other factors, can
+only emerge in the context of population level phenomena given the
+demographic history of populations (McDonald and Linde, 2002; Grunwald
+and Goss, 2011; Milgroom et al., 1989). The field of population
+genetics, in the era of whole genome resequencing, provides
+unprecedented power to describe the evolutionary history and population
+processes that drive coevolution between pathogens and hosts. This
+powerful field thus critically enables effective deployment of R genes,
+design of pathogen informed plant resistance breeding programs, and
+implementation of fungicide rotations that minimize emergence of
+resistance.
 
 Most computational tools for population genetics are based on concepts
 developed for sexual model organisms. Populations that reproduce
@@ -253,8 +253,8 @@ genetic distance. This algorithm will cluster by creating a
 representative sample per cluster and joining clusters if these
 representative samples are closer than the given threshold.
 
-\subsection*{\texorpdfstring{Demonstration data: \emph{P.
-infestans}}{Demonstration data: P. infestans}}\label{demonstration-data-p.-infestans}
+\subsection*{Demonstration data: \emph{P.
+infestans}}\label{demonstration-data-p.-infestans}
 \addcontentsline{toc}{subsection}{Demonstration data: \emph{P.
 infestans}}
 
@@ -344,19 +344,19 @@ Hierarchies}\label{population-strata-and-hierarchies}
 
 Assessments of population structure through methods such as hierarchical
 \(F_{st}\) and AMOVA benefit greatly from multiple levels of population
-definition (Linde et al., 2002; Everhart and Scherm, 2015). With clonal
-organisms, basic practice has been to clone-censor data to avoid
-downward bias in diversity due to duplicated genotypes that may or may
-not represent different samples (Milgroom, 1996). Data structures for
-population genetic data mostly allow for only one level of hierarchical
-definition. The impetus was placed on the researchers to provide the
-population hierarchies for every step of the analysis. In poppr version
-1.1, the hierarchy slot was introduced to allow unlimited population
-hierarchies or stratifications to travel with the data. In practice, it
-is stored as a data frame where each column represents a separate
-hierarchical level. The user could then define the population factor for
-the data by providing a hierarchical formula that would contain one or
-more levels from the hierarchy slot to be combined.
+definition (Linde et al., 2002; Everhart and Scherm, 2015; Gr{ü}nwald
+and Hoheisel, 2006). With clonal organisms, basic practice has been to
+clone-censor data to avoid downward bias in diversity due to duplicated
+genotypes that may or may not represent different samples (Milgroom,
+1996). Data structures for population genetic data mostly allow for only
+one level of hierarchical definition. The impetus was placed on the
+researchers to provide the population hierarchies for every step of the
+analysis. In poppr version 1.1, the hierarchy slot was introduced to
+allow unlimited population hierarchies or stratifications to travel with
+the data. In practice, it is stored as a data frame where each column
+represents a separate hierarchical level. The user could then define the
+population factor for the data by providing a hierarchical formula that
+would contain one or more levels from the hierarchy slot to be combined.
 
 \subsection*{Genotype Accumulation
 Curve}\label{genotype-accumulation-curve}
@@ -364,15 +364,15 @@ Curve}\label{genotype-accumulation-curve}
 
 Analysis of population genetics of clonal organisms often borrows from
 ecological methods such as analysis of diversity within populations
-(Milgroom, 1996; Arnaud-Hanod et al., 2007). When choosing markers for
-analysis, it is important to make sure that the observed diversity in
-your sample will not appreciably increase if an additional marker is
-added (Arnaud-Hanod et al., 2007). This concept is analogous to a
-species accumulation curve, obtained by rarefaction. The genotype
-accumulation curve in \emph{poppr} is implemented by randomly sampling
-\(x\) loci and counting the number of observed MLGs. This repeated \(r\)
-times for 1 locus up to \(n-1\) loci, creating \(n-1\) distributions of
-observed MLGs.
+(Milgroom, 1996; Arnaud-Hanod et al., 2007; Grünwald et al., 2003). When
+choosing markers for analysis, it is important to make sure that the
+observed diversity in your sample will not appreciably increase if an
+additional marker is added (Arnaud-Hanod et al., 2007). This concept is
+analogous to a species accumulation curve, obtained by rarefaction. The
+genotype accumulation curve in \emph{poppr} is implemented by randomly
+sampling \(x\) loci and counting the number of observed MLGs. This
+repeated \(r\) times for 1 locus up to \(n-1\) loci, creating \(n-1\)
+distributions of observed MLGs.
 
 \subsection*{Minimum Spanning Networks}\label{minimum-spanning-networks}
 \addcontentsline{toc}{subsection}{Minimum Spanning Networks}
@@ -440,8 +440,8 @@ calculated from it.
 \subsection*{Clonal identification}\label{clonal-identification}
 \addcontentsline{toc}{subsection}{Clonal identification}
 
-\subsection*{\texorpdfstring{Filtering \emph{P. infestans}
-MLGs}{Filtering P. infestans MLGs}}\label{filtering-p.-infestans-mlgs}
+\subsection*{Filtering \emph{P. infestans}
+MLGs}\label{filtering-p.-infestans-mlgs}
 \addcontentsline{toc}{subsection}{Filtering \emph{P. infestans} MLGs}
 
 The three algorithms were able to detect 18 multilocus lineages at
@@ -578,6 +578,10 @@ the National Academy of Sciences} 111, 8791--8796.
 Grunwald, N. J., and Goss, E. M. (2011). Evolution and population
 genetics of exotic and re-emerging pathogens: Novel tools and
 approaches. \emph{Annual Review of Phytopathology} 49, 249--267.
+
+Gr{ü}nwald, N. J., and Hoheisel, G.-A. (2006). Hierarchical analysis of
+diversity, selfing, and genetic differentiation in populations of the
+oomycete aphanomyces euteiches. \emph{Phytopathology} 96, 1134--1141.
 
 Grünwald, N. J., Goodwin, S. B., Milgroom, M. G., and Fry, W. E. (2003).
 Analysis of genotypic diversity data for populations of microorganisms.

@@ -282,7 +282,7 @@ parallelized bit level C code for efficiency [@Jombart_2008].
 
 Assessments of population structure through methods such as hierarchical
 $F_{st}$ and AMOVA benefit greatly from multiple levels of population definition
-[@linde2002population; @everhart2014fine]. With clonal organisms, basic practice
+[@linde2002population; @everhart2014fine; @grunwald2006hierarchical]. With clonal organisms, basic practice
 has been to clone-censor data to avoid downward bias in diversity due to
 duplicated genotypes that may or may not represent different samples
 [@milgroom1996recombination]. Data structures for population genetic data mostly
@@ -299,7 +299,7 @@ from the hierarchy slot to be combined.
 
 Analysis of population genetics of clonal organisms often borrows from
 ecological methods such as analysis of diversity within populations
-[@milgroom1996recombination; @arnaud2007standardizing]. When choosing markers
+[@milgroom1996recombination; @arnaud2007standardizing; @grunwald2003analysis]. When choosing markers
 for analysis, it is important to make sure that the observed diversity in your
 sample will not appreciably increase if an additional marker is added
 [@arnaud2007standardizing]. This concept is analogous to a species accumulation
