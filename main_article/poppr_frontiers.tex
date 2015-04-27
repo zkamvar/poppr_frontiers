@@ -69,7 +69,7 @@
 
 
 
-  \def\Authors{
+ \def\Authors{
   Zhian N. Kamvar\,\textsuperscript{1},
   Jonah C. Brooks\,\textsuperscript{2},
   Niklaus J. Grunwald\,\textsuperscript{1,3*}}
@@ -89,6 +89,7 @@
 
 
 \begin{document}
+% \inputencoding{utf8}
 \onecolumn
 \firstpage{1}
 
@@ -178,7 +179,7 @@ The research community using the R statistical and computing language
 (RCoreTeam, 2013) has developed a plethora of new resources for
 population genetic analysis (Paradis, 2010; Jombart, 2008). Recently, we
 introduced the R package \emph{poppr} specifically developed for
-analysis of clonal populations (Kamvar et al., 2014). \emph{Poppr}
+analysis of clonal populations (Kamvar et al., 2014b). \emph{Poppr}
 previously introduced several novel features including the ability to
 conduct a hierarchical analysis across unlimited hierarchies, test for
 linkage association, graph minimum spanning networks or provide
@@ -217,7 +218,7 @@ spanning networks, and bootstrapping for any genetic distance.
 
 As highlighted in previous work, clone correction is an important part
 of population genetic analysis of organisms that have cryptic growth or
-are known to produce asexual propagules (Kamvar et al., 2014; Milgroom,
+are known to produce asexual propagules (Kamvar et al., 2014b; Milgroom,
 1996; Grünwald et al., 2003). This method removes bias that would
 otherwise affect metrics that rely on allele frequencies. It was
 initially designed for data with only a handful of markers. With the
@@ -253,8 +254,8 @@ genetic distance. This algorithm will cluster by creating a
 representative sample per cluster and joining clusters if these
 representative samples are closer than the given threshold.
 
-\subsection*{Demonstration data: \emph{P.
-infestans}}\label{demonstration-data-p.-infestans}
+\subsection*{\texorpdfstring{Demonstration data: \emph{P.
+infestans}}{Demonstration data: P. infestans}}\label{demonstration-data-p.-infestans}
 \addcontentsline{toc}{subsection}{Demonstration data: \emph{P.
 infestans}}
 
@@ -374,20 +375,38 @@ sampling \(x\) loci and counting the number of observed MLGs. This
 repeated \(r\) times for 1 locus up to \(n-1\) loci, creating \(n-1\)
 distributions of observed MLGs.
 
-\subsection*{Minimum Spanning Networks}\label{minimum-spanning-networks}
-\addcontentsline{toc}{subsection}{Minimum Spanning Networks}
+\subsection*{Minimum Spanning Network
+Reticulation}\label{minimum-spanning-network-reticulation}
+\addcontentsline{toc}{subsection}{Minimum Spanning Network Reticulation}
 
 \emph{Poppr} introduced minimum spanning networks in it's original
 iteration that were based off of igraph's function
-minimum.spanning.tree. This algorithm would produce a minimum spanning
-tree, but with no reticulations, which is common and expected of clonal
-organisms. In other minimum spanning network programs, reticulation is
-obtained by calculating the minimum spanning tree several times and
-returning the set of all edges included in the trees. Due to the way
-igraph has implemented Prim's algorithm, it is not possible to utilize
-this strategy, thus we have implemented a C function to walk through a
-distance matrix and minimum spanning tree to connect groups of nodes
-with edges of equal weight.
+\texttt{minimum.spanning.tree} (Csardi and Nepusz, 2006). This algorithm
+would produce a minimum spanning tree, but with no reticulations, which
+is common and expected of clonal organisms. In other minimum spanning
+network programs, reticulation is obtained by calculating the minimum
+spanning tree several times and returning the set of all edges included
+in the trees. Due to the way igraph has implemented Prim's algorithm, it
+is not possible to utilize this strategy, thus we have implemented a C
+function to walk through a distance matrix and minimum spanning tree to
+connect groups of nodes with edges of equal weight. To demonstrate the
+utility of minimum spanning network reticulation, we use clonal
+\emph{Phytophthora ramorum} data from Nurseries and Oregon forests
+(Kamvar et al., 2014a). Minimum spanning networks were created with and
+without reticulation using the \emph{poppr} function \texttt{bruvo.msn}
+(Kamvar et al., 2014b). To detect mlg clusters, the infoMAP community
+detection algorithm was applied with 10,000 trials as implemented in the
+R package \texttt{igraph} version 0.7.1 utilizing Bruvo's distance as
+edge weights and number of samples in each MLG as vertex weights (Csardi
+and Nepusz, 2006; Rosvall and Bergstrom, 2008). To evaluate the results,
+we compared the number and size of resulting communities as we expect a
+highly clonal organism with low genetic diversity to result in few,
+large communities. We also created contingency tables of the community
+assignments with the defined populations and used those to calculate
+entropy using Shannon's index with the function \texttt{diversity} from
+the R package \texttt{vegan} version 2.2-1 {[}Oksanen et al. (2015);
+shannon1948{]}. A low entropy indicates few large communities whereas
+high entropy indicates many small communities.
 
 \subsection*{Bootstrapping}\label{bootstrapping}
 \addcontentsline{toc}{subsection}{Bootstrapping}
@@ -440,8 +459,8 @@ calculated from it.
 \subsection*{Clonal identification}\label{clonal-identification}
 \addcontentsline{toc}{subsection}{Clonal identification}
 
-\subsection*{Filtering \emph{P. infestans}
-MLGs}\label{filtering-p.-infestans-mlgs}
+\subsection*{\texorpdfstring{Filtering \emph{P. infestans}
+MLGs}{Filtering P. infestans MLGs}}\label{filtering-p.-infestans-mlgs}
 \addcontentsline{toc}{subsection}{Filtering \emph{P. infestans} MLGs}
 
 The three algorithms were able to detect 18 multilocus lineages at
@@ -496,6 +515,18 @@ duplicated samples had \(\sim\) 97\% true positive fraction and \(\sim\)
 2\% false positive fraction indicating that this method is robust to
 simulated populations.
 
+\subsection*{Minimum Spanning Networks}\label{minimum-spanning-networks}
+\addcontentsline{toc}{subsection}{Minimum Spanning Networks}
+
+Graph walking of the reticulated minimum spanning network of \emph{P.
+ramorum} by the infoMAP algorithm revealed 16 communities with a maximum
+community size of 13. The un-reticulated minimum spanning tree revealed
+20 communities with a maximum community size of 7. In the ability to
+predict Hunter Creek as belonging to a single community, the reticulated
+network was successful whereas the minimum spanning tree separated one
+genotype from that community. The entropy for the reticulated network
+was lower for all populations except for the Coast population.
+
 \subsection*{Speed}\label{speed}
 \addcontentsline{toc}{subsection}{Speed}
 
@@ -506,14 +537,15 @@ Reticulate minimum spanning networks are very important for
 \emph{extremely???} clonal organisms where a minimum spanning tree would
 become a chain. The current implementation in \emph{poppr} has been
 successfully used in analyses such as reconstruction of the \emph{P.
-ramorum} outbreak in Curry County, OR {[}kamvar2015spatial{]}.
-Reticulated networks also allow for the addition of graph community
-detection algorithms such as the infomap algorithm, giving the user
-another tool to detect clonal or population structure (Rosvall and
-Bergstrom, 2008). While it is possible to utilize these graph walking
-algorithms on non-reticulate minimum spanning trees, information that
-would be used by the walkers is not present in the graph and nodes that
-would truly be connected might be defined as separate communities.
+ramorum} outbreak in Curry County, OR {[}Kamvar et al. (2014a);
+kamvar2015spatial{]}. Reticulated networks also allow for the addition
+of graph community detection algorithms such as the infoMAP algorithm,
+giving the user another tool to detect clonal or population structure
+(Rosvall and Bergstrom, 2008). While it is possible to utilize these
+graph walking algorithms on non-reticulate minimum spanning trees,
+information that would be used by the walkers is not present in the
+graph and nodes that would truly be connected might be defined as
+separate communities.
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
@@ -546,6 +578,10 @@ studies. \emph{Molecular Ecology} 16, 5115--5139.
 Bruvo, R., Michiels, N. K., D'Souza, T. G., and Schulenburg, H. (2004).
 A simple method for the calculation of microsatellite genotype distances
 irrespective of ploidy level. \emph{Molecular Ecology} 13, 2101--2106.
+
+Csardi, G., and Nepusz, T. (2006). The igraph software package for
+complex network research. \emph{InterJournal} Complex Systems, 1695.
+Available at: \url{http://igraph.org}.
 
 Davey, J. W., and Blaxter, M. L. (2010). RADSeq: Next-generation
 population genetics. \emph{Briefings in Functional Genomics} 9,
@@ -595,7 +631,13 @@ doi:\href{http://dx.doi.org/10.1093/bioinformatics/btn129}{10.1093/bioinformatic
 Jombart, T., and Ahmed, I. (2011). Adegenet 1.3-1: New tools for the
 analysis of genome-wide sNP data. \emph{Bioinformatics} 27, 3070--3071.
 
-Kamvar, Z. N., Tabima, J. F., and Gr{ü}nwald, N. J. (2014). Poppr: An r
+Kamvar, Z. N., Larsen, M. M., Kanaskie, A. M., Hansen, E. M., and
+Grünwald, N. J. (2014a). Sudden\_Oak\_Death\_in\_Oregon\_Forests:
+Spatial and temporal population dynamics of the sudden oak death
+epidemic in Oregon Forests.
+doi:\href{http://dx.doi.org/10.5281/zenodo.13007}{10.5281/zenodo.13007}.
+
+Kamvar, Z. N., Tabima, J. F., and Gr{ü}nwald, N. J. (2014b). Poppr: An r
 package for genetic analysis of populations with clonal, partially
 clonal, and/or sexual reproduction. \emph{PeerJ} 2, e281.
 
@@ -624,6 +666,11 @@ fungal populations. \emph{Annual review of phytopathology} 34, 457--477.
 Milgroom, M. G., Levin, S. A., and Fry, W. E. (1989). Population
 genetics theory and fungicide resistance. \emph{Plant disease
 epidemiology} 2, 340--367.
+
+Oksanen, J., Blanchet, F. G., Kindt, R., Legendre, P., Minchin, P. R.,
+O'Hara, R. B., Simpson, G. L., Solymos, P., Stevens, M. H. H., and
+Wagner, H. (2015). \emph{Vegan: Community ecology package}. Available
+at: \url{http://CRAN.R-project.org/package=vegan}.
 
 Paradis, E. (2010). Pegas: an R package for population genetics with an
 integrated--modular approach. \emph{Bioinformatics} 26, 419--420.
