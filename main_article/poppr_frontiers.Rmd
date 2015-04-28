@@ -208,9 +208,8 @@ determine how well the multilocus lineages were detected.
 
 ## Demonstration data: Simulated data {-}
 
-To detect clonal lineages utilizing genomic data, we utilized simulated data
-constructed using the `glSim` function in adegenet [@jombart2011adegenet]. For
-the simulations, two diploid data sets were created, each with 10k SNPs (25%
+We utilized simulated data
+constructed using the `glSim` function in adegenet [@jombart2011adegenet] to obtain a SNP data set for demonstration. Two diploid data sets were created, each with 10k SNPs (25%
 structured into two groups) and 200 samples with 10 ancestral populations of
 even sizes. Clones were created in one data set by marking each sample with a
 unique identifier and then randomly sampling with replacement. It is well
@@ -218,7 +217,7 @@ documented that reduced- representation sequencing can introduce several
 erroneous calls and missing data [@mastretta2015restriction]. To reflect this,
 we mutated SNPs at a rate of 10% and inserted an average of 10% missing data for
 each sample after clones were created, ensuring that no two sequences were
-alike. The number of mutations and missing data per sample was determined with a
+alike. The number of mutations and missing data per sample were determined by
 sampling from a poisson distribution with $\lambda = 1000$. After pooling, 20%
 of the data set was randomly sampled for analysis. Genetic distance was
 represented as the fraction of different sites between samples, counting missing
