@@ -312,14 +312,13 @@ creating $n-1$ distributions of observed MLGs.
 ## Minimum Spanning Networks with Reticulation {-}
 
 *Poppr* introduced minimum spanning networks in it's original iteration that
-were based off of igraph's function `minimum.spanning.tree` [@csardi2006igraph].
-This algorithm would produce a minimum spanning tree, but with no reticulations,
-which is common and expected of clonal organisms. In other minimum spanning
+were based on the igraph function `minimum.spanning.tree` [@csardi2006igraph].
+This algorithm produces a minimum spanning tree with no reticulations,
+which is common and expected for clonal organisms. In other minimum spanning
 network programs, reticulation is obtained by calculating the minimum spanning
 tree several times and returning the set of all edges included in the trees. Due
 to the way igraph has implemented Prim's algorithm, it is not possible to
-utilize this strategy, thus we have implemented a C function to walk through a
-distance matrix and minimum spanning tree to connect groups of nodes with edges
+utilize this strategy, thus we implemented a C function to walk the sapce of minimum spanning trees based on genetic distance to connect groups of nodes with edges
 of equal weight. 
 
 To demonstrate the utility of minimum spanning network reticulation, we used two
