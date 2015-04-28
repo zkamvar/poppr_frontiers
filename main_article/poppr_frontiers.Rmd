@@ -106,6 +106,7 @@ representation libraries used in GBS or genome re-sequencing. Are two
 individuals that are identical for all observed SNPs different if one additional
 locus has missing data?
 
+<!-- This doesn't flow right -->
 Another major issues with large SNP data is computational efficiency. Analyses
 that resample a data set or rely on MCMC are computationally slow for large data
 and thus are preferentially implemented in a low level language such as C rather
@@ -134,7 +135,7 @@ recently been adopted into the more central adegenet package [@Jombart_2008].
 In version 1, *poppr* was appropriate for traditional markers systems, but not
 well suited to population genomic data resulting from high throughput sequencing
 methods. The raw size of these data made it difficult to conduct traditional
-analyses. Here, we introduce *poppr 2.0*, which provides a significant update to
+analyses. Here, we introduce *poppr* 2.0, which provides a significant update to
 *poppr* including novel tools for analysis of clonal populations specifically
 for large SNP data. Significant novel tools include functions for calculating
 clone boundaries and collapsing individuals into user-specified clones based on
@@ -194,14 +195,14 @@ We utilize these data from *Phytophthora infestans* to show how the `mlg.filter`
 function collapses multilocus genotypes with Bruvo's distance assuming a genome
 addition model [@bruvo2004simple]. *P. infestans* is the causal agent of potato
 late blight originating from Mexico and spread to Europe in the mid 19th century
-[@goss2014irish; cooke]. *P. infestans* reproduces both clonally and sexually.
-The clonal lineages of *P. infestans* have been formally defined into 18
-separate clonal lineages using a combination of various molecular methods
-including AFLP and microsatellite markers [cooke]. For these data, we used
-`mlg.filter` to detect all of the distance thresholds at which 18 multilocus
-lineages would be resolved. We the used these thresholds to define multilocus
-lineages and create contingency tables and dendrograms to determine how well the
-multilocus lineages were detected.
+[@goss2014irish; @li2013efficient; @lees2006novel]. *P. infestans* reproduces
+both clonally and sexually. The clonal lineages of *P. infestans* have been
+formally defined into 18 separate clonal lineages using a combination of various
+molecular methods including AFLP and microsatellite markers [@lees2006novel].
+For these data, we used `mlg.filter` to detect all of the distance thresholds at
+which 18 multilocus lineages would be resolved. We the used these thresholds to
+define multilocus lineages and create contingency tables and dendrograms to
+determine how well the multilocus lineages were detected.
 
 ## Simulated data {-}
 
@@ -456,7 +457,7 @@ biologically relevant process. Reticulations in the minimum spanning networks
 allow for a representation of uncertainty that goes along with clonal organisms.
 The current implementation in *poppr* has been successfully used in analyses
 such as reconstruction of the *P. ramorum* outbreak in Curry County, OR
-[@kamvar2014sudden; kamvar2015spatial]. Reticulated networks also allow for the
+[@kamvar2014sudden; @kamvar2015spatial]. Reticulated networks also allow for the
 application of graph community detection algorithms such as the infoMAP
 algorithm, [@rosvall2008maps]. As shown in the *P. ramorum* and H3N2 data,
 while it is possible to utilize these graph walking algorithms on non-reticulate
@@ -466,5 +467,36 @@ populations derived from serial cloning events.
 - bootstrapping methods encourage future developers to write distance implementations in common format
 - moving towards open source, modular tools is the direction that population genetics and plant pathology needs to go. 
 
+
+# Figure and Table Legends {-}
+
+## Figure 1 {-}
+
+Graphical representation of three different clustering algorithms collapsing
+multilocus genotypes for 12 SSR loci from *Phytophthora infestans* representing
+18 clonal lineages. The horizontal axis is Bruvo's genetic distance assuming the
+genome addition model. The vertical axis represents the number of multilocus
+lineages observed. Each point shows the threshold at which one would observe a
+given number of multilocus genotypes. The horizontal black line represents 18
+multilocus genotypes and vertical dashed lines mark the thresholds used to
+collapse the multilocus genotypes int 18 multilocus lineages.
+
+## Figure 2 {-}
+
+(**A-B**) Minimum spanning networks of the hemagglutinin (HA) segment of H3N2
+viral DNA from the *adegenet* package representing flu epidemics from 2001 to
+2006 with (**B**) and without (**A**) reticulations [@Jombart_2008;
+@jombart2010discriminant]. Each node represents a unique multilocus genotype,
+colors represent epidemic year, and edge color represents absolute genetic
+distance. (**C**) Shannon entropy values for population assignments compared
+with communities determined by the infoMAP algorithm on (**A**) and (**B**).
+(**D**) Graphic reproduced from @jombart2010discriminant showing that the 2006
+epidemic does not cluster neatly with the other years.
+
+## Table 1 {-}
+
+Contingency table comparing multilocus lineages assigned based on average
+neighbor clustering (columns) vs. multilocus lineages defined in
+@li2013efficient and @lees2006novel.
 
 # References {-}
