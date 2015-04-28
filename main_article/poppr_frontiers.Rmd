@@ -323,16 +323,16 @@ distance matrix and minimum spanning tree to connect groups of nodes with edges
 of equal weight. 
 
 To demonstrate the utility of minimum spanning network reticulation, we used two
-clonal data sets: *Phytophthora ramorum* data from Nurseries and Oregon forests,
-and H3N2 flu virus data from the `adegenet` package using years as the
-population factor[@kamvar2014sudden;
-@jombart2010discriminant]. Minimum spanning networks were created with and
-without reticulation using the *poppr* functions `bruvo.msn` and `diss.dist` for
-the *P. ramorum* and H3N2 data, respectively [@kamvar2014poppr;
-@bruvo2004simple]. To detect mlg clusters, the infoMAP community detection
-algorithm was applied with 10,000 trials as implemented in the R package
-`igraph` version 0.7.1 utilizing genetic distance as edge weights and number of
-samples in each MLG as vertex weights [@csardi2006igraph; @rosvall2008maps].
+clonal data sets: H3N2 flu virus data from the `adegenet` package using years of
+each epidemic as the population factor, and *Phytophthora ramorum* data from
+Nurseries and Oregon forests [@jombart2010discriminant; @kamvar2014sudden].
+Minimum spanning networks were created with and without reticulation using the
+*poppr* functions `diss.dist` and `bruvo.msn` for the H3N2 and *P. ramorum*
+data, respectively [@kamvar2014poppr; @bruvo2004simple]. To detect mlg clusters,
+the infoMAP community detection algorithm was applied with 10,000 trials as
+implemented in the R package `igraph` version 0.7.1 utilizing genetic distance
+as edge weights and number of samples in each MLG as vertex weights
+[@csardi2006igraph; @rosvall2008maps].
 
 To evaluate the results, we compared the number and size of resulting
 communities as we expect a highly clonal organism with low genetic diversity to
@@ -427,21 +427,26 @@ populations.
 
 ## Minimum Spanning Networks {-}
 
+
+The infoMAP algorithm revealed 63 communities with a maximum community size of
+77 and $H = 3.56$ for the reticulate network of the H3N2 data and 117
+communities with a maximum community size of 26 and $H = 4.65$ for the minimum
+spanning tree. The entropy across years was greatly decreased for all
+populations with the reticulate network compared to the minimum spanning tree
+(Fig 2).
+
+![Fig. 2](poppr_frontiers_files/custom_figures/Figure-2.eps)
+
 Graph walking of the reticulated minimum spanning network of *P. ramorum* by the
-infoMAP algorithm revealed 16 communities with a maximum community size of 13.
-The un-reticulated minimum spanning tree revealed 20 communities with a maximum
-community size of 7. In the ability to predict Hunter Creek as belonging to a
-single community, the reticulated network was successful whereas the minimum
-spanning tree separated one genotype from that community. The entropy for the
-reticulated network was lower for all populations except for the Coast
-population. 
+infoMAP algorithm revealed 16 communities with a maximum community size of 13
+and $H = 2.60$. The un-reticulated minimum spanning tree revealed 20 communities
+with a maximum community size of 7 and $H = 2.96$. In the ability to predict
+Hunter Creek as belonging to a single community, the reticulated network was
+successful whereas the minimum spanning tree separated one genotype from that
+community. The entropy for the reticulated network was lower for all populations
+except for the Coast population.
 
 
-the infoMAP algorithm revealed 62 communities with a maximum community size of
-80 for the reticulate network of the H3N2 data and 117 communities with a
-maximum community size of 24 for the minimum spanning tree. The entropy across
-years was greatly decreased for all populations with the reticulate network
-compared to the minimum spanning tree.
 
 
 ## Speed {-}

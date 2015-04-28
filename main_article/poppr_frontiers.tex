@@ -392,18 +392,18 @@ function to walk through a distance matrix and minimum spanning tree to
 connect groups of nodes with edges of equal weight.
 
 To demonstrate the utility of minimum spanning network reticulation, we
-used two clonal data sets: \emph{Phytophthora ramorum} data from
-Nurseries and Oregon forests, and H3N2 flu virus data from the
-\texttt{adegenet} package using years as the population factor(Kamvar et
-al., 2014a; Jombart et al., 2010). Minimum spanning networks were
-created with and without reticulation using the \emph{poppr} functions
-\texttt{bruvo.msn} and \texttt{diss.dist} for the \emph{P. ramorum} and
-H3N2 data, respectively (Kamvar et al., 2014b; Bruvo et al., 2004). To
-detect mlg clusters, the infoMAP community detection algorithm was
-applied with 10,000 trials as implemented in the R package
-\texttt{igraph} version 0.7.1 utilizing genetic distance as edge weights
-and number of samples in each MLG as vertex weights (Csardi and Nepusz,
-2006; Rosvall and Bergstrom, 2008).
+used two clonal data sets: H3N2 flu virus data from the
+\texttt{adegenet} package using years of each epidemic as the population
+factor, and \emph{Phytophthora ramorum} data from Nurseries and Oregon
+forests (Jombart et al., 2010; Kamvar et al., 2014a). Minimum spanning
+networks were created with and without reticulation using the
+\emph{poppr} functions \texttt{diss.dist} and \texttt{bruvo.msn} for the
+H3N2 and \emph{P. ramorum} data, respectively (Kamvar et al., 2014b;
+Bruvo et al., 2004). To detect mlg clusters, the infoMAP community
+detection algorithm was applied with 10,000 trials as implemented in the
+R package \texttt{igraph} version 0.7.1 utilizing genetic distance as
+edge weights and number of samples in each MLG as vertex weights (Csardi
+and Nepusz, 2006; Rosvall and Bergstrom, 2008).
 
 To evaluate the results, we compared the number and size of resulting
 communities as we expect a highly clonal organism with low genetic
@@ -525,26 +525,46 @@ simulated populations.
 \subsection*{Minimum Spanning Networks}\label{minimum-spanning-networks}
 \addcontentsline{toc}{subsection}{Minimum Spanning Networks}
 
+The infoMAP algorithm revealed 63 communities with a maximum community
+size of 77 and \(H = 3.56\) for the reticulate network of the H3N2 data
+and 117 communities with a maximum community size of 26 and \(H = 4.65\)
+for the minimum spanning tree. The entropy across years was greatly
+decreased for all populations with the reticulate network compared to
+the minimum spanning tree (Fig 2).
+
+\includegraphics{poppr_frontiers_files/custom_figures/Figure-2.eps}
+
 Graph walking of the reticulated minimum spanning network of \emph{P.
 ramorum} by the infoMAP algorithm revealed 16 communities with a maximum
-community size of 13. The un-reticulated minimum spanning tree revealed
-20 communities with a maximum community size of 7. In the ability to
-predict Hunter Creek as belonging to a single community, the reticulated
-network was successful whereas the minimum spanning tree separated one
-genotype from that community. The entropy for the reticulated network
-was lower for all populations except for the Coast population.
-
-the infoMAP algorithm revealed 62 communities with a maximum community
-size of 80 for the reticulate network of the H3N2 data and 117
-communities with a maximum community size of 24 for the minimum spanning
-tree. The entropy across years was greatly decreased for all populations
-with the reticulate network compared to the minimum spanning tree.
+community size of 13 and \(H = 2.60\). The un-reticulated minimum
+spanning tree revealed 20 communities with a maximum community size of 7
+and \(H = 2.96\). In the ability to predict Hunter Creek as belonging to
+a single community, the reticulated network was successful whereas the
+minimum spanning tree separated one genotype from that community. The
+entropy for the reticulated network was lower for all populations except
+for the Coast population.
 
 \subsection*{Speed}\label{speed}
 \addcontentsline{toc}{subsection}{Speed}
 
 \section*{Discussion}\label{discussion}
 \addcontentsline{toc}{section}{Discussion}
+
+We have presented here new model-free tools for the analysis of genomic
+data from clonal populations.
+
+Creating structures like minimum spanning networks and dendrograms allow
+researchers to distill the most important information from large
+distance matrices, revealing patterns that could support hypotheses of
+differentiation or the lack thereof. Bifurcating dendrograms are most
+familiar to biologists as the interpretation of them is straightforward
+and bootstrap confidence values can easily be obtained due to the basic
+structure of the tree. Minimum spanning networks allow for a different
+view into populations, where samples themselves can be treated as
+internal nodes connecting other samples, which could effectively
+describe populations sampled through time. The drawback to these is that
+there is no clear method for a bootstrap procedure to obtain confidence
+intervals.
 
 Reticulate minimum spanning networks are very important for clonal
 organisms where a minimum spanning tree would become a chain, implying
@@ -558,10 +578,10 @@ reconstruction of the \emph{P. ramorum} outbreak in Curry County, OR
 {[}Kamvar et al. (2014a); kamvar2015spatial{]}. Reticulated networks
 also allow for the application of graph community detection algorithms
 such as the infoMAP algorithm, (Rosvall and Bergstrom, 2008). As shown
-in the \emph{P. ramorum} and H3N2 data, While it is possible to utilize
+in the \emph{P. ramorum} and H3N2 data, while it is possible to utilize
 these graph walking algorithms on non-reticulate minimum spanning trees,
 the results derived from these are limited to explain populations
-derived from serial cloning events and might not represent reality.
+derived from serial cloning events.
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
