@@ -419,7 +419,7 @@ spanning tree. The entropy across years was greatly decreased for all
 populations with the reticulate network compared to the minimum spanning tree
 (Fig 2).
 
-![Fig. 2](poppr_frontiers_files/custom_figures/Figure-2.eps)
+![Fig. 2](poppr_frontiers_files/custom_figures/Figure-2.png)
 
 Graph walking of the reticulated minimum spanning network of *P. ramorum* by the
 infoMAP algorithm revealed 16 communities with a maximum community size of 13
