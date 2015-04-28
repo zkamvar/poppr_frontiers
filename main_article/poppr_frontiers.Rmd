@@ -71,15 +71,16 @@ of any genetic distance.
 To paraphrase Dobzhansky, nothing in the field of plant-microbe interactions
 makes sense except in the light of population genetics [@dobzhansky2013nothing].
 Genetic forces such as selection and drift act on alleles in a population. Thus,
-a true understanding of how plant pathogens evolve and adapt to crops, fungicides, or other factors,
-can only emerge in the context of population level phenomena given the
-demographic history of populations [@Mcdonald2002; @grunwald2011evolution;
-@milgroom1989population]. The field of population genetics, in the era of whole
-genome resequencing, provides unprecedented power to describe the evolutionary
-history and population processes that drive coevolution between pathogens and
-hosts. This powerful field thus critically enables effective deployment of R
-genes, design of pathogen informed plant resistance breeding programs, and
-implementation of fungicide rotations that minimize emergence of resistance.
+a true understanding of how plant pathogens evolve and adapt to crops,
+fungicides, or other factors, can only emerge in the context of population level
+phenomena given the demographic history of populations [@Mcdonald2002;
+@grunwald2011evolution; @milgroom1989population]. The field of population
+genetics, in the era of whole genome resequencing, provides unprecedented power
+to describe the evolutionary history and population processes that drive
+coevolution between pathogens and hosts. This powerful field thus critically
+enables effective deployment of R genes, design of pathogen informed plant
+resistance breeding programs, and implementation of fungicide rotations that
+minimize emergence of resistance.
 
 Most computational tools for population genetics are based on concepts developed
 for sexual model organisms. Populations that reproduce clonally or are polyploid
@@ -332,8 +333,9 @@ as we expect a highly clonal organism with low genetic diversity to result in
 few, large communities. We also created contingency tables of the community
 assignments with the defined populations and used those to calculate entropy
 using Shannon's index with the function `diversity` from the R package `vegan`
-version 2.2-1 [@oksanen2015vegan; shannon1948]. A low entropy indicates few
-large communities whereas high entropy indicates many small communities.
+version 2.2-1 [@oksanen2015vegan; @shannon2001mathematical]. A low entropy
+indicates few large communities whereas high entropy indicates many small
+communities.
 
 
 ## Bootstrapping {-}
