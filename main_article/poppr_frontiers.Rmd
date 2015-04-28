@@ -161,21 +161,21 @@ to reproduce asexually [@kamvar2014poppr; @milgroom1996recombination;
 @grunwald2003analysis]. This method removes bias that would otherwise affect
 metrics that rely on allele frequencies. It was initially designed for data with
 only a handful of markers. With the advent of large-scale sequencing and
-reduced- representation libraries, it has become easier to sequence tens of
+reduced-representation libraries, it has become easier to sequence tens of
 thousands of markers from hundreds of individuals [@elshire2011robust;
-@davey2011genome; @davey2010rad]. With this number of markers, the genetic
+@davey2011genome; @davey2010rad]. With this larger number of markers, the genetic
 resolution is much greater, but the chance of genotyping error is also greatly
-increased [@mastretta2015restriction]. Taking this and somatic mutation into
+increased [@mastretta2015restriction]. Taking this fact and occasional somatic mutations into
 account, it would be impossible to separate true clones from independent
 individuals by just comparing what multilocus genotypes are different. We
-introduce a a new transparent method for collapsing unique multilocus genotypes
+introduce a new method for collapsing unique multilocus genotypes
 determined by naive string comparison into multilocus lineages utilizing any
 genetic distance given three different clustering algorithms: farthest neighbor,
 nearest neighbor, and UPGMA (average neighbor) [@sokal1958statistical].
 
 The clustering algorithms act on a distance matrix that is either provided by
 the user or generated via a function that will calculate a distance from
-genclone objects such as `bruvo.dist`, which will calculate Bruvo's distance at
+genclone objects such as `bruvo.dist`, which in particular applies to
 any level of ploidy [@bruvo2004simple]. All algorithms have been implemented in
 C and utilize the open MP framework for optional parallel processing. Default is
 the conservative farthest neighbor algorithm, which will only cluster samples
