@@ -309,7 +309,7 @@ curve in *poppr* is implemented by randomly sampling $x$ loci and counting the
 number of observed MLGs. This repeated $r$ times for 1 locus up to $n-1$ loci,
 creating $n-1$ distributions of observed MLGs.
 
-## Minimum Spanning Network Reticulation {-}
+## Minimum Spanning Networks with Reticulation {-}
 
 *Poppr* introduced minimum spanning networks in it's original iteration that
 were based off of igraph's function `minimum.spanning.tree` [@csardi2006igraph].
