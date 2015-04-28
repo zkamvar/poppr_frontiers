@@ -189,6 +189,8 @@ preliminary ultra-metric trees based off of genetic distance. This algorithm
 will cluster by creating a representative sample per cluster and joining
 clusters if these representative samples are closer than the given threshold.
 
+> ############ Need a reference for OpenMP!!! ##############
+
 ## Demonstration data: *P. infestans* {-}
 
 We utilize these data from *Phytophthora infestans* to show how the `mlg.filter`
