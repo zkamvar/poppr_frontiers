@@ -193,7 +193,7 @@ clusters if these representative samples are closer than the given threshold.
 
 ## Demonstration data: *P. infestans* {-}
 
-We utilize these data from *Phytophthora infestans* to show how the `mlg.filter`
+We utilize data from the microbe *Phytophthora infestans* to show how the `mlg.filter`
 function collapses multilocus genotypes with Bruvo's distance assuming a genome
 addition model [@bruvo2004simple]. *P. infestans* is the causal agent of potato
 late blight originating from Mexico and spread to Europe in the mid 19th century
@@ -202,11 +202,11 @@ both clonally and sexually. The clonal lineages of *P. infestans* have been
 formally defined into 18 separate clonal lineages using a combination of various
 molecular methods including AFLP and microsatellite markers [@lees2006novel].
 For these data, we used `mlg.filter` to detect all of the distance thresholds at
-which 18 multilocus lineages would be resolved. We the used these thresholds to
+which 18 multilocus lineages would be resolved. We used these thresholds to
 define multilocus lineages and create contingency tables and dendrograms to
 determine how well the multilocus lineages were detected.
 
-## Simulated data {-}
+## Demonstration data: Simulated data {-}
 
 To detect clonal lineages utilizing genomic data, we utilized simulated data
 constructed using the `glSim` function in adegenet [@jombart2011adegenet]. For
