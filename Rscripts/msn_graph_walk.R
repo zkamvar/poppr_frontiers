@@ -146,8 +146,8 @@ ggplot(melt(ent_table), aes(x = population, y = value, color = variable)) +
 #' pathogen, we expect to see larger communities. 
 sizes(clusts.ties)
 sizes(clusts.noties)
-modularity(clusts.ties)
-modularity(clusts.noties)
+vegan::diversity(sizes(clusts.ties))
+vegan::diversity(sizes(clusts.noties))
 #'
 #' What we are seeing is that the reticulations allow for more genotypes to be
 #' clustered together because there are more meaningful connections. 
@@ -213,8 +213,7 @@ plot(clusts, nf.msn$graph, vertex.size = log(V(nf.msn$graph)$size, 1.75) + 3,
 #' package.
 data("H3N2")
 hc <- as.genclone(H3N2) # For faster calculation of MLGs
-strata(hc) <- other(hc)$x
-setPop(hc) <- ~year
+pop(hc) <- other(H3N2)$epid
 virusPal <- colorRampPalette(RColorBrewer::brewer.pal(n = nPop(hc), "Set1"))
 #' 
 #' First the distance needs to be calculated. For this, we will simply use a 
@@ -227,11 +226,11 @@ hdist <- diss.dist(hc, percent = TRUE)
 hmsn.noties <- poppr.msn(hc, distmat = hdist, showplot = FALSE, palette = virusPal)
 hmsn.ties <- poppr.msn(hc, distmat = hdist, showplot = FALSE, palette = virusPal, 
                          include.ties = TRUE)
-set.seed(20150427)
+set.seed(20150428)
 hmsn.communities.noties <- infomap.community(hmsn.noties$graph, 
                                              v.weights = V(hmsn.noties$graph), 
                                              nb.trials = 1e4)
-set.seed(20150427)
+set.seed(20150428)
 hmsn.communities.ties <- infomap.community(hmsn.ties$graph, 
                                            v.weights = V(hmsn.ties$graph), 
                                            nb.trials = 1e4)
@@ -240,8 +239,12 @@ hmsn.communities.ties <- infomap.community(hmsn.ties$graph,
 #' Since there will be a lot of them, we can visualize them as barplots:
 plot(sizes(hmsn.communities.ties), main = "with reticulation",
      xlab = "Community", ylab = "Size")
+vegan::diversity(sizes(hmsn.communities.ties))
+max(sizes(hmsn.communities.ties))
 plot(sizes(hmsn.communities.noties), main = "without reticulation",
      xlab = "Community", ylab = "Size")
+vegan::diversity(sizes(hmsn.communities.noties))
+max(sizes(hmsn.communities.noties))
 #'
 #' Now we can take a look at the contingency tables:
 members.ties <- match_communities(hc, hmsn.communities.ties, hmsn.ties$graph)
@@ -259,19 +262,30 @@ table.value(noties.table, col.labels = popNames(hc))
 #+ entropy_graph_virus
 ent_table <- data.frame(`No Reticulation` = vegan::diversity(noties.table, MARGIN = 2),
                         `With Reticulation` = vegan::diversity(ties.table, MARGIN = 2),
-                        population = popNames(hc), check.names = FALSE)
-ggplot(melt(ent_table), aes(x = population, y = value, color = variable)) +
+                        year = popNames(hc), check.names = FALSE)
+ent_plot <- ggplot(melt(ent_table), 
+                   aes(x = year, y = value, shape = variable)) +
   geom_point(position = "identity", size = 5) +
-  ggtitle("H3N2 flu virus") + 
-  ylab("entropy") + 
-  PramCurry:::myTheme +
-  theme(legend.title = element_blank())
+  ylab("entropy (H)") + 
+  theme_linedraw() +
+  ylim(0, NA) + # Set zero as lower limit
+  scale_shape_manual(values = c(3, 5)) +  # shape reflects method
+  theme(legend.title = element_blank(), legend.position = "top",
+        panel.grid = element_blank())
+ent_plot
+ggsave(filename = "../main_article/poppr_frontiers_files/custom_figures/entropy.pdf",plot = ent_plot, width = 80, height = 50, units = "mm", scale = 2)
 #' 
 #+ H3N2_msns, cache = TRUE, fig.width = 10, fig.height = 10
 set.seed(20150427)
 HLAYOUT <- get_layout(hmsn.ties$graph)
 plot_poppr_msn(hc, hmsn.ties, layout = HLAYOUT, inds = "none", nodebase = 1.9,
-               gadj = 20, quantiles = FALSE)
+               gadj = 25, quantiles = FALSE, nodelab = 1e3, wscale = FALSE)
+
+pdf("../main_article/poppr_frontiers_files/custom_figures/H3N2-ties.pdf")
+plot_poppr_msn(hc, hmsn.ties, layout = HLAYOUT, inds = "none", nodebase = 1.9,
+               gadj = 25, quantiles = FALSE, nodelab = 1e3, wscale = FALSE)
+dev.off()
+
 plot(hmsn.communities.ties, hmsn.ties$graph, 
      vertex.size = log(V(hmsn.ties$graph)$size, 1.9) + 3, 
      layout = HLAYOUT, vertex.label = NA)
@@ -279,7 +293,29 @@ plot(hmsn.communities.ties, hmsn.ties$graph,
 set.seed(20150427)
 HLAYOUT <- get_layout(hmsn.noties$graph)
 plot_poppr_msn(hc, hmsn.noties, layout = HLAYOUT, inds = "none", nodebase = 1.9,
-               gadj = 20, quantiles = FALSE)
+               gadj = 25, quantiles = FALSE, nodelab = 1e3, wscale = FALSE)
+
+pdf("../main_article/poppr_frontiers_files/custom_figures/H3N2-noties.pdf")
+plot_poppr_msn(hc, hmsn.noties, layout = HLAYOUT, inds = "none", nodebase = 1.9,
+               gadj = 25, quantiles = FALSE, nodelab = 1e3, wscale = FALSE)
+dev.off()
+
 plot(hmsn.communities.noties, hmsn.noties$graph, 
      vertex.size = log(V(hmsn.noties$graph)$size, 1.9) + 3, 
      layout = HLAYOUT, vertex.label = NA)
+#'
+#' Now to show the dapc analysis for comparison.
+#+ H3N2 dapc
+dapc.H3N2 <- dapc(hc, var.contrib=TRUE, scale=FALSE, n.pca=30, n.da=10)
+scatter(dapc.H3N2, pch=19, cstar=0, mstree=TRUE, lwd=2, lty=2, clabel = FALSE,
+        col = virusPal(6), scree.da = FALSE)
+points(dapc.H3N2$ind.coord[, 1:2], pch = 21, bg = NA)
+legend("topleft", legend = popNames(hc), pt.bg = virusPal(6), pch = 21)
+pdf("../main_article/poppr_frontiers_files/custom_figures/H3N2-scatter.pdf", 
+    width = 4*3.14961,
+    height = 3*3.14961)
+scatter(dapc.H3N2, pch=19, cstar=0, mstree=TRUE, lwd=2, lty=2, clabel = FALSE,
+        col = virusPal(6), scree.da = FALSE)
+points(dapc.H3N2$ind.coord[, 1:2], pch = 21, bg = NA)
+legend("topleft", legend = popNames(hc), pt.bg = virusPal(6), pch = 21)
+dev.off()
