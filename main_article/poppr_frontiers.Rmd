@@ -152,7 +152,7 @@ square braces.
 
 # Materials and Methods {-}
 
-## Clone correction {-}
+## Clonal identification {-}
 
 As highlighted in previous work, clone correction is an important part of
 population genetic analysis of organisms that have cryptic growth or are known
@@ -170,23 +170,23 @@ individuals by just comparing what multilocus genotypes are different. We
 introduce a a new transparent method for collapsing unique multilocus genotypes
 determined by naive string comparison into multilocus lineages utilizing any
 genetic distance given three different clustering algorithms: farthest neighbor,
-nearest neighbor, and UPGMA (average neighbor) [citation needed].
+nearest neighbor, and UPGMA (average neighbor) [@sokal1958statistical].
 
 The clustering algorithms act on a distance matrix that is either provided by
 the user or generated via a function that will calculate a distance from
 genclone objects such as `bruvo.dist`, which will calculate Bruvo's distance at
-any level of ploidy. All algorithms have been implemented in C and utilize the
-open MP framework for optional parallel processing. Default is the conservative
-farthest neighbor algorithm, which will only cluster samples together only if
-all samples in the cluster are at a distance less than the given threshold. By
-contrast, the nearest neighbor algorithm will have a chaining effect that will
-cluster samples akin to adding links on a chain where a sample can be included
-in a cluster if all of the samples have at least one connection below a given
-threshold. The UPGMA, or average neighbor clustering algorithm is the one most
-familiar to biologists as it is often used to generate preliminary ultra-metric
-trees based off of genetic distance. This algorithm will cluster by creating a
-representative sample per cluster and joining clusters if these representative
-samples are closer than the given threshold.
+any level of ploidy [@bruvo2004simple]. All algorithms have been implemented in
+C and utilize the open MP framework for optional parallel processing. Default is
+the conservative farthest neighbor algorithm, which will only cluster samples
+together only if all samples in the cluster are at a distance less than the
+given threshold. By contrast, the nearest neighbor algorithm will have a
+chaining effect that will cluster samples akin to adding links on a chain where
+a sample can be included in a cluster if all of the samples have at least one
+connection below a given threshold. The UPGMA, or average neighbor clustering
+algorithm is the one most familiar to biologists as it is often used to generate
+preliminary ultra-metric trees based off of genetic distance. This algorithm
+will cluster by creating a representative sample per cluster and joining
+clusters if these representative samples are closer than the given threshold.
 
 ## Demonstration data: *P. infestans* {-}
 
@@ -229,16 +229,16 @@ of the data.
 The index of association ($I_A$) is a measure of multilocus linkage
 disequilibrium that is most often used to detect clonal reproduction within
 organisms that have the ability to reproduce via sexual or asexual processes
-[brown1980; maynard1993; @milgroom1996recombination]. It was standardized in
-2001 as $\bar{r}_d$ by [@Agapow_2001] to address the issue of scaling with
-increasing number of loci. This metric is typically applied to traditional
-dominant and co-dominant markers such as AFLPs, SNPs, or microsatellite markers.
-With the advent of high throughput sequencing, SNP data is now available in in a
-genome-wide context and in very large matrices including thousands of SNPs.
-Thus, the likelihood of finding mutations within two individuals of a given
-clone increases and tools are needed for defining clone boundaries. For this
-reason, we  devised two approaches using the index of association for large
-numbers of markers typical for population genomic studies. 
+[@brown1980multilocus; @smith1993how; @milgroom1996recombination]. It was
+standardized in 2001 as $\bar{r}_d$ by @Agapow_2001 to address the issue of
+scaling with increasing number of loci. This metric is typically applied to
+traditional dominant and co-dominant markers such as AFLPs, SNPs, or
+microsatellite markers. With the advent of high throughput sequencing, SNP data
+is now available in in a genome-wide context and in very large matrices
+including thousands of SNPs. Thus, the likelihood of finding mutations within
+two individuals of a given clone increases and tools are needed for defining
+clone boundaries. For this reason, we  devised two approaches using the index of
+association for large numbers of markers typical for population genomic studies.
 
 The first approach is a sliding window approach that would utilize the position
 of markers in the genome to calculate $\bar{r}_d$ among any number of SNPs found
@@ -249,15 +249,11 @@ disequilibrium across the genome that can detect potential hotspots of LD that
 could be investigated further with more computationally intensive methods
 assuming that the number of samples << the number of loci.
 
-A sliding window approach would not be good for utilizing $\bar{r}_d$ as a test
-for clonal reproduction as it would necessarily focus on loci within a short
-section of the genome that may or may not be recombining. A remedy for this is
-to randomly sample $m$ loci, calculate $\bar{r}_d$ and repeat $r$ times,
-creating a distribution of expected values of $\bar{r}_d$. 
-
-As the data for this would be stored in a genlight object, which stores genetic
-information in bits, the calculations of $\bar{r}_d$ are performed in
-parallelized bit level C code for efficiency [@Jombart_2008].
+As it would necessarily focus on loci within a short section of the genome that
+may or may not be recombining, a sliding window approach would not be good for
+utilizing $\bar{r}_d$ as a test for clonal reproduction. A remedy for this is to
+randomly sample $m$ loci, calculate $\bar{r}_d$ and repeat $r$ times, creating a
+distribution of expected values of $\bar{r}_d$.
 
 <!--
  - Clone correction based on genetic distance
@@ -292,9 +288,11 @@ impetus was placed on the researchers to provide the population hierarchies for
 every step of the analysis. In poppr version 1.1, the hierarchy slot was
 introduced to allow unlimited population hierarchies or stratifications to
 travel with the data. In practice, it is stored as a data frame where each
-column represents a separate hierarchical level. The user could then define the
-population factor for the data by providing a hierarchical formula that would
-contain one or more levels from the hierarchy slot to be combined.
+column represents a separate hierarchical level. This is then used to set the
+population factor of the data by supplying a hierarchical formula containing one
+or more column names of the data frame in the hierarchy slot. This
+functionality, developed in *poppr*, has been moved to the *adegenet* package in
+version 2.0 and the slot and methods have been renamed to `strata`.
 
 ## Genotype Accumulation Curve {-}
 
@@ -364,26 +362,18 @@ facilitate bootstrapping, a function called aboot, which stands for "any boot",
 is introduced that will bootstrap any genclone, genind, or genpop object with
 any genetic distance that can be calculated from it.
 
-## Additions {-}
-
-- Psex
-- Bootstrapping for individuals or populations for any genetic distance
-- MLG clustering
-- Index of Association for genomic sequences
-- Parallelization
-- Genotype Accumulation Curve
-- Matching Ties in Minimum Spanning networks (Cite ramorum paper)
-
 # Results {-}
 
 ## Clonal identification {-}
 
-## Filtering *P. infestans* MLGs {-}
-
-The three algorithms were able to detect 18 multilocus lineages at different
-distance thresholds (Fig. 1). Contingency tables between the described multilocus
-genotypes and the genotypes defined by distance show that most of the 18
-lineages were resolved, except for US-8, which is polytomic (Table 1).
+With the *P. infestans* data, the three algorithms were able to detect 18
+multilocus lineages at different distance thresholds (Fig. 1). Contingency
+tables between the described multilocus genotypes and the genotypes defined by
+distance show that most of the 18 lineages were resolved, except for US-8, which
+is polytomic (Table 1). Out of the 100 simulations run, we found that across all
+methods, detection of duplicated samples had $\sim$ 98% true positive fraction
+and $\sim$ 0.8% false positive fraction indicating that this method is robust to
+simulated populations.
 
 
 > Nik, these are just to see how the figures look in the paper, the actual figures need to be uploaded separately, according to the frontiers specifications.
@@ -417,13 +407,6 @@ res[res == 0] <- "."
 print.xtable(xtable(res, align = rep("c", ncol(res) + 1)), comment = FALSE)
 ```
 
-## Simulations {-}
-
-100 simulations were run. We found that across all methods, detection of
-duplicated samples had $\sim$ 97% true positive fraction and $\sim$ 2% false
-positive fraction indicating that this method is robust to simulated
-populations.
-
 
 ## Minimum Spanning Networks {-}
 
@@ -447,9 +430,6 @@ community. The entropy for the reticulated network was lower for all populations
 except for the Coast population.
 
 
-
-
-## Speed {-}
 
 # Discussion {-}
 
