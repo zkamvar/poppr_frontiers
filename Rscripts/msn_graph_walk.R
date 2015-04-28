@@ -122,17 +122,25 @@ members.noties <- match_communities(for2nur, clusts.noties, nf.msn.noties$graph)
 #' Now, we are comparing the memberships vs. the populations
 ties_table   <- table(members.ties, pop(for2nur))
 noties_table <- table(members.noties, pop(for2nur))
+plot(sizes(clusts.ties), main = "with reticulation",
+     xlab = "Community", ylab = "Size")
+plot(sizes(clusts.noties), main = "without reticulation",
+     xlab = "Community", ylab = "Size")
 table.value(ties_table, col.labels = popNames(for2nur))
 table.value(noties_table, col.labels = popNames(for2nur))
 #' 
 #' We can utilize the Shannon index to investigate entropy.
 #' 
-ent_table <- data.frame(noties = vegan::diversity(noties_table, MARGIN = 2),
-                        ties = vegan::diversity(ties_table, MARGIN = 2),
-                        population = popNames(for2nur))
+#+ entropy_graph_ramorum
+ent_table <- data.frame(`No Reticulation` = vegan::diversity(noties_table, MARGIN = 2),
+                        `With Reticulation` = vegan::diversity(ties_table, MARGIN = 2),
+                        population = popNames(for2nur), check.names = FALSE)
 ggplot(melt(ent_table), aes(x = population, y = value, color = variable)) +
   geom_point(position = "identity", size = 5) +
-  ylab("entropy") + PramCurry:::myTheme
+  ggtitle("P. ramorum") + 
+  ylab("entropy") + 
+  PramCurry:::myTheme +
+  theme(legend.title = element_blank(), plot.title = element_text(face = "italic"))
 #'
 #' One other thing to look at is the sizes of the communities. With a clonal
 #' pathogen, we expect to see larger communities. 
@@ -163,12 +171,12 @@ MASTER <- get_layout(nf.msn$graph, LAYOUT = layout.fruchterman.reingold)
 plot_poppr_msn(for2nur, nf.msn, gad = 10, palette = thisPal, mlg = TRUE, 
                layfun = MASTER, nodebase = 1.75, vertex.label.font = 2,
                quantiles = FALSE, #inds = "none",
-               vertex.label.color = "firebrick",
-               mark.groups = nodeList[theClusts], 
-               mark.border = names(nodeList)[theClusts],
-               mark.col = transp(names(nodeList)[theClusts], 0.05),
-               mark.expand = 2,
-               mark.shape = 0)
+               vertex.label.color = "firebrick")#,
+#                mark.groups = nodeList[theClusts], 
+#                mark.border = names(nodeList)[theClusts],
+#                mark.col = transp(names(nodeList)[theClusts], 0.05),
+#                mark.expand = 2,
+#                mark.shape = 0)
 plot(clusts, nf.msn$graph, vertex.size = log(V(nf.msn$graph)$size, 1.75) + 3, 
      vertex.label = NA, layout = MASTER)
 
@@ -189,12 +197,12 @@ MASTER <- get_layout(nf.msn$graph, LAYOUT = layout.auto)
 plot_poppr_msn(for2nur, nf.msn, gad = 10, palette = thisPal, mlg = TRUE, 
                layfun = MASTER, nodebase = 1.75, vertex.label.font = 2,
                quantiles = FALSE, #inds = "none",
-               vertex.label.color = "firebrick",
-               mark.groups = nodeList[theClusts], 
-               mark.border = names(nodeList)[theClusts],
-               mark.col = transp(names(nodeList)[theClusts], 0.05),
-               mark.expand = 2,
-               mark.shape = 0)
+               vertex.label.color = "firebrick")#,
+#                mark.groups = nodeList[theClusts], 
+#                mark.border = names(nodeList)[theClusts],
+#                mark.col = transp(names(nodeList)[theClusts], 0.05),
+#                mark.expand = 2,
+#                mark.shape = 0)
 plot(clusts, nf.msn$graph, vertex.size = log(V(nf.msn$graph)$size, 1.75) + 3, 
      vertex.label = NA, layout = MASTER)
 #' 
@@ -222,16 +230,18 @@ hmsn.ties <- poppr.msn(hc, distmat = hdist, showplot = FALSE, palette = virusPal
 set.seed(20150427)
 hmsn.communities.noties <- infomap.community(hmsn.noties$graph, 
                                              v.weights = V(hmsn.noties$graph), 
-                                             nb.trials = 1e3)
+                                             nb.trials = 1e4)
 set.seed(20150427)
 hmsn.communities.ties <- infomap.community(hmsn.ties$graph, 
                                            v.weights = V(hmsn.ties$graph), 
-                                           nb.trials = 1e3)
+                                           nb.trials = 1e4)
 #' 
 #' Let's compare these, shall we? First, let's look at the community sizes.
 #' Since there will be a lot of them, we can visualize them as barplots:
-plot(sizes(hmsn.communities.ties), main = "with reticulation")
-plot(sizes(hmsn.communities.noties), main = "without reticulation")
+plot(sizes(hmsn.communities.ties), main = "with reticulation",
+     xlab = "Community", ylab = "Size")
+plot(sizes(hmsn.communities.noties), main = "without reticulation",
+     xlab = "Community", ylab = "Size")
 #'
 #' Now we can take a look at the contingency tables:
 members.ties <- match_communities(hc, hmsn.communities.ties, hmsn.ties$graph)
@@ -245,12 +255,17 @@ table.value(noties.table, col.labels = popNames(hc))
 #' A markded difference! Now onto the graphs!
 #' 
 #' We can examine the information contained within these tables:
-ent_table <- data.frame(noties = vegan::diversity(noties.table, MARGIN = 2),
-                        ties = vegan::diversity(ties.table, MARGIN = 2),
-                        population = popNames(hc))
+#' 
+#+ entropy_graph_virus
+ent_table <- data.frame(`No Reticulation` = vegan::diversity(noties.table, MARGIN = 2),
+                        `With Reticulation` = vegan::diversity(ties.table, MARGIN = 2),
+                        population = popNames(hc), check.names = FALSE)
 ggplot(melt(ent_table), aes(x = population, y = value, color = variable)) +
   geom_point(position = "identity", size = 5) +
-  ylab("entropy") + PramCurry:::myTheme
+  ggtitle("H3N2 flu virus") + 
+  ylab("entropy") + 
+  PramCurry:::myTheme +
+  theme(legend.title = element_blank())
 #' 
 #+ H3N2_msns, cache = TRUE, fig.width = 10, fig.height = 10
 set.seed(20150427)

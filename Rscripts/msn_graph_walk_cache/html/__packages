@@ -4,3 +4,5 @@ adegenet
 poppr
 PramCurry
 igraph
+ggplot2
+reshape2
