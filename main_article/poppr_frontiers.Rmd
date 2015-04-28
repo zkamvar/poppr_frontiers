@@ -448,6 +448,20 @@ compared to the minimum spanning tree.
 
 # Discussion {-}
 
+We have presented here new model-free tools for the analysis of genomic data
+from clonal populations. 
+
+Creating structures like minimum spanning networks and dendrograms allow
+researchers to distill the most important information from large distance
+matrices, revealing patterns that could support hypotheses of differentiation or
+the lack thereof. Bifurcating dendrograms are most familiar to biologists as the
+interpretation of them is straightforward and bootstrap confidence values can
+easily be obtained due to the basic structure of the tree. Minimum spanning
+networks allow for a different view into populations, where samples themselves
+can be treated as internal nodes connecting other samples, which could
+effectively describe populations sampled through time. The drawback to these is
+that there is no clear method for a bootstrap procedure to obtain confidence
+intervals.
 
 Reticulate minimum spanning networks are very important for clonal organisms
 where a minimum spanning tree would become a chain, implying that the clones
@@ -460,9 +474,9 @@ such as reconstruction of the *P. ramorum* outbreak in Curry County, OR
 [@kamvar2014sudden; kamvar2015spatial]. Reticulated networks also allow for the
 application of graph community detection algorithms such as the infoMAP
 algorithm, [@rosvall2008maps]. As shown in the *P. ramorum* and H3N2 data,
-While it is possible to utilize these graph walking algorithms on non-reticulate
+while it is possible to utilize these graph walking algorithms on non-reticulate
 minimum spanning trees, the results derived from these are limited to explain
-populations derived from serial cloning events and might not represent reality.
+populations derived from serial cloning events. 
 
 - bootstrapping methods encourage future developers to write distance implementations in common format
 - moving towards open source, modular tools is the direction that population genetics and plant pathology needs to go. 
