@@ -468,7 +468,7 @@ populations derived from serial cloning events.
 
 ## Figure 1 {-}
 
-```{r, pinf_data, echo = FALSE, message = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 4*1.5, fig.height = 4*1.5}
+```{r, pinf_data, echo = FALSE, message = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 4*1.5, fig.height = 4*1.5, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 source("../Rscripts/my_functions.R")
 library('poppr')
 library('ape')
@@ -492,13 +492,13 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 
 ## Figure 3 {-}
 
-```{r, microboot2, cache = TRUE, ref.label = "microboot", echo = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 5, fig.height = 5}
+```{r, microboot2, cache = TRUE, ref.label = "microboot", echo = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 5, fig.height = 5, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 
 ```
 
 ## Figure 4 {-}
 
-```{r, monilinia, cache = TRUE, ref.label = "monilinia_curve", echo = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE}
+```{r, monilinia, cache = TRUE, ref.label = "monilinia_curve", echo = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 
 ```
 ## Supplementary figure? {-}
