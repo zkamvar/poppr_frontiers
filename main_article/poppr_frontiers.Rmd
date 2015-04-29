@@ -459,10 +459,10 @@ potential scenario for clonal organisms, but does not account for any other
 biologically relevant process. Reticulations in the minimum spanning networks
 allow for a representation of uncertainty that goes along with clonal organisms.
 The current implementation in *poppr* has been successfully used in analyses
-such as reconstruction of the *P. ramorum* outbreak in Curry County, OR
+such as reconstruction of the *P. ramorum* epidemic in Curry County, OR
 [@kamvar2014sudden; @kamvar2015spatial]. Reticulated networks also allow for the
 application of graph community detection algorithms such as the infoMAP
-algorithm, [@rosvall2008maps]. As shown in the *P. ramorum* and H3N2 data,
+algorithm [@rosvall2008maps]. As shown in the *P. ramorum* and H3N2 data,
 while it is possible to utilize these graph walking algorithms on non-reticulate
 minimum spanning trees, the results derived from these are limited to explain
 populations derived from serial cloning events. 
