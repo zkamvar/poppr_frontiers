@@ -424,7 +424,7 @@ from @everhart2014fine showing that these data reach a small plateau, indicating
 that there are enough markers such that adding more markers to the analysis will
 not create very many new genotypes (Fig. 4).
 
-```{r, monolinia_curve, cache = TRUE, message = FALSE, out.width = "80mm", out.height = "80mm", fig.width = 5, fig.height = 5, fig.show = "hide", fig.keep = "last"}
+```{r, monilinia_curve, cache = TRUE, message = FALSE, out.width = "80mm", out.height = "80mm", fig.width = 5, fig.height = 5, fig.show = "hide", fig.keep = "last"}
 library("poppr")
 library("ggplot2")
 data("monpop", package = "poppr")
@@ -501,9 +501,7 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 
 ## Figure 4 {-}
 
-![Fig. 3](poppr_frontiers_files/figure-latex/monolinia_curve-1.pdf)
-
-> ### Pathogen genus is mispelled. Should be Monilinia ... ###
+![Fig. 3](poppr_frontiers_files/figure-latex/monilinia_curve-1.pdf)
 
 ## Supplementary figure? {-}
 ```{r, pinf_tree, echo = FALSE, message = FALSE, fig.height = 10, fig.width = 5}
@@ -557,7 +555,7 @@ out of 1,000 bootstrap replicates.
 ## Figure 4 {-}
 
 Genotype accumulation curve for 694 isolates of the peach brown rot pathogen,
-*Monolinia fructicola* genotyped over 13 loci from @everhart2014fine. The
+*Monilinia fructicola* genotyped over 13 loci from @everhart2014fine. The
 horizontal axis represents the number of loci randomly sampled without
 replacement up to $n - 1$ loci, the vertical axis shows the number of multilocus
 genotypes observed, up to 262, the number of unique multilocus genotypes in the
