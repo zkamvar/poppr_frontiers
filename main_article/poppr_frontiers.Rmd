@@ -317,25 +317,25 @@ creating $n-1$ distributions of observed MLGs.
 ## Minimum Spanning Networks with Reticulation {-}
 
 In its original iteration, *poppr* introduced minimum spanning networks that
-were based on the igraph function `minimum.spanning.tree` [@csardi2006igraph].
+were based on the *igraph* function `minimum.spanning.tree` [@csardi2006igraph].
 This algorithm produces a minimum spanning tree with no reticulations, which is
 common and expected for clonal organisms. In other minimum spanning network
 programs, reticulation is obtained by calculating the minimum spanning tree
 several times and returning the set of all edges included in the trees. Due to
-the way igraph has implemented Prim's algorithm, it is not possible to utilize
-this strategy, thus we implemented a C function to walk the sapce of minimum
+the way *igraph* has implemented Prim's algorithm, it is not possible to utilize
+this strategy, thus we implemented a C function to walk the space of minimum
 spanning trees based on genetic distance to connect groups of nodes with edges
 of equal weight.
 
 To demonstrate the utility of minimum spanning networks with reticulation, we
-used two clonal data sets: H3N2 flu virus data from the `adegenet` package using
+used two clonal data sets: H3N2 flu virus data from the *adegenet* package using
 years of each epidemic as the population factor, and *Phytophthora ramorum* data
 from Nurseries and Oregon forests [@jombart2010discriminant; @kamvar2014sudden].
 Minimum spanning networks were created with and without reticulation using the
 *poppr* functions `diss.dist` and `bruvo.msn` for the H3N2 and *P. ramorum*
 data, respectively [@kamvar2014poppr; @bruvo2004simple]. To detect mlg clusters,
 the infoMAP community detection algorithm was applied with 10,000 trials as
-implemented in the R package `igraph` version 0.7.1 utilizing genetic distance
+implemented in the R package *igraph* version 0.7.1 utilizing genetic distance
 as edge weights and number of samples in each MLG as vertex weights
 [@csardi2006igraph; @rosvall2008maps].
 
@@ -344,7 +344,7 @@ communities as we expect a highly clonal organism with low genetic diversity to
 result in a few, large communities. We also created contingency tables of the
 community assignments with the defined populations and used those to calculate
 entropy using Shannon's index with the function `diversity` from the R package
-`vegan` version 2.2-1 [@oksanen2015vegan; @shannon2001mathematical]. A low
+*vegan* version 2.2-1 [@oksanen2015vegan; @shannon2001mathematical]. A low
 entropy indicates presence of a few large communities whereas high entropy
 indicates presence of many small communities.
 
@@ -371,7 +371,7 @@ any genetic distance that can be calculated from it.
 
 # Results {-}
 
-## Demonstration: Clonal identification {-}
+## Clonal identification {-}
 
 With the *P. infestans* data, the three algorithms were able to detect 18
 multilocus lineages at different distance thresholds (Fig. 1). Contingency
@@ -383,7 +383,7 @@ and $\sim$ 0.8% false positive fraction indicating that this method is robust to
 simulated populations.
 
 
-## Demonstration: Minimum Spanning Network Reticulation {-}
+## Minimum Spanning Network Reticulation {-}
 
 The infoMAP algorithm revealed 63 communities with a maximum community size of
 77 and $H = 3.56$ for the reticulate network of the H3N2 data and 117
@@ -399,10 +399,27 @@ with a maximum community size of 7 and $H = 2.96$. In the ability to predict
 Hunter Creek as belonging to a single community, the reticulated network was
 successful whereas the minimum spanning tree separated one genotype from that
 community. The entropy for the reticulated network was lower for all populations
-except for the Coast population.
+except for the Coast population (supplementary information).
 
-## 
+## Example: Bootstrap population dendrogram {-}
 
+```{r, microboot, cache = TRUE, message = FALSE, out.width = "80mm", out.height = "80mm", fig.width = 5, fig.height = 5}
+library("poppr")
+data("microbov", package = "adegenet") 
+strata(microbov) <- data.frame(other(microbov)) 
+setPop(microbov) <- ~coun/spe/breed 
+bov_pop <- genind2genpop(microbov, quiet = TRUE) 
+set.seed(20150428)
+pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
+```
+## Example: Genotype accumulation curve {-}
+
+```{r, monolinia_curve, cache = TRUE, message = FALSE, out.width = "80mm", out.height = "80mm", fig.width = 5, fig.height = 5}
+library("poppr")
+data("monpop", package = "poppr")
+set.seed(20150428)
+invisible(genotype_curve(monpop, sample = 1000, quiet = TRUE))
+```
 
 
 # Discussion {-}

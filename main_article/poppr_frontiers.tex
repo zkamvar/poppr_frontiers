@@ -390,20 +390,20 @@ Reticulation}\label{minimum-spanning-networks-with-reticulation}
 Reticulation}
 
 In its original iteration, \emph{poppr} introduced minimum spanning
-networks that were based on the igraph function
+networks that were based on the \emph{igraph} function
 \texttt{minimum.spanning.tree} (Csardi and Nepusz, 2006). This algorithm
 produces a minimum spanning tree with no reticulations, which is common
 and expected for clonal organisms. In other minimum spanning network
 programs, reticulation is obtained by calculating the minimum spanning
 tree several times and returning the set of all edges included in the
-trees. Due to the way igraph has implemented Prim's algorithm, it is not
-possible to utilize this strategy, thus we implemented a C function to
-walk the sapce of minimum spanning trees based on genetic distance to
-connect groups of nodes with edges of equal weight.
+trees. Due to the way \emph{igraph} has implemented Prim's algorithm, it
+is not possible to utilize this strategy, thus we implemented a C
+function to walk the space of minimum spanning trees based on genetic
+distance to connect groups of nodes with edges of equal weight.
 
 To demonstrate the utility of minimum spanning networks with
 reticulation, we used two clonal data sets: H3N2 flu virus data from the
-\texttt{adegenet} package using years of each epidemic as the population
+\emph{adegenet} package using years of each epidemic as the population
 factor, and \emph{Phytophthora ramorum} data from Nurseries and Oregon
 forests (Jombart et al., 2010; Kamvar et al., 2014a). Minimum spanning
 networks were created with and without reticulation using the
@@ -411,16 +411,16 @@ networks were created with and without reticulation using the
 H3N2 and \emph{P. ramorum} data, respectively (Kamvar et al., 2014b;
 Bruvo et al., 2004). To detect mlg clusters, the infoMAP community
 detection algorithm was applied with 10,000 trials as implemented in the
-R package \texttt{igraph} version 0.7.1 utilizing genetic distance as
-edge weights and number of samples in each MLG as vertex weights (Csardi
-and Nepusz, 2006; Rosvall and Bergstrom, 2008).
+R package \emph{igraph} version 0.7.1 utilizing genetic distance as edge
+weights and number of samples in each MLG as vertex weights (Csardi and
+Nepusz, 2006; Rosvall and Bergstrom, 2008).
 
 To evaluate the results, we compared the number and size of resulting
 communities as we expect a highly clonal organism with low genetic
 diversity to result in a few, large communities. We also created
 contingency tables of the community assignments with the defined
 populations and used those to calculate entropy using Shannon's index
-with the function \texttt{diversity} from the R package \texttt{vegan}
+with the function \texttt{diversity} from the R package \emph{vegan}
 version 2.2-1 (Oksanen et al., 2015; Shannon, 2001). A low entropy
 indicates presence of a few large communities whereas high entropy
 indicates presence of many small communities.
@@ -452,9 +452,8 @@ calculated from it.
 \section*{Results}\label{results}
 \addcontentsline{toc}{section}{Results}
 
-\subsection*{Demonstration: Clonal
-identification}\label{demonstration-clonal-identification}
-\addcontentsline{toc}{subsection}{Demonstration: Clonal identification}
+\subsection*{Clonal identification}\label{clonal-identification-1}
+\addcontentsline{toc}{subsection}{Clonal identification}
 
 With the \emph{P. infestans} data, the three algorithms were able to
 detect 18 multilocus lineages at different distance thresholds (Fig. 1).
@@ -466,10 +465,9 @@ duplicated samples had \(\sim\) 98\% true positive fraction and \(\sim\)
 0.8\% false positive fraction indicating that this method is robust to
 simulated populations.
 
-\subsection*{Demonstration: Minimum Spanning Network
-Reticulation}\label{demonstration-minimum-spanning-network-reticulation}
-\addcontentsline{toc}{subsection}{Demonstration: Minimum Spanning
-Network Reticulation}
+\subsection*{Minimum Spanning Network
+Reticulation}\label{minimum-spanning-network-reticulation}
+\addcontentsline{toc}{subsection}{Minimum Spanning Network Reticulation}
 
 The infoMAP algorithm revealed 63 communities with a maximum community
 size of 77 and \(H = 3.56\) for the reticulate network of the H3N2 data
@@ -486,9 +484,39 @@ and \(H = 2.96\). In the ability to predict Hunter Creek as belonging to
 a single community, the reticulated network was successful whereas the
 minimum spanning tree separated one genotype from that community. The
 entropy for the reticulated network was lower for all populations except
-for the Coast population.
+for the Coast population (supplementary information).
 
-\subsection{}\label{section}
+\subsection*{Example: Bootstrap population
+dendrogram}\label{example-bootstrap-population-dendrogram}
+\addcontentsline{toc}{subsection}{Example: Bootstrap population
+dendrogram}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+library("poppr")
+data("microbov", package = "adegenet") 
+strata(microbov) <- data.frame(other(microbov)) 
+setPop(microbov) <- ~coun/spe/breed 
+bov_pop <- genind2genpop(microbov, quiet = TRUE) 
+set.seed(20150428)
+pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
+\end{CodeInput}
+
+\includegraphics[width=80mm,height=80mm]{poppr_frontiers_files/figure-latex/microboot-1} \end{CodeChunk}
+
+\subsection*{Example: Genotype accumulation
+curve}\label{example-genotype-accumulation-curve}
+\addcontentsline{toc}{subsection}{Example: Genotype accumulation curve}
+
+\begin{CodeChunk}
+\begin{CodeInput}
+library("poppr")
+data("monpop", package = "poppr")
+set.seed(20150428)
+invisible(genotype_curve(monpop, sample = 1000, quiet = TRUE))
+\end{CodeInput}
+
+\includegraphics[width=80mm,height=80mm]{poppr_frontiers_files/figure-latex/monolinia_curve-1} \end{CodeChunk}
 
 \section*{Discussion}\label{discussion}
 \addcontentsline{toc}{section}{Discussion}
