@@ -292,12 +292,16 @@ sample after clones were created, ensuring that no two sequences were
 alike. The number of mutations and missing data per sample were
 determined by sampling from a poisson distribution with
 \(\lambda = 1000\). After pooling, 20\% of the data set was randomly
-sampled for analysis. Genetic distance was represented as the fraction
-of different sites between samples, counting missing data as equivalent
-in comparison. Since each data set would have varying distances between
-samples, the clonal boundary threshold was defined as the midpoint of
-the largest gap between two thresholds that collapsed less than 50\% of
-the data.
+sampled for analysis. Genetic distance was obtained with the function
+\texttt{bitwise.dist}, which calculates the fraction of different sites
+between samples, counting missing data as equivalent in comparison.
+
+All three filtering algorithms were run with a threshold of 1, returning
+a numeric vector of length \(n - 1\) where each element represented a
+threshold at which two samples/clusters would join. Since each data set
+would have varying distances between samples, the clonal boundary
+threshold was defined as the midpoint of the largest gap between two
+thresholds that collapsed less than 50\% of the data.
 
 \subsection*{Index of association}\label{index-of-association}
 \addcontentsline{toc}{subsection}{Index of association}
@@ -495,6 +499,7 @@ data("microbov", package = "adegenet")
 strata(microbov) <- data.frame(other(microbov)) 
 setPop(microbov) <- ~coun/spe/breed 
 bov_pop <- genind2genpop(microbov, quiet = TRUE) 
+
 set.seed(20150428)
 pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
 \end{CodeInput}
@@ -515,9 +520,10 @@ more markers to the analysis will not create very many new genotypes
 library("poppr")
 library("ggplot2")
 data("monpop", package = "poppr")
+
 set.seed(20150428)
 genotype_curve(monpop, sample = 1000, quiet = TRUE)
-p <- last_plot()                # get the last plot
+p <- last_plot() + theme_bw()   # get the last plot
 p + geom_smooth(aes(group = 1)) # plot with a trendline
 \end{CodeInput}
 \end{CodeChunk}
@@ -525,8 +531,9 @@ p + geom_smooth(aes(group = 1)) # plot with a trendline
 \section*{Discussion}\label{discussion}
 \addcontentsline{toc}{section}{Discussion}
 
-We have presented here new model-free tools for the analysis of genomic
-data from clonal populations.
+We have presented here new model-free tools for the analysis of clonal
+populations with emphasis on genomic-scale data. Especially important is
+\texttt{mlg.filter}, which
 
 Creating structures like minimum spanning networks and dendrograms allow
 researchers to distill the most important information from large
@@ -596,13 +603,6 @@ serial cloning events.
 \begin{CodeChunk}
 
 \includegraphics[width=80mm,height=80mm]{poppr_frontiers_files/figure-latex/monilinia-1} \end{CodeChunk}
-
-\subsection*{Supplementary figure?}\label{supplementary-figure}
-\addcontentsline{toc}{subsection}{Supplementary figure?}
-
-\begin{CodeChunk}
-
-\includegraphics{poppr_frontiers_files/figure-latex/pinf_tree-1} \end{CodeChunk}
 
 \subsection*{Table 1}\label{table-1}
 \addcontentsline{toc}{subsection}{Table 1}

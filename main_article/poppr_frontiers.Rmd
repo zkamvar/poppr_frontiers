@@ -414,6 +414,7 @@ data("microbov", package = "adegenet")
 strata(microbov) <- data.frame(other(microbov)) 
 setPop(microbov) <- ~coun/spe/breed 
 bov_pop <- genind2genpop(microbov, quiet = TRUE) 
+
 set.seed(20150428)
 pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
 ```
@@ -428,9 +429,10 @@ not create very many new genotypes (Fig. 4).
 library("poppr")
 library("ggplot2")
 data("monpop", package = "poppr")
+
 set.seed(20150428)
 genotype_curve(monpop, sample = 1000, quiet = TRUE)
-p <- last_plot()                # get the last plot
+p <- last_plot() + theme_bw()   # get the last plot
 p + geom_smooth(aes(group = 1)) # plot with a trendline
 ```
 
@@ -505,12 +507,15 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 ```{r, monilinia, cache = TRUE, ref.label = "monilinia_curve", echo = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 
 ```
+
+<!--
 ## Supplementary figure? {-}
-```{r, pinf_tree, echo = FALSE, message = FALSE, fig.height = 10, fig.width = 5}
+```{r, pinf_tree, eval = FALSE, echo = FALSE, message = FALSE, fig.height = 10, fig.width = 5}
 pinfupgma <- upgma(bruvo.dist(x, replen = ssr, loss = FALSE))
 color_mlg_tree(x, pinfupgma, z)
 axisPhylo(3)
 ```
+-->
 
 ## Table 1 {-}
 ```{r pinf_table, echo = FALSE, message = FALSE, results='asis'}
