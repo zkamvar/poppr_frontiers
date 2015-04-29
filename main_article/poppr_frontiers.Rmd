@@ -152,9 +152,9 @@ square braces.
 -->
 
 
-> ##### I am wondering if need to structure the paper into MEthods and Demo sections, rather that results. #####
+> NIK: I am wondering if need to structure the paper into MEthods and Demo sections, rather that results.
 
-> %%%%% We can, but it must be a subsection. 
+> ZHIAN: We can, but it must be a subsection. 
 
 # Materials and Methods {-}
 

@@ -115,7 +115,7 @@ previously contributed the R package \textit{poppr} specifically addressing
 issues with analysis of clonal populations. In this paper we provide several
 significant extensions to \textit{poppr} with a focus on large, genome wide SNP
 data. Specifically, we provide analyses across any level of hierarchies, a new
-function to define clone boundaries we call \texttt{clone\_caller} allowing for
+function to define clone boundaries we call \texttt{mlg.filter} allowing for
 inspection and definition of what is a clonal lineage, and the index of
 association for reduced representation genomic data, and modular bootstrapping
 of any genetic distance.
@@ -210,86 +210,96 @@ user-specified clones based on genetic distance, sliding window
 analyses, genotype accumulation curves, reticulations in minimum
 spanning networks, and bootstrapping for any genetic distance.
 
+\begin{quote}
+NIK: I am wondering if need to structure the paper into MEthods and Demo
+sections, rather that results.
+\end{quote}
+
+\begin{quote}
+ZHIAN: We can, but it must be a subsection.
+\end{quote}
+
 \section*{Materials and Methods}\label{materials-and-methods}
 \addcontentsline{toc}{section}{Materials and Methods}
 
 \subsection*{Clonal identification}\label{clonal-identification}
 \addcontentsline{toc}{subsection}{Clonal identification}
 
-As highlighted in previous work, clone correction is an important part
-of population genetic analysis of organisms that have cryptic growth or
-are known to produce asexual propagules (Kamvar et al., 2014b; Milgroom,
-1996; Grünwald et al., 2003). This method removes bias that would
-otherwise affect metrics that rely on allele frequencies. It was
+As highlighted in previous work, clone correction is an important
+component of population genetic analysis of organisms that have cryptic
+growth or are known to reproduce asexually (Kamvar et al., 2014b;
+Milgroom, 1996; Grünwald et al., 2003). This method removes bias that
+would otherwise affect metrics that rely on allele frequencies. It was
 initially designed for data with only a handful of markers. With the
-advent of large-scale sequencing and reduced- representation libraries,
+advent of large-scale sequencing and reduced-representation libraries,
 it has become easier to sequence tens of thousands of markers from
 hundreds of individuals (Elshire et al., 2011; Davey et al., 2011; Davey
-and Blaxter, 2010). With this number of markers, the genetic resolution
-is much greater, but the chance of genotyping error is also greatly
-increased (Mastretta-Yanes et al., 2015). Taking this and somatic
-mutation into account, it would be impossible to separate true clones
-from independent individuals by just comparing what multilocus genotypes
-are different. We introduce a a new transparent method for collapsing
-unique multilocus genotypes determined by naive string comparison into
-multilocus lineages utilizing any genetic distance given three different
-clustering algorithms: farthest neighbor, nearest neighbor, and UPGMA
-(average neighbor) (Sokal, 1958).
+and Blaxter, 2010). With this larger number of markers, the genetic
+resolution is much greater, but the chance of genotyping error is also
+greatly increased (Mastretta-Yanes et al., 2015). Taking this fact and
+occasional somatic mutations into account, it would be impossible to
+separate true clones from independent individuals by just comparing what
+multilocus genotypes are different. We introduce a new method for
+collapsing unique multilocus genotypes determined by naive string
+comparison into multilocus lineages utilizing any genetic distance given
+three different clustering algorithms: farthest neighbor, nearest
+neighbor, and UPGMA (average neighbor) (Sokal, 1958).
 
 The clustering algorithms act on a distance matrix that is either
 provided by the user or generated via a function that will calculate a
-distance from genclone objects such as \texttt{bruvo.dist}, which will
-calculate Bruvo's distance at any level of ploidy (Bruvo et al., 2004).
-All algorithms have been implemented in C and utilize the open MP
-framework for optional parallel processing. Default is the conservative
-farthest neighbor algorithm, which will only cluster samples together
-only if all samples in the cluster are at a distance less than the given
-threshold. By contrast, the nearest neighbor algorithm will have a
-chaining effect that will cluster samples akin to adding links on a
-chain where a sample can be included in a cluster if all of the samples
-have at least one connection below a given threshold. The UPGMA, or
-average neighbor clustering algorithm is the one most familiar to
-biologists as it is often used to generate preliminary ultra-metric
-trees based off of genetic distance. This algorithm will cluster by
-creating a representative sample per cluster and joining clusters if
-these representative samples are closer than the given threshold.
+distance from genclone objects such as \texttt{bruvo.dist}, which in
+particular applies to any level of ploidy (Bruvo et al., 2004). All
+algorithms have been implemented in C and utilize the OpenMP framework
+for optional parallel processing (Dagum and Menon, 1998). Default is the
+conservative farthest neighbor algorithm, which will only cluster
+samples together if all samples in the cluster are at a distance less
+than the given threshold. By contrast, the nearest neighbor algorithm
+will have a chaining effect that will cluster samples akin to adding
+links on a chain where a sample can be included in a cluster if all of
+the samples have at least one connection below a given threshold. The
+UPGMA, or average neighbor clustering algorithm is the one most familiar
+to biologists as it is often used to generate preliminary ultra-metric
+trees based on genetic distance. This algorithm will cluster by creating
+a representative sample per cluster and joining clusters if these
+representative samples are closer than the given threshold.
 
-\subsection*{Demonstration data: \emph{P.
-infestans}}\label{demonstration-data-p.-infestans}
+\subsection*{\texorpdfstring{Demonstration data: \emph{P.
+infestans}}{Demonstration data: P. infestans}}\label{demonstration-data-p.-infestans}
 \addcontentsline{toc}{subsection}{Demonstration data: \emph{P.
 infestans}}
 
-We utilize these data from \emph{Phytophthora infestans} to show how the
-\texttt{mlg.filter} function collapses multilocus genotypes with Bruvo's
-distance assuming a genome addition model (Bruvo et al., 2004). \emph{P.
-infestans} is the causal agent of potato late blight originating from
-Mexico and spread to Europe in the mid 19th century (Goss et al., 2014;
-Li et al., 2013; Lees et al., 2006). \emph{P. infestans} reproduces both
-clonally and sexually. The clonal lineages of \emph{P. infestans} have
-been formally defined into 18 separate clonal lineages using a
-combination of various molecular methods including AFLP and
-microsatellite markers (Lees et al., 2006). For these data, we used
+We utilize data from the microbe \emph{Phytophthora infestans} to show
+how the \texttt{mlg.filter} function collapses multilocus genotypes with
+Bruvo's distance assuming a genome addition model (Bruvo et al., 2004).
+\emph{P. infestans} is the causal agent of potato late blight
+originating from Mexico and spread to Europe in the mid 19th century
+(Goss et al., 2014; Li et al., 2013; Lees et al., 2006). \emph{P.
+infestans} reproduces both clonally and sexually. The clonal lineages of
+\emph{P. infestans} have been formally defined into 18 separate clonal
+lineages using a combination of various molecular methods including AFLP
+and microsatellite markers (Lees et al., 2006). For these data, we used
 \texttt{mlg.filter} to detect all of the distance thresholds at which 18
-multilocus lineages would be resolved. We the used these thresholds to
+multilocus lineages would be resolved. We used these thresholds to
 define multilocus lineages and create contingency tables and dendrograms
 to determine how well the multilocus lineages were detected.
 
-\subsection*{Simulated data}\label{simulated-data}
-\addcontentsline{toc}{subsection}{Simulated data}
+\subsection*{Demonstration data: Simulated
+data}\label{demonstration-data-simulated-data}
+\addcontentsline{toc}{subsection}{Demonstration data: Simulated data}
 
-To detect clonal lineages utilizing genomic data, we utilized simulated
-data constructed using the \texttt{glSim} function in adegenet (Jombart
-and Ahmed, 2011). For the simulations, two diploid data sets were
-created, each with 10k SNPs (25\% structured into two groups) and 200
-samples with 10 ancestral populations of even sizes. Clones were created
-in one data set by marking each sample with a unique identifier and then
-randomly sampling with replacement. It is well documented that reduced-
-representation sequencing can introduce several erroneous calls and
-missing data (Mastretta-Yanes et al., 2015). To reflect this, we mutated
-SNPs at a rate of 10\% and inserted an average of 10\% missing data for
-each sample after clones were created, ensuring that no two sequences
-were alike. The number of mutations and missing data per sample was
-determined with a sampling from a poisson distribution with
+We utilized simulated data constructed using the \texttt{glSim} function
+in adegenet (Jombart and Ahmed, 2011) to obtain a SNP data set for
+demonstration. Two diploid data sets were created, each with 10k SNPs
+(25\% structured into two groups) and 200 samples with 10 ancestral
+populations of even sizes. Clones were created in one data set by
+marking each sample with a unique identifier and then randomly sampling
+with replacement. It is well documented that reduced- representation
+sequencing can introduce several erroneous calls and missing data
+(Mastretta-Yanes et al., 2015). To reflect this, we mutated SNPs at a
+rate of 10\% and inserted an average of 10\% missing data for each
+sample after clones were created, ensuring that no two sequences were
+alike. The number of mutations and missing data per sample were
+determined by sampling from a poisson distribution with
 \(\lambda = 1000\). After pooling, 20\% of the data set was randomly
 sampled for analysis. Genetic distance was represented as the fraction
 of different sites between samples, counting missing data as equivalent
@@ -374,24 +384,25 @@ sampling \(x\) loci and counting the number of observed MLGs. This
 repeated \(r\) times for 1 locus up to \(n-1\) loci, creating \(n-1\)
 distributions of observed MLGs.
 
-\subsection*{Minimum Spanning Network
-Reticulation}\label{minimum-spanning-network-reticulation}
-\addcontentsline{toc}{subsection}{Minimum Spanning Network Reticulation}
+\subsection*{Minimum Spanning Networks with
+Reticulation}\label{minimum-spanning-networks-with-reticulation}
+\addcontentsline{toc}{subsection}{Minimum Spanning Networks with
+Reticulation}
 
-\emph{Poppr} introduced minimum spanning networks in it's original
-iteration that were based off of igraph's function
+In its original iteration, \emph{poppr} introduced minimum spanning
+networks that were based on the igraph function
 \texttt{minimum.spanning.tree} (Csardi and Nepusz, 2006). This algorithm
-would produce a minimum spanning tree, but with no reticulations, which
-is common and expected of clonal organisms. In other minimum spanning
-network programs, reticulation is obtained by calculating the minimum
-spanning tree several times and returning the set of all edges included
-in the trees. Due to the way igraph has implemented Prim's algorithm, it
-is not possible to utilize this strategy, thus we have implemented a C
-function to walk through a distance matrix and minimum spanning tree to
+produces a minimum spanning tree with no reticulations, which is common
+and expected for clonal organisms. In other minimum spanning network
+programs, reticulation is obtained by calculating the minimum spanning
+tree several times and returning the set of all edges included in the
+trees. Due to the way igraph has implemented Prim's algorithm, it is not
+possible to utilize this strategy, thus we implemented a C function to
+walk the sapce of minimum spanning trees based on genetic distance to
 connect groups of nodes with edges of equal weight.
 
-To demonstrate the utility of minimum spanning network reticulation, we
-used two clonal data sets: H3N2 flu virus data from the
+To demonstrate the utility of minimum spanning networks with
+reticulation, we used two clonal data sets: H3N2 flu virus data from the
 \texttt{adegenet} package using years of each epidemic as the population
 factor, and \emph{Phytophthora ramorum} data from Nurseries and Oregon
 forests (Jombart et al., 2010; Kamvar et al., 2014a). Minimum spanning
@@ -406,13 +417,13 @@ and Nepusz, 2006; Rosvall and Bergstrom, 2008).
 
 To evaluate the results, we compared the number and size of resulting
 communities as we expect a highly clonal organism with low genetic
-diversity to result in few, large communities. We also created
+diversity to result in a few, large communities. We also created
 contingency tables of the community assignments with the defined
 populations and used those to calculate entropy using Shannon's index
 with the function \texttt{diversity} from the R package \texttt{vegan}
 version 2.2-1 (Oksanen et al., 2015; Shannon, 2001). A low entropy
-indicates few large communities whereas high entropy indicates many
-small communities.
+indicates presence of a few large communities whereas high entropy
+indicates presence of many small communities.
 
 \subsection*{Bootstrapping}\label{bootstrapping}
 \addcontentsline{toc}{subsection}{Bootstrapping}
@@ -441,8 +452,9 @@ calculated from it.
 \section*{Results}\label{results}
 \addcontentsline{toc}{section}{Results}
 
-\subsection*{Clonal identification}\label{clonal-identification-1}
-\addcontentsline{toc}{subsection}{Clonal identification}
+\subsection*{Demonstration: Clonal
+identification}\label{demonstration-clonal-identification}
+\addcontentsline{toc}{subsection}{Demonstration: Clonal identification}
 
 With the \emph{P. infestans} data, the three algorithms were able to
 detect 18 multilocus lineages at different distance thresholds (Fig. 1).
@@ -454,46 +466,10 @@ duplicated samples had \(\sim\) 98\% true positive fraction and \(\sim\)
 0.8\% false positive fraction indicating that this method is robust to
 simulated populations.
 
-\begin{quote}
-Nik, these are just to see how the figures look in the paper, the actual
-figures need to be uploaded separately, according to the frontiers
-specifications.
-\end{quote}
-
-\begin{CodeChunk}
-
-\includegraphics{poppr_frontiers_files/figure-latex/pinf_data-1} \end{CodeChunk}\begin{CodeChunk}
-
-\includegraphics{poppr_frontiers_files/figure-latex/pinf_tree-1} \end{CodeChunk}\begin{table}[ht]
-\centering
-\begin{tabular}{ccccccccccccccccccc}
-  \hline
- & 3 & 4 & 5 & 6 & 8 & 10 & 12 & 15 & 16 & 17 & 18 & 20 & 21 & 22 & 24 & 25 & 27 & 28 \\ 
-  \hline
-B & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . \\ 
-  C & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . \\ 
-  D.1 & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . \\ 
-  D.2 & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . \\ 
-  EU-13 & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . \\ 
-  EU-4 & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . \\ 
-  EU-5 & . & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . & . & . \\ 
-  EU-8 & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-11 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 \\ 
-  US-12 & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-14 & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-17 & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . \\ 
-  US-20 & 2 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-21 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 & . \\ 
-  US-22 & . & . & . & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . \\ 
-  US-23 & . & . & . & . & . & . & . & 3 & . & . & . & . & . & . & . & . & . & . \\ 
-  US-24 & . & . & . & . & 3 & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-8 & . & . & 1 & 1 & . & 2 & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-\subsection*{Minimum Spanning Networks}\label{minimum-spanning-networks}
-\addcontentsline{toc}{subsection}{Minimum Spanning Networks}
+\subsection*{Demonstration: Minimum Spanning Network
+Reticulation}\label{demonstration-minimum-spanning-network-reticulation}
+\addcontentsline{toc}{subsection}{Demonstration: Minimum Spanning
+Network Reticulation}
 
 The infoMAP algorithm revealed 63 communities with a maximum community
 size of 77 and \(H = 3.56\) for the reticulate network of the H3N2 data
@@ -501,8 +477,6 @@ and 117 communities with a maximum community size of 26 and \(H = 4.65\)
 for the minimum spanning tree. The entropy across years was greatly
 decreased for all populations with the reticulate network compared to
 the minimum spanning tree (Fig 2).
-
-\includegraphics{poppr_frontiers_files/custom_figures/Figure-2.png}
 
 Graph walking of the reticulated minimum spanning network of \emph{P.
 ramorum} by the infoMAP algorithm revealed 16 communities with a maximum
@@ -513,6 +487,8 @@ a single community, the reticulated network was successful whereas the
 minimum spanning tree separated one genotype from that community. The
 entropy for the reticulated network was lower for all populations except
 for the Coast population.
+
+\subsection{}\label{section}
 
 \section*{Discussion}\label{discussion}
 \addcontentsline{toc}{section}{Discussion}
@@ -560,10 +536,63 @@ serial cloning events.
   population genetics and plant pathology needs to go.
 \end{itemize}
 
+\section*{Figures and Tables}\label{figures-and-tables}
+\addcontentsline{toc}{section}{Figures and Tables}
+
+\subsection*{Figure 1}\label{figure-1}
+\addcontentsline{toc}{subsection}{Figure 1}
+
+\begin{CodeChunk}
+
+\includegraphics{poppr_frontiers_files/figure-latex/pinf_data-1} \end{CodeChunk}
+
+\subsection*{Figure 2}\label{figure-2}
+\addcontentsline{toc}{subsection}{Figure 2}
+
+\includegraphics{poppr_frontiers_files/custom_figures/Figure-2.png}
+
+\subsection*{Supplementary figure?}\label{supplementary-figure}
+\addcontentsline{toc}{subsection}{Supplementary figure?}
+
+\begin{CodeChunk}
+
+\includegraphics{poppr_frontiers_files/figure-latex/pinf_tree-1} \end{CodeChunk}
+
+\subsection*{Table 1}\label{table-1}
+\addcontentsline{toc}{subsection}{Table 1}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccccccccccccccccccc}
+  \hline
+ & 3 & 4 & 5 & 6 & 8 & 10 & 12 & 15 & 16 & 17 & 18 & 20 & 21 & 22 & 24 & 25 & 27 & 28 \\ 
+  \hline
+B & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . \\ 
+  C & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . \\ 
+  D.1 & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . \\ 
+  D.2 & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . \\ 
+  EU-13 & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . \\ 
+  EU-4 & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . \\ 
+  EU-5 & . & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . & . & . \\ 
+  EU-8 & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-11 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 \\ 
+  US-12 & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-14 & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-17 & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . \\ 
+  US-20 & 2 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-21 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 & . \\ 
+  US-22 & . & . & . & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . \\ 
+  US-23 & . & . & . & . & . & . & . & 3 & . & . & . & . & . & . & . & . & . & . \\ 
+  US-24 & . & . & . & . & 3 & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-8 & . & . & 1 & 1 & . & 2 & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+   \hline
+\end{tabular}
+\end{table}
+
 \section*{Figure and Table Legends}\label{figure-and-table-legends}
 \addcontentsline{toc}{section}{Figure and Table Legends}
 
-\subsection*{Figure 1}\label{figure-1}
+\subsection*{Figure 1}\label{figure-1-1}
 \addcontentsline{toc}{subsection}{Figure 1}
 
 Graphical representation of three different clustering algorithms
@@ -576,7 +605,7 @@ of multilocus genotypes. The horizontal black line represents 18
 multilocus genotypes and vertical dashed lines mark the thresholds used
 to collapse the multilocus genotypes int 18 multilocus lineages.
 
-\subsection*{Figure 2}\label{figure-2}
+\subsection*{Figure 2}\label{figure-2-1}
 \addcontentsline{toc}{subsection}{Figure 2}
 
 (\textbf{A-B}) Minimum spanning networks of the hemagglutinin (HA)
@@ -591,7 +620,7 @@ communities determined by the infoMAP algorithm on (\textbf{A}) and
 showing that the 2006 epidemic does not cluster neatly with the other
 years.
 
-\subsection*{Table 1}\label{table-1}
+\subsection*{Table 1}\label{table-1-1}
 \addcontentsline{toc}{subsection}{Table 1}
 
 Contingency table comparing multilocus lineages assigned based on
@@ -625,6 +654,10 @@ irrespective of ploidy level. \emph{Molecular Ecology} 13, 2101--2106.
 Csardi, G., and Nepusz, T. (2006). The igraph software package for
 complex network research. \emph{InterJournal} Complex Systems, 1695.
 Available at: \url{http://igraph.org}.
+
+Dagum, L., and Menon, R. (1998). OpenMP: An industry standard aPI for
+shared-memory programming. \emph{Computational Science \& Engineering,
+IEEE} 5, 46--55.
 
 Davey, J. W., and Blaxter, M. L. (2010). RADSeq: Next-generation
 population genetics. \emph{Briefings in Functional Genomics} 9,
