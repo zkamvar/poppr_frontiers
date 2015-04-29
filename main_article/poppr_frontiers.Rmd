@@ -545,6 +545,24 @@ with communities determined by the infoMAP algorithm on (**A**) and (**B**).
 (**D**) Graphic reproduced from @jombart2010discriminant showing that the 2006
 epidemic does not cluster neatly with the other years.
 
+## Figure 3 {-}
+
+UPGMA dendrogram generated from Nei's gentic distance on 15 breeds of *Bos
+taurus* (BT) or *Bos indicus* (BI) from Africa (AF) or France (FR). These data
+are from @laloe2007consensus. Node labels represent bootstrap support $>50\%$
+out of 1,000 bootstrap replicates.
+
+## Figure 4 {-}
+
+Genotype accumulation curve for 694 isolates of the peach brown rot pathogen,
+*Monolinia fructicola* genotyped over 13 loci from @everhart2014fine. The
+horizontal axis represents the number of loci randomly sampled without
+replacement up to $n - 1$ loci, the vertical axis shows the number of multilocus
+genotypes observed, up to 262, the number of unique multilocus genotypes in the
+data set. The red dashed line represents 90% of the total observed multilocus
+genotypes. A trendline (blue) has been added using the *ggplot2* function
+`stat_smooth`.
+
 ## Table 1 {-}
 
 Contingency table comparing multilocus lineages assigned based on average
