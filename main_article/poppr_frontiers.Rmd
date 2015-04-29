@@ -503,6 +503,8 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 
 ![Fig. 3](poppr_frontiers_files/figure-latex/monolinia_curve-1.pdf)
 
+> ### Pathogen genus is mispelled. Should be Monilinia ... ###
+
 ## Supplementary figure? {-}
 ```{r, pinf_tree, echo = FALSE, message = FALSE, fig.height = 10, fig.width = 5}
 pinfupgma <- upgma(bruvo.dist(x, replen = ssr, loss = FALSE))
