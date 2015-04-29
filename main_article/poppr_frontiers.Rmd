@@ -373,7 +373,7 @@ any genetic distance that can be calculated from it.
 
 ## Clonal identification {-}
 
-With the *P. infestans* data, the three algorithms were able to detect 18
+For the *P. infestans* population, the three algorithms were able to detect 18
 multilocus lineages at different distance thresholds (Fig. 1). Contingency
 tables between the described multilocus genotypes and the genotypes defined by
 distance show that most of the 18 lineages were resolved, except for US-8, which
