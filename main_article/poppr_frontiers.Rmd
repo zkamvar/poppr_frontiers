@@ -404,7 +404,9 @@ except for the Coast population (supplementary information).
 ## Example: Bootstrap population dendrogram {-}
 
 The following code example was used to demonstrate calculating a dendrogram with
-bootstrap support using the function `aboot` (Fig. 3).
+bootstrap support using the function `aboot` on the data set `microbov` from
+the *adegenet* package [@Jombart_2008; @laloe2007consensus]. The resulting
+dendrogram shows bootstrap support values $>50\%$ (Fig. 3).
 
 ```{r, microboot, cache = TRUE, message = FALSE, out.width = "80mm", out.height = "80mm", fig.width = 5, fig.height = 5, fig.show = "hide"}
 library("poppr")
