@@ -151,11 +151,6 @@ square braces.
 
 -->
 
-
-> NIK: I am wondering if need to structure the paper into MEthods and Demo sections, rather that results.
-
-> ZHIAN: We can, but it must be a subsection. 
-
 # Materials and Methods {-}
 
 ## Clonal identification {-}
@@ -367,7 +362,7 @@ class from adegenet. This class can be created from any genind, genclone, or
 genpop object, and allows loci to be sampled with replacement. To further
 facilitate bootstrapping, a function called aboot, which stands for "any boot",
 is introduced that will bootstrap any genclone, genind, or genpop object with
-any genetic distance that can be calculated from it.
+any genetic distance that can be calculated from it. 
 
 # Results {-}
 
@@ -408,7 +403,7 @@ bootstrap support using the function `aboot` on the data set `microbov` from
 the *adegenet* package [@Jombart_2008; @laloe2007consensus]. The resulting
 dendrogram shows bootstrap support values $>50\%$ (Fig. 3).
 
-```{r, microboot, cache = TRUE, message = FALSE, out.width = "80mm", out.height = "80mm", fig.width = 5, fig.height = 5, fig.show = "hide"}
+```{r, microboot, eval = FALSE}
 library("poppr")
 data("microbov", package = "adegenet") 
 strata(microbov) <- data.frame(other(microbov)) 
@@ -424,7 +419,7 @@ from @everhart2014fine showing that these data reach a small plateau, indicating
 that there are enough markers such that adding more markers to the analysis will
 not create very many new genotypes (Fig. 4).
 
-```{r, monilinia_curve, cache = TRUE, message = FALSE, out.width = "80mm", out.height = "80mm", fig.width = 5, fig.height = 5, fig.show = "hide", fig.keep = "last"}
+```{r, monilinia_curve, eval = FALSE}
 library("poppr")
 library("ggplot2")
 data("monpop", package = "poppr")
@@ -473,7 +468,7 @@ populations derived from serial cloning events.
 
 ## Figure 1 {-}
 
-```{r, pinf_data, echo = FALSE, message = FALSE}
+```{r, pinf_data, echo = FALSE, message = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 4*1.5, fig.height = 4*1.5}
 source("../Rscripts/my_functions.R")
 library('poppr')
 library('ape')
@@ -497,12 +492,15 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 
 ## Figure 3 {-}
 
-![Fig. 3](poppr_frontiers_files/figure-latex/microboot-1.pdf)
+```{r, microboot2, cache = TRUE, ref.label = "microboot", echo = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 5, fig.height = 5}
+
+```
 
 ## Figure 4 {-}
 
-![Fig. 3](poppr_frontiers_files/figure-latex/monilinia_curve-1.pdf)
+```{r, monilinia, cache = TRUE, ref.label = "monilinia_curve", echo = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE}
 
+```
 ## Supplementary figure? {-}
 ```{r, pinf_tree, echo = FALSE, message = FALSE, fig.height = 10, fig.width = 5}
 pinfupgma <- upgma(bruvo.dist(x, replen = ssr, loss = FALSE))

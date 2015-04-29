@@ -5,3 +5,6 @@ poppr
 ggplot2
 nlme
 mgcv
+ape
+phangorn
+animation
