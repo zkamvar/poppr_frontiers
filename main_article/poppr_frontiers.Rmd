@@ -180,7 +180,7 @@ The clustering algorithms act on a distance matrix that is either provided by
 the user or generated via a function that will calculate a distance from
 genclone objects such as `bruvo.dist`, which in particular applies to
 any level of ploidy [@bruvo2004simple]. All algorithms have been implemented in
-C and utilize the open MP framework for optional parallel processing. Default is
+C and utilize the OpenMP framework for optional parallel processing [@dagum1998openmp]. Default is
 the conservative farthest neighbor algorithm, which will only cluster samples
 together if all samples in the cluster are at a distance less than the
 given threshold. By contrast, the nearest neighbor algorithm will have a
@@ -191,8 +191,6 @@ algorithm is the one most familiar to biologists as it is often used to generate
 preliminary ultra-metric trees based on genetic distance. This algorithm
 will cluster by creating a representative sample per cluster and joining
 clusters if these representative samples are closer than the given threshold.
-
-> ############ Need a reference for OpenMP!!! ##############
 
 ## Demonstration data: *P. infestans* {-}
 
