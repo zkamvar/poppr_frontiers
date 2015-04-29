@@ -383,7 +383,7 @@ and $\sim$ 0.8% false positive fraction indicating that this method is robust to
 simulated populations.
 
 
-## Minimum Spanning Network Reticulation {-}
+## Minimum Spanning Network with Reticulation {-}
 
 The infoMAP algorithm revealed 63 communities with a maximum community size of
 77 and $H = 3.56$ for the reticulate network of the H3N2 data and 117
