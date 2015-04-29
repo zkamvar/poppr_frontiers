@@ -491,6 +491,10 @@ dendrogram}\label{example-bootstrap-population-dendrogram}
 \addcontentsline{toc}{subsection}{Example: Bootstrap population
 dendrogram}
 
+The following code example was used to demonstrate calculating a
+dendrogram with bootstrap support using the function \texttt{aboot}
+(Fig. 3).
+
 \begin{CodeChunk}
 \begin{CodeInput}
 library("poppr")
@@ -501,22 +505,29 @@ bov_pop <- genind2genpop(microbov, quiet = TRUE)
 set.seed(20150428)
 pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
 \end{CodeInput}
-
-\includegraphics[width=80mm,height=80mm]{poppr_frontiers_files/figure-latex/microboot-1} \end{CodeChunk}
+\end{CodeChunk}
 
 \subsection*{Example: Genotype accumulation
 curve}\label{example-genotype-accumulation-curve}
 \addcontentsline{toc}{subsection}{Example: Genotype accumulation curve}
 
+The following code example demonstrates the genotype accumulation curve
+for data from Everhart and Scherm (2015) showing that these data reach a
+small plateau, indicating that there are enough markers such that adding
+more markers to the analysis will not create very many new genotypes
+(Fig. 4).
+
 \begin{CodeChunk}
 \begin{CodeInput}
 library("poppr")
+library("ggplot2")
 data("monpop", package = "poppr")
 set.seed(20150428)
-invisible(genotype_curve(monpop, sample = 1000, quiet = TRUE))
+genotype_curve(monpop, sample = 1000, quiet = TRUE)
+p <- last_plot()                # get the last plot
+p + geom_smooth(aes(group = 1)) # plot with a trendline
 \end{CodeInput}
-
-\includegraphics[width=80mm,height=80mm]{poppr_frontiers_files/figure-latex/monolinia_curve-1} \end{CodeChunk}
+\end{CodeChunk}
 
 \section*{Discussion}\label{discussion}
 \addcontentsline{toc}{section}{Discussion}
@@ -578,6 +589,16 @@ serial cloning events.
 \addcontentsline{toc}{subsection}{Figure 2}
 
 \includegraphics{poppr_frontiers_files/custom_figures/Figure-2.png}
+
+\subsection*{Figure 3}\label{figure-3}
+\addcontentsline{toc}{subsection}{Figure 3}
+
+\includegraphics{poppr_frontiers_files/figure-latex/microboot-1.pdf}
+
+\subsection*{Figure 4}\label{figure-4}
+\addcontentsline{toc}{subsection}{Figure 4}
+
+\includegraphics{poppr_frontiers_files/figure-latex/monolinia_curve-1.pdf}
 
 \subsection*{Supplementary figure?}\label{supplementary-figure}
 \addcontentsline{toc}{subsection}{Supplementary figure?}

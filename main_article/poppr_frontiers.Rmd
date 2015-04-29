@@ -403,7 +403,10 @@ except for the Coast population (supplementary information).
 
 ## Example: Bootstrap population dendrogram {-}
 
-```{r, microboot, cache = TRUE, message = FALSE, out.width = "80mm", out.height = "80mm", fig.width = 5, fig.height = 5}
+The following code example was used to demonstrate calculating a dendrogram with
+bootstrap support using the function `aboot` (Fig. 3).
+
+```{r, microboot, cache = TRUE, message = FALSE, out.width = "80mm", out.height = "80mm", fig.width = 5, fig.height = 5, fig.show = "hide"}
 library("poppr")
 data("microbov", package = "adegenet") 
 strata(microbov) <- data.frame(other(microbov)) 
@@ -414,13 +417,20 @@ pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
 ```
 ## Example: Genotype accumulation curve {-}
 
-```{r, monolinia_curve, cache = TRUE, message = FALSE, out.width = "80mm", out.height = "80mm", fig.width = 5, fig.height = 5}
+The following code example demonstrates the genotype accumulation curve for data
+from @everhart2014fine showing that these data reach a small plateau, indicating
+that there are enough markers such that adding more markers to the analysis will
+not create very many new genotypes (Fig. 4).
+
+```{r, monolinia_curve, cache = TRUE, message = FALSE, out.width = "80mm", out.height = "80mm", fig.width = 5, fig.height = 5, fig.show = "hide", fig.keep = "last"}
 library("poppr")
+library("ggplot2")
 data("monpop", package = "poppr")
 set.seed(20150428)
-invisible(genotype_curve(monpop, sample = 1000, quiet = TRUE))
+genotype_curve(monpop, sample = 1000, quiet = TRUE)
+p <- last_plot()                # get the last plot
+p + geom_smooth(aes(group = 1)) # plot with a trendline
 ```
-
 
 # Discussion {-}
 
@@ -481,6 +491,15 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 ## Figure 2 {-}
 
 ![Fig. 2](poppr_frontiers_files/custom_figures/Figure-2.png)
+
+
+## Figure 3 {-}
+
+![Fig. 3](poppr_frontiers_files/figure-latex/microboot-1.pdf)
+
+## Figure 4 {-}
+
+![Fig. 3](poppr_frontiers_files/figure-latex/monolinia_curve-1.pdf)
 
 ## Supplementary figure? {-}
 ```{r, pinf_tree, echo = FALSE, message = FALSE, fig.height = 10, fig.width = 5}

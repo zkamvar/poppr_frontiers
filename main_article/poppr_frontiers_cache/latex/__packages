@@ -2,3 +2,6 @@ base
 ade4
 adegenet
 poppr
+ggplot2
+nlme
+mgcv
