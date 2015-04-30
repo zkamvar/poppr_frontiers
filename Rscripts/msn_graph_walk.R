@@ -265,7 +265,7 @@ ent_table <- data.frame(`No Reticulation` = vegan::diversity(noties.table, MARGI
                         year = popNames(hc), check.names = FALSE)
 ent_plot <- ggplot(melt(ent_table), 
                    aes(x = year, y = value, shape = variable)) +
-  geom_point(position = "identity", size = 5) +
+  geom_point(position = "identity") +
   ylab("entropy (H)") + 
   theme_linedraw() +
   ylim(0, NA) + # Set zero as lower limit
@@ -273,7 +273,7 @@ ent_plot <- ggplot(melt(ent_table),
   theme(legend.title = element_blank(), legend.position = "top",
         panel.grid = element_blank())
 ent_plot
-ggsave(filename = "../main_article/poppr_frontiers_files/custom_figures/entropy.pdf",plot = ent_plot, width = 80, height = 50, units = "mm", scale = 2)
+ggsave(filename = "../main_article/poppr_frontiers_files/custom_figures/entropy.pdf",plot = ent_plot, width = 80, height = 50, units = "mm", scale = 1.5)
 #' 
 #+ H3N2_msns, cache = TRUE, fig.width = 10, fig.height = 10
 set.seed(20150427)
