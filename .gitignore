@@ -1,7 +1,6 @@
 .Rproj.user
 .Rhistory
 .RData
-*.pdf
 main_article/*.html
 README.html
 LETTER.html
