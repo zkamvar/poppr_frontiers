@@ -419,9 +419,10 @@ pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
 ## Example: Genotype accumulation curve {-}
 
 The following code example demonstrates the genotype accumulation curve for data
-from @everhart2014fine showing that these data reach a small plateau, indicating
-that there are enough markers such that adding more markers to the analysis will
-not create very many new genotypes (Fig. 4).
+from @everhart2014fine showing that these data reach a small plateau and have a
+greatly decreased variance with 12 markers, indicating that there are enough
+markers such that adding more markers to the analysis will not create very many
+new genotypes (Fig. 4).
 
 ```{r, monilinia_curve, eval = FALSE}
 library("poppr")
