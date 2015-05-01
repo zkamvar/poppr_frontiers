@@ -7,16 +7,13 @@
 source("my_functions.R")
 #'
 #'
-#' ### Directory for RAD seq data
-RAD_data_dir <- "~/Documents/Grunwald/short-scripts/Genotype_error/"
-#'
 #' ### Analysis of *P. infestans*
 library('poppr')
 library('ape')
 library('phangorn')
 library('animation')
 infdat <- RCurl::getURL("https://raw.githubusercontent.com/grunwaldlab/phytophthora_id/master/shiny-server/www/genoid_infestans/reduced_database.txt.csv")
-infdat <- read.table(text = infdat, head = TRUE)
+infdat <- read.table(text = infdat, header = TRUE)
 pinf <- df2genind(infdat[-c(1,2)], sep = "/", ploidy = 3, ind.names = infdat[[1]], pop = infdat[[2]])
 ssr <- c(3,3,2,3,3,2,2,3,3,3,3,3)
 x <- as.genclone(pinf)
@@ -217,84 +214,6 @@ resmat <- matrix(signif(c(ares[2, 2], nres[2, 2], fres[2, 2],
                                  c("True Positive %", "False Positive %")))
 knitr::kable(resmat)
 #' 
-#' ### RAD seq data
-#' 
-#' Note that this data has no reference and has a lot of error. There are 10 
-#' technical replicates. Each file represents a different parameter used for 
-#' STACKS.
-plinklist <- list(m3 = character(0), m4 = character(0), m10 = character(0), def = character(0))
-plinklist[["m4"]]  <- "2R/PopSamples/data.out/PopSamples_m4/Popsouts_Rselec/out.replicates/plink.raw"
-plinklist[["def"]] <- "2R/PopSamples/data.out/PopSamples_def/Popsouts_Rselec/out.replicates/plink.raw"
-plinklist[["m3"]]  <- "2R/PopSamples/data.out/PopSamples_m3/Popsouts_Rselec/out.replicates/plink.raw"
-plinklist[["m10"]] <- "2R/PopSamples/data.out/PopSamples_m10/Popsouts_Rselec/out.replicates/plink.raw"
-
-
-
-contlist   <- plinklist # Contingency tables
-threshlist <- plinklist # Threshold stats
-#'
-#' Steps:
-#' 1. read in data
-#' 2. mlg.filter on all algorithms and plot the thresholds.
-#' 3. create the contingency table for each output (using UPGMA method).
-#' 
-#' Note for each plot regarding the MLG filter:
-#' 
-#' - Red: Nearest Neighbor clustering
-#' - Blue: Farthest Neighbor clustering
-#' - Black: UPGMA clustering (average neighbor)
-#' 
-#' The dotted lines represent the threshold at which the algorithms each
-#' creates 10 clusters.
-for (i in names(plinklist)){
-  barb <- read.PLINK(paste(RAD_data_dir, plinklist[[i]], sep = "/"))
-  show(barb)
-  fstats <- filter_stats(barb, bitwise.dist, plot = TRUE, nclone = nInd(barb) - 10)
-  title(paste(i, "SNPS:", nLoc(barb)))
-  minthresh  <- fstats$average$thresholds[10] + .Machine$double.eps^0.5
-#   nearthresh  <- fstats$nearest$thresholds[10] + .Machine$double.eps^0.5
-#   farthresh  <- fstats$farthest$thresholds[10] + .Machine$double.eps^0.5
-#   abline(v = minthresh, lty = 2)
-#   abline(v = nearthresh, lty = 2, col = "red")
-#   abline(v = farthresh, lty = 2, col = "blue")
-#   legend("topright", legend = c("Nearest Neighbor", "UPGMA", "Farthest Neighbor"), 
-#          col = c("red", "black", "blue"), pch = 1, title = "Clustering Method")
-  thresh     <- mlg.filter(barb, distance = bitwise.dist, algorithm = "a", 
-                           threshold = minthresh)
-  trueclones <- vapply(strsplit(indNames(barb), "_"), "[[", character(1), 1)
-  trueclones <- duplicated(trueclones)
-  thresh     <- duplicated(thresh)
-  contlist[[i]] <- table(thresh, trueclones)
-  threshlist[[i]] <- fstats$average$thresholds
-}
-#'
-#' Print the contingency tables and differences between threshold values to see
-#' if there is a large jump indicating a separation between replicates and 
-#' independent samples.
-print(contlist)
-for (i in threshlist){
-  plot(diff(i), log = "y")
-}
-
-#' No such luck.
-#' 
-#' Now, we are plotting the tree where 10 samples are collapsed via average
-#' neighbor (UPGMA) and color the tips with the true duplicates.
-#' 
-#' Note about the figure:
-#' Tips are colored blue. Internal branches are colored black.
-#' If the algorithm found samples with a distance below the threshold, their
-#' connecting branches are colored red. The duplicated samples have red labels
-#+ fig.width = 10, fig.height = 20
-defupgma <- phangorn::upgma(bitwise.dist(barb))
-
-z <- filter_stats(barb, bitwise.dist, threshold = minthresh, stats = "MLGS")
-barbnames <- vapply(strsplit(indNames(barb), "_"), "[[", character(1), 1)
-dupes <- barbnames[duplicated(barbnames)]
-thecols <- ifelse(barbnames %in% dupes, "red", "black")
-color_mlg_tree(barb, defupgma, z$average, tip.color = thecols)
-axisPhylo(1)
-#'
 #' ## Session Info
 #' 
 options(width = 100)
