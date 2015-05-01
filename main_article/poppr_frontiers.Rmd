@@ -315,14 +315,14 @@ distributions of observed MLGs.
 
 In its original iteration, *poppr* introduced minimum spanning networks that
 were based on the *igraph* function `minimum.spanning.tree` [@csardi2006igraph].
-This algorithm produces a minimum spanning tree with no reticulations, which is
-common and expected for clonal organisms. In other minimum spanning network
-programs, reticulation is obtained by calculating the minimum spanning tree
-several times and returning the set of all edges included in the trees. Due to
-the way *igraph* has implemented Prim's algorithm, it is not possible to utilize
-this strategy, thus we implemented a C function to walk the space of minimum
-spanning trees based on genetic distance to connect groups of nodes with edges
-of equal weight.
+This algorithm produces a minimum spanning tree with no reticulations where
+nodes represent individual MLGs. In other minimum spanning network programs,
+reticulation is obtained by calculating the minimum spanning tree several times
+and returning the set of all edges included in the trees. Due to the way
+*igraph* has implemented Prim's algorithm, it is not possible to utilize this
+strategy, thus we implemented an internal C function to walk the space of
+minimum spanning trees based on genetic distance to connect groups of nodes with
+edges of equal weight.
 
 To demonstrate the utility of minimum spanning networks with reticulation, we
 used two clonal data sets: H3N2 flu virus data from the *adegenet* package using
@@ -336,22 +336,23 @@ implemented in the R package *igraph* version 0.7.1 utilizing genetic distance
 as edge weights and number of samples in each MLG as vertex weights
 [@csardi2006igraph; @rosvall2008maps].
 
-To evaluate the results, we compared the number and size of resulting
-communities as we expect a highly clonal organism with low genetic diversity to
-result in a few, large communities. We also created contingency tables of the
-community assignments with the defined populations and used those to calculate
-entropy using Shannon's index with the function `diversity` from the R package
-*vegan* version 2.2-1 [@oksanen2015vegan; @shannon2001mathematical]. A low
-entropy indicates presence of a few large communities whereas high entropy
-indicates presence of many small communities.
+To evaluate the results, we compared the number, size, and entropy ($H$) of
+resulting communities as we expect a highly clonal organism with low genetic
+diversity to result in a few, large communities. We also created contingency
+tables of the community assignments with the defined populations and used those
+to calculate entropy using Shannon's index with the function `diversity` from
+the R package *vegan* version 2.2-1 [@oksanen2015vegan;
+@shannon2001mathematical]. A low entropy indicates presence of a few large
+communities whereas high entropy indicates presence of many small communities.
 
 
 ## Bootstrapping {-}
 
 Calculating genetic distance for among samples and populations is very important
 method for assessing population differentiation through methods such as
-$F_{st}$, AMOVA, and Mantel tests. Confidence in distance metrics is related to
-the confidence in the markers to accurately represent the diversity of the data.
+$G_{st}$, AMOVA, and Mantel tests [@nei1973analysis; @excoffier1992analysis;
+@mantel1967detection]. Confidence in distance metrics is related to the
+confidence in the markers to accurately represent the diversity of the data.
 Especially true with microsatellite markers, a single hyper-diverse locus can
 make a population appear to have more diversity based on genetic distance. Using
 a bootstrapping procedure of randomly sampling loci with replacement when
@@ -360,11 +361,11 @@ Because genetic data in a genind object is represented as a matrix with samples
 in rows and alleles in columns, bootstrapping is a non-trivial task as all
 alleles in a single locus need to be sampled together. To remedy this, we have
 created an internal S4 class called "bootgen", which extends the internal "gen"
-class from adegenet. This class can be created from any genind, genclone, or
+class from *adegenet*. This class can be created from any genind, genclone, or
 genpop object, and allows loci to be sampled with replacement. To further
-facilitate bootstrapping, a function called aboot, which stands for "any boot",
-is introduced that will bootstrap any genclone, genind, or genpop object with
-any genetic distance that can be calculated from it. 
+facilitate bootstrapping, a function called `aboot`, which stands for "any
+boot", is introduced that will bootstrap any genclone, genind, or genpop object
+with any genetic distance that can be calculated from it.
 
 # Results {-}
 
@@ -387,7 +388,7 @@ The infoMAP algorithm revealed 63 communities with a maximum community size of
 communities with a maximum community size of 26 and $H = 4.65$ for the minimum
 spanning tree. The entropy across years was greatly decreased for all
 populations with the reticulate network compared to the minimum spanning tree
-(Fig 2).
+(Fig. 2).
 
 Graph walking of the reticulated minimum spanning network of *P. ramorum* by the
 infoMAP algorithm revealed 16 communities with a maximum community size of 13
