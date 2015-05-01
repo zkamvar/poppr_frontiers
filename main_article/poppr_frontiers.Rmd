@@ -56,10 +56,10 @@ previously contributed the R package \textit{poppr} specifically addressing
 issues with analysis of clonal populations. In this paper we provide several
 significant extensions to \textit{poppr} with a focus on large, genome wide SNP
 data. Specifically, we provide analyses across any level of hierarchies, a new
-function to define clone boundaries we call \texttt{mlg.filter} allowing for
-inspection and definition of what is a clonal lineage, and the index of
-association for reduced representation genomic data, and modular bootstrapping
-of any genetic distance.
+function to define clone boundaries we call
+\texttt{mlg.filter} allowing for inspection and definition of what is a clonal
+lineage, and the index of association for reduced representation genomic data,
+and modular bootstrapping of any genetic distance.
 
 \tiny
  \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, open source}
@@ -87,7 +87,7 @@ for sexual model organisms. Populations that reproduce clonally or are polyploid
 are thus difficult to characterize using classical population genetic tools
 because theoretical assumptions underlying the theory are violated. Yet, many
 plant pathogen populations are at least partially clonal if not completely
-clonal [@milgroom1996recombination; @anderson1995clonality].  Thus, development
+clonal [@milgroom1996recombination; @anderson1995clonality]. Thus, development
 of tools for analysis of clonal or polyploid populations is needed.
 
 Genotyping by sequencing and whole genome resequencing provide the unprecedented
@@ -102,11 +102,11 @@ defined as a unique multilocus genotype (MLG). However, with large SNP data a
 measure of genetic distance is required to define the boundary of an MLG (e.g.,
 clone) or the boundaries of a clonal lineage. Definition of a clone is further
 complicated by the presence of missing data that is typical for reduced
-representation libraries used in GBS or genome re-sequencing. Are two
-individuals that are identical for all observed SNPs different if one additional
-locus has missing data?
+representation libraries used in GBS or genome re-sequencing. If two individuals
+are identical for all observed SNPs except for one missing allele, should they
+be considered different?
 
-<!-- This doesn't flow right -->
+<!-- This doesn't flow right --> 
 Another major issues with large SNP data is computational efficiency. Analyses
 that resample a data set or rely on MCMC are computationally slow for large data
 and thus are preferentially implemented in a low level language such as C rather
