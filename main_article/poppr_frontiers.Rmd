@@ -145,9 +145,8 @@ genetic distance, sliding window analyses, genotype accumulation curves,
 reticulations in minimum spanning networks, and bootstrapping for any genetic
 distance.
 
-# Materials and Methods {-}
 
-## Clonal identification {-}
+# Clonal identification {-}
 
 As highlighted in previous work, clone correction is an important component of
 population genetic analysis of organisms that have cryptic growth or are known
@@ -200,6 +199,12 @@ used these thresholds to define multilocus lineages and create contingency
 tables and dendrograms to determine how well the multilocus lineages were
 detected.
 
+For the *P. infestans* population, the three algorithms were able to detect 18
+multilocus lineages at different distance thresholds (Fig. 1). Contingency
+tables between the described multilocus genotypes and the genotypes defined by
+distance show that most of the 18 lineages were resolved, except for US-8, which
+is polytomic (Table 1). 
+
 ## Demonstration data: Simulated data {-}
 
 We utilized simulated data constructed using the `glSim` function in adegenet
@@ -225,7 +230,12 @@ distances between samples, the clonal boundary threshold was defined as the
 midpoint of the largest gap between two thresholds that collapsed less than 50%
 of the data.
 
-## Index of association {-}
+Out of the 100 simulations run, we found that across all methods, detection of
+duplicated samples had $\sim$ 98% true positive fraction and $\sim$ 0.8% false
+positive fraction indicating that this method is robust to simulated
+populations.
+
+# Index of association {-}
 
 The index of association ($I_A$) is a measure of multilocus linkage
 disequilibrium that is most often used to detect clonal reproduction within
@@ -257,7 +267,6 @@ utilizing $\bar{r}_d$ as a test for clonal reproduction. A remedy for this is
 implemented in the function `samp.ia`, which will randomly sample $m$ loci,
 calculate $\bar{r}_d$, and repeat $r$ times, thus creating a distribution of
 expected values of $\bar{r}_d$.
-
 <!--
  - Clone correction based on genetic distance
     - reduced representation data (GBS)
@@ -278,7 +287,7 @@ expected values of $\bar{r}_d$.
     - adopted by larger community
 -->
 
-## Population Strata and Hierarchies {-}
+# Population Strata and Hierarchies {-}
 
 Assessments of population structure through methods such as hierarchical
 $F_{st}$ and AMOVA benefit greatly from multiple levels of population definition
@@ -297,7 +306,7 @@ or more column names of the data frame in the hierarchy slot. This
 functionality, developed in *poppr*, has been moved to the *adegenet* package in
 version 2.0 and the slot and methods have been renamed to `strata`.
 
-## Genotype Accumulation Curve {-}
+# Genotype Accumulation Curve {-}
 
 Analysis of population genetics of clonal organisms often borrows from
 ecological methods such as analysis of diversity within populations
@@ -311,7 +320,24 @@ constructed by randomly sampling $x$ loci and counting the number of observed
 MLGs. This repeated $r$ times for 1 locus up to $n-1$ loci, creating $n-1$
 distributions of observed MLGs.
 
-## Minimum Spanning Networks with Reticulation {-}
+The following code example demonstrates the genotype accumulation curve for data
+from @everhart2014fine showing that these data reach a small plateau and have a
+greatly decreased variance with 12 markers, indicating that there are enough
+markers such that adding more markers to the analysis will not create very many
+new genotypes (Fig. 4).
+
+```{r, monilinia_curve, eval = FALSE}
+library("poppr")
+library("ggplot2")
+data("monpop", package = "poppr")
+
+set.seed(20150428)
+genotype_curve(monpop, sample = 1000, quiet = TRUE)
+p <- last_plot() + theme_bw()   # get the last plot
+p + geom_smooth(aes(group = 1)) # plot with a trendline
+```
+
+# Minimum Spanning Networks with Reticulation {-}
 
 In its original iteration, *poppr* introduced minimum spanning networks that
 were based on the *igraph* function `minimum.spanning.tree` [@csardi2006igraph].
@@ -345,8 +371,23 @@ the R package *vegan* version 2.2-1 [@oksanen2015vegan;
 @shannon2001mathematical]. A low entropy indicates presence of a few large
 communities whereas high entropy indicates presence of many small communities.
 
+The infoMAP algorithm revealed 63 communities with a maximum community size of
+77 and $H = 3.56$ for the reticulate network of the H3N2 data and 117
+communities with a maximum community size of 26 and $H = 4.65$ for the minimum
+spanning tree. The entropy across years was greatly decreased for all
+populations with the reticulate network compared to the minimum spanning tree
+(Fig. 2).
 
-## Bootstrapping {-}
+Graph walking of the reticulated minimum spanning network of *P. ramorum* by the
+infoMAP algorithm revealed 16 communities with a maximum community size of 13
+and $H = 2.60$. The un-reticulated minimum spanning tree revealed 20 communities
+with a maximum community size of 7 and $H = 2.96$. In the ability to predict
+Hunter Creek as belonging to a single community, the reticulated network was
+successful whereas the minimum spanning tree separated one genotype from that
+community. The entropy for the reticulated network was lower for all populations
+except for the Coast population (supplementary information).
+
+# Bootstrapping {-}
 
 Calculating genetic distance for among samples and populations is very important
 method for assessing population differentiation through methods such as
@@ -367,54 +408,6 @@ facilitate bootstrapping, a function called `aboot`, which stands for "any
 boot", is introduced that will bootstrap any genclone, genind, or genpop object
 with any genetic distance that can be calculated from it.
 
-# Results {-}
-
-## Availability {-}
-
-As of this writing, the *poppr* R package version 2.0 containing all of the
-features described here is located at https://github.com/grunwaldlab/poppr. It
-is necessary to install *adegenet* 2.0 before installing *poppr*. It can be
-found at https://github.com/thibautjombart/adegenet. Both of these can be
-installed via the R package *devtools* [@wickham2015devtools]:
-
-```{r, eval = FALSE}
-library("devtools")
-install_github("thibautjombart/adegenet")
-install_github("grunwaldlab/poppr")
-```
-
-## Clonal identification {-}
-
-For the *P. infestans* population, the three algorithms were able to detect 18
-multilocus lineages at different distance thresholds (Fig. 1). Contingency
-tables between the described multilocus genotypes and the genotypes defined by
-distance show that most of the 18 lineages were resolved, except for US-8, which
-is polytomic (Table 1). Out of the 100 simulations run, we found that across all
-methods, detection of duplicated samples had $\sim$ 98% true positive fraction
-and $\sim$ 0.8% false positive fraction indicating that this method is robust to
-simulated populations.
-
-
-## Minimum Spanning Network with Reticulation {-}
-
-The infoMAP algorithm revealed 63 communities with a maximum community size of
-77 and $H = 3.56$ for the reticulate network of the H3N2 data and 117
-communities with a maximum community size of 26 and $H = 4.65$ for the minimum
-spanning tree. The entropy across years was greatly decreased for all
-populations with the reticulate network compared to the minimum spanning tree
-(Fig. 2).
-
-Graph walking of the reticulated minimum spanning network of *P. ramorum* by the
-infoMAP algorithm revealed 16 communities with a maximum community size of 13
-and $H = 2.60$. The un-reticulated minimum spanning tree revealed 20 communities
-with a maximum community size of 7 and $H = 2.96$. In the ability to predict
-Hunter Creek as belonging to a single community, the reticulated network was
-successful whereas the minimum spanning tree separated one genotype from that
-community. The entropy for the reticulated network was lower for all populations
-except for the Coast population (supplementary information).
-
-## Example: Bootstrap population dendrogram {-}
-
 To demonstrate calculating a dendrogram with bootstrap support, we used the
 *poppr* function `aboot` on population allelic frequencies derived from the data
 set `microbov` in the *adegenet* package with 1000 bootstrap replicates
@@ -431,23 +424,19 @@ bov_pop <- genind2genpop(microbov, quiet = TRUE)
 set.seed(20150428)
 pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
 ```
-## Example: Genotype accumulation curve {-}
 
-The following code example demonstrates the genotype accumulation curve for data
-from @everhart2014fine showing that these data reach a small plateau and have a
-greatly decreased variance with 12 markers, indicating that there are enough
-markers such that adding more markers to the analysis will not create very many
-new genotypes (Fig. 4).
+# Availability {-}
 
-```{r, monilinia_curve, eval = FALSE}
-library("poppr")
-library("ggplot2")
-data("monpop", package = "poppr")
+As of this writing, the *poppr* R package version 2.0 containing all of the
+features described here is located at https://github.com/grunwaldlab/poppr. It
+is necessary to install *adegenet* 2.0 before installing *poppr*. It can be
+found at https://github.com/thibautjombart/adegenet. Both of these can be
+installed via the R package *devtools* [@wickham2015devtools]:
 
-set.seed(20150428)
-genotype_curve(monpop, sample = 1000, quiet = TRUE)
-p <- last_plot() + theme_bw()   # get the last plot
-p + geom_smooth(aes(group = 1)) # plot with a trendline
+```{r, eval = FALSE}
+library("devtools")
+install_github("thibautjombart/adegenet")
+install_github("grunwaldlab/poppr")
 ```
 
 # Discussion {-}
