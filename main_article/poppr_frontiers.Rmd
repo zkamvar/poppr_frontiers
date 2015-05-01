@@ -511,7 +511,7 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 
 ## Figure 5 {-}
 
-```{r, fig_ia, echo = FALSE, out.height = "53.3mm", out.width = "80mm", fig.width = 6, fig.height = 4, fig.keep = "last"}
+```{r, fig_ia, echo = FALSE, out.height = "64mm", out.width = "80mm", fig.width = 5, fig.height = 4, fig.keep = "last"}
 clone.ia <- c(-0.00860314630689772, 0.00385146662142994, 0.00866425251469457, 
 0.00512334195545175, 0.00766486917809724, -0.000382718899482899, 
 0.00657894763051245, 0.000814176472422117, -0.00283835103969685, 
@@ -659,10 +659,16 @@ lay <- layout(matrix(c(1, 1, 1, 2), nrow = 1, byrow = TRUE))
 plot(clone.ia, type = "l", main = "Sliding Window\n100nt",
      ylab = "Index of Association", xlab = "Window")
 lines(sex.ia, col = "blue")
-legend("topright", lty = 1, col = c("black", "blue"), legend = c("clonal snps", "sexual snps"))
+legend("topright", lty = 1, col = c("black", "blue"), 
+       legend = c("clonal snps", "sexual snps"))
 par(mar = c(5.1, 0, 4.1, 2.1))
-boxplot(data.frame(clonal = clone.samp, sexual = sex.samp), ylim = c(-0.02, 0.04), ylab = NA, yaxt = "n", border = c("black", "blue"),
-        main = "Random Sample\n50nt")
+boxplot(data.frame(clonal = clone.samp, sexual = sex.samp), 
+        ylim = c(-0.02, 0.04), 
+        ylab = NA, 
+        yaxt = "n", 
+        border = c("black", "blue"),
+        xpd = TRUE,
+        main = "Random\n50nt")
 par(mar = c(5, 4, 4, 2) + 0.1)
 layout(matrix(1))
 ```
