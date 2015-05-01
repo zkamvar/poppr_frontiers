@@ -485,7 +485,7 @@ populations derived from serial cloning events.
 
 ## Figure 1 {-}
 
-```{r, pinf_data, echo = FALSE, message = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 4*1.25, fig.height = 4*1.25, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, pinf_data, echo = FALSE, message = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 4*1.25, fig.height = 4*1.25, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 source("../Rscripts/my_functions.R")
 library('poppr')
 library('ape')
@@ -509,19 +509,19 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 
 ## Figure 3 {-}
 
-```{r, microboot2, cache = TRUE, ref.label = "microboot", echo = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 5, fig.height = 5, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, microboot2, cache = TRUE, ref.label = "microboot", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 
 ```
 
 ## Figure 4 {-}
 
-```{r, monilinia, cache = TRUE, ref.label = "monilinia_curve", echo = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, monilinia, cache = TRUE, ref.label = "monilinia_curve", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 
 ```
 
 ## Figure 5 {-}
 
-```{r, fig_ia, echo = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 5, fig.height = 5, fig.keep = "last", dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, fig_ia, echo = FALSE, out.height = "90mm", out.width = "180mm", fig.width = 10, fig.height = 5, fig.keep = "last", dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 clone.ia <- c(-0.00860314630689772, 0.00385146662142994, 0.00866425251469457, 
 0.00512334195545175, 0.00766486917809724, -0.000382718899482899, 
 0.00657894763051245, 0.000814176472422117, -0.00283835103969685, 
@@ -682,7 +682,7 @@ boxplot(data.frame(clonal = clone.samp, sexual = sex.samp),
         yaxt = "n", 
         border = c("black", "blue"),
         xpd = TRUE,
-        main = "Random\n50nt",
+        main = "Random Sample\n50nt",
         las = 2,
         cex.lab = 1.5,
         cex.axis = 1.5,
