@@ -241,20 +241,22 @@ two individuals of a given clone increases and tools are needed for defining
 clone boundaries. For this reason, we  devised two approaches using the index of
 association for large numbers of markers typical for population genomic studies.
 
-The first approach is a sliding window approach that would utilize the position
-of markers in the genome to calculate $\bar{r}_d$ among any number of SNPs found
-within the windowed region. It is important that this calculation utilize
-$\bar{r}_d$ as the number of loci will be different within each window
-[@Agapow_2001]. This approach would be suited for a quick calculation of linkage
-disequilibrium across the genome that can detect potential hotspots of LD that
-could be investigated further with more computationally intensive methods
-assuming that the number of samples << the number of loci.
+The first approach is a sliding window approach implemented in the function
+`win.ia`. It utilizes the position of markers in the genome to calculate
+$\bar{r}_d$ among any number of SNPs found within a user-specified windowed
+region. It is important that this calculation utilize $\bar{r}_d$ as the number
+of loci will be different within each window [@Agapow_2001]. This approach would
+be suited for a quick calculation of linkage disequilibrium across the genome
+that can detect potential hotspots of LD that could be investigated further with
+more computationally intensive methods assuming that the number of samples <<
+the number of loci.
 
 As it would necessarily focus on loci within a short section of the genome that
 may or may not be recombining, a sliding window approach would not be good for
-utilizing $\bar{r}_d$ as a test for clonal reproduction. A remedy for this is to
-randomly sample $m$ loci, calculate $\bar{r}_d$ and repeat $r$ times, creating a
-distribution of expected values of $\bar{r}_d$.
+utilizing $\bar{r}_d$ as a test for clonal reproduction. A remedy for this is
+implemented in the function `samp.ia`, which will randomly sample $m$ loci,
+calculate $\bar{r}_d$, and repeat $r$ times, thus creating a distribution of
+expected values of $\bar{r}_d$.
 
 <!--
  - Clone correction based on genetic distance
