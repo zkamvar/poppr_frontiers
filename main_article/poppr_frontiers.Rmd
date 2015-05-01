@@ -369,7 +369,7 @@ with any genetic distance that can be calculated from it.
 
 # Results {-}
 
-## Availability
+## Availability {-}
 
 As of this writing, the *poppr* R package version 2.0 containing all of the
 features described here is located at https://github.com/grunwaldlab/poppr. It
