@@ -34,8 +34,8 @@ system.time(y.ia <- win.ia(y, quiet = TRUE)) # window size = 100
 #' Now we can visualize it
 plot(x.ia, type = "l", main = "Index of Association over 100nt windows",
      ylab = "Index of Association", xlab = "Window")
-plot(y.ia, type = "l", main = "Index of Association over 100nt windows",
-     ylab = "Index of Association", xlab = "Window")
+lines(y.ia, col = "blue")
+legend("topleft", lty = 1, col = c("black", "blue"), legend = c("structured snps", "unstructured snps"))
 #'
 #' Of course, with this strong LD, it's pretty easy to detect a >100bp chunk.
 #' What happens if we randomly shuffle the loci?
@@ -74,15 +74,55 @@ abline(h = 0)
 #' ==========
 #' 
 #' Another method that can be done is to randomly sample SNPs to see if there
-#' is any structure. Here, we are sampling 100 snps 100 times.
+#' is any structure. Here, we are sampling 50 snps 100 times.
 #+ snp_samp, cache = TRUE
-x.samp <- samp.ia(x, quiet = TRUE)
-y.samp <- samp.ia(y, quiet = TRUE)
+x.samp <- samp.ia(x, quiet = TRUE, n.snp = 50)
+y.samp <- samp.ia(y, quiet = TRUE, n.snp = 50)
 #'
 #' Now we can produce a boxplot
 boxplot(data.frame(structure = x.samp, no_structure = y.samp), 
         ylab = "Index of Association", 
-        main = "Index of association over 100 random samples of 100nt")
+        main = "Index of association over 100 random samples of 50nt")
+#'
+#' With clones
+#' ===========
+#' 
+#' Now, we can compare populations with clones.
+source("my_functions.R")
+#'
+#+ data_setup_clone, cache = TRUE
+set.seed(20150501)
+clone_samples <- getSims(n = 100, snps = 1.1e3, strucrat = 1, ploidy = 2, 
+                         na.perc = 0.01, err = 0.01, clone = TRUE, n.cores = 4)
+set.seed(20150501)
+sex_samples <- getSims(n = 100, snps = 1.1e3, strucrat = 1, ploidy = 2, 
+                       na.perc = 0.01,  err = 0.01, clone = FALSE, n.cores = 4)
+#'
+position(clone_samples) <- position(x) -> position(sex_samples)
+plot(clone_samples)
+plot(sex_samples)
+#'
+#+ clone_window, cache = TRUE
+system.time(clone.ia <- win.ia(clone_samples, quiet = TRUE))
+system.time(sex.ia <- win.ia(sex_samples, quiet = TRUE))
+#'
+plot(clone.ia, type = "l", main = "Index of Association over 100nt windows",
+     ylab = "Index of Association", xlab = "Window")
+lines(sex.ia, col = "blue")
+legend("topleft", lty = 1, col = c("black", "blue"), legend = c("clonal snps", "sexual snps"))
+abline(h = mean(clone.ia), lty = 2)
+abline(h = mean(sex.ia), lty = 2, col = "blue")
+#'
+#' Now, to do boxplots
+#+ clone_samp, cache = TRUE
+set.seed(20150501)
+system.time(clone.samp <- samp.ia(clone_samples, quiet = TRUE, n.snp = 50))
+set.seed(20150501)
+system.time(sex.samp <- samp.ia(sex_samples, quiet = TRUE, n.snp = 50))
+#' Now we can produce a boxplot
+boxplot(data.frame(clonal = clone.samp, sexual = sex.samp), 
+        ylab = "Index of Association", 
+        main = "Index of association over 100 random samples of 50nt")
 #' ## Session Info
 options(width = 100)
 devtools::session_info()
