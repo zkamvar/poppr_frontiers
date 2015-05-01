@@ -306,9 +306,10 @@ When choosing markers for analysis, it is important to make sure that the
 observed diversity in your sample will not appreciably increase if an additional
 marker is added [@arnaud2007standardizing]. This concept is analogous to a
 species accumulation curve, obtained by rarefaction. The genotype accumulation
-curve in *poppr* is implemented by randomly sampling $x$ loci and counting the
-number of observed MLGs. This repeated $r$ times for 1 locus up to $n-1$ loci,
-creating $n-1$ distributions of observed MLGs.
+curve in *poppr* is implemented in the function `genotype_curve`. The curve is
+constructed by randomly sampling $x$ loci and counting the number of observed
+MLGs. This repeated $r$ times for 1 locus up to $n-1$ loci, creating $n-1$
+distributions of observed MLGs.
 
 ## Minimum Spanning Networks with Reticulation {-}
 
