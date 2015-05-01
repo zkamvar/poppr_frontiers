@@ -485,7 +485,7 @@ populations derived from serial cloning events.
 
 ## Figure 1 {-}
 
-```{r, pinf_data, echo = FALSE, message = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 4*1.5, fig.height = 4*1.5, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, pinf_data, echo = FALSE, message = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 4*1.25, fig.height = 4*1.25, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 source("../Rscripts/my_functions.R")
 library('poppr')
 library('ape')
@@ -521,7 +521,7 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 
 ## Figure 5 {-}
 
-```{r, fig_ia, echo = FALSE, out.height = "64mm", out.width = "80mm", fig.width = 5, fig.height = 4, fig.keep = "last"}
+```{r, fig_ia, echo = FALSE, out.height = "80mm", out.width = "80mm", fig.width = 5, fig.height = 5, fig.keep = "last", dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 clone.ia <- c(-0.00860314630689772, 0.00385146662142994, 0.00866425251469457, 
 0.00512334195545175, 0.00766486917809724, -0.000382718899482899, 
 0.00657894763051245, 0.000814176472422117, -0.00283835103969685, 
@@ -667,11 +667,14 @@ sex.samp <- c(-0.000264538753712546, -0.000295000260035365, 0.00134333120697102,
 par(mar = c(5, 4, 4, 2) + 0.1)
 lay <- layout(matrix(c(1, 1, 1, 2), nrow = 1, byrow = TRUE))
 plot(clone.ia, type = "l", main = "Sliding Window\n100nt",
-     ylab = "Index of Association", xlab = "Window")
+     ylab = "Index of Association", xlab = "Window",
+     cex.lab = 1.5,
+     cex.axis = 1.5,
+     cex.main = 1.5)
 lines(sex.ia, col = "blue")
-legend("top", lty = 1, col = c("black", "blue"), 
-       legend = c("clonal snps", "sexual snps"))
-legend("topleft", legend = "", pch = "A", cex = 3, xjust = -1, bty = "n")
+legend("topright", lty = 1, col = c("black", "blue"), bty = "n",
+       legend = c("clonal snps", "sexual snps"), cex = 1.5)
+legend("topleft", legend = "", pch = "A", cex = 2, xjust = -1, yjust = -1, bty = "n")
 par(mar = c(5.1, 0, 4.1, 2.1))
 boxplot(data.frame(clonal = clone.samp, sexual = sex.samp), 
         ylim = c(-0.02, 0.04), 
@@ -679,8 +682,12 @@ boxplot(data.frame(clonal = clone.samp, sexual = sex.samp),
         yaxt = "n", 
         border = c("black", "blue"),
         xpd = TRUE,
-        main = "Random\n50nt")
-legend("topleft", legend = "", pch = "B", cex = 3, xjust = -1, bty = "n")
+        main = "Random\n50nt",
+        las = 2,
+        cex.lab = 1.5,
+        cex.axis = 1.5,
+        cex.main = 1.5)
+legend("topleft", legend = "", pch = "B", cex = 2, xjust = -1, yjust = -1, bty = "n")
 par(mar = c(5, 4, 4, 2) + 0.1)
 layout(matrix(1))
 ```
@@ -745,6 +752,16 @@ genotypes observed, up to 262, the number of unique multilocus genotypes in the
 data set. The red dashed line represents 90% of the total observed multilocus
 genotypes. A trendline (blue) has been added using the *ggplot2* function
 `stat_smooth`.
+
+## Figure 5 {-}
+
+**(A)** Sliding window analysis of the standardized index of association
+($\bar{r}_d$) across a simulated $1.1 \times 10^4$nt chromosome containing 1,100
+variants among 100 individuals. Each window analyzed variants within 100nt
+chunks. The black line indicates clonal population, the blue line indicates
+sexual. **(B)** 100 random samplings of 50 variants to calculate a distribution
+of $\bar{r}_d$ for the clonal (black) and sexual (blue) population. **(A)** and
+**(B)** are plotted on the same y-axis.
 
 ## Table 1 {-}
 
