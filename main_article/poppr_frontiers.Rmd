@@ -401,10 +401,11 @@ except for the Coast population (supplementary information).
 
 ## Example: Bootstrap population dendrogram {-}
 
-The following code example was used to demonstrate calculating a dendrogram with
-bootstrap support using the function `aboot` on the data set `microbov` from
-the *adegenet* package [@Jombart_2008; @laloe2007consensus]. The resulting
-dendrogram shows bootstrap support values $>50\%$ (Fig. 3).
+To demonstrate calculating a dendrogram with bootstrap support, we used the
+*poppr* function `aboot` on population allelic frequencies derived from the data
+set `microbov` in the *adegenet* package with 1000 bootstrap replicates
+[@Jombart_2008; @laloe2007consensus]. The resulting dendrogram shows bootstrap
+support values $>50\%$ (Fig. 3).
 
 ```{r, microboot, eval = FALSE}
 library("poppr")
