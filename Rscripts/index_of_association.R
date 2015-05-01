@@ -17,18 +17,24 @@ library("poppr")
 #+ data_setup, cache = TRUE
 set.seed(999)
 x <- glSim(100, 1e3, n.snp.struc=100, ploid=2, alpha = 0.1)
+y <- glSim(100, 1.1e3, ploid = 2) # random population
 plot(x)
+plot(y)
 #' 
 #' If we use the windowing function for $\bar{r}_d$, here, we can see that all 
 #' of the linkage is at the end of the data. First, we are going to set some
 #' arbitrary positions for the data.
 #+ first_ia, cache = TRUE
-set.seed(999) #
-position(x) <- sort(sample(1.1e4, 1.1e3))
+set.seed(999)
+# I've wanted to do this type of assignment for a long time :)
+position(x) <- sort(sample(1.1e4, 1.1e3)) -> position(y)
 system.time(x.ia <- win.ia(x, quiet = TRUE)) # window size = 100
+system.time(y.ia <- win.ia(y, quiet = TRUE)) # window size = 100
 #'
 #' Now we can visualize it
 plot(x.ia, type = "l", main = "Index of Association over 100nt windows",
+     ylab = "Index of Association", xlab = "Window")
+plot(y.ia, type = "l", main = "Index of Association over 100nt windows",
      ylab = "Index of Association", xlab = "Window")
 #'
 #' Of course, with this strong LD, it's pretty easy to detect a >100bp chunk.
@@ -63,6 +69,20 @@ which_wins <- win_tab >= 3
 abline(v = which(which_wins), lty = 3, lwd = win_tab[which_wins] - 1)
 abline(h = 0)
 #'
+#'
+#' Randomly sampling snps
+#' ==========
+#' 
+#' Another method that can be done is to randomly sample SNPs to see if there
+#' is any structure. Here, we are sampling 100 snps 100 times.
+#+ snp_samp, cache = TRUE
+x.samp <- samp.ia(x, quiet = TRUE)
+y.samp <- samp.ia(y, quiet = TRUE)
+#'
+#' Now we can produce a boxplot
+boxplot(data.frame(structure = x.samp, no_structure = y.samp), 
+        ylab = "Index of Association", 
+        main = "Index of association over 100 random samples of 100nt")
 #' ## Session Info
 options(width = 100)
 devtools::session_info()
