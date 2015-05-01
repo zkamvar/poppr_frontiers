@@ -145,14 +145,6 @@ genetic distance, sliding window analyses, genotype accumulation curves,
 reticulations in minimum spanning networks, and bootstrapping for any genetic
 distance.
 
-<!--
-
-Multiple references get a semi-colon [@wilson2014best; @wilson2014best].
-References that are simply mentioned, such as @wilson2014best, are cited without
-square braces.
-
--->
-
 # Materials and Methods {-}
 
 ## Clonal identification {-}
