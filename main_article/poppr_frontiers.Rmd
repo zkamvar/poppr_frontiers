@@ -144,6 +144,25 @@ reticulations in minimum spanning networks, and bootstrapping for any genetic
 distance.
 
 
+# Population Strata and Hierarchies {-}
+
+Assessments of population structure through methods such as hierarchical
+$F_{st}$ and AMOVA benefit greatly from multiple levels of population definition
+[@linde2002population; @everhart2014fine; @grunwald2006hierarchical]. With
+clonal organisms, basic practice has been to clone-censor data to avoid downward
+bias in diversity due to duplicated genotypes that may or may not represent
+different samples [@milgroom1996recombination]. Data structures for population
+genetic data mostly allow for only one level of hierarchical definition. The
+impetus was placed on the researchers to provide the population hierarchies for
+every step of the analysis. In poppr version 1.1, the hierarchy slot was
+introduced to allow unlimited population hierarchies or stratifications to
+travel with the data. In practice, it is stored as a data frame where each
+column represents a separate hierarchical level. This is then used to set the
+population factor of the data by supplying a hierarchical formula containing one
+or more column names of the data frame in the hierarchy slot. This
+functionality, developed in *poppr*, has been moved to the *adegenet* package in
+version 2.0 and the slot and methods have been renamed to `strata`.
+
 # Clonal identification {-}
 
 As highlighted in previous work, clone correction is an important component of
@@ -233,108 +252,6 @@ duplicated samples had $\sim$ 98% true positive fraction and $\sim$ 0.8% false
 positive fraction indicating that this method is robust to simulated
 populations.
 
-# Index of association {-}
-
-The index of association ($I_A$) is a measure of multilocus linkage
-disequilibrium that is most often used to detect clonal reproduction within
-organisms that have the ability to reproduce via sexual or asexual processes
-[@brown1980multilocus; @smith1993how; @milgroom1996recombination]. It was
-standardized in 2001 as $\bar{r}_d$ by @Agapow_2001 to address the issue of
-scaling with increasing number of loci. This metric is typically applied to
-traditional dominant and co-dominant markers such as AFLPs, SNPs, or
-microsatellite markers. With the advent of high throughput sequencing, SNP data
-is now available in in a genome-wide context and in very large matrices
-including thousands of SNPs. Thus, the likelihood of finding mutations within
-two individuals of a given clone increases and tools are needed for defining
-clone boundaries. For this reason, we  devised two approaches using the index of
-association for large numbers of markers typical for population genomic studies.
-
-The first approach is a sliding window approach implemented in the function
-`win.ia`. It utilizes the position of markers in the genome to calculate
-$\bar{r}_d$ among any number of SNPs found within a user-specified windowed
-region. It is important that this calculation utilize $\bar{r}_d$ as the number
-of loci will be different within each window [@Agapow_2001]. This approach would
-be suited for a quick calculation of linkage disequilibrium across the genome
-that can detect potential hotspots of LD that could be investigated further with
-more computationally intensive methods assuming that the number of samples <<
-the number of loci.
-
-As it would necessarily focus on loci within a short section of the genome that
-may or may not be recombining, a sliding window approach would not be good for
-utilizing $\bar{r}_d$ as a test for clonal reproduction. A remedy for this is
-implemented in the function `samp.ia`, which will randomly sample $m$ loci,
-calculate $\bar{r}_d$, and repeat $r$ times, thus creating a distribution of
-expected values of $\bar{r}_d$.
-<!--
- - Clone correction based on genetic distance
-    - reduced representation data (GBS)
-    - consistent clones with one or two highly variable loci (Cooke example)
-    - nearest neighbor; farthest neighbor; average neighbor
- - Index of Association
-    - Invented for small number of markers
-    - Methods of $\bar{r}_d$ for large number of markers:
-      - sliding window (could be a fast way to detect linkage)
-      - random sampling of x loci (creates a distribution of $\bar{r}_d$)
- - Bootstrapping genetic distance
-    - Matrix algebra makes it easy to calculate genetic distance in R (with alleles in columns).
-    - Alleles in columns makes it hard to bootstrap (alleles are not independent units).
- - Population Stratification
-    - Necessary for analyses of factorial sampling [@everhart2014fine] or hierarchical sampling [@linde2002population]
-    - Implementation in StrataG and Hierfstat loosely defined.
-    - Solution in S4 classes: strict definition.
-    - adopted by larger community
--->
-
-# Population Strata and Hierarchies {-}
-
-Assessments of population structure through methods such as hierarchical
-$F_{st}$ and AMOVA benefit greatly from multiple levels of population definition
-[@linde2002population; @everhart2014fine; @grunwald2006hierarchical]. With
-clonal organisms, basic practice has been to clone-censor data to avoid downward
-bias in diversity due to duplicated genotypes that may or may not represent
-different samples [@milgroom1996recombination]. Data structures for population
-genetic data mostly allow for only one level of hierarchical definition. The
-impetus was placed on the researchers to provide the population hierarchies for
-every step of the analysis. In poppr version 1.1, the hierarchy slot was
-introduced to allow unlimited population hierarchies or stratifications to
-travel with the data. In practice, it is stored as a data frame where each
-column represents a separate hierarchical level. This is then used to set the
-population factor of the data by supplying a hierarchical formula containing one
-or more column names of the data frame in the hierarchy slot. This
-functionality, developed in *poppr*, has been moved to the *adegenet* package in
-version 2.0 and the slot and methods have been renamed to `strata`.
-
-# Genotype Accumulation Curve {-}
-
-Analysis of population genetics of clonal organisms often borrows from
-ecological methods such as analysis of diversity within populations
-[@milgroom1996recombination; @arnaud2007standardizing; @grunwald2003analysis].
-When choosing markers for analysis, it is important to make sure that the
-observed diversity in your sample will not appreciably increase if an additional
-marker is added [@arnaud2007standardizing]. This concept is analogous to a
-species accumulation curve, obtained by rarefaction. The genotype accumulation
-curve in *poppr* is implemented in the function `genotype_curve`. The curve is
-constructed by randomly sampling $x$ loci and counting the number of observed
-MLGs. This repeated $r$ times for 1 locus up to $n-1$ loci, creating $n-1$
-distributions of observed MLGs.
-
-The following code example demonstrates the genotype accumulation curve for data
-from @everhart2014fine showing that these data reach a small plateau and have a
-greatly decreased variance with 12 markers, indicating that there are enough
-markers such that adding more markers to the analysis will not create very many
-new genotypes (Fig. 4).
-
-```{r, monilinia_curve, eval = FALSE}
-library("poppr")
-library("ggplot2")
-data("monpop", package = "poppr")
-
-set.seed(20150428)
-genotype_curve(monpop, sample = 1000, quiet = TRUE)
-p <- last_plot() + theme_bw()   # get the last plot
-p + geom_smooth(aes(group = 1)) # plot with a trendline
-```
-
 # Minimum Spanning Networks with Reticulation {-}
 
 In its original iteration, *poppr* introduced minimum spanning networks that
@@ -422,6 +339,99 @@ bov_pop <- genind2genpop(microbov, quiet = TRUE)
 set.seed(20150428)
 pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
 ```
+
+<!--
+ - Clone correction based on genetic distance
+    - reduced representation data (GBS)
+    - consistent clones with one or two highly variable loci (Cooke example)
+    - nearest neighbor; farthest neighbor; average neighbor
+ - Index of Association
+    - Invented for small number of markers
+    - Methods of $\bar{r}_d$ for large number of markers:
+      - sliding window (could be a fast way to detect linkage)
+      - random sampling of x loci (creates a distribution of $\bar{r}_d$)
+ - Bootstrapping genetic distance
+    - Matrix algebra makes it easy to calculate genetic distance in R (with alleles in columns).
+    - Alleles in columns makes it hard to bootstrap (alleles are not independent units).
+ - Population Stratification
+    - Necessary for analyses of factorial sampling [@everhart2014fine] or hierarchical sampling [@linde2002population]
+    - Implementation in StrataG and Hierfstat loosely defined.
+    - Solution in S4 classes: strict definition.
+    - adopted by larger community
+-->
+
+# Genotype Accumulation Curve {-}
+
+Analysis of population genetics of clonal organisms often borrows from
+ecological methods such as analysis of diversity within populations
+[@milgroom1996recombination; @arnaud2007standardizing; @grunwald2003analysis].
+When choosing markers for analysis, it is important to make sure that the
+observed diversity in your sample will not appreciably increase if an additional
+marker is added [@arnaud2007standardizing]. This concept is analogous to a
+species accumulation curve, obtained by rarefaction. The genotype accumulation
+curve in *poppr* is implemented in the function `genotype_curve`. The curve is
+constructed by randomly sampling $x$ loci and counting the number of observed
+MLGs. This repeated $r$ times for 1 locus up to $n-1$ loci, creating $n-1$
+distributions of observed MLGs.
+
+The following code example demonstrates the genotype accumulation curve for data
+from @everhart2014fine showing that these data reach a small plateau and have a
+greatly decreased variance with 12 markers, indicating that there are enough
+markers such that adding more markers to the analysis will not create very many
+new genotypes (Fig. 4).
+
+```{r, monilinia_curve, eval = FALSE}
+library("poppr")
+library("ggplot2")
+data("monpop", package = "poppr")
+
+set.seed(20150428)
+genotype_curve(monpop, sample = 1000, quiet = TRUE)
+p <- last_plot() + theme_bw()   # get the last plot
+p + geom_smooth(aes(group = 1)) # plot with a trendline
+```
+
+# Index of association {-}
+
+The index of association ($I_A$) is a measure of multilocus linkage
+disequilibrium that is most often used to detect clonal reproduction within
+organisms that have the ability to reproduce via sexual or asexual processes
+[@brown1980multilocus; @smith1993how; @milgroom1996recombination]. It was
+standardized in 2001 as $\bar{r}_d$ by @Agapow_2001 to address the issue of
+scaling with increasing number of loci. This metric is typically applied to
+traditional dominant and co-dominant markers such as AFLPs, SNPs, or
+microsatellite markers. With the advent of high throughput sequencing, SNP data
+is now available in in a genome-wide context and in very large matrices
+including thousands of SNPs. Thus, the likelihood of finding mutations within
+two individuals of a given clone increases and tools are needed for defining
+clone boundaries. For this reason, we  devised two approaches using the index of
+association for large numbers of markers typical for population genomic studies.
+
+The first approach is a sliding window approach implemented in the function
+`win.ia`. It utilizes the position of markers in the genome to calculate
+$\bar{r}_d$ among any number of SNPs found within a user-specified windowed
+region. It is important that this calculation utilize $\bar{r}_d$ as the number
+of loci will be different within each window [@Agapow_2001]. This approach would
+be suited for a quick calculation of linkage disequilibrium across the genome
+that can detect potential hotspots of LD that could be investigated further with
+more computationally intensive methods assuming that the number of samples <<
+the number of loci.
+
+As it would necessarily focus on loci within a short section of the genome that
+may or may not be recombining, a sliding window approach would not be good for
+utilizing $\bar{r}_d$ as a test for clonal reproduction. A remedy for this is
+implemented in the function `samp.ia`, which will randomly sample $m$ loci,
+calculate $\bar{r}_d$, and repeat $r$ times, thus creating a distribution of
+expected values of $\bar{r}_d$.
+
+To demonstrate the sliding window and random sampling of $\bar{r}_d$ with
+respect to clonal populations, we simulated two populations containing 1,100
+neutral SNPs for 100 diploid individuals under the same initial seed. One
+population had individuals randomly sampled with replacement, representing the
+clonal population. After sampling, both populations had 5% random error and 1%
+missing data independently propagated across all samples. On average, we
+obtained a higher value of $\bar{r}_d$ for the clonal population compared to the
+sexual population (Fig. 5).
 
 # Availability {-}
 
@@ -659,8 +669,9 @@ lay <- layout(matrix(c(1, 1, 1, 2), nrow = 1, byrow = TRUE))
 plot(clone.ia, type = "l", main = "Sliding Window\n100nt",
      ylab = "Index of Association", xlab = "Window")
 lines(sex.ia, col = "blue")
-legend("topright", lty = 1, col = c("black", "blue"), 
+legend("top", lty = 1, col = c("black", "blue"), 
        legend = c("clonal snps", "sexual snps"))
+legend("topleft", legend = "", pch = "A", cex = 3, xjust = -1, bty = "n")
 par(mar = c(5.1, 0, 4.1, 2.1))
 boxplot(data.frame(clonal = clone.samp, sexual = sex.samp), 
         ylim = c(-0.02, 0.04), 
@@ -669,6 +680,7 @@ boxplot(data.frame(clonal = clone.samp, sexual = sex.samp),
         border = c("black", "blue"),
         xpd = TRUE,
         main = "Random\n50nt")
+legend("topleft", legend = "", pch = "B", cex = 3, xjust = -1, bty = "n")
 par(mar = c(5, 4, 4, 2) + 0.1)
 layout(matrix(1))
 ```

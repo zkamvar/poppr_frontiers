@@ -205,6 +205,29 @@ user-specified clones based on genetic distance, sliding window
 analyses, genotype accumulation curves, reticulations in minimum
 spanning networks, and bootstrapping for any genetic distance.
 
+\section*{Population Strata and
+Hierarchies}\label{population-strata-and-hierarchies}
+\addcontentsline{toc}{section}{Population Strata and Hierarchies}
+
+Assessments of population structure through methods such as hierarchical
+\(F_{st}\) and AMOVA benefit greatly from multiple levels of population
+definition (Linde et al., 2002; Everhart and Scherm, 2015; Gr{ü}nwald
+and Hoheisel, 2006). With clonal organisms, basic practice has been to
+clone-censor data to avoid downward bias in diversity due to duplicated
+genotypes that may or may not represent different samples (Milgroom,
+1996). Data structures for population genetic data mostly allow for only
+one level of hierarchical definition. The impetus was placed on the
+researchers to provide the population hierarchies for every step of the
+analysis. In poppr version 1.1, the hierarchy slot was introduced to
+allow unlimited population hierarchies or stratifications to travel with
+the data. In practice, it is stored as a data frame where each column
+represents a separate hierarchical level. This is then used to set the
+population factor of the data by supplying a hierarchical formula
+containing one or more column names of the data frame in the hierarchy
+slot. This functionality, developed in \emph{poppr}, has been moved to
+the \emph{adegenet} package in version 2.0 and the slot and methods have
+been renamed to \texttt{strata}.
+
 \section*{Clonal identification}\label{clonal-identification}
 \addcontentsline{toc}{section}{Clonal identification}
 
@@ -305,103 +328,6 @@ Out of the 100 simulations run, we found that across all methods,
 detection of duplicated samples had \(\sim\) 98\% true positive fraction
 and \(\sim\) 0.8\% false positive fraction indicating that this method
 is robust to simulated populations.
-
-\section*{Index of association}\label{index-of-association}
-\addcontentsline{toc}{section}{Index of association}
-
-The index of association (\(I_A\)) is a measure of multilocus linkage
-disequilibrium that is most often used to detect clonal reproduction
-within organisms that have the ability to reproduce via sexual or
-asexual processes (Brown et al., 1980; Smith et al., 1993; Milgroom,
-1996). It was standardized in 2001 as \(\bar{r}_d\) by Agapow and Burt
-(2001) to address the issue of scaling with increasing number of loci.
-This metric is typically applied to traditional dominant and co-dominant
-markers such as AFLPs, SNPs, or microsatellite markers. With the advent
-of high throughput sequencing, SNP data is now available in in a
-genome-wide context and in very large matrices including thousands of
-SNPs. Thus, the likelihood of finding mutations within two individuals
-of a given clone increases and tools are needed for defining clone
-boundaries. For this reason, we devised two approaches using the index
-of association for large numbers of markers typical for population
-genomic studies.
-
-The first approach is a sliding window approach implemented in the
-function \texttt{win.ia}. It utilizes the position of markers in the
-genome to calculate \(\bar{r}_d\) among any number of SNPs found within
-a user-specified windowed region. It is important that this calculation
-utilize \(\bar{r}_d\) as the number of loci will be different within
-each window (Agapow and Burt, 2001). This approach would be suited for a
-quick calculation of linkage disequilibrium across the genome that can
-detect potential hotspots of LD that could be investigated further with
-more computationally intensive methods assuming that the number of
-samples \textless{}\textless{} the number of loci.
-
-As it would necessarily focus on loci within a short section of the
-genome that may or may not be recombining, a sliding window approach
-would not be good for utilizing \(\bar{r}_d\) as a test for clonal
-reproduction. A remedy for this is implemented in the function
-\texttt{samp.ia}, which will randomly sample \(m\) loci, calculate
-\(\bar{r}_d\), and repeat \(r\) times, thus creating a distribution of
-expected values of \(\bar{r}_d\).
-
-\section*{Population Strata and
-Hierarchies}\label{population-strata-and-hierarchies}
-\addcontentsline{toc}{section}{Population Strata and Hierarchies}
-
-Assessments of population structure through methods such as hierarchical
-\(F_{st}\) and AMOVA benefit greatly from multiple levels of population
-definition (Linde et al., 2002; Everhart and Scherm, 2015; Gr{ü}nwald
-and Hoheisel, 2006). With clonal organisms, basic practice has been to
-clone-censor data to avoid downward bias in diversity due to duplicated
-genotypes that may or may not represent different samples (Milgroom,
-1996). Data structures for population genetic data mostly allow for only
-one level of hierarchical definition. The impetus was placed on the
-researchers to provide the population hierarchies for every step of the
-analysis. In poppr version 1.1, the hierarchy slot was introduced to
-allow unlimited population hierarchies or stratifications to travel with
-the data. In practice, it is stored as a data frame where each column
-represents a separate hierarchical level. This is then used to set the
-population factor of the data by supplying a hierarchical formula
-containing one or more column names of the data frame in the hierarchy
-slot. This functionality, developed in \emph{poppr}, has been moved to
-the \emph{adegenet} package in version 2.0 and the slot and methods have
-been renamed to \texttt{strata}.
-
-\section*{Genotype Accumulation
-Curve}\label{genotype-accumulation-curve}
-\addcontentsline{toc}{section}{Genotype Accumulation Curve}
-
-Analysis of population genetics of clonal organisms often borrows from
-ecological methods such as analysis of diversity within populations
-(Milgroom, 1996; Arnaud-Hanod et al., 2007; Grünwald et al., 2003). When
-choosing markers for analysis, it is important to make sure that the
-observed diversity in your sample will not appreciably increase if an
-additional marker is added (Arnaud-Hanod et al., 2007). This concept is
-analogous to a species accumulation curve, obtained by rarefaction. The
-genotype accumulation curve in \emph{poppr} is implemented in the
-function \texttt{genotype\_curve}. The curve is constructed by randomly
-sampling \(x\) loci and counting the number of observed MLGs. This
-repeated \(r\) times for 1 locus up to \(n-1\) loci, creating \(n-1\)
-distributions of observed MLGs.
-
-The following code example demonstrates the genotype accumulation curve
-for data from Everhart and Scherm (2015) showing that these data reach a
-small plateau and have a greatly decreased variance with 12 markers,
-indicating that there are enough markers such that adding more markers
-to the analysis will not create very many new genotypes (Fig. 4).
-
-\begin{CodeChunk}
-\begin{CodeInput}
-library("poppr")
-library("ggplot2")
-data("monpop", package = "poppr")
-
-set.seed(20150428)
-genotype_curve(monpop, sample = 1000, quiet = TRUE)
-p <- last_plot() + theme_bw()   # get the last plot
-p + geom_smooth(aes(group = 1)) # plot with a trendline
-\end{CodeInput}
-\end{CodeChunk}
 
 \section*{Minimum Spanning Networks with
 Reticulation}\label{minimum-spanning-networks-with-reticulation}
@@ -504,6 +430,90 @@ set.seed(20150428)
 pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
 \end{CodeInput}
 \end{CodeChunk}
+
+\section*{Genotype Accumulation
+Curve}\label{genotype-accumulation-curve}
+\addcontentsline{toc}{section}{Genotype Accumulation Curve}
+
+Analysis of population genetics of clonal organisms often borrows from
+ecological methods such as analysis of diversity within populations
+(Milgroom, 1996; Arnaud-Hanod et al., 2007; Grünwald et al., 2003). When
+choosing markers for analysis, it is important to make sure that the
+observed diversity in your sample will not appreciably increase if an
+additional marker is added (Arnaud-Hanod et al., 2007). This concept is
+analogous to a species accumulation curve, obtained by rarefaction. The
+genotype accumulation curve in \emph{poppr} is implemented in the
+function \texttt{genotype\_curve}. The curve is constructed by randomly
+sampling \(x\) loci and counting the number of observed MLGs. This
+repeated \(r\) times for 1 locus up to \(n-1\) loci, creating \(n-1\)
+distributions of observed MLGs.
+
+The following code example demonstrates the genotype accumulation curve
+for data from Everhart and Scherm (2015) showing that these data reach a
+small plateau and have a greatly decreased variance with 12 markers,
+indicating that there are enough markers such that adding more markers
+to the analysis will not create very many new genotypes (Fig. 4).
+
+\begin{CodeChunk}
+\begin{CodeInput}
+library("poppr")
+library("ggplot2")
+data("monpop", package = "poppr")
+
+set.seed(20150428)
+genotype_curve(monpop, sample = 1000, quiet = TRUE)
+p <- last_plot() + theme_bw()   # get the last plot
+p + geom_smooth(aes(group = 1)) # plot with a trendline
+\end{CodeInput}
+\end{CodeChunk}
+
+\section*{Index of association}\label{index-of-association}
+\addcontentsline{toc}{section}{Index of association}
+
+The index of association (\(I_A\)) is a measure of multilocus linkage
+disequilibrium that is most often used to detect clonal reproduction
+within organisms that have the ability to reproduce via sexual or
+asexual processes (Brown et al., 1980; Smith et al., 1993; Milgroom,
+1996). It was standardized in 2001 as \(\bar{r}_d\) by Agapow and Burt
+(2001) to address the issue of scaling with increasing number of loci.
+This metric is typically applied to traditional dominant and co-dominant
+markers such as AFLPs, SNPs, or microsatellite markers. With the advent
+of high throughput sequencing, SNP data is now available in in a
+genome-wide context and in very large matrices including thousands of
+SNPs. Thus, the likelihood of finding mutations within two individuals
+of a given clone increases and tools are needed for defining clone
+boundaries. For this reason, we devised two approaches using the index
+of association for large numbers of markers typical for population
+genomic studies.
+
+The first approach is a sliding window approach implemented in the
+function \texttt{win.ia}. It utilizes the position of markers in the
+genome to calculate \(\bar{r}_d\) among any number of SNPs found within
+a user-specified windowed region. It is important that this calculation
+utilize \(\bar{r}_d\) as the number of loci will be different within
+each window (Agapow and Burt, 2001). This approach would be suited for a
+quick calculation of linkage disequilibrium across the genome that can
+detect potential hotspots of LD that could be investigated further with
+more computationally intensive methods assuming that the number of
+samples \textless{}\textless{} the number of loci.
+
+As it would necessarily focus on loci within a short section of the
+genome that may or may not be recombining, a sliding window approach
+would not be good for utilizing \(\bar{r}_d\) as a test for clonal
+reproduction. A remedy for this is implemented in the function
+\texttt{samp.ia}, which will randomly sample \(m\) loci, calculate
+\(\bar{r}_d\), and repeat \(r\) times, thus creating a distribution of
+expected values of \(\bar{r}_d\).
+
+To demonstrate the sliding window and random sampling of \(\bar{r}_d\)
+with respect to clonal populations, we simulated two populations
+containing 1,100 neutral SNPs for 100 diploid individuals under the same
+initial seed. One population had individuals randomly sampled with
+replacement, representing the clonal population. After sampling, both
+populations had 5\% random error and 1\% missing data independently
+propagated across all samples. On average, we obtained a higher value of
+\(\bar{r}_d\) for the clonal population compared to the sexual
+population (Fig. 5).
 
 \section*{Availability}\label{availability}
 \addcontentsline{toc}{section}{Availability}
