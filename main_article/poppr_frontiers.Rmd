@@ -120,7 +120,9 @@ previously introduced several novel features including the ability to conduct a
 hierarchical analysis across unlimited hierarchies, test for linkage
 association, graph minimum spanning networks or provide bootstrap support for
 Bruvo's distance in resulting trees. It was well received by the community,
-garnering 14 citations in its first year of publication.
+garnering 14 citations in its first year of publication. Since it's first
+release, however, limitations with speed, ease of use, and efficiency became
+more apparent as genomic data became more readily available.
 
 In version 1.1, to address difficulties with handling hierarchical and
 mutlilocus genotypic metadata, a new S4 object called "genclone" was defined to
