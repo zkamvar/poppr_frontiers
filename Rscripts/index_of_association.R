@@ -15,15 +15,15 @@ library("poppr")
 #' individuals with 1,000 unstructured loci and 100 structured loci in strong
 #' LD.
 #+ data_setup, cache = TRUE
-set.seed(2015)
-x <- glSim(100, 1e3, n.snp.struc=100, ploid=2, alpha=0.4, LD=TRUE, block.minsize=100)
+set.seed(999)
+x <- glSim(100, 1e3, n.snp.struc=100, ploid=2, alpha = 0.1)
 plot(x)
 #' 
 #' If we use the windowing function for $\bar{r}_d$, here, we can see that all 
 #' of the linkage is at the end of the data. First, we are going to set some
 #' arbitrary positions for the data.
 #+ first_ia, cache = TRUE
-set.seed(2015)
+set.seed(999) #
 position(x) <- sort(sample(1.1e4, 1.1e3))
 system.time(x.ia <- win.ia(x, quiet = TRUE)) # window size = 100
 #'
@@ -33,30 +33,36 @@ plot(x.ia, type = "l", main = "Index of Association over 100nt windows",
 #'
 #' Of course, with this strong LD, it's pretty easy to detect a >100bp chunk.
 #' What happens if we randomly shuffle the loci?
-set.seed(2015)
+set.seed(999)#
 shuffled_loci <- sample(nLoc(x))
-x.shuff <- x[, shuffled_loci]
+x.shuff <- x[sample(nInd(x)), shuffled_loci]
 position(x.shuff) <- position(x) # Reset the position
 #' 
 #+ shuffle_ia, cache = TRUE
-plot(x.shuff) # 
+plot(x.shuff) #
 system.time(x.ia.shuff <- win.ia(x.shuff, quiet = TRUE))
 #'
 #' Now we can plot it!
 plot(x.ia.shuff, type = "l", main = "Index of Association over 100nt windows",
      ylab = "Index of Association", xlab = "Window")
+abline(h = 0)
 #' 
 #' We can see exactly where the linked loci are by figuring out what windows they
 #' are in:
 nwin <- ceiling(max(position(x)/100L))
 winmat <- matrix(100L * 1:nwin, nrow = nwin, ncol = 2)
-winmat[, 1] <- winmat[, 1] - 100L
+winmat[, 1] <- winmat[, 1] - 100L + 1
 linked <- position(x)[shuffled_loci > 1000]
 link_wins <- unlist(sapply(linked, 
                            function(x) which(x >= winmat[, 1] & x <= winmat[, 2])))
-two_wins <- table(link_wins)
-two_wins <- as.numeric(names(two_wins)[two_wins >= 2])
 #' Now we can visualize this all together!
 plot(x.ia.shuff, type = "l", main = "Index of Association over 100nt windows",
      ylab = "Index of Association", xlab = "Window")
-abline(v = two_wins, lty = 3)
+win_tab <- tabulate(link_wins)
+which_wins <- win_tab >= 3
+abline(v = which(which_wins), lty = 3, lwd = win_tab[which_wins] - 1)
+abline(h = 0)
+#'
+#' ## Session Info
+options(width = 100)
+devtools::session_info()
