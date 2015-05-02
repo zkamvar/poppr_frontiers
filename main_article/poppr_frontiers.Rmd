@@ -457,8 +457,22 @@ install_github("grunwaldlab/poppr")
 
 # Discussion {-}
 
-Genomic data has become more readily accessible due to advances in low-cost sequencing technology. Many tools have been developed or adapted to these data, but most of them were designed with sexual populations in mind. 
+Genomic data has become more readily accessible due to advances in low-cost
+sequencing technology. Many tools have been developed or adapted to these data,
+but most of them were designed with sexual populations in mind. Particularly
+important is the implementation of $\bar{r}_d$ for genomic data [@Agapow_2001].
+Random sampling of loci across the genome can give an expected distribution of
+$\bar{r}_d$, which is expected to have a mean of zero for panmictic populations.
+Additionally, due to the fact that the it acts on multiple loci, is not affected
+by the number of loci sampled, and has the ability to detect population
+structure, $\bar{r}_d$ is well suited to sliding window analyses and has the
+potential to be applied to non-clonal populations.
 
+The tools developed here, however are not all exclusively applicable for genomic
+data, as was shown with `mlg.filter`, population hierarchies, bootstrapping, and
+reticulate minimum spanning networks.
+
+<!-- Old stuff below here -->
 Creating structures like minimum spanning networks and dendrograms allow
 researchers to distill the most important information from large distance
 matrices, revealing patterns that could support hypotheses of differentiation or
