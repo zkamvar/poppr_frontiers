@@ -143,8 +143,9 @@ genetic distance, sliding window analyses, genotype accumulation curves,
 reticulations in minimum spanning networks, and bootstrapping for any genetic
 distance.
 
+# Implementations and Examples {-}
 
-# Population Strata and Hierarchies {-}
+## Population Strata and Hierarchies {-}
 
 Assessments of population structure through methods such as hierarchical
 $F_{st}$ and AMOVA benefit greatly from multiple levels of population definition
@@ -163,7 +164,7 @@ or more column names of the data frame in the hierarchy slot. This
 functionality, developed in *poppr*, has been moved to the *adegenet* package in
 version 2.0 and the slot and methods have been renamed to `strata`.
 
-# Clonal identification {-}
+## Clonal identification {-}
 
 As highlighted in previous work, clone correction is an important component of
 population genetic analysis of organisms that have cryptic growth or are known
@@ -200,7 +201,7 @@ distance. This algorithm will cluster by creating a representative sample per
 cluster and joining clusters if these representative samples are closer than the
 given threshold.
 
-## Demonstration data: *P. infestans* {-}
+<!-- ## Demonstration data: *P. infestans* {-} -->
 
 We utilize data from the microbe *Phytophthora infestans* to show how the
 `mlg.filter` function collapses multilocus genotypes with Bruvo's distance
@@ -222,7 +223,7 @@ tables between the described multilocus genotypes and the genotypes defined by
 distance show that most of the 18 lineages were resolved, except for US-8, which
 is polytomic (Table 1). 
 
-## Demonstration data: Simulated data {-}
+<!-- ## Demonstration data: Simulated data {-} -->
 
 We utilized simulated data constructed using the `glSim` function in adegenet
 [@jombart2011adegenet] to obtain a SNP data set for demonstration. Two diploid
@@ -252,7 +253,7 @@ duplicated samples had $\sim$ 98% true positive fraction and $\sim$ 0.8% false
 positive fraction indicating that this method is robust to simulated
 populations.
 
-# Minimum Spanning Networks with Reticulation {-}
+## Minimum Spanning Networks with Reticulation {-}
 
 In its original iteration, *poppr* introduced minimum spanning networks that
 were based on the *igraph* function `minimum.spanning.tree` [@csardi2006igraph].
@@ -302,7 +303,7 @@ successful whereas the minimum spanning tree separated one genotype from that
 community. The entropy for the reticulated network was lower for all populations
 except for the Coast population (supplementary information).
 
-# Bootstrapping {-}
+## Bootstrapping {-}
 
 Calculating genetic distance for among samples and populations is very important
 method for assessing population differentiation through methods such as
@@ -360,7 +361,7 @@ pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
     - adopted by larger community
 -->
 
-# Genotype Accumulation Curve {-}
+## Genotype Accumulation Curve {-}
 
 Analysis of population genetics of clonal organisms often borrows from
 ecological methods such as analysis of diversity within populations
@@ -391,7 +392,7 @@ p <- last_plot() + theme_bw()   # get the last plot
 p + geom_smooth(aes(group = 1)) # plot with a trendline
 ```
 
-# Index of association {-}
+## Index of association {-}
 
 The index of association ($I_A$) is a measure of multilocus linkage
 disequilibrium that is most often used to detect clonal reproduction within
@@ -449,7 +450,7 @@ install_github("grunwaldlab/poppr")
 
 # Discussion {-}
 
-We have presented here new model-free tools for the analysis of clonal populations with emphasis on genomic-scale data. Especially important is `mlg.filter`, which 
+We have presented here new model-free tools for the analysis of clonal populations with emphasis on genomic-scale data. 
 
 Creating structures like minimum spanning networks and dendrograms allow
 researchers to distill the most important information from large distance
