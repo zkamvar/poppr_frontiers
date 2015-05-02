@@ -45,16 +45,18 @@ Note: Everything in the abstract needs to be in latex format.
 
 \begin{abstract}
 
-To gain a detailed understanding of how plant microbe evovle and adapt to host and other factors such as pesticides, knowledge of the population dynamics and evolutionary history
-of populations is crucial. With the advent of high throughput sequencing
-technologies, obtaining genomic sequences for representative populations has
-become easier than ever before. A move towards open, reproducible science has
-provided impetus for developing population genetic analysis tools in R. We
-previously contributed the R package \textit{poppr} specifically addressing
-issues with analysis of clonal populations. In this paper we provide several
-significant extensions to \textit{poppr} with a focus on large, genome wide SNP
-data. Specifically, we provide analyses across any level of hierarchies, a new
-function to define clone boundaries we call
+To gain a detailed understanding of how plant microbe evovle and adapt to host
+and other factors such as pesticides, knowledge of the population dynamics and
+evolutionary history of populations is crucial. With the advent of high
+throughput sequencing technologies, obtaining genomic sequences for
+representative populations has become easier than ever before. A move towards
+open, reproducible science has provided impetus for developing population
+genetic analysis tools in R. We previously contributed the R package
+\textit{poppr} specifically addressing issues with analysis of clonal
+populations. In this paper we provide several significant extensions to
+\textit{poppr} with a focus on large, genome wide SNP data. Specifically, we
+provide analyses across any level of hierarchies, a new function to define clone
+boundaries we call
 \texttt{mlg.filter} allowing for inspection and definition of what is a clonal
 lineage, and the index of association for reduced representation genomic data,
 and modular bootstrapping of any genetic distance.
@@ -407,6 +409,11 @@ including thousands of SNPs. Thus, the likelihood of finding mutations within
 two individuals of a given clone increases and tools are needed for defining
 clone boundaries. For this reason, we  devised two approaches using the index of
 association for large numbers of markers typical for population genomic studies.
+Both functions utilize *adegenet*'s "genlight" object class, which efficiently
+stores 8 binary alleles in a single byte [@jombart2011adegenet]. As calculation
+of the $\bar{r}_d$ requires distance matrices of absolute number of differences,
+we utilize a function that calculates these distances directly from the
+compressed data called `bitwise.dist`.
 
 The first approach is a sliding window approach implemented in the function
 `win.ia`. It utilizes the position of markers in the genome to calculate
@@ -450,7 +457,7 @@ install_github("grunwaldlab/poppr")
 
 # Discussion {-}
 
-We have presented here new model-free tools for the analysis of clonal populations with emphasis on genomic-scale data. 
+Genomic data has become more readily accessible due to advances in low-cost sequencing technology. Many tools have been developed or adapted to these data, but most of them were designed with sexual populations in mind. 
 
 Creating structures like minimum spanning networks and dendrograms allow
 researchers to distill the most important information from large distance
