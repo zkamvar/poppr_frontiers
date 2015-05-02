@@ -125,6 +125,18 @@ legend("topleft", lty = 1, col = c("black", "blue"), legend = c("clonal snps", "
 abline(h = mean(clone.ia), lty = 2)
 abline(h = mean(sex.ia), lty = 2, col = "blue")
 #'
+#+ clone_window1k, cache = TRUE
+# 100nt windows
+system.time(clone.ia1k <- win.ia(clone_samples, quiet = TRUE, window = 5e2, threads = 2))
+system.time(sex.ia1k <- win.ia(sex_samples, quiet = TRUE, window = 5e2, threads = 2))
+#'
+plot(clone.ia1k, type = "l", main = "Index of Association over 500nt windows",
+     ylab = "Index of Association", xlab = "Window", 
+     ylim = c(-0.02, 0.04))
+lines(sex.ia1k, col = "blue")
+legend("topleft", lty = 1, col = c("black", "blue"), legend = c("clonal snps", "sexual snps"))
+abline(h = mean(clone.ia1k), lty = 2)
+abline(h = mean(sex.ia1k), lty = 2, col = "blue")
 #' Now, to do boxplots
 #+ clone_samp, cache = TRUE
 set.seed(20150501) #
@@ -152,18 +164,21 @@ boxplot(data.frame(clonal = clone.samp, sexual = sex.samp), ylim = c(-0.02, 0.04
 par(mar = c(5, 4, 4, 2) + 0.1)
 layout(matrix(1))
 #' 
-dput(clone.ia)
-dput(sex.ia)
+dput(clone.ia1k)
+dput(sex.ia1k)
 dput(clone.samp)
 dput(sex.samp)
 par(mar = c(5, 4, 4, 2) + 0.1)
+ylims <- range(sex.ia1k, clone.ia1k, clone.samp, sex.samp)
 lay <- layout(matrix(c(1, 1, 1, 2), nrow = 1, byrow = TRUE))
-plot(clone.ia, type = "l", main = "Sliding Window\n100nt",
-     ylab = "Index of Association", xlab = "Window")
-lines(sex.ia, col = "blue")
+plot(clone.ia1k, type = "l", main = "Sliding Window\n100nt",
+     ylab = "Index of Association", xlab = "Window", ylim = ylims)
+lines(sex.ia1k, col = "blue")
+abline(h = mean(clone.ia1k), lty = 2)
+abline(h = mean(sex.ia1k), lty = 2, col = "blue")
 legend("topright", lty = 1, col = c("black", "blue"), legend = c("clonal snps", "sexual snps"))
 par(mar = c(5.1, 0, 4.1, 2.1))
-boxplot(data.frame(clonal = clone.samp, sexual = sex.samp), ylim = c(-0.02, 0.04), ylab = NA, yaxt = "n", border = c("black", "blue"),
+boxplot(data.frame(clonal = clone.samp, sexual = sex.samp), ylim = ylims, ylab = NA, yaxt = "n", border = c("black", "blue"),
         main = "Random Sample\n50nt")
 par(mar = c(5, 4, 4, 2) + 0.1)
 layout(matrix(1))
