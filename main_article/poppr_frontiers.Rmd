@@ -469,7 +469,7 @@ structure, $\bar{r}_d$ is well suited to sliding window analyses and has the
 potential to be applied to non-clonal populations.
 
 Clustering multilocus genotypes into multilocus lineages based on genetic
-distances greater than zero is a non-trivial task and has not previously been
+distances is a non-trivial task. Moreover, this has not previously been
 implemented for genomic data for clonal populations. Perhaps highlighting the
 fact that many of the features presented in this paper are not exclusive to
 genomic data is the fact that this method of clonal assignment has been
@@ -499,8 +499,7 @@ it is possible to utilize these graph walking algorithms on non-reticulate
 minimum spanning trees, the results derived from these are limited to explain
 populations derived from serial cloning events.
 
-- bootstrapping methods encourage future developers to write distance implementations in common format
-- moving towards open source, modular tools is the direction that population genetics and plant pathology needs to go. 
+
 
 # Figures and Tables {-}
 
@@ -727,9 +726,11 @@ genotypes. A trendline (blue) has been added using the *ggplot2* function
 ($\bar{r}_d$) across a simulated $1.1 \times 10^4$nt chromosome containing 1,100
 variants among 100 individuals. Each window analyzed variants within 500nt
 chunks. The black line indicates clonal population, the blue line indicates
-sexual. **(B)** 100 random samplings of 50 variants to calculate a distribution
-of $\bar{r}_d$ for the clonal (black) and sexual (blue) population. **(A)** and
-**(B)** are plotted on the same y-axis.
+sexual. **(B)** boxplots showing 100 random samplings of 50 variants to
+calculate a distribution of $\bar{r}_d$ for the clonal (black) and sexual (blue)
+population. Each box is centered around the mean, with whiskers extending out to
+1.5 times the interquartile range. The median is indicated by the center line.
+**(A)** and **(B)** are plotted on the same y-axis.
 
 ## Table 1 {-}
 
