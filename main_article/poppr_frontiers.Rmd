@@ -469,8 +469,11 @@ structure, $\bar{r}_d$ is well suited to sliding window analyses and has the
 potential to be applied to non-clonal populations.
 
 Clustering multilocus genotypes into multilocus lineages based on genetic
-distances greater than zero is a non-trivial task. This task has been available
-in the programs \textsc{GenClone} and \textsc{Genodive}
+distances greater than zero is a non-trivial task and has not previously been
+implemented for genomic data for clonal populations. Perhaps highlighting the
+fact that many of the features presented in this paper are not exclusive to
+genomic data is the fact that this method of clonal assignment has been
+available in the programs \textsc{GenClone} and \textsc{Genodive}
 [@arnaud2007standardizing; @meirmans2004genotype]. Our method with `mlg.filter`
 builds upon this idea and allows the user to choose between three different
 approaches for clustering MLGs. As shown in Fig. 1, it is clear that the choice
@@ -480,33 +483,21 @@ neighbor and UPGMA clustering, respectively (Fig. 1). The option to choose the
 clustering algorithm gives the user the ability to choose what is biologically
 relevant to their populations.
 
-<!-- Old stuff below here -->
-Creating structures like minimum spanning networks and dendrograms allow
-researchers to distill the most important information from large distance
-matrices, revealing patterns that could support hypotheses of differentiation or
-the lack thereof. Bifurcating dendrograms are most familiar to biologists as the
-interpretation of them is straightforward and bootstrap confidence values can
-easily be obtained due to the basic structure of the tree. Minimum spanning
-networks allow for a different view into populations, where samples themselves
-can be treated as internal nodes connecting other samples, which could
-effectively describe populations sampled through time. The drawback to these is
-that there is no clear method for a bootstrap procedure to obtain confidence
-intervals.
-
-Reticulate minimum spanning networks are very important for clonal organisms
-where a minimum spanning tree would become a chain, implying that the clones
-were derived in a progressive and linear fashion. This presents but one
-potential scenario for clonal organisms, but does not account for any other
-biologically relevant process. Reticulations in the minimum spanning networks
-allow for a representation of uncertainty that goes along with clonal organisms.
-The current implementation in *poppr* has been successfully used in analyses
-such as reconstruction of the *P. ramorum* epidemic in Curry County, OR
+Multilocus genotypes that have been clustered can then be visualized in minimum
+spanning networks. Reticulate minimum spanning networks are very important for
+clonal organisms where a minimum spanning tree would become a chain, implying
+that the clones were derived in a progressive and linear fashion. This presents
+but one potential scenario for clonal organisms, but does not account for any
+other biologically relevant process. Reticulations in the minimum spanning
+networks allow for a representation of uncertainty that goes along with clonal
+organisms. The current implementation in *poppr* has been successfully used in
+analyses such as reconstruction of the *P. ramorum* epidemic in Curry County, OR
 [@kamvar2014sudden; @kamvar2015spatial]. Reticulated networks also allow for the
 application of graph community detection algorithms such as the infoMAP
-algorithm [@rosvall2008maps]. As shown in the *P. ramorum* and H3N2 data,
-while it is possible to utilize these graph walking algorithms on non-reticulate
+algorithm [@rosvall2008maps]. As shown in the *P. ramorum* and H3N2 data, while
+it is possible to utilize these graph walking algorithms on non-reticulate
 minimum spanning trees, the results derived from these are limited to explain
-populations derived from serial cloning events. 
+populations derived from serial cloning events.
 
 - bootstrapping methods encourage future developers to write distance implementations in common format
 - moving towards open source, modular tools is the direction that population genetics and plant pathology needs to go. 
