@@ -380,7 +380,7 @@ standardized in 2001 as $\bar{r}_d$ by @Agapow_2001 to address the issue of
 scaling with increasing number of loci. This metric is typically applied to
 traditional dominant and co-dominant markers such as AFLPs, SNPs, or
 microsatellite markers. With the advent of high throughput sequencing, SNP data
-is now available in in a genome-wide context and in very large matrices
+is now available in a genome-wide context and in very large matrices
 including thousands of SNPs.<!-- This doesn't make sense in this context -->
 Thus, the likelihood of finding mutations within two individuals of a given
 clone increases and tools are needed for defining clone boundaries.<!----> For
