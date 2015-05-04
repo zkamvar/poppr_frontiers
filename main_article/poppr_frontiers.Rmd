@@ -138,19 +138,21 @@ bootstrapping for any genetic distance.
 As highlighted in previous work, clone correction is an important component of
 population genetic analysis of organisms that have cryptic growth or are known
 to reproduce asexually [@kamvar2014poppr; @milgroom1996recombination;
-@grunwald2003analysis]. This method is a partial correction for bias that affects metrics that rely on allele frequencies assuming panmixia. It was initially designed for data with
-only a handful of markers. With the advent of large-scale sequencing and
-reduced-representation libraries, it has become easier to sequence tens of
-thousands of markers from hundreds of individuals [@elshire2011robust;
-@davey2011genome; @davey2010rad]. With this larger number of markers, the
-genetic resolution is much greater, but the chance of genotyping error is also
-greatly increased [@mastretta2015restriction]. Taking this fact and occasional
-somatic mutations into account, it would be impossible to separate true clones
-from independent individuals by just comparing what multilocus genotypes are
-different. We introduce a new method for collapsing unique multilocus genotypes
-determined by naive string comparison into multilocus lineages utilizing any
-genetic distance given three different clustering algorithms: farthest neighbor,
-nearest neighbor, and UPGMA (average neighbor) [@sokal1958statistical].
+@grunwald2003analysis]. This method is a partial correction for bias that
+affects metrics that rely on allele frequencies assuming panmixia. It was
+initially designed for data with only a handful of markers. With the advent of
+large-scale sequencing and reduced-representation libraries, it has become
+easier to sequence tens of thousands of markers from hundreds of individuals
+[@elshire2011robust; @davey2011genome; @davey2010rad]. With this larger number
+of markers, the genetic resolution is much greater, but the chance of genotyping
+error is also greatly increased [@mastretta2015restriction]. Taking this fact
+and occasional somatic mutations into account, it would be impossible to
+separate true clones from independent individuals by just comparing what
+multilocus genotypes are different. We introduce a new method for collapsing
+unique multilocus genotypes determined by naive string comparison into
+multilocus lineages utilizing any genetic distance given three different
+clustering algorithms: farthest neighbor, nearest neighbor, and UPGMA (average
+neighbor) [@sokal1958statistical].
 
 These clustering algorithms act on a distance matrix that is either provided by
 the user or generated via a function that will calculate a distance from
@@ -246,16 +248,16 @@ minimum spanning trees based on genetic distance to connect groups of nodes with
 edges of equal weight.
 
 To demonstrate the utility of minimum spanning networks with reticulation, we
-used two clonal data sets: the H3N2 flu virus data from the *adegenet* package using
-years of each epidemic as the population factor, and *Phytophthora ramorum* data
-from Nurseries and Oregon forests [@jombart2010discriminant; @kamvar2014sudden].
-Minimum spanning networks were created with and without reticulation using the
-*poppr* functions `diss.dist` and `bruvo.msn` for the H3N2 and *P. ramorum*
-data, respectively [@kamvar2014poppr; @bruvo2004simple]. To detect mlg clusters,
-the infoMAP community detection algorithm was applied with 10,000 trials as
-implemented in the R package *igraph* version 0.7.1 utilizing genetic distance
-as edge weights and number of samples in each MLG as vertex weights
-[@csardi2006igraph; @rosvall2008maps].
+used two clonal data sets: the H3N2 flu virus data from the *adegenet* package
+using years of each epidemic as the population factor, and *Phytophthora
+ramorum* data from Nurseries and Oregon forests [@jombart2010discriminant;
+@kamvar2014sudden]. Minimum spanning networks were created with and without
+reticulation using the *poppr* functions `diss.dist` and `bruvo.msn` for the
+H3N2 and *P. ramorum* data, respectively [@kamvar2014poppr; @bruvo2004simple].
+To detect mlg clusters, the infoMAP community detection algorithm was applied
+with 10,000 trials as implemented in the R package *igraph* version 0.7.1
+utilizing genetic distance as edge weights and number of samples in each MLG as
+vertex weights [@csardi2006igraph; @rosvall2008maps].
 
 To evaluate the results, we compared the number, size, and entropy ($H$) of
 the resulting communities as we expect a highly clonal organism with low genetic
@@ -284,23 +286,24 @@ except for the coast population (supplementary information).
 
 ## Bootstrapping {-}
 
-Assessing population differentiation through methods such as
-$G_{st}$, AMOVA, and Mantel tests relies on comparing samples within and across populations [@nei1973analysis; @excoffier1992analysis;
+Assessing population differentiation through methods such as $G_{st}$, AMOVA,
+and Mantel tests relies on comparing samples within and across populations
+[@nei1973analysis; @excoffier1992analysis;
 @mantel1967detection]. Confidence in distance metrics is related to the
 confidence in the markers to accurately represent the diversity of the data.
 Especially true with microsatellite markers, a single hyper-diverse locus can
 make a population appear to have more diversity based on genetic distance. Using
 a bootstrapping procedure of randomly sampling loci with replacement when
-calculating a distance matrix provides support for clades in hierarchical clustering.
-Because genetic data in a genind object is represented as a matrix with samples
-in rows and alleles in columns, bootstrapping is a non-trivial task as all
-alleles at a single locus need to be sampled together. To remedy this, we have
-created an internal S4 class called "bootgen", which extends the internal "gen"
-class from *adegenet*. This class can be created from any genind, genclone, or
-genpop object, and allows loci to be sampled with replacement. To further
-facilitate bootstrapping, a function called `aboot`, which stands for "any
-boot", is introduced that will bootstrap any genclone, genind, or genpop object
-with any genetic distance that can be calculated from it.
+calculating a distance matrix provides support for clades in hierarchical
+clustering. Because genetic data in a genind object is represented as a matrix
+with samples in rows and alleles in columns, bootstrapping is a non-trivial task
+as all alleles at a single locus need to be sampled together. To remedy this, we
+have created an internal S4 class called "bootgen", which extends the internal
+"gen" class from *adegenet*. This class can be created from any genind,
+genclone, or genpop object, and allows loci to be sampled with replacement. To
+further facilitate bootstrapping, a function called `aboot`, which stands for
+"any boot", is introduced that will bootstrap any genclone, genind, or genpop
+object with any genetic distance that can be calculated from it.
 
 To demonstrate calculating a dendrogram with bootstrap support, we used the
 *poppr* function `aboot` on population allelic frequencies derived from the data
@@ -717,7 +720,8 @@ epidemic does not cluster neatly with the other years.
 
 ## Figure 3 {-}
 
-UPGMA dendrogram generated from Nei's genetic distance on 15 breeds of *Bos taurus* (BT) or *Bos indicus* (BI) from Africa (AF) or France (FR). These data
+UPGMA dendrogram generated from Nei's genetic distance on 15 breeds of *Bos
+taurus* (BT) or *Bos indicus* (BI) from Africa (AF) or France (FR). These data
 are from @laloe2007consensus. Node labels represent bootstrap support $>50\%$
 out of 1,000 bootstrap replicates.
 
