@@ -29,7 +29,7 @@ The purpose of this script is to demonstrate the differences between minimum spa
  
 Both of these data sets produce minimum spanning networks with very few branching events without reticulation. With reticulation, they create dense clusters.
 
-We use the infoMAP algorithm to detect clusters within the graphs and then compared the entropy.
+We use the [infoMAP](http://www.pnas.org/content/105/4/1118) [algorithm](http://arxiv.org/abs/0707.0609) to detect clusters within the graphs and then compared the entropy.
 
 ## index\_of\_association.R
 
