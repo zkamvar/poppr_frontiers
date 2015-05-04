@@ -45,9 +45,10 @@ Note: Everything in the abstract needs to be in latex format.
 
 \begin{abstract}
 
-To gain a detailed understanding of how plant microbes evolve and adapt to host
-and other factors such as pesticides, knowledge of the population dynamics and
-evolutionary history of populations is crucial. With the advent of high
+To gain a detailed understanding of how plant microbes evolve and adapt to hosts, pesticides,
+and other factors, knowledge of the population dynamics and
+evolutionary history of populations is crucial. Plant pathogen populations are often clonal or partially clonal which requires different analytical tools. 
+With the advent of high
 throughput sequencing technologies, obtaining genomic sequences for
 representative populations has become easier than ever before. A move towards
 open, reproducible science has provided impetus for developing population
