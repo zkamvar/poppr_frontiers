@@ -208,8 +208,9 @@ created, ensuring that no two sequences were alike. The number of mutations and
 missing data per sample were determined by sampling from a Poisson distribution
 with $\lambda = 1000$. After pooling, 20% of the data set was randomly sampled
 for analysis. Genetic distance was obtained with the function `bitwise.dist`,
-which calculates the fraction of different sites between samples, counting
-missing data as equivalent in comparison. 
+which calculates the fraction of different sites between samples equivalent to
+Provesti's distance, counting missing data as equivalent in comparison
+[@prevosti1975distances].
 
 <!-- Does bitwise.dist have a reference? Is there a better name for the
 distance? --> 
