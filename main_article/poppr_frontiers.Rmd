@@ -122,21 +122,18 @@ Here, we introduce *poppr* 2.0, which provides a major update to
 ## Population Strata and Hierarchies {-}
 
 Assessments of population structure through methods such as hierarchical
-$F_{st}$ and AMOVA benefit greatly from multiple levels of population definition
-[@linde2002population; @everhart2014fine; @grunwald2006hierarchical]. With
+$F_{st}$ [@goudet2005hierfstat] and AMOVA [@michalakis1996generic] require hierarchical sampling of populations across space or time [@linde2002population; @everhart2014fine; @grunwald2006hierarchical]. With
 clonal organisms, basic practice has been to clone-censor data to avoid downward
 bias in diversity due to duplicated genotypes that may or may not represent
-different samples [@milgroom1996recombination]. Data structures for population
-genetic data mostly allow for only one level of hierarchical definition. The
-impetus was placed on the researchers to provide the population hierarchies for
-every step of the analysis. In poppr version 1.1, the hierarchy slot was
+different samples [@milgroom1996recombination]. Traditional data structures for population
+genetic data in most analysis tools allow for only one level of hierarchical definition. The investigator thus had to provide the data set for
+analysis at each hierarchical level. In poppr version 1.1, the hierarchy slot was
 introduced to allow unlimited population hierarchies or stratifications to
 travel with the data. In practice, it is stored as a data frame where each
 column represents a separate hierarchical level. This is then used to set the
 population factor of the data by supplying a hierarchical formula containing one
 or more column names of the data frame in the hierarchy slot. This
-functionality, developed in *poppr*, has been moved to the *adegenet* package in
-version 2.0 and the slot and methods have been renamed to `strata`.
+functionality, developed in *poppr*, has now been moved to the *adegenet* package in version 2.0 and the slot and methods have been renamed to `strata`.
 
 ## Clonal identification {-}
 
