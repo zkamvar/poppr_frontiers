@@ -124,8 +124,7 @@ Here, we introduce *poppr* 2.0, which provides a major update to
 As highlighted in previous work, clone correction is an important component of
 population genetic analysis of organisms that have cryptic growth or are known
 to reproduce asexually [@kamvar2014poppr; @milgroom1996recombination;
-@grunwald2003analysis]. This method removes bias that would otherwise affect
-metrics that rely on allele frequencies. It was initially designed for data with
+@grunwald2003analysis]. This method is a partial correction for bias that affects metrics that rely on allele frequencies assuming panmixia. It was initially designed for data with
 only a handful of markers. With the advent of large-scale sequencing and
 reduced-representation libraries, it has become easier to sequence tens of
 thousands of markers from hundreds of individuals [@elshire2011robust;
@@ -397,7 +396,7 @@ sexual population (Fig. 5).
 ## Change in definition of population Strata and Hierarchies {-}
 
 <!--
-I moved this section because it really removes somthing from poppr and should not be incldued as a new implementaiton in poppr 2.0. IT is an update and change.
+I moved this section because it really removes something from poppr and should not be included as a new implementaiton in poppr 2.0. It is an update and change.
 -->
 
 Assessments of population structure through methods such as hierarchical
