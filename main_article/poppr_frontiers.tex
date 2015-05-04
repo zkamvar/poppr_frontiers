@@ -233,17 +233,18 @@ distance from genclone objects such as \texttt{bruvo.dist}, which in
 particular applies to any level of ploidy (Bruvo et al., 2004). All
 algorithms have been implemented in C and utilize the OpenMP framework
 for optional parallel processing (Dagum and Menon, 1998). Default is the
-conservative farthest neighbor algorithm, which will only cluster
-samples together if all samples in the cluster are at a distance less
-than the given threshold. By contrast, the nearest neighbor algorithm
-will have a chaining effect that will cluster samples akin to adding
-links on a chain where a sample can be included in a cluster if all of
-the samples have at least one connection below a given threshold. The
-UPGMA, or average neighbor clustering algorithm is the one most familiar
-to biologists as it is often used to generate ultra-metric trees based
-on genetic distance. This algorithm will cluster by creating a
-representative sample per cluster and joining clusters if these
-representative samples are closer than the given threshold.
+conservative farthest neighbor algorithm (Fig. 1A), which will only
+cluster samples together if all samples in the cluster are at a distance
+less than the given threshold. By contrast, the nearest neighbor
+algorithm will have a chaining effect that will cluster samples akin to
+adding links on a chain where a sample can be included in a cluster if
+all of the samples have at least one connection below a given threshold
+(Fig. 1C). The UPGMA, or average neighbor clustering algorithm is the
+one most familiar to biologists as it is often used to generate
+ultra-metric trees based on genetic distance (Fig. 1B). This algorithm
+will cluster by creating a representative sample per cluster and joining
+clusters if these representative samples are closer than the given
+threshold.
 
 We utilize data from the microbe \emph{Phytophthora infestans} to show
 how the \texttt{mlg.filter} function collapses multilocus genotypes with
@@ -262,7 +263,7 @@ to determine how well the multilocus lineages were detected.
 
 For the \emph{P. infestans} population, the three algorithms were able
 to detect 18 multilocus lineages at different distance thresholds (Fig.
-1). Contingency tables between the described multilocus genotypes and
+2). Contingency tables between the described multilocus genotypes and
 the genotypes defined by distance show that most of the 18 lineages were
 resolved, except for US-8, which is polytomic (Table 1).
 
@@ -342,7 +343,7 @@ size of 77 and \(H = 3.56\) for the reticulate network of the H3N2 data
 and 117 communities with a maximum community size of 26 and \(H = 4.65\)
 for the minimum spanning tree. The entropy across years was greatly
 decreased for all populations with the reticulate network compared to
-the minimum spanning tree (Fig. 2).
+the minimum spanning tree (Fig. 3).
 
 Graph walking of the reticulated minimum spanning network of \emph{P.
 ramorum} by the infoMAP algorithm revealed 16 communities with a maximum
@@ -383,7 +384,7 @@ the \emph{poppr} function \texttt{aboot} on population allelic
 frequencies derived from the data set \texttt{microbov} in the
 \emph{adegenet} package with 1000 bootstrap replicates (Jombart, 2008;
 Lalo{ë} et al., 2007). The resulting dendrogram shows bootstrap support
-values \(>50\%\) (Fig. 3).
+values \(>50\%\) (Fig. 4).
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -419,7 +420,7 @@ The following code example demonstrates the genotype accumulation curve
 for data from Everhart and Scherm (2015) showing that these data reach a
 small plateau and have a greatly decreased variance with 12 markers,
 indicating that there are enough markers such that adding more markers
-to the analysis will not create very many new genotypes (Fig. 4).
+to the analysis will not create very many new genotypes (Fig. 5).
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -485,7 +486,7 @@ replacement, representing the clonal population. After sampling, both
 populations had 5\% random error and 1\% missing data independently
 propagated across all samples. On average, we obtained a higher value of
 \(\bar{r}_d\) for the clonal population compared to the sexual
-population for both methods (Fig. 5).
+population for both methods (Fig. 6).
 
 \subsection*{Change in definition of population Strata and
 Hierarchies}\label{change-in-definition-of-population-strata-and-hierarchies}
@@ -562,11 +563,11 @@ method of clonal assignment has been available in the programs
 \textsc{GenClone} and \textsc{Genodive} (Arnaud-Hanod et al., 2007;
 Meirmans and Van Tienderen, 2004). Our method with \texttt{mlg.filter}
 builds upon this idea and allows the user to choose between three
-different approaches for clustering MLGs. As shown in Fig. 1, it is
+different approaches for clustering MLGs. As shown in Fig. 2, it is
 clear that the choice of clustering algorithm has an impact on the data,
 where a genetic distance cutoff of 0.1 would be the difference between
 14 MLLs and 17 MLLs for nearest neighbor and UPGMA clustering,
-respectively (Fig. 1). The option to choose the clustering algorithm
+respectively (Fig. 2). The option to choose the clustering algorithm
 gives the user the ability to choose what is biologically relevant to
 their populations.
 
@@ -598,31 +599,36 @@ of the researchers who use them.
 \subsection*{Figure 1}\label{figure-1}
 \addcontentsline{toc}{subsection}{Figure 1}
 
-\begin{CodeChunk}
-
-\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/pinf_data-1} \end{CodeChunk}
+\includegraphics{poppr_frontiers_files/custom_figures/Figure-1.eps}
 
 \subsection*{Figure 2}\label{figure-2}
 \addcontentsline{toc}{subsection}{Figure 2}
 
-\includegraphics{poppr_frontiers_files/custom_figures/Figure-2.png}
+\begin{CodeChunk}
+
+\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/pinf_data-1} \end{CodeChunk}
 
 \subsection*{Figure 3}\label{figure-3}
 \addcontentsline{toc}{subsection}{Figure 3}
 
-\begin{CodeChunk}
-
-\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/microboot2-1} \end{CodeChunk}
+\includegraphics{poppr_frontiers_files/custom_figures/Figure-3.png}
 
 \subsection*{Figure 4}\label{figure-4}
 \addcontentsline{toc}{subsection}{Figure 4}
 
 \begin{CodeChunk}
 
-\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/monilinia-1} \end{CodeChunk}
+\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/microboot2-1} \end{CodeChunk}
 
 \subsection*{Figure 5}\label{figure-5}
 \addcontentsline{toc}{subsection}{Figure 5}
+
+\begin{CodeChunk}
+
+\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/monilinia-1} \end{CodeChunk}
+
+\subsection*{Figure 6}\label{figure-6}
+\addcontentsline{toc}{subsection}{Figure 6}
 
 \begin{CodeChunk}
 
@@ -665,6 +671,23 @@ B & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . \\
 \subsection*{Figure 1}\label{figure-1-1}
 \addcontentsline{toc}{subsection}{Figure 1}
 
+Diagrammatic representation of the three clustering algorithms
+implemented in \texttt{mlg.filter}. (\textbf{A-C}) represent different
+clustering algorithms on the same imaginary network with a threshold of
+0.45. Edge weights are represented in arbitrary units noted by the line
+thickness and numerical values next to the lines. All outer angles are
+90 degrees, so the un-labled edge weights can be obtained with simply
+geometry. Colored circles represent clusters of genotypes. (\textbf{A})
+Farthest neighbor clustering does not cluster nodes B and C because
+nodes A and C are more than a distance of 0.45 apart. (\textbf{B}) UPGMA
+(average neighbor) clustering clusters nodes A, B, and C together
+because the average distance between them and C is \textless{} 0.45.
+(\textbf{C}) Nearest neighbor clustering clusters all nodes together
+because the minimum distance between them is always \textless{} 0.45.
+
+\subsection*{Figure 2}\label{figure-2-1}
+\addcontentsline{toc}{subsection}{Figure 2}
+
 Graphical representation of three different clustering algorithms
 collapsing multilocus genotypes for 12 SSR loci from \emph{Phytophthora
 infestans} representing 18 clonal lineages. The horizontal axis is
@@ -675,8 +698,8 @@ of multilocus genotypes. The horizontal black line represents 18
 multilocus genotypes and vertical dashed lines mark the thresholds used
 to collapse the multilocus genotypes into 18 multilocus lineages.
 
-\subsection*{Figure 2}\label{figure-2-1}
-\addcontentsline{toc}{subsection}{Figure 2}
+\subsection*{Figure 3}\label{figure-3-1}
+\addcontentsline{toc}{subsection}{Figure 3}
 
 (\textbf{A-B}) Minimum spanning networks of the hemagglutinin (HA)
 segment of H3N2 viral DNA from the \emph{adegenet} package representing
@@ -690,16 +713,16 @@ with communities determined by the infoMAP algorithm on (\textbf{A}) and
 showing that the 2006 epidemic does not cluster neatly with the other
 years.
 
-\subsection*{Figure 3}\label{figure-3-1}
-\addcontentsline{toc}{subsection}{Figure 3}
+\subsection*{Figure 4}\label{figure-4-1}
+\addcontentsline{toc}{subsection}{Figure 4}
 
 UPGMA dendrogram generated from Nei's genetic distance on 15 breeds of
 \emph{Bos taurus} (BT) or \emph{Bos indicus} (BI) from Africa (AF) or
 France (FR). These data are from Lalo{ë} et al. (2007). Node labels
 represent bootstrap support \(>50\%\) out of 1,000 bootstrap replicates.
 
-\subsection*{Figure 4}\label{figure-4-1}
-\addcontentsline{toc}{subsection}{Figure 4}
+\subsection*{Figure 5}\label{figure-5-1}
+\addcontentsline{toc}{subsection}{Figure 5}
 
 Genotype accumulation curve for 694 isolates of the peach brown rot
 pathogen, \emph{Monilinia fructicola} genotyped over 13 loci from
@@ -711,8 +734,8 @@ dashed line represents 90\% of the total observed multilocus genotypes.
 A trendline (blue) has been added using the \emph{ggplot2} function
 \texttt{stat\_smooth}.
 
-\subsection*{Figure 5}\label{figure-5-1}
-\addcontentsline{toc}{subsection}{Figure 5}
+\subsection*{Figure 6}\label{figure-6-1}
+\addcontentsline{toc}{subsection}{Figure 6}
 
 \textbf{(A)} Sliding window analysis of the standardized index of
 association (\(\bar{r}_d\)) across a simulated \(1.1 \times 10^4\)nt

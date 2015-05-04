@@ -159,17 +159,17 @@ the user or generated via a function that will calculate a distance from
 genclone objects such as `bruvo.dist`, which in particular applies to any level
 of ploidy [@bruvo2004simple]. All algorithms have been implemented in C and
 utilize the OpenMP framework for optional parallel processing
-[@dagum1998openmp]. Default is the conservative farthest neighbor algorithm,
-which will only cluster samples together if all samples in the cluster are at a
-distance less than the given threshold. By contrast, the nearest neighbor
-algorithm will have a chaining effect that will cluster samples akin to adding
-links on a chain where a sample can be included in a cluster if all of the
-samples have at least one connection below a given threshold. The UPGMA, or
-average neighbor clustering algorithm is the one most familiar to biologists as
-it is often used to generate ultra-metric trees based on genetic
-distance. This algorithm will cluster by creating a representative sample per
-cluster and joining clusters if these representative samples are closer than the
-given threshold.
+[@dagum1998openmp]. Default is the conservative farthest neighbor algorithm
+(Fig. 1A), which will only cluster samples together if all samples in the
+cluster are at a distance less than the given threshold. By contrast, the
+nearest neighbor algorithm will have a chaining effect that will cluster samples
+akin to adding links on a chain where a sample can be included in a cluster if
+all of the samples have at least one connection below a given threshold (Fig.
+1C). The UPGMA, or average neighbor clustering algorithm is the one most
+familiar to biologists as it is often used to generate ultra-metric trees based
+on genetic distance (Fig. 1B). This algorithm will cluster by creating a
+representative sample per cluster and joining clusters if these representative
+samples are closer than the given threshold.
 
 <!-- ## Demonstration data: *P. infestans* {-} -->
 
@@ -188,7 +188,7 @@ tables and dendrograms to determine how well the multilocus lineages were
 detected.
 
 For the *P. infestans* population, the three algorithms were able to detect 18
-multilocus lineages at different distance thresholds (Fig. 1). Contingency
+multilocus lineages at different distance thresholds (Fig. 2). Contingency
 tables between the described multilocus genotypes and the genotypes defined by
 distance show that most of the 18 lineages were resolved, except for US-8, which
 is polytomic (Table 1). 
@@ -273,7 +273,7 @@ The infoMAP algorithm revealed 63 communities with a maximum community size of
 communities with a maximum community size of 26 and $H = 4.65$ for the minimum
 spanning tree. The entropy across years was greatly decreased for all
 populations with the reticulate network compared to the minimum spanning tree
-(Fig. 2).
+(Fig. 3).
 
 Graph walking of the reticulated minimum spanning network of *P. ramorum* by the
 infoMAP algorithm revealed 16 communities with a maximum community size of 13
@@ -309,7 +309,7 @@ To demonstrate calculating a dendrogram with bootstrap support, we used the
 *poppr* function `aboot` on population allelic frequencies derived from the data
 set `microbov` in the *adegenet* package with 1000 bootstrap replicates
 [@Jombart_2008; @laloe2007consensus]. The resulting dendrogram shows bootstrap
-support values $>50\%$ (Fig. 3).
+support values $>50\%$ (Fig. 4).
 
 ```{r, microboot, eval = FALSE}
 library("poppr")
@@ -360,7 +360,7 @@ The following code example demonstrates the genotype accumulation curve for data
 from @everhart2014fine showing that these data reach a small plateau and have a
 greatly decreased variance with 12 markers, indicating that there are enough
 markers such that adding more markers to the analysis will not create very many
-new genotypes (Fig. 4).
+new genotypes (Fig. 5).
 
 ```{r, monilinia_curve, eval = FALSE}
 library("poppr")
@@ -419,7 +419,7 @@ population had individuals randomly sampled with replacement, representing the
 clonal population. After sampling, both populations had 5% random error and 1%
 missing data independently propagated across all samples. On average, we
 obtained a higher value of $\bar{r}_d$ for the clonal population compared to the
-sexual population for both methods (Fig. 5).
+sexual population for both methods (Fig. 6).
 
 ## Change in definition of population Strata and Hierarchies {-}
 
@@ -486,10 +486,10 @@ genomic data is the fact that this method of clonal assignment has been
 available in the programs \textsc{GenClone} and \textsc{Genodive}
 [@arnaud2007standardizing; @meirmans2004genotype]. Our method with `mlg.filter`
 builds upon this idea and allows the user to choose between three different
-approaches for clustering MLGs. As shown in Fig. 1, it is clear that the choice
+approaches for clustering MLGs. As shown in Fig. 2, it is clear that the choice
 of clustering algorithm has an impact on the data, where a genetic distance
 cutoff of 0.1 would be the difference between 14 MLLs and 17 MLLs for nearest
-neighbor and UPGMA clustering, respectively (Fig. 1). The option to choose the
+neighbor and UPGMA clustering, respectively (Fig. 2). The option to choose the
 clustering algorithm gives the user the ability to choose what is biologically
 relevant to their populations.
 
@@ -518,6 +518,10 @@ who use them.
 
 ## Figure 1 {-}
 
+![Fig 1](poppr_frontiers_files/custom_figures/Figure-1.eps)
+
+## Figure 2 {-}
+
 ```{r, pinf_data, echo = FALSE, message = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 4*1.25, fig.height = 4*1.25, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 source("../Rscripts/my_functions.R")
 library('poppr')
@@ -535,24 +539,24 @@ thresh18 <- fstats$average$thresholds[nInd(x) - 18] + .Machine$double.eps^0.5
 z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, loss = FALSE, stats = "MLGS")
 ```
 
-## Figure 2 {-}
-
-![Fig. 2](poppr_frontiers_files/custom_figures/Figure-2.png)
-
-
 ## Figure 3 {-}
+
+![Fig. 3](poppr_frontiers_files/custom_figures/Figure-3.png)
+
+
+## Figure 4 {-}
 
 ```{r, microboot2, cache = TRUE, ref.label = "microboot", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 
 ```
 
-## Figure 4 {-}
+## Figure 5 {-}
 
 ```{r, monilinia, cache = TRUE, ref.label = "monilinia_curve", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 
 ```
 
-## Figure 5 {-}
+## Figure 6 {-}
 
 ```{r, fig_ia, echo = FALSE, out.height = "60mm", out.width = "85mm", fig.width = 5, fig.height = 3.333, fig.keep = "last", dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 clone.ia <- c(0.00657391971000822, 0.00475038591717665, 0.00590697833268689, 
@@ -698,6 +702,21 @@ print.xtable(xtable(res, align = rep("c", ncol(res) + 1)), comment = FALSE)
 
 ## Figure 1 {-}
 
+Diagrammatic representation of the three clustering algorithms implemented in
+`mlg.filter`. (**A-C**) represent different clustering algorithms on the same
+imaginary network with a threshold of 0.45. Edge weights are represented in
+arbitrary units noted by the line thickness and numerical values next to the
+lines. All outer angles are 90 degrees, so the un-labled edge weights can be
+obtained with simply geometry. Colored circles represent clusters of genotypes.
+(**A**) Farthest neighbor clustering does not cluster nodes B and C because
+nodes A and C are more than a distance of 0.45 apart. (**B**) UPGMA (average
+neighbor) clustering clusters nodes A, B, and C together because the average
+distance between them and  C is < 0.45. (**C**) Nearest neighbor clustering
+clusters all nodes together because the minimum distance between them is always
+< 0.45.
+
+## Figure 2 {-}
+
 Graphical representation of three different clustering algorithms collapsing
 multilocus genotypes for 12 SSR loci from *Phytophthora infestans* representing
 18 clonal lineages. The horizontal axis is Bruvo's genetic distance assuming the
@@ -707,7 +726,7 @@ given number of multilocus genotypes. The horizontal black line represents 18
 multilocus genotypes and vertical dashed lines mark the thresholds used to
 collapse the multilocus genotypes into 18 multilocus lineages.
 
-## Figure 2 {-}
+## Figure 3 {-}
 
 (**A-B**) Minimum spanning networks of the hemagglutinin (HA) segment of H3N2
 viral DNA from the *adegenet* package representing flu epidemics from 2001 to
@@ -719,14 +738,14 @@ with communities determined by the infoMAP algorithm on (**A**) and (**B**).
 (**D**) Graphic reproduced from @jombart2010discriminant showing that the 2006
 epidemic does not cluster neatly with the other years.
 
-## Figure 3 {-}
+## Figure 4 {-}
 
 UPGMA dendrogram generated from Nei's genetic distance on 15 breeds of *Bos
 taurus* (BT) or *Bos indicus* (BI) from Africa (AF) or France (FR). These data
 are from @laloe2007consensus. Node labels represent bootstrap support $>50\%$
 out of 1,000 bootstrap replicates.
 
-## Figure 4 {-}
+## Figure 5 {-}
 
 Genotype accumulation curve for 694 isolates of the peach brown rot pathogen,
 *Monilinia fructicola* genotyped over 13 loci from @everhart2014fine. The
@@ -737,7 +756,7 @@ data set. The red dashed line represents 90% of the total observed multilocus
 genotypes. A trendline (blue) has been added using the *ggplot2* function
 `stat_smooth`.
 
-## Figure 5 {-}
+## Figure 6 {-}
 
 **(A)** Sliding window analysis of the standardized index of association
 ($\bar{r}_d$) across a simulated $1.1 \times 10^4$nt chromosome containing 1,100
