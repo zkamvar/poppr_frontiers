@@ -91,29 +91,11 @@ clonal [@milgroom1996recombination; @anderson1995clonality]. Thus, development
 of tools for analysis of clonal or polyploid populations is needed.
 
 Genotyping by sequencing and whole genome resequencing provide the unprecedented
-ability to identify >1,000 single nucleotide polymorphisms (SNPs) in populations
-[@elshire2011robust; @luikart2003power; @davey2011genome]. Availability of these
-large SNP data sets provides new challenges for data analysis. 
-<!-- What were you trying to say here?--> For example, it
-is not clear what a clone is in large SNP data where the chance of observing
-variation at a given SNP locus within independent samples of the same clone are
-substantial enough that novel tools for definition of clone boundaries are
-required. 
-<!---->With traditional marker data (e.g., SSR, AFLP) a clone was typically
-defined as a unique multilocus genotype (MLG). However, with large SNP data a
-measure of genetic distance is required to define the boundary of an MLG (e.g.,
-clone) or the boundaries of a clonal lineage. Definition of a clone is further
-complicated by the presence of missing data that is typical for reduced
-representation libraries used in GBS or genome re-sequencing. If two individuals
-are identical for all observed SNPs except for one missing allele, should they
-be considered different?
+ability to identify thousands of single nucleotide polymorphisms (SNPs) in populations
+[@elshire2011robust; @luikart2003power; @davey2011genome]. With traditional marker data (e.g., SSR, AFLP) a clone was typically
+defined as a unique multilocus genotype (MLG). Availability of 
+large SNP data sets provides new challenges for data analysis. These data are based on reduced representation libaries and high throughput sequencing with moderate sequencing depth which invariably results in substantiatl missing data, error in SNP calling due to sequencing error, lack of read depth or other sources of spurious allele calls. It is thus not clear what a clone is in large SNP data sets and novel tools are required for definition of clone boundaries. 
 
-<!-- This doesn't flow right, I'm going to remove it for now 
-Another major issues with large SNP data is computational efficiency. Analyses
-that resample a data set or rely on MCMC are computationally slow for large data
-and thus are preferentially implemented in a low level language such as C rather
-than in interpreted languages such as R.
--->
 The research community using the R statistical and computing language [@R] has
 developed a plethora of new resources for population genetic analysis [@pegas;
 @Jombart_2008]. Recently, we introduced the R package *poppr* specifically
@@ -121,31 +103,21 @@ developed for analysis of clonal populations [@kamvar2014poppr]. *Poppr*
 previously introduced several novel features including the ability to conduct a
 hierarchical analysis across unlimited hierarchies, test for linkage
 association, graph minimum spanning networks or provide bootstrap support for
-Bruvo's distance in resulting trees. It was well received by the community,
-garnering 14 citations in its first year of publication. Since it's first
-release, however, limitations with speed, ease of use, and efficiency became
-more apparent as genomic data became more readily available.
+Bruvo's distance in resulting trees. 
 
-In version 1.1, to address difficulties with handling hierarchical and
-mutlilocus genotypic metadata, a new S4 object called "genclone" was defined to
+In version 1.1, to facilitate handling hierarchical and
+mutlilocus genotypic metadata, a new S4 data object called "genclone" was defined to
 expand the genind object of *adegenet*. The genclone object formalized the
 definitions of multilocus genotypes and population hierarchies by adding two
 slots called "mlg" and "hierarchy" that carried a numeric vector and a data frame,
 respectively. These new slots allow for increased efficiency and ease of use by
 allowing these metadata to travel with the genetic data. The addition of the
 population hierarchies has proved to be advantageous enough that they have
-recently been adopted into the more central *adegenet* package [@Jombart_2008].
+recently been incorporated directly into the *adegenet* package [@Jombart_2008].
 
-In version 1, *poppr* was appropriate for traditional markers systems, but not
-well suited to population genomic data resulting from high throughput sequencing
-methods. The raw size of these data made it difficult to conduct traditional
-analyses. Here, we introduce *poppr* 2.0, which provides a significant update to
-*poppr* including novel tools for analysis of clonal populations specifically
-for large SNP data. Significant novel tools include functions for calculating
-clone boundaries and collapsing individuals into user-specified clones based on
-genetic distance, sliding window analyses, genotype accumulation curves,
-reticulations in minimum spanning networks, and bootstrapping for any genetic
-distance.
+Here, we introduce *poppr* 2.0, which provides a major update to
+*poppr* 1.1 including novel tools for analysis of clonal populations specifically
+addressing large SNP data. Significant novel tools include functions for calculating clone boundaries and collapsing individuals into user-specified clones based on genetic distance, sliding window analyses, genotype accumulation curves, reticulations in minimum spanning networks, and bootstrapping for any genetic distance.
 
 # Implementations and Examples {-}
 
