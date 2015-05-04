@@ -227,7 +227,7 @@ any genetic distance given three different clustering algorithms:
 farthest neighbor, nearest neighbor, and UPGMA (average neighbor)
 (Sokal, 1958).
 
-The clustering algorithms act on a distance matrix that is either
+These clustering algorithms act on a distance matrix that is either
 provided by the user or generated via a function that will calculate a
 distance from genclone objects such as \texttt{bruvo.dist}, which in
 particular applies to any level of ploidy (Bruvo et al., 2004). All
@@ -240,9 +240,9 @@ will have a chaining effect that will cluster samples akin to adding
 links on a chain where a sample can be included in a cluster if all of
 the samples have at least one connection below a given threshold. The
 UPGMA, or average neighbor clustering algorithm is the one most familiar
-to biologists as it is often used to generate preliminary ultra-metric
-trees based on genetic distance. This algorithm will cluster by creating
-a representative sample per cluster and joining clusters if these
+to biologists as it is often used to generate ultra-metric trees based
+on genetic distance. This algorithm will cluster by creating a
+representative sample per cluster and joining clusters if these
 representative samples are closer than the given threshold.
 
 We utilize data from the microbe \emph{Phytophthora infestans} to show
@@ -272,13 +272,13 @@ for demonstration. Two diploid data sets were created, each with 10k
 SNPs (25\% structured into two groups) and 200 samples with 10 ancestral
 populations of even sizes. Clones were created in one data set by
 marking each sample with a unique identifier and then randomly sampling
-with replacement. It is well documented that reduced- representation
+with replacement. It is well documented that reduced-representation
 sequencing can introduce several erroneous calls and missing data
 (Mastretta-Yanes et al., 2015). To reflect this, we mutated SNPs at a
 rate of 10\% and inserted an average of 10\% missing data for each
 sample after clones were created, ensuring that no two sequences were
 alike. The number of mutations and missing data per sample were
-determined by sampling from a poisson distribution with
+determined by sampling from a Poisson distribution with
 \(\lambda = 1000\). After pooling, 20\% of the data set was randomly
 sampled for analysis. Genetic distance was obtained with the function
 \texttt{bitwise.dist}, which calculates the fraction of different sites
@@ -314,11 +314,11 @@ function to walk the space of minimum spanning trees based on genetic
 distance to connect groups of nodes with edges of equal weight.
 
 To demonstrate the utility of minimum spanning networks with
-reticulation, we used two clonal data sets: H3N2 flu virus data from the
-\emph{adegenet} package using years of each epidemic as the population
-factor, and \emph{Phytophthora ramorum} data from Nurseries and Oregon
-forests (Jombart et al., 2010; Kamvar et al., 2014a). Minimum spanning
-networks were created with and without reticulation using the
+reticulation, we used two clonal data sets: the H3N2 flu virus data from
+the \emph{adegenet} package using years of each epidemic as the
+population factor, and \emph{Phytophthora ramorum} data from Nurseries
+and Oregon forests (Jombart et al., 2010; Kamvar et al., 2014a). Minimum
+spanning networks were created with and without reticulation using the
 \emph{poppr} functions \texttt{diss.dist} and \texttt{bruvo.msn} for the
 H3N2 and \emph{P. ramorum} data, respectively (Kamvar et al., 2014b;
 Bruvo et al., 2004). To detect mlg clusters, the infoMAP community
@@ -328,14 +328,14 @@ weights and number of samples in each MLG as vertex weights (Csardi and
 Nepusz, 2006; Rosvall and Bergstrom, 2008).
 
 To evaluate the results, we compared the number, size, and entropy
-(\(H\)) of resulting communities as we expect a highly clonal organism
-with low genetic diversity to result in a few, large communities. We
-also created contingency tables of the community assignments with the
-defined populations and used those to calculate entropy using Shannon's
-index with the function \texttt{diversity} from the R package
-\emph{vegan} version 2.2-1 (Oksanen et al., 2015; Shannon, 2001). A low
-entropy indicates presence of a few large communities whereas high
-entropy indicates presence of many small communities.
+(\(H\)) of the resulting communities as we expect a highly clonal
+organism with low genetic diversity to result in a few, large
+communities. We also created contingency tables of the community
+assignments with the defined populations and used those to calculate
+entropy using Shannon's index with the function \texttt{diversity} from
+the R package \emph{vegan} version 2.2-1 (Oksanen et al., 2015; Shannon,
+2001). A low entropy indicates presence of a few large communities
+whereas high entropy indicates presence of many small communities.
 
 The infoMAP algorithm revealed 63 communities with a maximum community
 size of 77 and \(H = 3.56\) for the reticulate network of the H3N2 data
@@ -352,31 +352,31 @@ and \(H = 2.96\). In the ability to predict Hunter Creek as belonging to
 a single community, the reticulated network was successful whereas the
 minimum spanning tree separated one genotype from that community. The
 entropy for the reticulated network was lower for all populations except
-for the Coast population (supplementary information).
+for the coast population (supplementary information).
 
 \subsection*{Bootstrapping}\label{bootstrapping}
 \addcontentsline{toc}{subsection}{Bootstrapping}
 
-Calculating genetic distance for among samples and populations is very
-important method for assessing population differentiation through
-methods such as \(G_{st}\), AMOVA, and Mantel tests (Nei, 1973;
-Excoffier et al., 1992; Mantel, 1967). Confidence in distance metrics is
-related to the confidence in the markers to accurately represent the
-diversity of the data. Especially true with microsatellite markers, a
-single hyper-diverse locus can make a population appear to have more
-diversity based on genetic distance. Using a bootstrapping procedure of
-randomly sampling loci with replacement when calculating a distance
-matrix gives confidence in hierarchical clustering. Because genetic data
-in a genind object is represented as a matrix with samples in rows and
-alleles in columns, bootstrapping is a non-trivial task as all alleles
-in a single locus need to be sampled together. To remedy this, we have
-created an internal S4 class called ``bootgen'', which extends the
-internal ``gen'' class from \emph{adegenet}. This class can be created
-from any genind, genclone, or genpop object, and allows loci to be
-sampled with replacement. To further facilitate bootstrapping, a
-function called \texttt{aboot}, which stands for ``any boot'', is
-introduced that will bootstrap any genclone, genind, or genpop object
-with any genetic distance that can be calculated from it.
+Assessing population differentiation through methods such as \(G_{st}\),
+AMOVA, and Mantel tests relies on comparing samples within and across
+populations (Nei, 1973; Excoffier et al., 1992; Mantel, 1967).
+Confidence in distance metrics is related to the confidence in the
+markers to accurately represent the diversity of the data. Especially
+true with microsatellite markers, a single hyper-diverse locus can make
+a population appear to have more diversity based on genetic distance.
+Using a bootstrapping procedure of randomly sampling loci with
+replacement when calculating a distance matrix provides support for
+clades in hierarchical clustering. Because genetic data in a genind
+object is represented as a matrix with samples in rows and alleles in
+columns, bootstrapping is a non-trivial task as all alleles at a single
+locus need to be sampled together. To remedy this, we have created an
+internal S4 class called ``bootgen'', which extends the internal ``gen''
+class from \emph{adegenet}. This class can be created from any genind,
+genclone, or genpop object, and allows loci to be sampled with
+replacement. To further facilitate bootstrapping, a function called
+\texttt{aboot}, which stands for ``any boot'', is introduced that will
+bootstrap any genclone, genind, or genpop object with any genetic
+distance that can be calculated from it.
 
 To demonstrate calculating a dendrogram with bootstrap support, we used
 the \emph{poppr} function \texttt{aboot} on population allelic
@@ -445,7 +445,7 @@ asexual processes (Brown et al., 1980; Smith et al., 1993; Milgroom,
 (2001) to address the issue of scaling with increasing number of loci.
 This metric is typically applied to traditional dominant and co-dominant
 markers such as AFLPs, SNPs, or microsatellite markers. With the advent
-of high throughput sequencing, SNP data is now available in in a
+of high throughput sequencing, SNP data is now available in a
 genome-wide context and in very large matrices including thousands of
 SNPs. Thus, the likelihood of finding mutations within two individuals
 of a given clone increases and tools are needed for defining clone
@@ -672,19 +672,19 @@ vertical axis represents the number of multilocus lineages observed.
 Each point shows the threshold at which one would observe a given number
 of multilocus genotypes. The horizontal black line represents 18
 multilocus genotypes and vertical dashed lines mark the thresholds used
-to collapse the multilocus genotypes int 18 multilocus lineages.
+to collapse the multilocus genotypes into 18 multilocus lineages.
 
 \subsection*{Figure 2}\label{figure-2-1}
 \addcontentsline{toc}{subsection}{Figure 2}
 
 (\textbf{A-B}) Minimum spanning networks of the hemagglutinin (HA)
 segment of H3N2 viral DNA from the \emph{adegenet} package representing
-flu epidemics from 2001 to 2006 with (\textbf{B}) and without
-(\textbf{A}) reticulations (Jombart, 2008; Jombart et al., 2010). Each
-node represents a unique multilocus genotype, colors represent epidemic
-year, and edge color represents absolute genetic distance. (\textbf{C})
-Shannon entropy values for population assignments compared with
-communities determined by the infoMAP algorithm on (\textbf{A}) and
+flu epidemics from 2001 to 2006 without reticulation (\textbf{A}) and
+with reticulation (\textbf{B}) (Jombart, 2008; Jombart et al., 2010).
+Each node represents a unique multilocus genotype, colors represent
+epidemic year, and edge color represents absolute genetic distance.
+(\textbf{C}) Shannon entropy values for population assignments compared
+with communities determined by the infoMAP algorithm on (\textbf{A}) and
 (\textbf{B}). (\textbf{D}) Graphic reproduced from Jombart et al. (2010)
 showing that the 2006 epidemic does not cluster neatly with the other
 years.
@@ -692,7 +692,7 @@ years.
 \subsection*{Figure 3}\label{figure-3-1}
 \addcontentsline{toc}{subsection}{Figure 3}
 
-UPGMA dendrogram generated from Nei's gentic distance on 15 breeds of
+UPGMA dendrogram generated from Nei's genetic distance on 15 breeds of
 \emph{Bos taurus} (BT) or \emph{Bos indicus} (BI) from Africa (AF) or
 France (FR). These data are from Lalo{ë} et al. (2007). Node labels
 represent bootstrap support \(>50\%\) out of 1,000 bootstrap replicates.
@@ -716,13 +716,14 @@ A trendline (blue) has been added using the \emph{ggplot2} function
 \textbf{(A)} Sliding window analysis of the standardized index of
 association (\(\bar{r}_d\)) across a simulated \(1.1 \times 10^4\)nt
 chromosome containing 1,100 variants among 100 individuals. Each window
-analyzed variants within 500nt chunks. The black line indicates clonal
-population, the blue line indicates sexual. \textbf{(B)} boxplots
-showing 100 random samplings of 50 variants to calculate a distribution
-of \(\bar{r}_d\) for the clonal (black) and sexual (blue) population.
-Each box is centered around the mean, with whiskers extending out to 1.5
-times the interquartile range. The median is indicated by the center
-line. \textbf{(A)} and \textbf{(B)} are plotted on the same y-axis.
+analyzed variants within 500nt chunks. The black line refers to the
+clonal and the blue line to the sexual populations. \textbf{(B)}
+boxplots showing 100 random samples of 50 variants to calculate a
+distribution of \(\bar{r}_d\) for the clonal (red) and sexual (blue)
+populations. Each box is centered around the mean, with whiskers
+extending out to 1.5 times the interquartile range. The median is
+indicated by the center line. \textbf{(A)} and \textbf{(B)} are plotted
+on the same y-axis.
 
 \subsection*{Table 1}\label{table-1-1}
 \addcontentsline{toc}{subsection}{Table 1}
