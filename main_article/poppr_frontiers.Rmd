@@ -119,22 +119,6 @@ Here, we introduce *poppr* 2.0, which provides a major update to
 
 # Implementations and Examples {-}
 
-## Population Strata and Hierarchies {-}
-
-Assessments of population structure through methods such as hierarchical
-$F_{st}$ [@goudet2005hierfstat] and AMOVA [@michalakis1996generic] require hierarchical sampling of populations across space or time [@linde2002population; @everhart2014fine; @grunwald2006hierarchical]. With
-clonal organisms, basic practice has been to clone-censor data to avoid downward
-bias in diversity due to duplicated genotypes that may or may not represent
-different samples [@milgroom1996recombination]. Traditional data structures for population
-genetic data in most analysis tools allow for only one level of hierarchical definition. The investigator thus had to provide the data set for
-analysis at each hierarchical level. In poppr version 1.1, the hierarchy slot was
-introduced to allow unlimited population hierarchies or stratifications to
-travel with the data. In practice, it is stored as a data frame where each
-column represents a separate hierarchical level. This is then used to set the
-population factor of the data by supplying a hierarchical formula containing one
-or more column names of the data frame in the hierarchy slot. This
-functionality, developed in *poppr*, has now been moved to the *adegenet* package in version 2.0 and the slot and methods have been renamed to `strata`.
-
 ## Clonal identification {-}
 
 As highlighted in previous work, clone correction is an important component of
@@ -409,6 +393,26 @@ clonal population. After sampling, both populations had 5% random error and 1%
 missing data independently propagated across all samples. On average, we
 obtained a higher value of $\bar{r}_d$ for the clonal population compared to the
 sexual population (Fig. 5).
+
+## Change in definition of population Strata and Hierarchies {-}
+
+<!--
+I moved this section because it really removes somthing from poppr and should not be incldued as a new implementaiton in poppr 2.0. IT is an update and change.
+-->
+
+Assessments of population structure through methods such as hierarchical
+$F_{st}$ [@goudet2005hierfstat] and AMOVA [@michalakis1996generic] require hierarchical sampling of populations across space or time [@linde2002population; @everhart2014fine; @grunwald2006hierarchical]. With
+clonal organisms, basic practice has been to clone-censor data to avoid downward
+bias in diversity due to duplicated genotypes that may or may not represent
+different samples [@milgroom1996recombination]. Traditional data structures for population
+genetic data in most analysis tools allow for only one level of hierarchical definition. The investigator thus had to provide the data set for
+analysis at each hierarchical level. In *poppr* version 1.1, the hierarchy slot was
+introduced to allow unlimited population hierarchies or stratifications to
+travel with the data [@@kamvar2014poppr] . In R, it is stored as a data frame where each
+column represents a separate hierarchical level. This is then used to set the
+population factor of the data by supplying a hierarchical formula containing one
+or more column names of the data frame in the hierarchy slot. This
+functionality, has now been migrated to the *adegenet* package, version 2.0 to allow hierarchical analysis in *adegenet*, *poppr*, and other dependent packages. The prior *poppr* `hierarchy` slot and methods have now been renamed `strata` in *adegenet*. This migration provides endusers with a broader ability to analyze data hierarchically in R across packages. 
 
 # Availability {-}
 
