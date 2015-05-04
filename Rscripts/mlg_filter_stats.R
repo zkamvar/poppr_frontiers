@@ -156,7 +156,7 @@ Sys.time()
 
 for (i in 1:nreps){
   set.seed(i) # setting seed for accuracy.
-  snps <- rpois(1, 1e4)
+  snps <- 1e4
   samp1 <- getSims(n = 200, snps = snps, strucrat = 0.5, ploidy = 2,
                    err = 0.1, na.perc = 0.1, clone = TRUE, n.cores = 4,
                    k = 10, pop.freq = rep(0.1, 10), alpha = 0.25)
@@ -194,10 +194,11 @@ for (i in 1:nreps){
   fararray[, , i] <- table(fthresh, trueclones)
   fararray[, , i] <- sweep(fararray[, , i], 2, colSums(fararray[, , i]), "/")
 }
+systime <- Sys.time()
 #' 
 #' ### Results
 #' 
-Sys.time()
+systime
 # color_mlg_tree(samp, upgma(bitwise.dist(samp)), z$average)
 # axisPhylo(1)
 #' 
