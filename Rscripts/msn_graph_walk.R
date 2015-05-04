@@ -319,3 +319,7 @@ scatter(dapc.H3N2, pch=19, cstar=0, mstree=TRUE, lwd=2, lty=2, clabel = FALSE,
 points(dapc.H3N2$ind.coord[, 1:2], pch = 21, bg = NA)
 legend("topleft", legend = popNames(hc), pt.bg = virusPal(6), pch = 21)
 dev.off()
+#'
+#' ## Session Info
+options(width = 100)
+devtools::session_info()
