@@ -423,9 +423,6 @@ sexual population for both methods (Fig. 6).
 
 ## Change in definition of population Strata and Hierarchies {-}
 
-<!--
-I moved this section because it really removes something from poppr and should not be included as a new implementaiton in poppr 2.0. It is an update and change.
--->
 
 Assessments of population structure through methods such as hierarchical
 $F_{st}$ [@goudet2005hierfstat] and AMOVA [@michalakis1996generic] require
@@ -439,7 +436,7 @@ Traditional data structures for population genetic data in most analysis tools
 allow for only one level of hierarchical definition. The investigator thus had
 to provide the data set for analysis at each hierarchical level. In *poppr*
 version 1.1, the hierarchy slot was introduced to allow unlimited population
-hierarchies or stratifications to travel with the data [@kamvar2014poppr] . In
+hierarchies or stratifications to travel with the data [@kamvar2014poppr]. In
 R, it is stored as a data frame where each column represents a separate
 hierarchical level. This is then used to set the population factor of the data
 by supplying a hierarchical formula containing one or more column names of the
@@ -464,6 +461,8 @@ library("devtools")
 install_github("thibautjombart/adegenet")
 install_github("grunwaldlab/poppr@2.0-rc")
 ```
+
+Several population geenetics packages in R are currenlty going through a major upgrade and have not yet been updated in CRAN. We will push *poppr* 2.0 to CRAN, once all other reverse dependent packages have been updated. 
 
 # Discussion {-}
 
