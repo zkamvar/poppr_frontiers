@@ -453,15 +453,16 @@ across packages.
 # Availability {-}
 
 As of this writing, the *poppr* R package version 2.0 containing all of the
-features described here is located at https://github.com/grunwaldlab/poppr. It
-is necessary to install *adegenet* 2.0 before installing *poppr*. It can be
-found at https://github.com/thibautjombart/adegenet. Both of these can be
-installed via the R package *devtools* [@wickham2015devtools]:
+features described here is located at
+https://github.com/grunwaldlab/poppr/tree/2.0-rc. It is necessary to install
+*adegenet* 2.0 before installing *poppr*. It can be found at
+https://github.com/thibautjombart/adegenet. Both of these can be installed via
+the R package *devtools* [@wickham2015devtools]:
 
 ```{r, eval = FALSE}
 library("devtools")
 install_github("thibautjombart/adegenet")
-install_github("grunwaldlab/poppr")
+install_github("grunwaldlab/poppr@2.0-rc")
 ```
 
 # Discussion {-}
