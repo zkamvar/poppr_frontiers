@@ -93,8 +93,7 @@ of tools for analysis of clonal or polyploid populations is needed.
 Genotyping by sequencing and whole genome resequencing provide the unprecedented
 ability to identify thousands of single nucleotide polymorphisms (SNPs) in populations
 [@elshire2011robust; @luikart2003power; @davey2011genome]. With traditional marker data (e.g., SSR, AFLP) a clone was typically
-defined as a unique multilocus genotype (MLG) [@grunwald2006hierarchical; @Falush01082003; @goss2009population; @cooke2012genome]. Availability of 
-large SNP data sets provides new challenges for data analysis. These data are based on reduced representation libaries and high throughput sequencing with moderate sequencing depth which invariably results in substantial missing data, error in SNP calling due to sequencing error, lack of read depth or other sources of spurious allele calls. It is thus not clear what a clone is in large SNP data sets and novel tools are required for definition of clone boundaries. 
+defined as a unique multilocus genotype (MLG) [@grunwald2006hierarchical; @Falush01082003; @goss2009population; @cooke2012genome; @taylor2003fungal]. Availability of large SNP data sets provides new challenges for data analysis. These data are based on reduced representation libaries and high throughput sequencing with moderate sequencing depth which invariably results in substantial missing data, error in SNP calling due to sequencing error, lack of read depth or other sources of spurious allele calls. It is thus not clear what a clone is in large SNP data sets and novel tools are required for definition of clone boundaries. 
 
 The research community using the R statistical and computing language [@R] has
 developed a plethora of new resources for population genetic analysis [@pegas;
