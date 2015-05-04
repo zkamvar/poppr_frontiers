@@ -203,13 +203,17 @@ sequencing can introduce several erroneous calls and missing data
 [@mastretta2015restriction]. To reflect this, we mutated SNPs at a rate of 10%
 and inserted an average of 10% missing data for each sample after clones were
 created, ensuring that no two sequences were alike. The number of mutations and
-missing data per sample were determined by sampling from a poisson distribution
+missing data per sample were determined by sampling from a Poisson distribution
 with $\lambda = 1000$. After pooling, 20% of the data set was randomly sampled
 for analysis. Genetic distance was obtained with the function `bitwise.dist`,
 which calculates the fraction of different sites between samples, counting
 missing data as equivalent in comparison. 
 
-<!-- Does bitwise.dist have a reference? Is there a better name for the distance? -->
+<!-- Does bitwise.dist have a reference? Is there a better name for the
+distance? --> 
+
+<!-- ZHIAN: bitwise.dist is the function that Jonah came up with. There is no
+reference for it. If you want, I can try to change it to diss.dist -->
 
 All three filtering algorithms were run with a threshold of 1, returning a
 numeric vector of length $n - 1$ where each element represented a threshold at
@@ -224,6 +228,9 @@ positive fraction indicating that this method is robust to simulated
 populations.
 
 <!-- Should we cite github page with analyses and results? -->
+
+<!-- ZHIAN: That would probably be one of the better options. When do you want
+me to put the analyses on github? -->
 
 ## Minimum Spanning Networks with Reticulation {-}
 
