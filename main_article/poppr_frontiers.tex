@@ -104,13 +104,14 @@
 
 \begin{abstract}
 
-To gain a detailed understanding of how plant microbes evolve and adapt to host
-and other factors such as pesticides, knowledge of the population dynamics and
-evolutionary history of populations is crucial. With the advent of high
-throughput sequencing technologies, obtaining genomic sequences for
-representative populations has become easier than ever before. A move towards
-open, reproducible science has provided impetus for developing population
-genetic analysis tools in R. We previously contributed the R package
+To gain a detailed understanding of how plant microbes evolve and adapt to
+hosts, pesticides, and other factors, knowledge of the population dynamics and
+evolutionary history of populations is crucial. Plant pathogen populations are
+often clonal or partially clonal which requires different analytical tools. With
+the advent of high throughput sequencing technologies, obtaining genomic
+sequences for representative populations has become easier than ever before. A
+move towards open, reproducible science has provided impetus for developing
+population genetic analysis tools in R. We previously contributed the R package
 \textit{poppr} specifically addressing issues with analysis of clonal
 populations. In this paper we provide several significant extensions to
 \textit{poppr} with a focus on large, genome wide SNP data. Specifically, we
@@ -152,22 +153,20 @@ Anderson and Kohn, 1995). Thus, development of tools for analysis of
 clonal or polyploid populations is needed.
 
 Genotyping by sequencing and whole genome resequencing provide the
-unprecedented ability to identify \textgreater{}1,000 single nucleotide
+unprecedented ability to identify thousands of single nucleotide
 polymorphisms (SNPs) in populations (Elshire et al., 2011; Luikart et
-al., 2003; Davey et al., 2011). Availability of these large SNP data
-sets provides new challenges for data analysis. For example, it is not
-clear what a clone is in large SNP data where the chance of observing
-variation at a given SNP locus within independent samples of the same
-clone are substantial enough that novel tools for definition of clone
-boundaries are required. With traditional marker data (e.g., SSR, AFLP)
-a clone was typically defined as a unique multilocus genotype (MLG).
-However, with large SNP data a measure of genetic distance is required
-to define the boundary of an MLG (e.g., clone) or the boundaries of a
-clonal lineage. Definition of a clone is further complicated by the
-presence of missing data that is typical for reduced representation
-libraries used in GBS or genome re-sequencing. If two individuals are
-identical for all observed SNPs except for one missing allele, should
-they be considered different?
+al., 2003; Davey et al., 2011). With traditional marker data (e.g., SSR,
+AFLP) a clone was typically defined as a unique multilocus genotype
+(MLG) (Gr{ü}nwald and Hoheisel, 2006; Falush et al., 2003; Goss et al.,
+2009; Cooke et al., 2012; Taylor and Fisher, 2003). Availability of
+large SNP data sets provides new challenges for data analysis. These
+data are based on reduced representation libaries and high throughput
+sequencing with moderate sequencing depth which invariably results in
+substantial missing data, error in SNP calling due to sequencing error,
+lack of read depth or other sources of spurious allele calls
+(Mastretta-Yanes et al., 2015). It is thus not clear what a clone is in
+large SNP data sets and novel tools are required for definition of clone
+boundaries.
 
 The research community using the R statistical and computing language (R
 Core Team, 2015) has developed a plethora of new resources for
@@ -177,62 +176,32 @@ analysis of clonal populations (Kamvar et al., 2014b). \emph{Poppr}
 previously introduced several novel features including the ability to
 conduct a hierarchical analysis across unlimited hierarchies, test for
 linkage association, graph minimum spanning networks or provide
-bootstrap support for Bruvo's distance in resulting trees. It was well
-received by the community, garnering 14 citations in its first year of
-publication. Since it's first release, however, limitations with speed,
-ease of use, and efficiency became more apparent as genomic data became
-more readily available.
+bootstrap support for Bruvo's distance in resulting trees.
 
-In version 1.1, to address difficulties with handling hierarchical and
-mutlilocus genotypic metadata, a new S4 object called ``genclone'' was
-defined to expand the genind object of \emph{adegenet}. The genclone
-object formalized the definitions of multilocus genotypes and population
+In version 1.1, to facilitate handling hierarchical and mutlilocus
+genotypic metadata, a new S4 data object called ``genclone'' was defined
+to expand the genind object of \emph{adegenet}. The genclone object
+formalized the definitions of multilocus genotypes and population
 hierarchies by adding two slots called ``mlg'' and ``hierarchy'' that
 carried a numeric vector and a data frame, respectively. These new slots
 allow for increased efficiency and ease of use by allowing these
 metadata to travel with the genetic data. The addition of the population
 hierarchies has proved to be advantageous enough that they have recently
-been adopted into the more central \emph{adegenet} package (Jombart,
+been incorporated directly into the \emph{adegenet} package (Jombart,
 2008).
 
-In version 1, \emph{poppr} was appropriate for traditional markers
-systems, but not well suited to population genomic data resulting from
-high throughput sequencing methods. The raw size of these data made it
-difficult to conduct traditional analyses. Here, we introduce
-\emph{poppr} 2.0, which provides a significant update to \emph{poppr}
-including novel tools for analysis of clonal populations specifically
-for large SNP data. Significant novel tools include functions for
-calculating clone boundaries and collapsing individuals into
-user-specified clones based on genetic distance, sliding window
-analyses, genotype accumulation curves, reticulations in minimum
-spanning networks, and bootstrapping for any genetic distance.
+Here, we introduce \emph{poppr} 2.0, which provides a major update to
+\emph{poppr} (Kamvar et al., 2014b) including novel tools for analysis
+of clonal populations specifically addressing large SNP data.
+Significant novel tools include functions for calculating clone
+boundaries and collapsing individuals into user- specified clones based
+on genetic distance, sliding window analyses, genotype accumulation
+curves, reticulations in minimum spanning networks, and bootstrapping
+for any genetic distance.
 
 \section*{Implementations and
 Examples}\label{implementations-and-examples}
 \addcontentsline{toc}{section}{Implementations and Examples}
-
-\subsection*{Population Strata and
-Hierarchies}\label{population-strata-and-hierarchies}
-\addcontentsline{toc}{subsection}{Population Strata and Hierarchies}
-
-Assessments of population structure through methods such as hierarchical
-\(F_{st}\) and AMOVA benefit greatly from multiple levels of population
-definition (Linde et al., 2002; Everhart and Scherm, 2015; Gr{ü}nwald
-and Hoheisel, 2006). With clonal organisms, basic practice has been to
-clone-censor data to avoid downward bias in diversity due to duplicated
-genotypes that may or may not represent different samples (Milgroom,
-1996). Data structures for population genetic data mostly allow for only
-one level of hierarchical definition. The impetus was placed on the
-researchers to provide the population hierarchies for every step of the
-analysis. In poppr version 1.1, the hierarchy slot was introduced to
-allow unlimited population hierarchies or stratifications to travel with
-the data. In practice, it is stored as a data frame where each column
-represents a separate hierarchical level. This is then used to set the
-population factor of the data by supplying a hierarchical formula
-containing one or more column names of the data frame in the hierarchy
-slot. This functionality, developed in \emph{poppr}, has been moved to
-the \emph{adegenet} package in version 2.0 and the slot and methods have
-been renamed to \texttt{strata}.
 
 \subsection*{Clonal identification}\label{clonal-identification}
 \addcontentsline{toc}{subsection}{Clonal identification}
@@ -297,9 +266,9 @@ the genotypes defined by distance show that most of the 18 lineages were
 resolved, except for US-8, which is polytomic (Table 1).
 
 We utilized simulated data constructed using the \texttt{glSim} function
-in adegenet (Jombart and Ahmed, 2011) to obtain a SNP data set for
-demonstration. Two diploid data sets were created, each with 10k SNPs
-(25\% structured into two groups) and 200 samples with 10 ancestral
+in \emph{adegenet} (Jombart and Ahmed, 2011) to obtain a SNP data set
+for demonstration. Two diploid data sets were created, each with 10k
+SNPs (25\% structured into two groups) and 200 samples with 10 ancestral
 populations of even sizes. Clones were created in one data set by
 marking each sample with a unique identifier and then randomly sampling
 with replacement. It is well documented that reduced- representation
@@ -515,7 +484,38 @@ replacement, representing the clonal population. After sampling, both
 populations had 5\% random error and 1\% missing data independently
 propagated across all samples. On average, we obtained a higher value of
 \(\bar{r}_d\) for the clonal population compared to the sexual
-population (Fig. 5).
+population for both methods (Fig. 5).
+
+\subsection*{Change in definition of population Strata and
+Hierarchies}\label{change-in-definition-of-population-strata-and-hierarchies}
+\addcontentsline{toc}{subsection}{Change in definition of population
+Strata and Hierarchies}
+
+Assessments of population structure through methods such as hierarchical
+\(F_{st}\) (Goudet, 2005) and AMOVA (Michalakis and Excoffier, 1996)
+require hierarchical sampling of populations across space or time (Linde
+et al., 2002; Everhart and Scherm, 2015; Gr{ü}nwald and Hoheisel, 2006).
+With clonal organisms, basic practice has been to clone-censor data to
+avoid downward bias in diversity due to duplicated genotypes that may or
+may not represent different samples (Milgroom, 1996). This correction
+should be performed with respect to a population hierarchy to accurately
+reflect the biology of the organism. Traditional data structures for
+population genetic data in most analysis tools allow for only one level
+of hierarchical definition. The investigator thus had to provide the
+data set for analysis at each hierarchical level. In \emph{poppr}
+version 1.1, the hierarchy slot was introduced to allow unlimited
+population hierarchies or stratifications to travel with the data
+(Kamvar et al., 2014b) . In R, it is stored as a data frame where each
+column represents a separate hierarchical level. This is then used to
+set the population factor of the data by supplying a hierarchical
+formula containing one or more column names of the data frame in the
+hierarchy slot. This functionality, has now been migrated to the
+\emph{adegenet} package, version 2.0 to allow hierarchical analysis in
+\emph{adegenet}, \emph{poppr}, and other dependent packages. The prior
+\emph{poppr} \texttt{hierarchy} slot and methods have now been renamed
+\texttt{strata} in \emph{adegenet}. This migration provides endusers
+with a broader ability to analyze data hierarchically in R across
+packages.
 
 \section*{Availability}\label{availability}
 \addcontentsline{toc}{section}{Availability}
@@ -754,6 +754,11 @@ Bruvo, R., Michiels, N. K., D'Souza, T. G., and Schulenburg, H. (2004).
 A simple method for the calculation of microsatellite genotype distances
 irrespective of ploidy level. \emph{Molecular Ecology} 13, 2101--2106.
 
+Cooke, D. E., Cano, L. M., Raffaele, S., Bain, R. A., Cooke, L. R.,
+Etherington, G. J., Deahl, K. L., Farrer, R. A., Gilroy, E. M., Goss, E.
+M., et al. (2012). Genome analyses of an aggressive and invasive lineage
+of the irish potato famine pathogen. \emph{PLoS pathogens} 8, e1002940.
+
 Csardi, G., and Nepusz, T. (2006). The igraph software package for
 complex network research. \emph{InterJournal} Complex Systems, 1695.
 Available at: \url{http://igraph.org}.
@@ -789,11 +794,24 @@ molecular variance inferred from metric distances among dNA haplotypes:
 Application to human mitochondrial dNA restriction data. \emph{Genetics}
 131, 479--491.
 
+Falush, D., Stephens, M., and Pritchard, J. K. (2003). Inference of
+population structure using multilocus genotype data: Linked loci and
+correlated allele frequencies. \emph{Genetics} 164, 1567--1587.
+Available at: \url{http://www.genetics.org/content/164/4/1567.abstract}.
+
+Goss, E. M., Larsen, M., Chastagner, G. A., Givens, D. R., and
+Gr{ü}nwald, N. J. (2009). Population genetic analysis infers migration
+pathways of phytophthora ramorum in uS nurseries. \emph{PLoS pathogens}
+5, e1000583.
+
 Goss, E. M., Tabima, J. F., Cooke, D. E., Restrepo, S., Fry, W. E.,
 Forbes, G. A., Fieland, V. J., Cardenas, M., and Gr{ü}nwald, N. J.
 (2014). The irish potato famine pathogen \emph{Phytophthora infestans}
 originated in central mexico rather than the andes. \emph{Proceedings of
 the National Academy of Sciences} 111, 8791--8796.
+
+Goudet, J. (2005). Hierfstat, a package for r to compute and test
+hierarchical f-statistics. \emph{Molecular Ecology Notes} 5, 184--186.
 
 Grünwald, N. J., and Goss, E. M. (2011). Evolution and population
 genetics of exotic and re-emerging pathogens: Novel tools and
@@ -873,6 +891,10 @@ Meirmans, P. G., and Van Tienderen, P. H. (2004). GENOTYPE and gENODIVE:
 Two programs for the analysis of genetic diversity of asexual organisms.
 \emph{Molecular Ecology Notes} 4, 792--794.
 
+Michalakis, Y., and Excoffier, L. (1996). A generic estimation of
+population subdivision using distances between alleles with special
+reference for microsatellite loci. \emph{Genetics} 142, 1061--1064.
+
 Milgroom, M. G. (1996). Recombination and the multilocus structure of
 fungal populations. \emph{Annual review of phytopathology} 34, 457--477.
 
@@ -911,6 +933,10 @@ doi:\href{http://dx.doi.org/10.1073/pnas.90.10.4384}{10.1073/pnas.90.10.4384}.
 
 Sokal, R. R. (1958). A statistical method for evaluating systematic
 relationships. \emph{Univ Kans Sci Bull} 38, 1409--1438.
+
+Taylor, J. W., and Fisher, M. C. (2003). Fungal multilocus sequence
+typing---it's not just for bacteria. \emph{Current opinion in
+microbiology} 6, 351--356.
 
 Wickham, H., and Chang, W. (2015). \emph{Devtools: Tools to make
 developing r packages easier}. Available at:
