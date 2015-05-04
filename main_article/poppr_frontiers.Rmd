@@ -291,7 +291,7 @@ confidence in the markers to accurately represent the diversity of the data.
 Especially true with microsatellite markers, a single hyper-diverse locus can
 make a population appear to have more diversity based on genetic distance. Using
 a bootstrapping procedure of randomly sampling loci with replacement when
-calculating a distance matrix provides confidence intervals for hierarchical clustering.
+calculating a distance matrix provides support for clades in hierarchical clustering.
 Because genetic data in a genind object is represented as a matrix with samples
 in rows and alleles in columns, bootstrapping is a non-trivial task as all
 alleles at a single locus need to be sampled together. To remedy this, we have
