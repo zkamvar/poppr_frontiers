@@ -209,22 +209,23 @@ Examples}\label{implementations-and-examples}
 As highlighted in previous work, clone correction is an important
 component of population genetic analysis of organisms that have cryptic
 growth or are known to reproduce asexually (Kamvar et al., 2014b;
-Milgroom, 1996; Grünwald et al., 2003). This method removes bias that
-would otherwise affect metrics that rely on allele frequencies. It was
-initially designed for data with only a handful of markers. With the
-advent of large-scale sequencing and reduced-representation libraries,
-it has become easier to sequence tens of thousands of markers from
-hundreds of individuals (Elshire et al., 2011; Davey et al., 2011; Davey
-and Blaxter, 2010). With this larger number of markers, the genetic
-resolution is much greater, but the chance of genotyping error is also
-greatly increased (Mastretta-Yanes et al., 2015). Taking this fact and
-occasional somatic mutations into account, it would be impossible to
-separate true clones from independent individuals by just comparing what
-multilocus genotypes are different. We introduce a new method for
-collapsing unique multilocus genotypes determined by naive string
-comparison into multilocus lineages utilizing any genetic distance given
-three different clustering algorithms: farthest neighbor, nearest
-neighbor, and UPGMA (average neighbor) (Sokal, 1958).
+Milgroom, 1996; Grünwald et al., 2003). This method is a partial
+correction for bias that affects metrics that rely on allele frequencies
+assuming panmixia. It was initially designed for data with only a
+handful of markers. With the advent of large-scale sequencing and
+reduced-representation libraries, it has become easier to sequence tens
+of thousands of markers from hundreds of individuals (Elshire et al.,
+2011; Davey et al., 2011; Davey and Blaxter, 2010). With this larger
+number of markers, the genetic resolution is much greater, but the
+chance of genotyping error is also greatly increased (Mastretta-Yanes et
+al., 2015). Taking this fact and occasional somatic mutations into
+account, it would be impossible to separate true clones from independent
+individuals by just comparing what multilocus genotypes are different.
+We introduce a new method for collapsing unique multilocus genotypes
+determined by naive string comparison into multilocus lineages utilizing
+any genetic distance given three different clustering algorithms:
+farthest neighbor, nearest neighbor, and UPGMA (average neighbor)
+(Sokal, 1958).
 
 The clustering algorithms act on a distance matrix that is either
 provided by the user or generated via a function that will calculate a
