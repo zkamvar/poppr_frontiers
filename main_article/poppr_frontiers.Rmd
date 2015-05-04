@@ -444,7 +444,7 @@ data frame in the hierarchy slot. This functionality, has now been migrated to
 the *adegenet* package, version 2.0 to allow hierarchical analysis in
 *adegenet*, *poppr*, and other dependent packages. The prior *poppr* `hierarchy`
 slot and methods have now been renamed `strata` in *adegenet*. This migration
-provides endusers with a broader ability to analyze data hierarchically in R
+provides end users with a broader ability to analyze data hierarchically in R
 across packages.
 
 # Availability {-}
@@ -462,7 +462,9 @@ install_github("thibautjombart/adegenet")
 install_github("grunwaldlab/poppr@2.0-rc")
 ```
 
-Several population geenetics packages in R are currenlty going through a major upgrade and have not yet been updated in CRAN. We will push *poppr* 2.0 to CRAN, once all other reverse dependent packages have been updated. 
+Several population genetics packages in R are currently going through a major
+upgrade and have not yet been updated in CRAN. We will push *poppr* 2.0 to CRAN,
+once all other reverse dependent packages have been updated.
 
 # Discussion {-}
 

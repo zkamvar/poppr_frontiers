@@ -507,7 +507,7 @@ of hierarchical definition. The investigator thus had to provide the
 data set for analysis at each hierarchical level. In \emph{poppr}
 version 1.1, the hierarchy slot was introduced to allow unlimited
 population hierarchies or stratifications to travel with the data
-(Kamvar et al., 2014b) . In R, it is stored as a data frame where each
+(Kamvar et al., 2014b). In R, it is stored as a data frame where each
 column represents a separate hierarchical level. This is then used to
 set the population factor of the data by supplying a hierarchical
 formula containing one or more column names of the data frame in the
@@ -515,7 +515,7 @@ hierarchy slot. This functionality, has now been migrated to the
 \emph{adegenet} package, version 2.0 to allow hierarchical analysis in
 \emph{adegenet}, \emph{poppr}, and other dependent packages. The prior
 \emph{poppr} \texttt{hierarchy} slot and methods have now been renamed
-\texttt{strata} in \emph{adegenet}. This migration provides endusers
+\texttt{strata} in \emph{adegenet}. This migration provides end users
 with a broader ability to analyze data hierarchically in R across
 packages.
 
@@ -537,6 +537,11 @@ install_github("thibautjombart/adegenet")
 install_github("grunwaldlab/poppr@2.0-rc")
 \end{CodeInput}
 \end{CodeChunk}
+
+Several population genetics packages in R are currently going through a
+major upgrade and have not yet been updated in CRAN. We will push
+\emph{poppr} 2.0 to CRAN, once all other reverse dependent packages have
+been updated.
 
 \section*{Discussion}\label{discussion}
 \addcontentsline{toc}{section}{Discussion}
