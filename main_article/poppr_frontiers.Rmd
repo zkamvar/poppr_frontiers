@@ -707,7 +707,7 @@ collapse the multilocus genotypes into 18 multilocus lineages.
 
 (**A-B**) Minimum spanning networks of the hemagglutinin (HA) segment of H3N2
 viral DNA from the *adegenet* package representing flu epidemics from 2001 to
-2006 with (**B**) and reticulations [@Jombart_2008;
+2006 without reticulation (**A**) and with reticulation (**B**) [@Jombart_2008;
 @jombart2010discriminant]. Each node represents a unique multilocus genotype,
 colors represent epidemic year, and edge color represents absolute genetic
 distance. (**C**) Shannon entropy values for population assignments compared
@@ -739,7 +739,7 @@ genotypes. A trendline (blue) has been added using the *ggplot2* function
 variants among 100 individuals. Each window analyzed variants within 500nt
 chunks. The black line refers to the clonal and the blue line to the 
 sexual populations. **(B)** boxplots showing 100 random samples of 50 variants to
-calculate a distribution of $\bar{r}_d$ for the clonal (black) and sexual (blue)
+calculate a distribution of $\bar{r}_d$ for the clonal (red) and sexual (blue)
 populations. Each box is centered around the mean, with whiskers extending out to
 1.5 times the interquartile range. The median is indicated by the center line.
 **(A)** and **(B)** are plotted on the same y-axis.
