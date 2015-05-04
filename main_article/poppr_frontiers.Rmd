@@ -511,8 +511,8 @@ minimum spanning trees, the results derived from these are limited to explain
 populations derived from serial cloning events.
 
 Implementing these methods in R and hosting the code free and open on GitHub has
-allowed gave us the ability to tailor our tools for the needs of the researchers
-who use them. 
+given us the ability to tailor our tools for the needs of the researchers
+who use them.  
 
 
 # Figures and Tables {-}

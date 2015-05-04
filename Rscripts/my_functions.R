@@ -205,28 +205,31 @@ plot_filter_stats <- function(x, fstats, distmat, nclone = NULL){
   a <- fstats$average$thresholds
   n <- fstats$nearest$thresholds
   f <- fstats$farthest$thresholds
-  points(x = rev(a), y = 1:length(a))
-  points(x = rev(f), y = 1:length(f), col = "blue")
-  points(x = rev(n), y = 1:length(n), col = "red") 
+  plotcols <- RColorBrewer::brewer.pal(3, "Set1")
+  names(plotcols) <- c("f", "a", "n")
+  points(x = rev(a), y = 1:length(a), col = plotcols["a"])
+  points(x = rev(f), y = 1:length(f), col = plotcols["f"])
+  points(x = rev(n), y = 1:length(n), col = plotcols["n"])
   if (!is.null(nclone)){
-    abline(v = a[1 + length(a) - nclone] + .Machine$double.eps^0.5, lty = 2)
+    abline(v = a[1 + length(a) - nclone] + .Machine$double.eps^0.5, lty = 2,
+           col = plotcols["a"])
     abline(v = f[1 + length(f) - nclone] + .Machine$double.eps^0.5, lty = 2, 
-           col = "blue")
+           col = plotcols["f"])
     abline(v = n[1 + length(n) - nclone] + .Machine$double.eps^0.5, lty = 2, 
-           col = "red")
+           col = plotcols["n"])
     abline(h = nclone)
     text(upper, nclone, labels = paste0("n = ", nclone), 
          adj = c(1, -0.5))
     legend("topright", 
            legend = c("Nearest Neighbor", "UPGMA", "Farthest Neighbor"), 
-           col = c("red", "black", "blue"), 
+           col = plotcols[c("n", "a", "f")], 
            pch = 1, 
            lty = 2,
            title = "Clustering Method")
   } else {
     legend("topright", 
            legend = c("Nearest Neighbor", "UPGMA", "Farthest Neighbor"), 
-           col = c("red", "black", "blue"), 
+           col = plotcols[c("n", "a", "f")], 
            pch = 1, 
            title = "Clustering Method")    
   }
