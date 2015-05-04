@@ -138,7 +138,7 @@ determined by naive string comparison into multilocus lineages utilizing any
 genetic distance given three different clustering algorithms: farthest neighbor,
 nearest neighbor, and UPGMA (average neighbor) [@sokal1958statistical].
 
-The clustering algorithms act on a distance matrix that is either provided by
+These clustering algorithms act on a distance matrix that is either provided by
 the user or generated via a function that will calculate a distance from
 genclone objects such as `bruvo.dist`, which in particular applies to any level
 of ploidy [@bruvo2004simple]. All algorithms have been implemented in C and
@@ -150,7 +150,7 @@ algorithm will have a chaining effect that will cluster samples akin to adding
 links on a chain where a sample can be included in a cluster if all of the
 samples have at least one connection below a given threshold. The UPGMA, or
 average neighbor clustering algorithm is the one most familiar to biologists as
-it is often used to generate preliminary ultra-metric trees based on genetic
+it is often used to generate ultra-metric trees based on genetic
 distance. This algorithm will cluster by creating a representative sample per
 cluster and joining clusters if these representative samples are closer than the
 given threshold.
@@ -184,7 +184,7 @@ We utilized simulated data constructed using the `glSim` function in adegenet
 data sets were created, each with 10k SNPs (25% structured into two groups) and
 200 samples with 10 ancestral populations of even sizes. Clones were created in
 one data set by marking each sample with a unique identifier and then randomly
-sampling with replacement. It is well documented that reduced- representation
+sampling with replacement. It is well documented that reduced-representation
 sequencing can introduce several erroneous calls and missing data
 [@mastretta2015restriction]. To reflect this, we mutated SNPs at a rate of 10%
 and inserted an average of 10% missing data for each sample after clones were
@@ -194,6 +194,8 @@ with $\lambda = 1000$. After pooling, 20% of the data set was randomly sampled
 for analysis. Genetic distance was obtained with the function `bitwise.dist`,
 which calculates the fraction of different sites between samples, counting
 missing data as equivalent in comparison. 
+
+<!-- Does bitwise.dist have a reference? Is there a better name for the distance? -->
 
 All three filtering algorithms were run with a threshold of 1, returning a
 numeric vector of length $n - 1$ where each element represented a threshold at
@@ -206,6 +208,8 @@ Out of the 100 simulations run, we found that across all methods, detection of
 duplicated samples had $\sim$ 98% true positive fraction and $\sim$ 0.8% false
 positive fraction indicating that this method is robust to simulated
 populations.
+
+<!-- Should we cite github page with analyses and results? -->
 
 ## Minimum Spanning Networks with Reticulation {-}
 
