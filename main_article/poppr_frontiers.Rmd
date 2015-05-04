@@ -462,6 +462,8 @@ install_github("thibautjombart/adegenet")
 install_github("grunwaldlab/poppr@2.0-rc")
 ```
 
+Several population geenetics packages in R are currenlty going through a major upgrade and have not yet been updated in CRAN. We will push *poppr* 2.0 to CRAN, once all other reverse dependent packages have been updated. 
+
 # Discussion {-}
 
 Genomic data has become more readily accessible due to advances in low-cost
