@@ -239,7 +239,7 @@ minimum spanning trees based on genetic distance to connect groups of nodes with
 edges of equal weight.
 
 To demonstrate the utility of minimum spanning networks with reticulation, we
-used two clonal data sets: H3N2 flu virus data from the *adegenet* package using
+used two clonal data sets: the H3N2 flu virus data from the *adegenet* package using
 years of each epidemic as the population factor, and *Phytophthora ramorum* data
 from Nurseries and Oregon forests [@jombart2010discriminant; @kamvar2014sudden].
 Minimum spanning networks were created with and without reticulation using the
@@ -251,7 +251,7 @@ as edge weights and number of samples in each MLG as vertex weights
 [@csardi2006igraph; @rosvall2008maps].
 
 To evaluate the results, we compared the number, size, and entropy ($H$) of
-resulting communities as we expect a highly clonal organism with low genetic
+the resulting communities as we expect a highly clonal organism with low genetic
 diversity to result in a few, large communities. We also created contingency
 tables of the community assignments with the defined populations and used those
 to calculate entropy using Shannon's index with the function `diversity` from
@@ -273,22 +273,21 @@ with a maximum community size of 7 and $H = 2.96$. In the ability to predict
 Hunter Creek as belonging to a single community, the reticulated network was
 successful whereas the minimum spanning tree separated one genotype from that
 community. The entropy for the reticulated network was lower for all populations
-except for the Coast population (supplementary information).
+except for the coast population (supplementary information).
 
 ## Bootstrapping {-}
 
-Calculating genetic distance for among samples and populations is very important
-method for assessing population differentiation through methods such as
-$G_{st}$, AMOVA, and Mantel tests [@nei1973analysis; @excoffier1992analysis;
+Assessing population differentiation through methods such as
+$G_{st}$, AMOVA, and Mantel tests relies on comparing samples within and across populations [@nei1973analysis; @excoffier1992analysis;
 @mantel1967detection]. Confidence in distance metrics is related to the
 confidence in the markers to accurately represent the diversity of the data.
 Especially true with microsatellite markers, a single hyper-diverse locus can
 make a population appear to have more diversity based on genetic distance. Using
 a bootstrapping procedure of randomly sampling loci with replacement when
-calculating a distance matrix gives confidence in hierarchical clustering.
+calculating a distance matrix provides confidence intervals for hierarchical clustering.
 Because genetic data in a genind object is represented as a matrix with samples
 in rows and alleles in columns, bootstrapping is a non-trivial task as all
-alleles in a single locus need to be sampled together. To remedy this, we have
+alleles at a single locus need to be sampled together. To remedy this, we have
 created an internal S4 class called "bootgen", which extends the internal "gen"
 class from *adegenet*. This class can be created from any genind, genclone, or
 genpop object, and allows loci to be sampled with replacement. To further
@@ -695,13 +694,13 @@ genome addition model. The vertical axis represents the number of multilocus
 lineages observed. Each point shows the threshold at which one would observe a
 given number of multilocus genotypes. The horizontal black line represents 18
 multilocus genotypes and vertical dashed lines mark the thresholds used to
-collapse the multilocus genotypes int 18 multilocus lineages.
+collapse the multilocus genotypes into 18 multilocus lineages.
 
 ## Figure 2 {-}
 
 (**A-B**) Minimum spanning networks of the hemagglutinin (HA) segment of H3N2
 viral DNA from the *adegenet* package representing flu epidemics from 2001 to
-2006 with (**B**) and without (**A**) reticulations [@Jombart_2008;
+2006 with (**B**) and reticulations [@Jombart_2008;
 @jombart2010discriminant]. Each node represents a unique multilocus genotype,
 colors represent epidemic year, and edge color represents absolute genetic
 distance. (**C**) Shannon entropy values for population assignments compared
@@ -711,8 +710,7 @@ epidemic does not cluster neatly with the other years.
 
 ## Figure 3 {-}
 
-UPGMA dendrogram generated from Nei's gentic distance on 15 breeds of *Bos
-taurus* (BT) or *Bos indicus* (BI) from Africa (AF) or France (FR). These data
+UPGMA dendrogram generated from Nei's genetic distance on 15 breeds of *Bos taurus* (BT) or *Bos indicus* (BI) from Africa (AF) or France (FR). These data
 are from @laloe2007consensus. Node labels represent bootstrap support $>50\%$
 out of 1,000 bootstrap replicates.
 
@@ -732,10 +730,10 @@ genotypes. A trendline (blue) has been added using the *ggplot2* function
 **(A)** Sliding window analysis of the standardized index of association
 ($\bar{r}_d$) across a simulated $1.1 \times 10^4$nt chromosome containing 1,100
 variants among 100 individuals. Each window analyzed variants within 500nt
-chunks. The black line indicates clonal population, the blue line indicates
-sexual. **(B)** boxplots showing 100 random samplings of 50 variants to
+chunks. The black line refers to the clonal and the blue line to the 
+sexual populations. **(B)** boxplots showing 100 random samples of 50 variants to
 calculate a distribution of $\bar{r}_d$ for the clonal (black) and sexual (blue)
-population. Each box is centered around the mean, with whiskers extending out to
+populations. Each box is centered around the mean, with whiskers extending out to
 1.5 times the interquartile range. The median is indicated by the center line.
 **(A)** and **(B)** are plotted on the same y-axis.
 
