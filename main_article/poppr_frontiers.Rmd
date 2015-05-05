@@ -131,10 +131,10 @@ incorporated directly into the *adegenet* package [@Jombart_2008]. -->
 Here, we introduce *poppr* 2.0, which provides a major update to *poppr*
 [@kamvar2014poppr] including novel tools for analysis of clonal populations
 specifically addressing large SNP data. Significant novel tools include
-functions for calculating clone boundaries and collapsing individuals into user-
-specified clones based on genetic distance, sliding window analyses, genotype
-accumulation curves, reticulations in minimum spanning networks, and
-bootstrapping for any genetic distance.
+functions for calculating clone boundaries and collapsing individuals into
+clonal groups based on a user-specified genetic distance threshold, sliding
+window analyses, genotype accumulation curves, reticulations in minimum spanning
+networks, and bootstrapping for any genetic distance.
 
 # Implementations and Examples {-}
 
@@ -441,9 +441,10 @@ the hierarchy slot.
 The functionality represented by the hierarchy slot has now been migrated to the
 *adegenet* package, version 2.0 to allow hierarchical analysis in *adegenet*,
 *poppr*, and other dependent packages. The prior *poppr* `hierarchy` slot and
-methods have now been renamed `strata` in *adegenet*. This migration provides
-end users with a broader ability to analyze data hierarchically in R across
-packages.
+methods have now been renamed `strata` in *adegenet*. A short example of the
+utility of these methods can be seen in the code segment under
+**Bootstrapping**, above. This migration provides end users with a broader
+ability to analyze data hierarchically in R across packages.
 
 # Availability {-}
 

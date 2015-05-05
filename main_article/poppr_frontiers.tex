@@ -189,10 +189,10 @@ Here, we introduce \emph{poppr} 2.0, which provides a major update to
 \emph{poppr} (Kamvar et al., 2014b) including novel tools for analysis
 of clonal populations specifically addressing large SNP data.
 Significant novel tools include functions for calculating clone
-boundaries and collapsing individuals into user- specified clones based
-on genetic distance, sliding window analyses, genotype accumulation
-curves, reticulations in minimum spanning networks, and bootstrapping
-for any genetic distance.
+boundaries and collapsing individuals into clonal groups based on a
+user-specified genetic distance threshold, sliding window analyses,
+genotype accumulation curves, reticulations in minimum spanning
+networks, and bootstrapping for any genetic distance.
 
 \section*{Implementations and
 Examples}\label{implementations-and-examples}
@@ -524,9 +524,11 @@ The functionality represented by the hierarchy slot has now been
 migrated to the \emph{adegenet} package, version 2.0 to allow
 hierarchical analysis in \emph{adegenet}, \emph{poppr}, and other
 dependent packages. The prior \emph{poppr} \texttt{hierarchy} slot and
-methods have now been renamed \texttt{strata} in \emph{adegenet}. This
-migration provides end users with a broader ability to analyze data
-hierarchically in R across packages.
+methods have now been renamed \texttt{strata} in \emph{adegenet}. A
+short example of the utility of these methods can be seen in the code
+segment under \textbf{Bootstrapping}, above. This migration provides end
+users with a broader ability to analyze data hierarchically in R across
+packages.
 
 \section*{Availability}\label{availability}
 \addcontentsline{toc}{section}{Availability}
