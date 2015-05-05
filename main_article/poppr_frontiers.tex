@@ -93,7 +93,8 @@
 \onecolumn
 \firstpage{1}
 
-\title[Novel tools for population genetics]{Novel tools for analyzing genome-wide data of clonal populations}
+\title[Novel tools for population genetics]{Novel tools for analysis genome-wide population genetic data with
+emphasis on clonality}
 \author[\firstAuthorLast]{\Authors}
 \address{}
 \correspondance{}
@@ -108,20 +109,20 @@ To gain a detailed understanding of how plant microbes evolve and adapt to
 hosts, pesticides, and other factors, knowledge of the population dynamics and
 evolutionary history of populations is crucial. Plant pathogen populations are
 often clonal or partially clonal which requires different analytical tools. With
-the advent of high throughput sequencing technologies, obtaining genomic
-sequences for representative populations has become easier than ever before. A
-move towards open, reproducible science has provided impetus for developing
-population genetic analysis tools in R. We previously contributed the R package
-\textit{poppr} specifically addressing issues with analysis of clonal
-populations. In this paper we provide several significant extensions to
-\textit{poppr} with a focus on large, genome wide SNP data. Specifically, we
-provide analyses across any level of hierarchies, a new function to define clone
-boundaries we call \texttt{mlg.filter} allowing for inspection and definition of
-what is a clonal lineage, the index of association for reduced representation
-genomic data, and modular bootstrapping of any genetic distance.
+the advent of high throughput sequencing technologies, obtaining genome-wide
+population genetic data has become easier than ever before. A move towards open,
+reproducible science has provided impetus for developing population genetic
+analysis tools in R. We previously contributed the R package \textit{poppr}
+specifically addressing issues with analysis of clonal populations. In this
+paper we provide several significant extensions to \textit{poppr} with a focus
+on large, genome-wide SNP data. Specifically, we provide several new
+functionalities including the new function \texttt{mlg.filter} to define clone
+boundaries allowing for inspection and definition of what is a clonal lineage, a
+sliding-window analysis of the index of association, modular bootstrapping of
+any genetic distance, and analyses across any level of hierarchies.
 
 \tiny
- \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, open source}
+ \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, index of association, hierarchical analysis, sliding window}
 \end{abstract}
 
 \section*{Introduction}\label{introduction}
@@ -160,7 +161,7 @@ AFLP) a clone was typically defined as a unique multilocus genotype
 (MLG) (Gr{ü}nwald and Hoheisel, 2006; Falush et al., 2003; Goss et al.,
 2009; Cooke et al., 2012; Taylor and Fisher, 2003). Availability of
 large SNP data sets provides new challenges for data analysis. These
-data are based on reduced representation libaries and high throughput
+data are based on reduced representation libraries and high throughput
 sequencing with moderate sequencing depth which invariably results in
 substantial missing data, error in SNP calling due to sequencing error,
 lack of read depth or other sources of spurious allele calls
@@ -176,19 +177,13 @@ analysis of clonal populations (Kamvar et al., 2014b). \emph{Poppr}
 previously introduced several novel features including the ability to
 conduct a hierarchical analysis across unlimited hierarchies, test for
 linkage association, graph minimum spanning networks or provide
-bootstrap support for Bruvo's distance in resulting trees.
-
-In version 1.1, to facilitate handling hierarchical and mutlilocus
-genotypic metadata, a new S4 data object called ``genclone'' was defined
-to expand the genind object of \emph{adegenet}. The genclone object
-formalized the definitions of multilocus genotypes and population
-hierarchies by adding two slots called ``mlg'' and ``hierarchy'' that
-carried a numeric vector and a data frame, respectively. These new slots
-allow for increased efficiency and ease of use by allowing these
-metadata to travel with the genetic data. The addition of the population
-hierarchies has proved to be advantageous enough that they have recently
-been incorporated directly into the \emph{adegenet} package (Jombart,
-2008).
+bootstrap support for Bruvo's distance in resulting trees. \emph{Poppr}
+has been rapidly adopted and applied to a range of studies including for
+example horizontal transmission in leukemia of clams (Metzger et al.,
+2015), study of the vector-mediated parent- to-offspring transmission in
+an avian malaria-like parasite (Chakarov et al., 2015), and
+characterization of the emergence of the invasive forest pathogen
+\emph{Hymenoscyphus pseudoalbidus} (Gross et al., 2014).
 
 Here, we introduce \emph{poppr} 2.0, which provides a major update to
 \emph{poppr} (Kamvar et al., 2014b) including novel tools for analysis
@@ -283,7 +278,8 @@ determined by sampling from a Poisson distribution with
 \(\lambda = 1000\). After pooling, 20\% of the data set was randomly
 sampled for analysis. Genetic distance was obtained with the function
 \texttt{bitwise.dist}, which calculates the fraction of different sites
-between samples, counting missing data as equivalent in comparison.
+between samples equivalent to Provesti's distance, counting missing data
+as equivalent in comparison (Prevosti et al., 1975).
 
 All three filtering algorithms were run with a threshold of 1, returning
 a numeric vector of length \(n - 1\) where each element represented a
@@ -367,12 +363,16 @@ true with microsatellite markers, a single hyper-diverse locus can make
 a population appear to have more diversity based on genetic distance.
 Using a bootstrapping procedure of randomly sampling loci with
 replacement when calculating a distance matrix provides support for
-clades in hierarchical clustering. Because genetic data in a genind
-object is represented as a matrix with samples in rows and alleles in
-columns, bootstrapping is a non-trivial task as all alleles at a single
-locus need to be sampled together. To remedy this, we have created an
-internal S4 class called ``bootgen'', which extends the internal ``gen''
-class from \emph{adegenet}. This class can be created from any genind,
+clades in hierarchical clustering.
+
+Data in genind and genpop objects are represented as matrices with
+individuals in rows and alleles in columns (Jombart, 2008). This gives
+the advantage of being able to use R's matrix algebra capabilities to
+quickly calculate genetic distance. Unfortunately, this also means that
+bootstrapping is a non-trivial task as all alleles at a single locus
+need to be sampled together. To remedy this, we have created an internal
+S4 class called ``bootgen'', which extends the internal ``gen'' class
+from \emph{adegenet}. This class can be created from any genind,
 genclone, or genpop object, and allows loci to be sampled with
 replacement. To further facilitate bootstrapping, a function called
 \texttt{aboot}, which stands for ``any boot'', is introduced that will
@@ -488,10 +488,10 @@ propagated across all samples. On average, we obtained a higher value of
 \(\bar{r}_d\) for the clonal population compared to the sexual
 population for both methods (Fig. 6).
 
-\subsection*{Change in definition of population Strata and
-Hierarchies}\label{change-in-definition-of-population-strata-and-hierarchies}
-\addcontentsline{toc}{subsection}{Change in definition of population
-Strata and Hierarchies}
+\subsection*{Data format updates: population strata and
+hierarchies}\label{data-format-updates-population-strata-and-hierarchies}
+\addcontentsline{toc}{subsection}{Data format updates: population strata
+and hierarchies}
 
 Assessments of population structure through methods such as hierarchical
 \(F_{st}\) (Goudet, 2005) and AMOVA (Michalakis and Excoffier, 1996)
@@ -504,20 +504,29 @@ should be performed with respect to a population hierarchy to accurately
 reflect the biology of the organism. Traditional data structures for
 population genetic data in most analysis tools allow for only one level
 of hierarchical definition. The investigator thus had to provide the
-data set for analysis at each hierarchical level. In \emph{poppr}
-version 1.1, the hierarchy slot was introduced to allow unlimited
-population hierarchies or stratifications to travel with the data
-(Kamvar et al., 2014b). In R, it is stored as a data frame where each
-column represents a separate hierarchical level. This is then used to
-set the population factor of the data by supplying a hierarchical
-formula containing one or more column names of the data frame in the
-hierarchy slot. This functionality, has now been migrated to the
-\emph{adegenet} package, version 2.0 to allow hierarchical analysis in
-\emph{adegenet}, \emph{poppr}, and other dependent packages. The prior
-\emph{poppr} \texttt{hierarchy} slot and methods have now been renamed
-\texttt{strata} in \emph{adegenet}. This migration provides end users
-with a broader ability to analyze data hierarchically in R across
-packages.
+data set for analysis at each hierarchical level.
+
+To facilitate handling hierarchical and mutlilocus genotypic metadata,
+\emph{poppr} version 1.1 introduced a new S4 data object called
+``genclone'', extending \emph{adegenet}'s ``genind'' object. The
+genclone object formalized the definitions of multilocus genotypes and
+population hierarchies by adding two slots called ``mlg'' and
+``hierarchy'' that carried a numeric vector and a data frame,
+respectively. These new slots allow for increased efficiency and ease of
+use by allowing these metadata to travel with the genetic data. The
+hierarchy slot in particular contains a data frame where each column
+represents a separate hierarchical level. This is then used to set the
+population factor of the data by supplying a hierarchical formula
+containing one or more column names of the data frame in the hierarchy
+slot.
+
+The functionality represented by the hierarchy slot has now been
+migrated to the \emph{adegenet} package, version 2.0 to allow
+hierarchical analysis in \emph{adegenet}, \emph{poppr}, and other
+dependent packages. The prior \emph{poppr} \texttt{hierarchy} slot and
+methods have now been renamed \texttt{strata} in \emph{adegenet}. This
+migration provides end users with a broader ability to analyze data
+hierarchically in R across packages.
 
 \section*{Availability}\label{availability}
 \addcontentsline{toc}{section}{Availability}
@@ -595,7 +604,7 @@ results derived from these are limited to explain populations derived
 from serial cloning events.
 
 Implementing these methods in R and hosting the code free and open on
-GitHub has given us the ability to tailor our tools for the needs of the
+GitHub has given us the ability to tailor our tools to the needs of the
 researchers who use them.
 
 \section*{Figures and Tables}\label{figures-and-tables}
@@ -677,11 +686,11 @@ B & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . \\
 \addcontentsline{toc}{subsection}{Figure 1}
 
 Diagrammatic representation of the three clustering algorithms
-implemented in \texttt{mlg.filter}. (\textbf{A-C}) represent different
+implemented in \texttt{mlg.filter}. (\textbf{A-C}) Represent different
 clustering algorithms on the same imaginary network with a threshold of
 0.45. Edge weights are represented in arbitrary units noted by the line
 thickness and numerical values next to the lines. All outer angles are
-90 degrees, so the un-labled edge weights can be obtained with simply
+90 degrees, so the un-labeled edge weights can be obtained with simply
 geometry. Colored circles represent clusters of genotypes. (\textbf{A})
 Farthest neighbor clustering does not cluster nodes B and C because
 nodes A and C are more than a distance of 0.45 apart. (\textbf{B}) UPGMA
@@ -785,6 +794,11 @@ Bruvo, R., Michiels, N. K., D'Souza, T. G., and Schulenburg, H. (2004).
 A simple method for the calculation of microsatellite genotype distances
 irrespective of ploidy level. \emph{Molecular Ecology} 13, 2101--2106.
 
+Chakarov, N., Linke, B., Boerner, M., Goesmann, A., Kr{ü}ger, O., and
+Hoffman, J. I. (2015). Apparent vector-mediated parent-to-offspring
+transmission in an avian malaria-like parasite. \emph{Molecular ecology}
+24, 1355--1363.
+
 Cooke, D. E., Cano, L. M., Raffaele, S., Bain, R. A., Cooke, L. R.,
 Etherington, G. J., Deahl, K. L., Farrer, R. A., Gilroy, E. M., Goss, E.
 M., et al. (2012). Genome analyses of an aggressive and invasive lineage
@@ -843,6 +857,10 @@ the National Academy of Sciences} 111, 8791--8796.
 
 Goudet, J. (2005). Hierfstat, a package for r to compute and test
 hierarchical f-statistics. \emph{Molecular Ecology Notes} 5, 184--186.
+
+Gross, A., Hosoya, T., and Queloz, V. (2014). Population structure of
+the invasive forest pathogen hymenoscyphus pseudoalbidus.
+\emph{Molecular ecology} 23, 2943--2960.
 
 Grünwald, N. J., and Goss, E. M. (2011). Evolution and population
 genetics of exotic and re-emerging pathogens: Novel tools and
@@ -922,6 +940,10 @@ Meirmans, P. G., and Van Tienderen, P. H. (2004). GENOTYPE and gENODIVE:
 Two programs for the analysis of genetic diversity of asexual organisms.
 \emph{Molecular Ecology Notes} 4, 792--794.
 
+Metzger, M. J., Reinisch, C., Sherry, J., and Goff, S. P. (2015).
+Horizontal transmission of clonal cancer cells causes leukemia in
+soft-shell clams. \emph{Cell} 161, 255--263.
+
 Michalakis, Y., and Excoffier, L. (1996). A generic estimation of
 population subdivision using distances between alleles with special
 reference for microsatellite loci. \emph{Genetics} 142, 1061--1064.
@@ -943,6 +965,11 @@ at: \url{http://CRAN.R-project.org/package=vegan}.
 
 Paradis, E. (2010). Pegas: an R package for population genetics with an
 integrated--modular approach. \emph{Bioinformatics} 26, 419--420.
+
+Prevosti, A., Oca{ñ}a, J., and Alonso, G. (1975). Distances between
+populations of \emph{Drosophila subobscura}, based on chromosome
+arrangement frequencies. \emph{Theoretical and Applied Genetics} 45,
+231--241.
 
 R Core Team (2015). \emph{R: A language and environment for statistical
 computing}. Vienna, Austria: R Foundation for Statistical Computing
