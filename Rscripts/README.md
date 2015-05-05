@@ -12,6 +12,10 @@ Note that all html files have `devtools::session_info()` called at the end, whic
 
 This R script contains various functions that are used with the following R scripts. 
 
+## figure_one.R
+
+Construction of figure 1 with a walkthrough of the concepts using example data.
+
 ## mlg\_filter\_stats.R
 
 This script's purpose is to explore how the MLG filtering methods perform in two ways:
