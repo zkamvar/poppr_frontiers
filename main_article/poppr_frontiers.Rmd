@@ -528,7 +528,7 @@ requests on our repository at https://github.com/grunwaldlab/poppr/issues.
 
 ## Figure 2 {-}
 
-```{r, pinf_data, echo = FALSE, message = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 4*1.125, fig.height = 4*1.125, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, pinf_data, echo = FALSE, message = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 4*1.25, fig.height = 4*1.25, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 source("../Rscripts/my_functions.R")
 library('poppr')
 library('ape')
@@ -685,16 +685,11 @@ legend("topright", legend = "", pch = "B", cex = 2, xjust = 2, yjust = 1, bty = 
 par(mar = c(5, 4, 4, 2) + 0.1)
 layout(matrix(1))
 ```
-<!--
-## Supplementary figure? {-}
-```{r, pinf_tree, eval = FALSE, echo = FALSE, message = FALSE, fig.height = 10, fig.width = 5}
-pinfupgma <- upgma(bruvo.dist(x, replen = ssr, loss = FALSE))
-color_mlg_tree(x, pinfupgma, z)
-axisPhylo(3)
-```
--->
 
-## Table 1 {-}
+**Table 1** Contingency table comparing multilocus lineages assigned based on average
+neighbor clustering (columns) vs. multilocus lineages defined in
+@li2013efficient and @lees2006novel.
+
 ```{r pinf_table, echo = FALSE, message = FALSE, results='asis'}
 library("xtable")
 
@@ -703,40 +698,34 @@ res[res == 0] <- "."
 print.xtable(xtable(res, align = rep("c", ncol(res) + 1)), comment = FALSE)
 ```
 
+# Figure Legends {-}
 
-# Figure and Table Legends {-}
+**Figure 1** Diagrammatic representation of the three clustering algorithms
+implemented in `mlg.filter`. (**A-C**) Represent different clustering algorithms
+on the same imaginary network with a threshold of 0.451. Edge weights are
+represented in arbitrary units noted by the line thickness and numerical values
+next to the lines. All outer angles are 90 degrees, so the un-labeled edge
+weights can be obtained with simply geometry. Colored circles represent clusters
+of genotypes. (**A**) Farthest neighbor clustering does not cluster nodes B and
+C because nodes A and C are more than a distance of 0.451 apart. (**B**) UPGMA
+(average neighbor) clustering clusters nodes A, B, and C together because the
+average distance between them and  C is < 0.451. (**C**) Nearest neighbor
+clustering clusters all nodes together because the minimum distance between them
+is always < 0.451.
 
-## Figure 1 {-}
+**Figure 2** Graphical representation of three different clustering algorithms
+collapsing multilocus genotypes for 12 SSR loci from *Phytophthora infestans*
+representing 18 clonal lineages. The horizontal axis is Bruvo's genetic distance
+assuming the genome addition model. The vertical axis represents the number of
+multilocus lineages observed. Each point shows the threshold at which one would
+observe a given number of multilocus genotypes. The horizontal black line
+represents 18 multilocus genotypes and vertical dashed lines mark the thresholds
+used to collapse the multilocus genotypes into 18 multilocus lineages.
 
-Diagrammatic representation of the three clustering algorithms implemented in
-`mlg.filter`. (**A-C**) Represent different clustering algorithms on the same
-imaginary network with a threshold of 0.451. Edge weights are represented in
-arbitrary units noted by the line thickness and numerical values next to the
-lines. All outer angles are 90 degrees, so the un-labeled edge weights can be
-obtained with simply geometry. Colored circles represent clusters of genotypes.
-(**A**) Farthest neighbor clustering does not cluster nodes B and C because
-nodes A and C are more than a distance of 0.451 apart. (**B**) UPGMA (average
-neighbor) clustering clusters nodes A, B, and C together because the average
-distance between them and  C is < 0.451. (**C**) Nearest neighbor clustering
-clusters all nodes together because the minimum distance between them is always
-< 0.45.
-
-## Figure 2 {-}
-
-Graphical representation of three different clustering algorithms collapsing
-multilocus genotypes for 12 SSR loci from *Phytophthora infestans* representing
-18 clonal lineages. The horizontal axis is Bruvo's genetic distance assuming the
-genome addition model. The vertical axis represents the number of multilocus
-lineages observed. Each point shows the threshold at which one would observe a
-given number of multilocus genotypes. The horizontal black line represents 18
-multilocus genotypes and vertical dashed lines mark the thresholds used to
-collapse the multilocus genotypes into 18 multilocus lineages.
-
-## Figure 3 {-}
-
-(**A-B**) Minimum spanning networks of the hemagglutinin (HA) segment of H3N2
-viral DNA from the *adegenet* package representing flu epidemics from 2001 to
-2006 without reticulation (**A**) and with reticulation (**B**) [@Jombart_2008;
+**Figure 3** (**A-B**) Minimum spanning networks of the hemagglutinin (HA)
+segment of H3N2 viral DNA from the *adegenet* package representing flu epidemics
+from 2001 to 2006 without reticulation (**A**) and with reticulation (**B**)
+[@Jombart_2008;
 @jombart2010discriminant]. Each node represents a unique multilocus genotype,
 colors represent epidemic year, and edge color represents absolute genetic
 distance. (**C**) Shannon entropy values for population assignments compared
@@ -744,40 +733,29 @@ with communities determined by the infoMAP algorithm on (**A**) and (**B**).
 (**D**) Graphic reproduced from @jombart2010discriminant showing that the 2006
 epidemic does not cluster neatly with the other years.
 
-## Figure 4 {-}
+**Figure 4** UPGMA dendrogram generated from Nei's genetic distance on 15 breeds
+of *Bos taurus* (BT) or *Bos indicus* (BI) from Africa (AF) or France (FR).
+These data are from @laloe2007consensus. Node labels represent bootstrap support
+$>50\%$ out of 1,000 bootstrap replicates.
 
-UPGMA dendrogram generated from Nei's genetic distance on 15 breeds of *Bos
-taurus* (BT) or *Bos indicus* (BI) from Africa (AF) or France (FR). These data
-are from @laloe2007consensus. Node labels represent bootstrap support $>50\%$
-out of 1,000 bootstrap replicates.
-
-## Figure 5 {-}
-
-Genotype accumulation curve for 694 isolates of the peach brown rot pathogen,
-*Monilinia fructicola* genotyped over 13 loci from @everhart2014fine. The
-horizontal axis represents the number of loci randomly sampled without
+**Figure 5** Genotype accumulation curve for 694 isolates of the peach brown rot
+pathogen, *Monilinia fructicola* genotyped over 13 loci from @everhart2014fine.
+The horizontal axis represents the number of loci randomly sampled without
 replacement up to $n - 1$ loci, the vertical axis shows the number of multilocus
 genotypes observed, up to 262, the number of unique multilocus genotypes in the
 data set. The red dashed line represents 90% of the total observed multilocus
 genotypes. A trendline (blue) has been added using the *ggplot2* function
 `stat_smooth`.
 
-## Figure 6 {-}
+**Figure 6** **(A)** Sliding window analysis of the standardized index of
+association ($\bar{r}_d$) across a simulated $1.1 \times 10^4$nt chromosome
+containing 1,100 variants among 100 individuals. Each window analyzed variants
+within 500nt chunks. The black line refers to the clonal and the blue line to
+the sexual populations. **(B)** boxplots showing 100 random samples of 50
+variants to calculate a distribution of $\bar{r}_d$ for the clonal (red) and
+sexual (blue) populations. Each box is centered around the mean, with whiskers
+extending out to 1.5 times the interquartile range. The median is indicated by
+the center line. **(A)** and **(B)** are plotted on the same y-axis.
 
-**(A)** Sliding window analysis of the standardized index of association
-($\bar{r}_d$) across a simulated $1.1 \times 10^4$nt chromosome containing 1,100
-variants among 100 individuals. Each window analyzed variants within 500nt
-chunks. The black line refers to the clonal and the blue line to the 
-sexual populations. **(B)** boxplots showing 100 random samples of 50 variants to
-calculate a distribution of $\bar{r}_d$ for the clonal (red) and sexual (blue)
-populations. Each box is centered around the mean, with whiskers extending out to
-1.5 times the interquartile range. The median is indicated by the center line.
-**(A)** and **(B)** are plotted on the same y-axis.
-
-## Table 1 {-}
-
-Contingency table comparing multilocus lineages assigned based on average
-neighbor clustering (columns) vs. multilocus lineages defined in
-@li2013efficient and @lees2006novel.
 
 # References {-}
