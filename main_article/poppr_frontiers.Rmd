@@ -111,7 +111,7 @@ developed for analysis of clonal populations [@kamvar2014poppr]. *Poppr*
 previously introduced several novel features including the ability to conduct a
 hierarchical analysis across unlimited hierarchies, test for linkage
 association, graph minimum spanning networks or provide bootstrap support for
-Bruvo's distance in resulting trees.
+Bruvo's distance in resulting trees. *Poppr* has been rapidly adopted and applied to a range of studies inlcuding for example horizontal trasmission in luekemia of clams [@metzger2015horizontal], study of the vector-mediated parent-to-offspring transmission in an avian malaria-like parasite [@chakarov2015apparent], and characterization of the emergence of the invasive forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population]. 
 
 In version 1.1, to facilitate handling hierarchical and mutlilocus genotypic
 metadata, a new S4 data object called "genclone" was defined to expand the
