@@ -550,8 +550,8 @@ install_github("grunwaldlab/poppr@2.0-rc")
 \end{CodeChunk}
 
 Several population genetics packages in R are currently going through a
-major upgrade and have not yet been updated in CRAN. We will push
-\emph{poppr} 2.0 to CRAN, once all other reverse dependent packages have
+major upgrade and have not yet been updated in CRAN. We will upload
+\emph{poppr} 2.0 to CRAN once all other reverse dependent packages have
 been updated.
 
 \section*{Discussion}\label{discussion}
@@ -560,32 +560,33 @@ been updated.
 Genomic data has become more readily accessible due to advances in
 low-cost sequencing technology. Many tools have been developed or
 adapted to these data, but most of them were designed with sexual
-populations in mind. Particularly important is the implementation of
-\(\bar{r}_d\) for genomic data (Agapow and Burt, 2001). Random sampling
-of loci across the genome can give an expected distribution of
-\(\bar{r}_d\), which is expected to have a mean of zero for panmictic
-populations. Additionally, due to the fact that the it acts on multiple
-loci, is not affected by the number of loci sampled, and has the ability
-to detect population structure, \(\bar{r}_d\) is well suited to sliding
-window analyses and has the potential to be applied to non-clonal
-populations.
+populations in mind. We have presented here implementations of
+model-free analyses for clonal organisms. Particularly important is the
+implementation of \(\bar{r}_d\) for genomic data (Agapow and Burt,
+2001). Random sampling of loci across the genome can give an expected
+distribution of \(\bar{r}_d\), which is expected to have a mean of zero
+for panmictic populations. Additionally, due to the fact that the it
+acts on multiple loci, is not affected by the number of loci sampled, is
+model free, and has the ability to detect population structure,
+\(\bar{r}_d\) is well suited to sliding window analyses and has the
+potential to be applied to non-clonal populations.
 
 Clustering multilocus genotypes into multilocus lineages based on
 genetic distances is a non-trivial task. Moreover, this has not
 previously been implemented for genomic data for clonal populations.
-Perhaps highlighting the fact that many of the features presented in
-this paper are not exclusive to genomic data is the fact that this
+Perhaps highlighting that many of the features presented in this paper
+are not necessarily exclusive to genomic data is the fact that this
 method of clonal assignment has been available in the programs
 \textsc{GenClone} and \textsc{Genodive} (Arnaud-Hanod et al., 2007;
 Meirmans and Van Tienderen, 2004). Our method with \texttt{mlg.filter}
 builds upon this idea and allows the user to choose between three
-different approaches for clustering MLGs. As shown in Fig. 2, it is
-clear that the choice of clustering algorithm has an impact on the data,
-where a genetic distance cutoff of 0.1 would be the difference between
-14 MLLs and 17 MLLs for nearest neighbor and UPGMA clustering,
-respectively (Fig. 2). The option to choose the clustering algorithm
-gives the user the ability to choose what is biologically relevant to
-their populations.
+different approaches for clustering MLGs. As diagrammed in Fig. 1 and
+demonstrated in Fig. 2, it is clear that the choice of clustering
+algorithm has an impact on the data, where a genetic distance cutoff of
+0.1 would be the difference between 14 MLLs and 17 MLLs for nearest
+neighbor and UPGMA clustering, respectively (Fig. 2). The option to
+choose the clustering algorithm gives the user the ability to choose
+what is biologically relevant to their populations.
 
 Multilocus genotypes that have been clustered can then be visualized in
 minimum spanning networks. Reticulate minimum spanning networks are very
@@ -607,7 +608,12 @@ from serial cloning events.
 
 Implementing these methods in R and hosting the code free and open on
 GitHub has given us the ability to tailor our tools to the needs of the
-researchers who use them.
+researchers who use them. We have spent a considerable amount of time
+developing these methods in such a way that users without technical
+background would be able to use and understand them without too much
+effort. As it is an open-source project, those with technical knowledge
+are invited to contribute by raising issues or pull requests on our
+repository at \url{https://github.com/grunwaldlab/poppr/issues}.
 
 \section*{Figures and Tables}\label{figures-and-tables}
 \addcontentsline{toc}{section}{Figures and Tables}
@@ -690,14 +696,14 @@ B & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . \\
 Diagrammatic representation of the three clustering algorithms
 implemented in \texttt{mlg.filter}. (\textbf{A-C}) Represent different
 clustering algorithms on the same imaginary network with a threshold of
-0.45. Edge weights are represented in arbitrary units noted by the line
+0.451. Edge weights are represented in arbitrary units noted by the line
 thickness and numerical values next to the lines. All outer angles are
 90 degrees, so the un-labeled edge weights can be obtained with simply
 geometry. Colored circles represent clusters of genotypes. (\textbf{A})
 Farthest neighbor clustering does not cluster nodes B and C because
-nodes A and C are more than a distance of 0.45 apart. (\textbf{B}) UPGMA
-(average neighbor) clustering clusters nodes A, B, and C together
-because the average distance between them and C is \textless{} 0.45.
+nodes A and C are more than a distance of 0.451 apart. (\textbf{B})
+UPGMA (average neighbor) clustering clusters nodes A, B, and C together
+because the average distance between them and C is \textless{} 0.451.
 (\textbf{C}) Nearest neighbor clustering clusters all nodes together
 because the minimum distance between them is always \textless{} 0.45.
 
