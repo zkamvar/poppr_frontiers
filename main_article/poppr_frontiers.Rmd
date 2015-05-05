@@ -62,7 +62,7 @@ what is a clonal lineage, a sliding-window analysis of the index of association,
 level of hierarchies.
 
 \tiny
- \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, index of assocaition, hierarchical analysis, sliding window}
+ \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, index of association, hierarchical analysis, sliding window}
 \end{abstract}
 
 
@@ -97,7 +97,7 @@ traditional marker data (e.g., SSR, AFLP) a clone was typically defined as a
 unique multilocus genotype (MLG) [@grunwald2006hierarchical; @Falush01082003;
 @goss2009population; @cooke2012genome; @taylor2003fungal]. Availability of large
 SNP data sets provides new challenges for data analysis. These data are based on
-reduced representation libaries and high throughput sequencing with moderate
+reduced representation libraries and high throughput sequencing with moderate
 sequencing depth which invariably results in substantial missing data, error in
 SNP calling due to sequencing error, lack of read depth or other sources of
 spurious allele calls [@mastretta2015restriction]. It is thus not clear what a
@@ -111,7 +111,7 @@ developed for analysis of clonal populations [@kamvar2014poppr]. *Poppr*
 previously introduced several novel features including the ability to conduct a
 hierarchical analysis across unlimited hierarchies, test for linkage
 association, graph minimum spanning networks or provide bootstrap support for
-Bruvo's distance in resulting trees. *Poppr* has been rapidly adopted and applied to a range of studies inlcuding for example horizontal trasmission in luekemia of clams [@metzger2015horizontal], study of the vector-mediated parent-to-offspring transmission in an avian malaria-like parasite [@chakarov2015apparent], and characterization of the emergence of the invasive forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population]. 
+Bruvo's distance in resulting trees. *Poppr* has been rapidly adopted and applied to a range of studies including for example horizontal transmission in leukemia of clams [@metzger2015horizontal], study of the vector-mediated parent-to-offspring transmission in an avian malaria-like parasite [@chakarov2015apparent], and characterization of the emergence of the invasive forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population]. 
 
 In version 1.1, to facilitate handling hierarchical and mutlilocus genotypic
 metadata, a new S4 data object called "genclone" was defined to expand the
@@ -704,10 +704,10 @@ print.xtable(xtable(res, align = rep("c", ncol(res) + 1)), comment = FALSE)
 ## Figure 1 {-}
 
 Diagrammatic representation of the three clustering algorithms implemented in
-`mlg.filter`. (**A-C**) represent different clustering algorithms on the same
+`mlg.filter`. (**A-C**) Represent different clustering algorithms on the same
 imaginary network with a threshold of 0.45. Edge weights are represented in
 arbitrary units noted by the line thickness and numerical values next to the
-lines. All outer angles are 90 degrees, so the un-labled edge weights can be
+lines. All outer angles are 90 degrees, so the un-labeled edge weights can be
 obtained with simply geometry. Colored circles represent clusters of genotypes.
 (**A**) Farthest neighbor clustering does not cluster nodes B and C because
 nodes A and C are more than a distance of 0.45 apart. (**B**) UPGMA (average
