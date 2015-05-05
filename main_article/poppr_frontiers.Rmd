@@ -126,8 +126,7 @@ incorporated directly into the *adegenet* package [@Jombart_2008].
 Here, we introduce *poppr* 2.0, which provides a major update to *poppr*
 [@kamvar2014poppr] including novel tools for analysis of clonal populations
 specifically addressing large SNP data. Significant novel tools include
-functions for calculating clone boundaries and collapsing individuals into user-
-specified clones based on genetic distance, sliding window analyses, genotype
+functions for calculating clone boundaries and collapsing individuals into user-specified clones based on genetic distance, sliding window analyses, genotype
 accumulation curves, reticulations in minimum spanning networks, and
 bootstrapping for any genetic distance.
 
