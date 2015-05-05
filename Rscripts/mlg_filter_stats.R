@@ -15,7 +15,7 @@ library('animation')
 infdat <- RCurl::getURL("https://raw.githubusercontent.com/grunwaldlab/phytophthora_id/master/shiny-server/www/genoid_infestans/reduced_database.txt.csv")
 infdat <- read.table(text = infdat, header = TRUE)
 pinf <- df2genind(infdat[-c(1,2)], sep = "/", ploidy = 3, ind.names = infdat[[1]], pop = infdat[[2]])
-ssr <- c(3,3,2,3,3,2,2,3,3,3,3,3)
+ssr <- c(3, 3, 2, 3, 3, 2, 2, 3, 3, 3, 3, 3)
 x <- as.genclone(pinf)
 
 fstats <- filter_stats(x, bruvo.dist, plot = TRUE, replen = ssr, loss = FALSE, nclone = 18)
