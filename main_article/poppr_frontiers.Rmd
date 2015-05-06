@@ -50,9 +50,9 @@ hosts, pesticides, and other factors, knowledge of the population dynamics and
 evolutionary history of populations is crucial. Plant pathogen populations are
 often clonal or partially clonal which requires different analytical tools. With
 the advent of high throughput sequencing technologies, obtaining genome-wide
-population genetic data has become easier than ever before. A move towards open,
+population genetic data has become easier than ever before. <!-- A move towards open,
 reproducible science has provided impetus for developing population genetic
-analysis tools in R. We previously contributed the R package \textit{poppr}
+analysis tools in R. --> We previously contributed the R package \textit{poppr}
 specifically addressing issues with analysis of clonal populations. In this
 paper we provide several significant extensions to \textit{poppr} with a focus
 on large, genome-wide SNP data. Specifically, we provide several new
@@ -71,7 +71,7 @@ any genetic distance, and analyses across any level of hierarchies.
 To paraphrase Dobzhansky, nothing in the field of plant-microbe interactions
 makes sense except in the light of population genetics [@dobzhansky2013nothing].
 Genetic forces such as selection and drift act on alleles in a population. Thus,
-a true understanding of how plant pathogens evolve and adapt to crops,
+a true understanding of how plant pathogens emerge, evolve and adapt to crops,
 fungicides, or other factors, can only emerge in the context of population level
 phenomena given the demographic history of populations [@Mcdonald2002;
 @grunwald2011evolution; @milgroom1989population]. The field of population
