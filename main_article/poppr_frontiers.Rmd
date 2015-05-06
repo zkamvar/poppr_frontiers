@@ -115,7 +115,7 @@ Bruvo's distance in resulting trees. *Poppr* has been rapidly adopted and
 applied to a range of studies including for example horizontal transmission in
 leukemia of clams [@metzger2015horizontal], study of the vector-mediated parent-to-offspring transmission in an avian malaria-like parasite
 [@chakarov2015apparent], and characterization of the emergence of the invasive
-forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population]. It has also been used to implement real-time, online shinyR based tools for visualizing relationships among unkown MLGs in reference databases  (http://phytophthora-id.org/) [@grunwald2011phytophthora]
+forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population]. It has also been used to implement real-time, online shinyR based tools for visualizing relationships among unknown MLGs in reference databases  (http://phytophthora-id.org/) [@grunwald2011phytophthora]
 <!-- 
 In version 1.1, to facilitate handling hierarchical and mutlilocus genotypic
 metadata, a new S4 data object called "genclone" was defined to expand the
@@ -274,7 +274,7 @@ The infoMAP algorithm revealed 63 communities with a maximum community size of
 communities with a maximum community size of 26 and $H = 4.65$ for the minimum
 spanning tree. The entropy across years was greatly decreased for all
 populations with the reticulate network compared to the minimum spanning tree
-(Fig. 3). Note that the reticulated network (Fig. 3B) showed patterns corresponding with those resulting from a discrimnant analysis of principal components (Fig. 3D) [@jombart2010discriminant].
+(Fig. 3). Note that the reticulated network (Fig. 3B) showed patterns corresponding with those resulting from a discriminant analysis of principal components (Fig. 3D) [@jombart2010discriminant].
 
 Graph walking of the reticulated minimum spanning network of *P. ramorum* by the
 infoMAP algorithm revealed 16 communities with a maximum community size of 13
@@ -344,7 +344,7 @@ The following code example demonstrates the genotype accumulation curve for data
 from @everhart2014fine showing that these data reach a small plateau and have a
 greatly decreased variance with 12 markers, indicating that there are enough
 markers such that adding more markers to the analysis will not create very many
-new genotypes (Fig. 5). The following code was used:
+new genotypes (Fig. 5). 
 
 ```{r, monilinia_curve, eval = FALSE}
 library("poppr")
@@ -514,6 +514,10 @@ understand them without too much effort. As it is an open-source project, those
 with technical knowledge are invited to contribute by raising issues or pull
 requests on our repository at https://github.com/grunwaldlab/poppr/issues.
 
+# Acknowledegements {-}
+
+<!-- anybody else to thank? -->
+We thank Ignazio Carbone for discussions on the index of association. This work was supported in part by US Department of Agriculture (USDA) Agricultural Research Service Grant 5358-22000-039-00D, USDA APHIS, the USDA-ARS Floriculture Nursery Initiative, and the USDA-Forest Service Forest Health Monitoring Program.
 
 # Figures and Tables {-}
 
