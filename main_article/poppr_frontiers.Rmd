@@ -106,7 +106,7 @@ clone boundaries.
 
 The research community using the R statistical and computing language [@R] has
 developed a plethora of new resources for population genetic analysis [@pegas;
-@Jombart_2008]. Recently, we introduced the R package *poppr* specifically
+@Jombart_2008]. R is particularly appealing because all code is open source and functions can be evaluated and modified by any user. Recently, we introduced the R package *poppr* specifically
 developed for analysis of clonal populations [@kamvar2014poppr]. *Poppr*
 previously introduced several novel features including the ability to conduct a
 hierarchical analysis across unlimited hierarchies, test for linkage
