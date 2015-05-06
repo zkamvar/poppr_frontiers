@@ -223,13 +223,6 @@ duplicated samples had $\sim$ 98% true positive fraction and $\sim$ 0.8% false
 positive fraction indicating that this method is robust to simulated
 populations.
 
-<!-- Should we cite github page with analyses and results? -->
-
-<!-- ZHIAN: That would probably be one of the better options. When do you want
-me to put the analyses on github? -->
-
-<!-- Now -->
-
 ## Minimum Spanning Networks with Reticulation {-}
 
 In its original iteration, *poppr* introduced minimum spanning networks that
