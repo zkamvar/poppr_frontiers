@@ -665,7 +665,7 @@ lines(sex.ia, col = cols["sex"])
 abline(h = mean(sex.ia), lty = 2, col = cols["sex"])
 abline(h = mean(clone.ia), lty = 2, col = cols["clone"])
 legend("top", lty = 1, col = cols, bty = "n",
-       legend = c("clonal snps", "sexual snps"), cex = 1.5)
+       legend = c("clonal pop.", "sexual pop."), cex = 1.5)
 legend("topleft", legend = "", pch = "A", cex = 2, xjust = -1, yjust = -1, 
        bty = "n")
 par(mar = c(5.1, 0, 4.1, 2.1))
