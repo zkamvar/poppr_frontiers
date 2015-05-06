@@ -1,6 +1,6 @@
 ---
 title: "Novel R tools for analysis of genome-wide population genetic data with emphasis on clonality"
-runtitle: "Novel R tools for population genetics"
+runtitle: "Novel R tools for population genomics"
 author:
   - name: Zhian N. Kamvar
     affiliation: '1'
@@ -62,7 +62,7 @@ sliding-window analysis of the index of association, modular bootstrapping of
 any genetic distance, and analyses across any level of hierarchies.
 
 \tiny
- \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, index of association, hierarchical analysis, sliding window}
+ \keyFont{ \section{Keywords:} clonality, population genomics, bootstrap, index of association, hierarchical analysis, sliding window}
 \end{abstract}
 
 
