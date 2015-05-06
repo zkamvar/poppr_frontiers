@@ -1,6 +1,6 @@
 ---
-title: "Novel tools for analysis genome-wide population genetic data with emphasis on clonality"
-runtitle: "Novel tools for population genetics"
+title: "Novel R tools for analysis of genome-wide population genetic data with emphasis on clonality"
+runtitle: "Novel R tools for population genetics"
 author:
   - name: Zhian N. Kamvar
     affiliation: '1'
