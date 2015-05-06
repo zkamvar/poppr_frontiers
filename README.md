@@ -10,6 +10,14 @@
     iii. install the FrontiersTemplate.
 4. Knit the file `main_article/poppr_frontiers.Rmd`
 
+## To prepare file document
+
+1. run `make unitex`. This will convert the unicode tex document to pure tex and then convert pdf figures to eps and finally replace the figure names with eps names in the tex document.
+
+2. move tables and figures to the bottom of the manuscript.
+
+3. run `make tex`. This will make the final latex document called poppr_frontiers_unicode.pdf
+
 # Files and Directories
 
  - Frontiers\_LaTeX\_Templates - original template from Frontiers
