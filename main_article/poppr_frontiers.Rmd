@@ -423,7 +423,7 @@ to provide the data set for analysis at each hierarchical level.
 
 To facilitate handling hierarchical and mutlilocus genotypic metadata, *poppr*
 version 1.1 introduced a new S4 data object called "genclone", extending
-*adegenet*'s "genind" object. The genclone object formalized the definitions of
+*adegenet*'s "genind" object (Kamvar and Gr\"unwald, unpublished). The genclone object formalized the definitions of
 multilocus genotypes and population hierarchies by adding two slots called "mlg"
 and "hierarchy" that carried a numeric vector and a data frame, respectively.
 These new slots allow for increased efficiency and ease of use by allowing these
@@ -433,8 +433,8 @@ level. This is then used to set the population factor of the data by supplying a
 hierarchical formula containing one or more column names of the data frame in
 the hierarchy slot.
 
-The functionality represented by the hierarchy slot has now been migrated to the
-*adegenet* package, version 2.0 to allow hierarchical analysis in *adegenet*,
+The functionality represented by the hierarchy slot has now been migrated from the  *poppr* to the
+*adegenet* package version 2.0 to allow hierarchical analysis in *adegenet*,
 *poppr*, and other dependent packages. The prior *poppr* `hierarchy` slot and
 methods have now been renamed `strata` in *adegenet*. A short example of the
 utility of these methods can be seen in the code segment under
@@ -517,7 +517,7 @@ requests on our repository at https://github.com/grunwaldlab/poppr/issues.
 # Acknowledgements {-}
 
 <!-- anybody else to thank? -->
-We thank Ignazio Carbone for discussions on the index of association. This work was supported in part by US Department of Agriculture (USDA) Agricultural Research Service Grant 5358-22000-039-00D, USDA APHIS, the USDA-ARS Floriculture Nursery Initiative, and the USDA-Forest Service Forest Health Monitoring Program.
+We thank Ignazio Carbone for discussions on the index of association and Thibaut Jombart for allowing us to incorporate the `strata` slot anr relted methds in *adegenet*. This work was supported in part by US Department of Agriculture (USDA) Agricultural Research Service Grant 5358-22000-039-00D, USDA APHIS, the USDA-ARS Floriculture Nursery Initiative, and the USDA-Forest Service Forest Health Monitoring Program.
 
 # Figures and Tables {-}
 
