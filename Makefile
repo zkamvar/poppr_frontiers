@@ -14,3 +14,15 @@ build_template:
 
 ver_two_deps:
 	R --slave -e 'devtools::install_github(c("thibautjombart/adegenet", "emmanuelparadis/pegas/pegas", "KlausVigo/phangorn"))';
+
+unitex:
+	cd main_article; \
+	python convert_pandoc_latex.py poppr_frontiers.tex poppr_frontiers_unicode.tex;
+
+tex: 
+	latexmk -pdf -quiet poppr_frontiers_unicode.tex;
+
+clean: 
+	cd main_article; \
+	$(RM) *.log *.out *.aux *.toc *.blg *.bbl *.synctex.gz \
+	*.fdb_latexmk *.fls
