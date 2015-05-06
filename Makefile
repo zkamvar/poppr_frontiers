@@ -19,7 +19,8 @@ unitex:
 	cd main_article; \
 	python convert_pandoc_latex.py poppr_frontiers.tex poppr_frontiers_unicode.tex;
 
-tex: 
+tex:
+	cd main_article; \
 	latexmk -pdf -quiet poppr_frontiers_unicode.tex;
 
 clean: 
