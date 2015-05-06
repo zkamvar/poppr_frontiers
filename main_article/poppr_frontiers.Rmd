@@ -116,7 +116,7 @@ applied to a range of studies including for example horizontal transmission in
 leukemia of clams [@metzger2015horizontal], study of the vector-mediated parent-
 to-offspring transmission in an avian malaria-like parasite
 [@chakarov2015apparent], and characterization of the emergence of the invasive
-forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population].
+forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population]. It has also been used to implement real-time, online shinyR based tools for visualizing relationships among unkown multilocus genotypes in reference databases  (http://phytophthora-id.org/) [@grunwald2011phytophthora]
 <!-- 
 In version 1.1, to facilitate handling hierarchical and mutlilocus genotypic
 metadata, a new S4 data object called "genclone" was defined to expand the
