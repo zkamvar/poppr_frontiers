@@ -1,6 +1,6 @@
 ---
-title: "Novel tools for analysis genome-wide population genetic data with emphasis on clonality"
-runtitle: "Novel tools for population genetics"
+title: "Novel R tools for analysis of genome-wide population genetic data with emphasis on clonality"
+runtitle: "Novel R tools for population genetics"
 author:
   - name: Zhian N. Kamvar
     affiliation: '1'
@@ -50,9 +50,9 @@ hosts, pesticides, and other factors, knowledge of the population dynamics and
 evolutionary history of populations is crucial. Plant pathogen populations are
 often clonal or partially clonal which requires different analytical tools. With
 the advent of high throughput sequencing technologies, obtaining genome-wide
-population genetic data has become easier than ever before. A move towards open,
+population genetic data has become easier than ever before. <!-- A move towards open,
 reproducible science has provided impetus for developing population genetic
-analysis tools in R. We previously contributed the R package \textit{poppr}
+analysis tools in R. --> We previously contributed the R package \textit{poppr}
 specifically addressing issues with analysis of clonal populations. In this
 paper we provide several significant extensions to \textit{poppr} with a focus
 on large, genome-wide SNP data. Specifically, we provide several new
@@ -71,8 +71,8 @@ any genetic distance, and analyses across any level of hierarchies.
 To paraphrase Dobzhansky, nothing in the field of plant-microbe interactions
 makes sense except in the light of population genetics [@dobzhansky2013nothing].
 Genetic forces such as selection and drift act on alleles in a population. Thus,
-a true understanding of how plant pathogens evolve and adapt to crops,
-fungicides, or other factors, can only emerge in the context of population level
+a true understanding of how plant pathogens emerge, evolve and adapt to crops,
+fungicides, or other factors, can only be elucidated in the context of population level
 phenomena given the demographic history of populations [@Mcdonald2002;
 @grunwald2011evolution; @milgroom1989population]. The field of population
 genetics, in the era of whole genome resequencing, provides unprecedented power
@@ -106,17 +106,16 @@ clone boundaries.
 
 The research community using the R statistical and computing language [@R] has
 developed a plethora of new resources for population genetic analysis [@pegas;
-@Jombart_2008]. Recently, we introduced the R package *poppr* specifically
+@Jombart_2008]. R is particularly appealing because all code is open source and functions can be evaluated and modified by any user. Recently, we introduced the R package *poppr* specifically
 developed for analysis of clonal populations [@kamvar2014poppr]. *Poppr*
 previously introduced several novel features including the ability to conduct a
 hierarchical analysis across unlimited hierarchies, test for linkage
 association, graph minimum spanning networks or provide bootstrap support for
 Bruvo's distance in resulting trees. *Poppr* has been rapidly adopted and
 applied to a range of studies including for example horizontal transmission in
-leukemia of clams [@metzger2015horizontal], study of the vector-mediated parent-
-to-offspring transmission in an avian malaria-like parasite
+leukemia of clams [@metzger2015horizontal], study of the vector-mediated parent-to-offspring transmission in an avian malaria-like parasite
 [@chakarov2015apparent], and characterization of the emergence of the invasive
-forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population].
+forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population]. It has also been used to implement real-time, online shinyR based tools for visualizing relationships among unkown MLGs in reference databases  (http://phytophthora-id.org/) [@grunwald2011phytophthora]
 <!-- 
 In version 1.1, to facilitate handling hierarchical and mutlilocus genotypic
 metadata, a new S4 data object called "genclone" was defined to expand the
@@ -141,7 +140,7 @@ networks, and bootstrapping for any genetic distance.
 ## Clonal identification {-}
 
 As highlighted in previous work, clone correction is an important component of
-population genetic analysis of organisms that have cryptic growth or are known
+population genetic analysis of organisms that are known
 to reproduce asexually [@kamvar2014poppr; @milgroom1996recombination;
 @grunwald2003analysis]. This method is a partial correction for bias that
 affects metrics that rely on allele frequencies assuming panmixia. It was
@@ -150,10 +149,10 @@ large-scale sequencing and reduced-representation libraries, it has become
 easier to sequence tens of thousands of markers from hundreds of individuals
 [@elshire2011robust; @davey2011genome; @davey2010rad]. With this larger number
 of markers, the genetic resolution is much greater, but the chance of genotyping
-error is also greatly increased [@mastretta2015restriction]. Taking this fact
+error is also greatly increased and missing data is frequent [@mastretta2015restriction]. Taking this fact
 and occasional somatic mutations into account, it would be impossible to
 separate true clones from independent individuals by just comparing what
-multilocus genotypes are different. We introduce a new method for collapsing
+MLGs are different. We introduce a new method for collapsing
 unique multilocus genotypes determined by naive string comparison into
 multilocus lineages utilizing any genetic distance given three different
 clustering algorithms: farthest neighbor, nearest neighbor, and UPGMA (average
@@ -181,12 +180,12 @@ samples are closer than the given threshold.
 We utilize data from the microbe *Phytophthora infestans* to show how the
 `mlg.filter` function collapses multilocus genotypes with Bruvo's distance
 assuming a genome addition model [@bruvo2004simple]. *P. infestans* is the
-causal agent of potato late blight originating from Mexico and spread to Europe
-in the mid 19th century [@goss2014irish; @li2013efficient; @lees2006novel]. *P.
+causal agent of potato late blight originating from Mexico that spread to Europe
+in the mid 19th century [@goss2014irish; @yoshida2013rise]. *P.
 infestans* reproduces both clonally and sexually. The clonal lineages of *P.
 infestans* have been formally defined into 18 separate clonal lineages using a
 combination of various molecular methods including AFLP and microsatellite
-markers [@lees2006novel]. For these data, we used `mlg.filter` to detect all of
+markers [@lees2006novel; @li2013efficient]. For these data, we used `mlg.filter` to detect all of
 the distance thresholds at which 18 multilocus lineages would be resolved. We
 used these thresholds to define multilocus lineages and create contingency
 tables and dendrograms to determine how well the multilocus lineages were
@@ -200,7 +199,7 @@ is polytomic (Table 1).
 
 <!-- ## Demonstration data: Simulated data {-} -->
 
-We utilized simulated data constructed using the `glSim` function in *adegenet*
+We utilized simulated data to evaluate the effect of sequencing error and missing data on MLG calling. We constructed the data using the `glSim` function in *adegenet*
 [@jombart2011adegenet] to obtain a SNP data set for demonstration. Two diploid
 data sets were created, each with 10k SNPs (25% structured into two groups) and
 200 samples with 10 ancestral populations of even sizes. Clones were created in
@@ -216,12 +215,6 @@ for analysis. Genetic distance was obtained with the function `bitwise.dist`,
 which calculates the fraction of different sites between samples equivalent to
 Provesti's distance, counting missing data as equivalent in comparison
 [@prevosti1975distances].
-
-<!-- Does bitwise.dist have a reference? Is there a better name for the
-distance? --> 
-
-<!-- ZHIAN: bitwise.dist is the function that Jonah came up with. There is no
-reference for it. If you want, I can try to change it to diss.dist -->
 
 All three filtering algorithms were run with a threshold of 1, returning a
 numeric vector of length $n - 1$ where each element represented a threshold at
@@ -239,6 +232,8 @@ populations.
 
 <!-- ZHIAN: That would probably be one of the better options. When do you want
 me to put the analyses on github? -->
+
+<!-- Now -->
 
 ## Minimum Spanning Networks with Reticulation {-}
 
@@ -279,7 +274,7 @@ The infoMAP algorithm revealed 63 communities with a maximum community size of
 communities with a maximum community size of 26 and $H = 4.65$ for the minimum
 spanning tree. The entropy across years was greatly decreased for all
 populations with the reticulate network compared to the minimum spanning tree
-(Fig. 3).
+(Fig. 3). Note that the reticulated network (Fig. 3B) showed patterns corresponding with those resulting from a discrimnant analysis of principal components (Fig. 3D) [@jombart2010discriminant].
 
 Graph walking of the reticulated minimum spanning network of *P. ramorum* by the
 infoMAP algorithm revealed 16 communities with a maximum community size of 13
