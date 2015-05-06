@@ -149,10 +149,10 @@ large-scale sequencing and reduced-representation libraries, it has become
 easier to sequence tens of thousands of markers from hundreds of individuals
 [@elshire2011robust; @davey2011genome; @davey2010rad]. With this larger number
 of markers, the genetic resolution is much greater, but the chance of genotyping
-error is also greatly increased [@mastretta2015restriction]. Taking this fact
+error is also greatly increased and missing data is frequent [@mastretta2015restriction]. Taking this fact
 and occasional somatic mutations into account, it would be impossible to
 separate true clones from independent individuals by just comparing what
-multilocus genotypes are different. We introduce a new method for collapsing
+MLGs are different. We introduce a new method for collapsing
 unique multilocus genotypes determined by naive string comparison into
 multilocus lineages utilizing any genetic distance given three different
 clustering algorithms: farthest neighbor, nearest neighbor, and UPGMA (average
@@ -180,8 +180,8 @@ samples are closer than the given threshold.
 We utilize data from the microbe *Phytophthora infestans* to show how the
 `mlg.filter` function collapses multilocus genotypes with Bruvo's distance
 assuming a genome addition model [@bruvo2004simple]. *P. infestans* is the
-causal agent of potato late blight originating from Mexico and spread to Europe
-in the mid 19th century [@goss2014irish; @li2013efficient; @lees2006novel]. *P.
+causal agent of potato late blight originating from Mexico that spread to Europe
+in the mid 19th century [@goss2014irish; @li2013efficient; @lees2006novel; @yoshida2013rise]. *P.
 infestans* reproduces both clonally and sexually. The clonal lineages of *P.
 infestans* have been formally defined into 18 separate clonal lineages using a
 combination of various molecular methods including AFLP and microsatellite
