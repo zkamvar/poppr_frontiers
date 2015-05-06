@@ -181,11 +181,11 @@ We utilize data from the microbe *Phytophthora infestans* to show how the
 `mlg.filter` function collapses multilocus genotypes with Bruvo's distance
 assuming a genome addition model [@bruvo2004simple]. *P. infestans* is the
 causal agent of potato late blight originating from Mexico that spread to Europe
-in the mid 19th century [@goss2014irish; @li2013efficient; @lees2006novel; @yoshida2013rise]. *P.
+in the mid 19th century [@goss2014irish; @yoshida2013rise]. *P.
 infestans* reproduces both clonally and sexually. The clonal lineages of *P.
 infestans* have been formally defined into 18 separate clonal lineages using a
 combination of various molecular methods including AFLP and microsatellite
-markers [@lees2006novel]. For these data, we used `mlg.filter` to detect all of
+markers [@lees2006novel; @li2013efficient]. For these data, we used `mlg.filter` to detect all of
 the distance thresholds at which 18 multilocus lineages would be resolved. We
 used these thresholds to define multilocus lineages and create contingency
 tables and dendrograms to determine how well the multilocus lineages were
@@ -199,7 +199,7 @@ is polytomic (Table 1).
 
 <!-- ## Demonstration data: Simulated data {-} -->
 
-We utilized simulated data constructed using the `glSim` function in *adegenet*
+We utilized simulated data to evaluate the effect of sequencing error and missing data on MLG calling. We constructed the data using the `glSim` function in *adegenet*
 [@jombart2011adegenet] to obtain a SNP data set for demonstration. Two diploid
 data sets were created, each with 10k SNPs (25% structured into two groups) and
 200 samples with 10 ancestral populations of even sizes. Clones were created in
