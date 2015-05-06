@@ -379,7 +379,7 @@ $\bar{r}_d$ requires distance matrices of absolute number of differences, we
 utilize a function that calculates these distances directly from the compressed
 data called `bitwise.dist`.
 
-The first approach is a sliding window approach implemented in the function
+The first approach is a sliding window analysis implemented in the function
 `win.ia`. It utilizes the position of markers in the genome to calculate
 $\bar{r}_d$ among any number of SNPs found within a user-specified windowed
 region. It is important that this calculation utilize $\bar{r}_d$ as the number
@@ -747,7 +747,7 @@ genotypes. A trendline (blue) has been added using the *ggplot2* function
 `stat_smooth`.
 
 **Figure 6** **(A)** Sliding window analysis of the standardized index of
-association ($\bar{r}_d$) across a simulated $1.1 \times 10^4$nt chromosome
+association ($\bar{r}_d$) across a simulated $1.1 \times 10^4$ nt chromosome
 containing 1,100 variants among 100 individuals. Each window analyzed variants
 within 500nt chunks. The black line refers to the clonal and the blue line to
 the sexual populations. **(B)** boxplots showing 100 random samples of 50
