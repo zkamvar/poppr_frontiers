@@ -136,11 +136,12 @@ NA_generator <- function(snpbin, nloc, na.perc = 0.01, rawchars = 2^(0:7)){
 #' Propogate missing data in a genlight object
 #' 
 #' @param na.perc the percentage of missing data per sample
-#' @param parallel a logical specifying whether or not parallel processing should be utilized
+#' @param parallel a logical specifying whether or not parallel processing
+#'   should be utilized
 #' @param n.cores the number of cores to use with parallel processing.
-#' 
+#'   
 #' @return a genlight object with missing data propogated.
-#' 
+#'   
 #' @author Zhian N. Kamvar
 pop_NA <- function(glt, na.perc = 0.01, parallel = require('parallel'), n.cores = 2L){
   rawchars <- 2^(0:7)
@@ -317,7 +318,7 @@ binary_char_from_hex <- function(y){
 
 #' Utilize all algorithms of mlg.filter
 #' 
-#' This function is a wrapper to mlg.filter. It will calculate all of the stats
+#' This function is a wrapper to mlg.filter. It will calculate all of the stats 
 #' for mlg.filter utilizing all of the algorithms.
 #' 
 #' @param x a genind or genlight object
@@ -325,18 +326,19 @@ binary_char_from_hex <- function(y){
 #' @param threshold a threshold to be passed to mlg.filter
 #' @param stats what statistics should be calculated.
 #' @param missing how to treat missing data with mlg.filter
-#' @param If the threshold is a maximum threshold, should the statistics be
-#' plotted (Figure 2)
-#' @param nclone the number of multilocus genotypes you expect for the data.
-#' This will draw horizontal line on the graph at the value nclone and then vertical lines showing the cutoff thresholds for each algorithm.
-#' 
+#' @param If the threshold is a maximum threshold, should the statistics be 
+#'   plotted (Figure 2)
+#' @param nclone the number of multilocus genotypes you expect for the data. 
+#'   This will draw horizontal line on the graph at the value nclone and then
+#'   vertical lines showing the cutoff thresholds for each algorithm.
+#'   
 #' @return a list of results from mlg.filter from the three algorithms.
-#' 
+#'   
 #' @author Zhian N. Kamvar, Jonah C. Brooks
 filter_stats <- function(x, distance = bitwise.dist, threshold = 1, 
                          stats = "All", missing = "ignore", plot = FALSE, 
                          nclone = NULL, ...){
-  if (!is.dist(distance)){
+  if (!"dist" %in% class(distance)){
     distmat <- distance(x, ...)
   }
   f <- mlg.filter(x, threshold, missing, algorithm = "f", distance = distmat, 
@@ -469,7 +471,9 @@ color_mlg_tree <- function(x, tree, newmlgs, ...){
 
 #' Create an HTML animation of trees collapsing multilocus genotypes
 #' 
-#' This function utilizes saveHTML from the animation package to color dendrograms as they are serially collapsed given increasing thresholds to mlg.filter.
+#' This function utilizes saveHTML from the animation package to color
+#' dendrograms as they are serially collapsed given increasing thresholds to
+#' mlg.filter.
 #' 
 #' @param measure one of the algorithm options for mlg.filter
 #' @param x a genind or genlight object.
@@ -478,9 +482,9 @@ color_mlg_tree <- function(x, tree, newmlgs, ...){
 #' @param fstats a list from filter_stats where stats = "All"
 #' @param destdir a destination directory
 #' @param ... parameters passed on to mlg.filter
-#' 
-#' @return an animation 
-#' 
+#'   
+#' @return an animation
+#'   
 #' @author Zhian N. Kamvar
 HTML_collapse <- function(measure, x, treefun, distfun, fstats, destdir = NULL, ...){
   desc <- "An exploration of collapsing MLGs using"
