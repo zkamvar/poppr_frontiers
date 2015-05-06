@@ -19,7 +19,15 @@ unitex:
 	cd main_article; \
 	python convert_pandoc_latex.py poppr_frontiers.tex poppr_frontiers_unicode.tex;
 
-tex:
+pdf2eps:
+	cd main_article/poppr_frontiers_files/figure-latex/; \
+	for i in *pdf; do gs -q -dNOCACHE -dNOPAUSE -dBATCH -dSAFER -sDEVICE=epswrite -sOutputFile=$$i.eps $$i; done
+
+epstex: pdf2eps
+	cd main_article; \
+	perl -p -i -e 's/(Figure-\d-1+?)\}/$$1.eps\}/' poppr_frontiers_unicode.tex
+
+tex: epstex
 	cd main_article; \
 	latexmk -pdf -quiet poppr_frontiers_unicode.tex;
 
