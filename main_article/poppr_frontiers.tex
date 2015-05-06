@@ -93,7 +93,7 @@
 \onecolumn
 \firstpage{1}
 
-\title[Novel R tools for population genetics]{Novel R tools for analysis of genome-wide population genetic data with
+\title[Novel R tools for population genomics]{Novel R tools for analysis of genome-wide population genetic data with
 emphasis on clonality}
 \author[\firstAuthorLast]{\Authors}
 \address{}
@@ -110,19 +110,18 @@ hosts, pesticides, and other factors, knowledge of the population dynamics and
 evolutionary history of populations is crucial. Plant pathogen populations are
 often clonal or partially clonal which requires different analytical tools. With
 the advent of high throughput sequencing technologies, obtaining genome-wide
-population genetic data has become easier than ever before. <!-- A move towards open,
-reproducible science has provided impetus for developing population genetic
-analysis tools in R. --> We previously contributed the R package \textit{poppr}
-specifically addressing issues with analysis of clonal populations. In this
-paper we provide several significant extensions to \textit{poppr} with a focus
-on large, genome-wide SNP data. Specifically, we provide several new
-functionalities including the new function \texttt{mlg.filter} to define clone
-boundaries allowing for inspection and definition of what is a clonal lineage, a
-sliding-window analysis of the index of association, modular bootstrapping of
-any genetic distance, and analyses across any level of hierarchies.
+population genetic data has become easier than ever before. We previously
+contributed the R package \textit{poppr} specifically addressing issues with
+analysis of clonal populations. In this paper we provide several significant
+extensions to \textit{poppr} with a focus on large, genome-wide SNP data.
+Specifically, we provide several new functionalities including the new function
+\texttt{mlg.filter} to define clone boundaries allowing for inspection and
+definition of what is a clonal lineage, a sliding-window analysis of the index
+of association, modular bootstrapping of any genetic distance, and analyses
+across any level of hierarchies.
 
 \tiny
- \keyFont{ \section{Keywords:} clonality, population genetics, bootstrap, index of association, hierarchical analysis, sliding window}
+ \keyFont{ \section{Keywords:} clonality, population genomics, bootstrap, index of association, hierarchical analysis, sliding window}
 \end{abstract}
 
 \section*{Introduction}\label{introduction}
@@ -187,8 +186,8 @@ malaria-like parasite (Chakarov et al., 2015), and characterization of
 the emergence of the invasive forest pathogen \emph{Hymenoscyphus
 pseudoalbidus} (Gross et al., 2014). It has also been used to implement
 real-time, online shinyR based tools for visualizing relationships among
-unkown MLGs in reference databases (\url{http://phytophthora-id.org/})
-(Gr{ü}nwald et al., 2011)
+unknown MLGs in reference databases (http ://phytophthora-id.org/)
+(Gr{ü}nwald et al., 2011).
 
 Here, we introduce \emph{poppr} 2.0, which provides a major update to
 \emph{poppr} (Kamvar et al., 2014b) including novel tools for analysis
@@ -212,7 +211,7 @@ reproduce asexually (Kamvar et al., 2014b; Milgroom, 1996; Grünwald et
 al., 2003). This method is a partial correction for bias that affects
 metrics that rely on allele frequencies assuming panmixia. It was
 initially designed for data with only a handful of markers. With the
-advent of large-scale sequencing and reduced-representation libraries,
+advent of large-scale sequencing and reduced- representation libraries,
 it has become easier to sequence tens of thousands of markers from
 hundreds of individuals (Elshire et al., 2011; Davey et al., 2011; Davey
 and Blaxter, 2010). With this larger number of markers, the genetic
@@ -250,16 +249,16 @@ how the \texttt{mlg.filter} function collapses multilocus genotypes with
 Bruvo's distance assuming a genome addition model (Bruvo et al., 2004).
 \emph{P. infestans} is the causal agent of potato late blight
 originating from Mexico that spread to Europe in the mid 19th century
-(Goss et al., 2014; Li et al., 2013; Lees et al., 2006; Yoshida et al.,
-2013). \emph{P. infestans} reproduces both clonally and sexually. The
-clonal lineages of \emph{P. infestans} have been formally defined into
-18 separate clonal lineages using a combination of various molecular
-methods including AFLP and microsatellite markers (Lees et al., 2006).
-For these data, we used \texttt{mlg.filter} to detect all of the
-distance thresholds at which 18 multilocus lineages would be resolved.
-We used these thresholds to define multilocus lineages and create
-contingency tables and dendrograms to determine how well the multilocus
-lineages were detected.
+(Goss et al., 2014; Yoshida et al., 2013). \emph{P. infestans}
+reproduces both clonally and sexually. The clonal lineages of \emph{P.
+infestans} have been formally defined into 18 separate clonal lineages
+using a combination of various molecular methods including AFLP and
+microsatellite markers (Lees et al., 2006; Li et al., 2013). For these
+data, we used \texttt{mlg.filter} to detect all of the distance
+thresholds at which 18 multilocus lineages would be resolved. We used
+these thresholds to define multilocus lineages and create contingency
+tables and dendrograms to determine how well the multilocus lineages
+were detected.
 
 For the \emph{P. infestans} population, the three algorithms were able
 to detect 18 multilocus lineages at different distance thresholds (Fig.
@@ -267,18 +266,19 @@ to detect 18 multilocus lineages at different distance thresholds (Fig.
 the genotypes defined by distance show that most of the 18 lineages were
 resolved, except for US-8, which is polytomic (Table 1).
 
-We utilized simulated data constructed using the \texttt{glSim} function
-in \emph{adegenet} (Jombart and Ahmed, 2011) to obtain a SNP data set
-for demonstration. Two diploid data sets were created, each with 10k
-SNPs (25\% structured into two groups) and 200 samples with 10 ancestral
-populations of even sizes. Clones were created in one data set by
-marking each sample with a unique identifier and then randomly sampling
-with replacement. It is well documented that reduced-representation
-sequencing can introduce several erroneous calls and missing data
-(Mastretta-Yanes et al., 2015). To reflect this, we mutated SNPs at a
-rate of 10\% and inserted an average of 10\% missing data for each
-sample after clones were created, ensuring that no two sequences were
-alike. The number of mutations and missing data per sample were
+We utilized simulated data to evaluate the effect of sequencing error
+and missing data on MLG calling. We constructed the data using the
+\texttt{glSim} function in \emph{adegenet} (Jombart and Ahmed, 2011) to
+obtain a SNP data set for demonstration. Two diploid data sets were
+created, each with 10k SNPs (25\% structured into two groups) and 200
+samples with 10 ancestral populations of even sizes. Clones were created
+in one data set by marking each sample with a unique identifier and then
+randomly sampling with replacement. It is well documented that reduced-
+representation sequencing can introduce several erroneous calls and
+missing data (Mastretta-Yanes et al., 2015). To reflect this, we mutated
+SNPs at a rate of 10\% and inserted an average of 10\% missing data for
+each sample after clones were created, ensuring that no two sequences
+were alike. The number of mutations and missing data per sample were
 determined by sampling from a Poisson distribution with
 \(\lambda = 1000\). After pooling, 20\% of the data set was randomly
 sampled for analysis. Genetic distance was obtained with the function
@@ -344,7 +344,10 @@ size of 77 and \(H = 3.56\) for the reticulate network of the H3N2 data
 and 117 communities with a maximum community size of 26 and \(H = 4.65\)
 for the minimum spanning tree. The entropy across years was greatly
 decreased for all populations with the reticulate network compared to
-the minimum spanning tree (Fig. 3).
+the minimum spanning tree (Fig. 3). Note that the reticulated network
+(Fig. 3B) showed patterns corresponding with those resulting from a
+discriminant analysis of principal components (Fig. 3D) (Jombart et al.,
+2010).
 
 Graph walking of the reticulated minimum spanning network of \emph{P.
 ramorum} by the infoMAP algorithm revealed 16 communities with a maximum
@@ -373,11 +376,11 @@ clades in hierarchical clustering.
 Data in genind and genpop objects are represented as matrices with
 individuals in rows and alleles in columns (Jombart, 2008). This gives
 the advantage of being able to use R's matrix algebra capabilities to
-quickly calculate genetic distance. Unfortunately, this also means that
-bootstrapping is a non-trivial task as all alleles at a single locus
-need to be sampled together. To remedy this, we have created an internal
-S4 class called ``bootgen'', which extends the internal ``gen'' class
-from \emph{adegenet}. This class can be created from any genind,
+efficiently calculate genetic distance. Unfortunately, this also means
+that bootstrapping is a non- trivial task as all alleles at a single
+locus need to be sampled together. To remedy this, we have created an
+internal S4 class called ``bootgen'', which extends the internal ``gen''
+class from \emph{adegenet}. This class can be created from any genind,
 genclone, or genpop object, and allows loci to be sampled with
 replacement. To further facilitate bootstrapping, a function called
 \texttt{aboot}, which stands for ``any boot'', is introduced that will
@@ -389,7 +392,7 @@ the \emph{poppr} function \texttt{aboot} on population allelic
 frequencies derived from the data set \texttt{microbov} in the
 \emph{adegenet} package with 1000 bootstrap replicates (Jombart, 2008;
 Lalo{ë} et al., 2007). The resulting dendrogram shows bootstrap support
-values \(>50\%\) (Fig. 4).
+values \(>50\%\) (Fig. 4) and used the following code:
 
 \begin{CodeChunk}
 \begin{CodeInput}
@@ -453,18 +456,16 @@ This metric is typically applied to traditional dominant and co-dominant
 markers such as AFLPs, SNPs, or microsatellite markers. With the advent
 of high throughput sequencing, SNP data is now available in a
 genome-wide context and in very large matrices including thousands of
-SNPs. Thus, the likelihood of finding mutations within two individuals
-of a given clone increases and tools are needed for defining clone
-boundaries. For this reason, we devised two approaches using the index
-of association for large numbers of markers typical for population
-genomic studies. Both functions utilize \emph{adegenet}'s ``genlight''
-object class, which efficiently stores 8 binary alleles in a single byte
+SNPs. For this reason, we devised two approaches using the index of
+association for large numbers of markers typical for population genomic
+studies. Both functions utilize \emph{adegenet}'s ``genlight'' object
+class, which efficiently stores 8 binary alleles in a single byte
 (Jombart and Ahmed, 2011). As calculation of the \(\bar{r}_d\) requires
 distance matrices of absolute number of differences, we utilize a
 function that calculates these distances directly from the compressed
 data called \texttt{bitwise.dist}.
 
-The first approach is a sliding window approach implemented in the
+The first approach is a sliding window analysis implemented in the
 function \texttt{win.ia}. It utilizes the position of markers in the
 genome to calculate \(\bar{r}_d\) among any number of SNPs found within
 a user-specified windowed region. It is important that this calculation
@@ -513,23 +514,23 @@ data set for analysis at each hierarchical level.
 
 To facilitate handling hierarchical and mutlilocus genotypic metadata,
 \emph{poppr} version 1.1 introduced a new S4 data object called
-``genclone'', extending \emph{adegenet}'s ``genind'' object. The
-genclone object formalized the definitions of multilocus genotypes and
-population hierarchies by adding two slots called ``mlg'' and
-``hierarchy'' that carried a numeric vector and a data frame,
-respectively. These new slots allow for increased efficiency and ease of
-use by allowing these metadata to travel with the genetic data. The
-hierarchy slot in particular contains a data frame where each column
-represents a separate hierarchical level. This is then used to set the
-population factor of the data by supplying a hierarchical formula
-containing one or more column names of the data frame in the hierarchy
-slot.
+``genclone'', extending \emph{adegenet}'s ``genind'' object (Kamvar and
+Grünwald, unpublished). The genclone object formalized the definitions
+of multilocus genotypes and population hierarchies by adding two slots
+called ``mlg'' and ``hierarchy'' that carried a numeric vector and a
+data frame, respectively. These new slots allow for increased efficiency
+and ease of use by allowing these metadata to travel with the genetic
+data. The hierarchy slot in particular contains a data frame where each
+column represents a separate hierarchical level. This is then used to
+set the population factor of the data by supplying a hierarchical
+formula containing one or more column names of the data frame in the
+hierarchy slot.
 
 The functionality represented by the hierarchy slot has now been
-migrated to the \emph{adegenet} package, version 2.0 to allow
-hierarchical analysis in \emph{adegenet}, \emph{poppr}, and other
-dependent packages. The prior \emph{poppr} \texttt{hierarchy} slot and
-methods have now been renamed \texttt{strata} in \emph{adegenet}. A
+migrated from the \emph{poppr} to the \emph{adegenet} package version
+2.0 to allow hierarchical analysis in \emph{adegenet}, \emph{poppr}, and
+other dependent packages. The prior \emph{poppr} \texttt{hierarchy} slot
+and methods have now been renamed \texttt{strata} in \emph{adegenet}. A
 short example of the utility of these methods can be seen in the code
 segment under \textbf{Bootstrapping}, above. This migration provides end
 users with a broader ability to analyze data hierarchically in R across
@@ -555,9 +556,10 @@ install_github("grunwaldlab/poppr@2.0-rc")
 \end{CodeChunk}
 
 Several population genetics packages in R are currently going through a
-major upgrade and have not yet been updated in CRAN. We will upload
-\emph{poppr} 2.0 to CRAN once all other reverse dependent packages have
-been updated.
+major upgrade following the 2015 R hackathon on population genetics
+i(\url{https://github.com/NESCent/r-popgen-hackathon}) and have not yet
+been updated in CRAN. We will upload \emph{poppr} 2.0 to CRAN once all
+other reverse dependent packages have been updated.
 
 \section*{Discussion}\label{discussion}
 \addcontentsline{toc}{section}{Discussion}
@@ -620,6 +622,20 @@ effort. As it is an open-source project, those with technical knowledge
 are invited to contribute by raising issues or pull requests on our
 repository at \url{https://github.com/grunwaldlab/poppr/issues}.
 
+\section*{Acknowledgements}\label{acknowledgements}
+\addcontentsline{toc}{section}{Acknowledgements}
+
+We thank Ignazio Carbone for discussions on the index of association;
+David Cooke, Sanmohan Baby, and Jens Hansen for beta testing; and
+Thibaut Jombart for allowing us to incorporate the \texttt{strata} slot
+and related methods in \emph{adegenet}. We also thank all the members of
+the 2015 R hackathon on population genetics in Durham, NC for their
+advice and input (\url{https://github.com/NESCent/r-popgen-hackathon}).
+This work was supported in part by US Department of Agriculture (USDA)
+Agricultural Research Service Grant 5358-22000-039-00D, USDA APHIS, the
+USDA-ARS Floriculture Nursery Initiative, and the USDA-Forest Service
+Forest Health Monitoring Program.
+
 \section*{Figures and Tables}\label{figures-and-tables}
 \addcontentsline{toc}{section}{Figures and Tables}
 
@@ -638,7 +654,7 @@ repository at \url{https://github.com/grunwaldlab/poppr/issues}.
 \subsection*{Figure 3}\label{figure-3}
 \addcontentsline{toc}{subsection}{Figure 3}
 
-\includegraphics{poppr_frontiers_files/custom_figures/Figure-3.png}
+\includegraphics{poppr_frontiers_files/custom_figures/Figure-3.eps}
 
 \subsection*{Figure 4}\label{figure-4}
 \addcontentsline{toc}{subsection}{Figure 4}
@@ -752,7 +768,7 @@ multilocus genotypes. A trendline (blue) has been added using the
 
 \textbf{Figure 6} \textbf{(A)} Sliding window analysis of the
 standardized index of association (\(\bar{r}_d\)) across a simulated
-\(1.1 \times 10^4\)nt chromosome containing 1,100 variants among 100
+\(1.1 \times 10^4\) nt chromosome containing 1,100 variants among 100
 individuals. Each window analyzed variants within 500nt chunks. The
 black line refers to the clonal and the blue line to the sexual
 populations. \textbf{(B)} boxplots showing 100 random samples of 50

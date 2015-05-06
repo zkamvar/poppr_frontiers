@@ -515,14 +515,14 @@ requests on our repository at https://github.com/grunwaldlab/poppr/issues.
 # Acknowledgements {-}
 
 We thank Ignazio Carbone for discussions on the index of association; David
-Cooke, Sanmohan Baby, and Jens Gr\onbech Hansen for beta testing; and Thibaut
+Cooke, Sanmohan Baby, and Jens Hansen for beta testing; and Thibaut
 Jombart for allowing us to incorporate the `strata` slot and related methods in
 *adegenet*. We also thank all the members of the 2015 R hackathon on population
-genetics in Durham, NC for their advice and input (https://github.com/NESCent/r
--popgen-hackathon). This work was supported in part by US Department of
-Agriculture (USDA) Agricultural Research Service Grant 5358-22000-039-00D, USDA
-APHIS, the USDA-ARS Floriculture Nursery Initiative, and the USDA-Forest Service
-Forest Health Monitoring Program.
+genetics in Durham, NC for their advice and input 
+(https://github.com/NESCent/r-popgen-hackathon). This work was supported in part
+by US Department of Agriculture (USDA) Agricultural Research Service Grant
+5358-22000-039-00D, USDA APHIS, the USDA-ARS Floriculture Nursery Initiative,
+and the USDA-Forest Service Forest Health Monitoring Program.
 
 # Figures and Tables {-}
 
@@ -551,7 +551,7 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 
 ## Figure 3 {-}
 
-![Fig. 3](poppr_frontiers_files/custom_figures/Figure-3.png)
+![Fig. 3](poppr_frontiers_files/custom_figures/Figure-3.eps)
 
 
 ## Figure 4 {-}
