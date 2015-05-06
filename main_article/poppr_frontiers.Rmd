@@ -216,12 +216,6 @@ which calculates the fraction of different sites between samples equivalent to
 Provesti's distance, counting missing data as equivalent in comparison
 [@prevosti1975distances].
 
-<!-- Does bitwise.dist have a reference? Is there a better name for the
-distance? --> 
-
-<!-- ZHIAN: bitwise.dist is the function that Jonah came up with. There is no
-reference for it. If you want, I can try to change it to diss.dist -->
-
 All three filtering algorithms were run with a threshold of 1, returning a
 numeric vector of length $n - 1$ where each element represented a threshold at
 which two samples/clusters would join. Since each data set would have varying
@@ -238,6 +232,8 @@ populations.
 
 <!-- ZHIAN: That would probably be one of the better options. When do you want
 me to put the analyses on github? -->
+
+<!-- Now -->
 
 ## Minimum Spanning Networks with Reticulation {-}
 
