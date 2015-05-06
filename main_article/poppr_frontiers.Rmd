@@ -274,7 +274,7 @@ The infoMAP algorithm revealed 63 communities with a maximum community size of
 communities with a maximum community size of 26 and $H = 4.65$ for the minimum
 spanning tree. The entropy across years was greatly decreased for all
 populations with the reticulate network compared to the minimum spanning tree
-(Fig. 3).
+(Fig. 3). Note that the reticulated network (Fig. 3B) showed patterns corresponding with those resulting from a discrimnant analysis of principal components (Fig. 3D) [@jombart2010discriminant].
 
 Graph walking of the reticulated minimum spanning network of *P. ramorum* by the
 infoMAP algorithm revealed 16 communities with a maximum community size of 13
