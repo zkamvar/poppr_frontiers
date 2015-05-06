@@ -223,13 +223,6 @@ duplicated samples had $\sim$ 98% true positive fraction and $\sim$ 0.8% false
 positive fraction indicating that this method is robust to simulated
 populations.
 
-<!-- Should we cite github page with analyses and results? -->
-
-<!-- ZHIAN: That would probably be one of the better options. When do you want
-me to put the analyses on github? -->
-
-<!-- Now -->
-
 ## Minimum Spanning Networks with Reticulation {-}
 
 In its original iteration, *poppr* introduced minimum spanning networks that
@@ -318,10 +311,10 @@ library("poppr")
 data("microbov", package = "adegenet") 
 strata(microbov) <- data.frame(other(microbov)) 
 setPop(microbov) <- ~coun/spe/breed 
-bov_pop <- genind2genpop(microbov, quiet = TRUE) 
+bov_pop <- genind2genpop(microbov) 
 
 set.seed(20150428)
-pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
+pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50)
 ```
 
 ## Genotype Accumulation Curve {-}
@@ -350,7 +343,7 @@ library("ggplot2")
 data("monpop", package = "poppr")
 
 set.seed(20150428)
-genotype_curve(monpop, sample = 1000, quiet = TRUE)
+genotype_curve(monpop, sample = 1000)
 p <- last_plot() + theme_bw()   # get the last plot
 p + geom_smooth(aes(group = 1)) # plot with a trendline
 ```
@@ -453,7 +446,8 @@ install_github("grunwaldlab/poppr@2.0-rc")
 ```
 
 Several population genetics packages in R are currently going through a major
-upgrade following the 2015 R hackathon on population genetics (https://github.com/NESCent/r-popgen-hackathon) and have not yet been updated
+upgrade following the 2015 R hackathon on population genetics
+(https://github.com/NESCent/r-popgen-hackathon) and have not yet been updated
 in CRAN. We will upload *poppr* 2.0 to CRAN once all other reverse dependent
 packages have been updated.
 
@@ -531,7 +525,7 @@ and the USDA-Forest Service Forest Health Monitoring Program.
 
 ## Figure 2 {-}
 
-```{r, pinf_data, echo = FALSE, message = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 4*1.25, fig.height = 4*1.25, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, Figure-2, echo = FALSE, message = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 4*1.25, fig.height = 4*1.25, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 source("../Rscripts/my_functions.R")
 library('poppr')
 library('ape')
@@ -555,19 +549,19 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 
 ## Figure 4 {-}
 
-```{r, microboot2, cache = TRUE, ref.label = "microboot", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, Figure-4, cache = TRUE, results = "hide", ref.label = "microboot", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 
 ```
 
 ## Figure 5 {-}
 
-```{r, monilinia, cache = TRUE, ref.label = "monilinia_curve", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, Figure-5, cache = TRUE, results = "hide", ref.label = "monilinia_curve", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 
 ```
 
 ## Figure 6 {-}
 
-```{r, fig_ia, echo = FALSE, out.height = "60mm", out.width = "85mm", fig.width = 5, fig.height = 3.333, fig.keep = "last", dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, Figure-6, echo = FALSE, out.height = "60mm", out.width = "85mm", fig.width = 5, fig.height = 3.333, fig.keep = "last", dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 clone.ia <- c(0.00657391971000822, 0.00475038591717665, 0.00590697833268689, 
 0.00177109538039166, 0.00784047946321868, 0.0054449176789628, 
 0.0034546641854964, 0.00201826415448331, 0.00813373673459406, 

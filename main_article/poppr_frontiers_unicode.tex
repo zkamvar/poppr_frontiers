@@ -400,10 +400,10 @@ library("poppr")
 data("microbov", package = "adegenet") 
 strata(microbov) <- data.frame(other(microbov)) 
 setPop(microbov) <- ~coun/spe/breed 
-bov_pop <- genind2genpop(microbov, quiet = TRUE) 
+bov_pop <- genind2genpop(microbov) 
 
 set.seed(20150428)
-pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50, quiet = TRUE)
+pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50)
 \end{CodeInput}
 \end{CodeChunk}
 
@@ -437,7 +437,7 @@ library("ggplot2")
 data("monpop", package = "poppr")
 
 set.seed(20150428)
-genotype_curve(monpop, sample = 1000, quiet = TRUE)
+genotype_curve(monpop, sample = 1000)
 p <- last_plot() + theme_bw()   # get the last plot
 p + geom_smooth(aes(group = 1)) # plot with a trendline
 \end{CodeInput}
@@ -557,7 +557,7 @@ install_github("grunwaldlab/poppr@2.0-rc")
 
 Several population genetics packages in R are currently going through a
 major upgrade following the 2015 R hackathon on population genetics
-i(\url{https://github.com/NESCent/r-popgen-hackathon}) and have not yet
+(\url{https://github.com/NESCent/r-popgen-hackathon}) and have not yet
 been updated in CRAN. We will upload \emph{poppr} 2.0 to CRAN once all
 other reverse dependent packages have been updated.
 
@@ -649,7 +649,7 @@ Forest Health Monitoring Program.
 
 \begin{CodeChunk}
 
-\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/pinf_data-1} \end{CodeChunk}
+\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/Figure-2-1.eps} \end{CodeChunk}
 
 \subsection*{Figure 3}\label{figure-3}
 \addcontentsline{toc}{subsection}{Figure 3}
@@ -661,21 +661,21 @@ Forest Health Monitoring Program.
 
 \begin{CodeChunk}
 
-\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/microboot2-1} \end{CodeChunk}
+\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/Figure-4-1.eps} \end{CodeChunk}
 
 \subsection*{Figure 5}\label{figure-5}
 \addcontentsline{toc}{subsection}{Figure 5}
 
 \begin{CodeChunk}
 
-\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/monilinia-1} \end{CodeChunk}
+\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/Figure-5-1.eps} \end{CodeChunk}
 
 \subsection*{Figure 6}\label{figure-6}
 \addcontentsline{toc}{subsection}{Figure 6}
 
 \begin{CodeChunk}
 
-\includegraphics[width=85mm,height=60mm]{poppr_frontiers_files/figure-latex/fig_ia-1} \end{CodeChunk}
+\includegraphics[width=85mm,height=60mm]{poppr_frontiers_files/figure-latex/Figure-6-1.eps} \end{CodeChunk}
 
 \textbf{Table 1} Contingency table comparing multilocus lineages
 assigned based on average neighbor clustering (columns) vs.~multilocus
