@@ -453,8 +453,7 @@ install_github("grunwaldlab/poppr@2.0-rc")
 ```
 
 Several population genetics packages in R are currently going through a major
-upgrade following the 2015 R hackathon on population genetics
-i(https://github.com/NESCent/r-popgen-hackathon) and have not yet been updated
+upgrade following the 2015 R hackathon on population genetics (https://github.com/NESCent/r-popgen-hackathon) and have not yet been updated
 in CRAN. We will upload *poppr* 2.0 to CRAN once all other reverse dependent
 packages have been updated.
 
