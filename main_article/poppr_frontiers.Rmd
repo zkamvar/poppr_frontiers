@@ -50,16 +50,15 @@ hosts, pesticides, and other factors, knowledge of the population dynamics and
 evolutionary history of populations is crucial. Plant pathogen populations are
 often clonal or partially clonal which requires different analytical tools. With
 the advent of high throughput sequencing technologies, obtaining genome-wide
-population genetic data has become easier than ever before. <!-- A move towards open,
-reproducible science has provided impetus for developing population genetic
-analysis tools in R. --> We previously contributed the R package \textit{poppr}
-specifically addressing issues with analysis of clonal populations. In this
-paper we provide several significant extensions to \textit{poppr} with a focus
-on large, genome-wide SNP data. Specifically, we provide several new
-functionalities including the new function \texttt{mlg.filter} to define clone
-boundaries allowing for inspection and definition of what is a clonal lineage, a
-sliding-window analysis of the index of association, modular bootstrapping of
-any genetic distance, and analyses across any level of hierarchies.
+population genetic data has become easier than ever before. We previously
+contributed the R package \textit{poppr} specifically addressing issues with
+analysis of clonal populations. In this paper we provide several significant
+extensions to \textit{poppr} with a focus on large, genome-wide SNP data.
+Specifically, we provide several new functionalities including the new function
+\texttt{mlg.filter} to define clone boundaries allowing for inspection and
+definition of what is a clonal lineage, a sliding-window analysis of the index
+of association, modular bootstrapping of any genetic distance, and analyses
+across any level of hierarchies.
 
 \tiny
  \keyFont{ \section{Keywords:} clonality, population genomics, bootstrap, index of association, hierarchical analysis, sliding window}
@@ -72,8 +71,9 @@ To paraphrase Dobzhansky, nothing in the field of plant-microbe interactions
 makes sense except in the light of population genetics [@dobzhansky2013nothing].
 Genetic forces such as selection and drift act on alleles in a population. Thus,
 a true understanding of how plant pathogens emerge, evolve and adapt to crops,
-fungicides, or other factors, can only be elucidated in the context of population level
-phenomena given the demographic history of populations [@Mcdonald2002;
+fungicides, or other factors, can only be elucidated in the context of
+population level phenomena given the demographic history of populations
+[@Mcdonald2002;
 @grunwald2011evolution; @milgroom1989population]. The field of population
 genetics, in the era of whole genome resequencing, provides unprecedented power
 to describe the evolutionary history and population processes that drive
@@ -106,26 +106,21 @@ clone boundaries.
 
 The research community using the R statistical and computing language [@R] has
 developed a plethora of new resources for population genetic analysis [@pegas;
-@Jombart_2008]. R is particularly appealing because all code is open source and functions can be evaluated and modified by any user. Recently, we introduced the R package *poppr* specifically
-developed for analysis of clonal populations [@kamvar2014poppr]. *Poppr*
-previously introduced several novel features including the ability to conduct a
-hierarchical analysis across unlimited hierarchies, test for linkage
-association, graph minimum spanning networks or provide bootstrap support for
-Bruvo's distance in resulting trees. *Poppr* has been rapidly adopted and
-applied to a range of studies including for example horizontal transmission in
-leukemia of clams [@metzger2015horizontal], study of the vector-mediated parent-to-offspring transmission in an avian malaria-like parasite
-[@chakarov2015apparent], and characterization of the emergence of the invasive
-forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population]. It has also been used to implement real-time, online shinyR based tools for visualizing relationships among unknown MLGs in reference databases  (http://phytophthora-id.org/) [@grunwald2011phytophthora]
-<!-- 
-In version 1.1, to facilitate handling hierarchical and mutlilocus genotypic
-metadata, a new S4 data object called "genclone" was defined to expand the
-genind object of *adegenet*. The genclone object formalized the definitions of
-multilocus genotypes and population hierarchies by adding two slots called "mlg"
-and "hierarchy" that carried a numeric vector and a data frame, respectively.
-These new slots allow for increased efficiency and ease of use by allowing these
-metadata to travel with the genetic data. The addition of the population
-hierarchies has proved to be advantageous enough that they have recently been
-incorporated directly into the *adegenet* package [@Jombart_2008]. -->
+@Jombart_2008]. R is particularly appealing because all code is open source and
+functions can be evaluated and modified by any user. Recently, we introduced the
+R package *poppr* specifically developed for analysis of clonal populations
+[@kamvar2014poppr]. *Poppr* previously introduced several novel features
+including the ability to conduct a hierarchical analysis across unlimited
+hierarchies, test for linkage association, graph minimum spanning networks or
+provide bootstrap support for Bruvo's distance in resulting trees. *Poppr* has
+been rapidly adopted and applied to a range of studies including for example
+horizontal transmission in leukemia of clams [@metzger2015horizontal], study of
+the vector-mediated parent-to-offspring transmission in an avian malaria-like
+parasite [@chakarov2015apparent], and characterization of the emergence of the
+invasive forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population].
+It has also been used to implement real-time, online shinyR based tools for
+visualizing relationships among unknown MLGs in reference databases  (http
+://phytophthora-id.org/) [@grunwald2011phytophthora].
 
 Here, we introduce *poppr* 2.0, which provides a major update to *poppr*
 [@kamvar2014poppr] including novel tools for analysis of clonal populations
@@ -140,23 +135,22 @@ networks, and bootstrapping for any genetic distance.
 ## Clonal identification {-}
 
 As highlighted in previous work, clone correction is an important component of
-population genetic analysis of organisms that are known
-to reproduce asexually [@kamvar2014poppr; @milgroom1996recombination;
-@grunwald2003analysis]. This method is a partial correction for bias that
-affects metrics that rely on allele frequencies assuming panmixia. It was
-initially designed for data with only a handful of markers. With the advent of
-large-scale sequencing and reduced-representation libraries, it has become
-easier to sequence tens of thousands of markers from hundreds of individuals
-[@elshire2011robust; @davey2011genome; @davey2010rad]. With this larger number
-of markers, the genetic resolution is much greater, but the chance of genotyping
-error is also greatly increased and missing data is frequent [@mastretta2015restriction]. Taking this fact
-and occasional somatic mutations into account, it would be impossible to
-separate true clones from independent individuals by just comparing what
-MLGs are different. We introduce a new method for collapsing
-unique multilocus genotypes determined by naive string comparison into
-multilocus lineages utilizing any genetic distance given three different
-clustering algorithms: farthest neighbor, nearest neighbor, and UPGMA (average
-neighbor) [@sokal1958statistical].
+population genetic analysis of organisms that are known to reproduce asexually
+[@kamvar2014poppr; @milgroom1996recombination; @grunwald2003analysis]. This
+method is a partial correction for bias that affects metrics that rely on allele
+frequencies assuming panmixia. It was initially designed for data with only a
+handful of markers. With the advent of large-scale sequencing and reduced-
+representation libraries, it has become easier to sequence tens of thousands of
+markers from hundreds of individuals [@elshire2011robust; @davey2011genome;
+@davey2010rad]. With this larger number of markers, the genetic resolution is
+much greater, but the chance of genotyping error is also greatly increased and
+missing data is frequent [@mastretta2015restriction]. Taking this fact and
+occasional somatic mutations into account, it would be impossible to separate
+true clones from independent individuals by just comparing what MLGs are
+different. We introduce a new method for collapsing unique multilocus genotypes
+determined by naive string comparison into multilocus lineages utilizing any
+genetic distance given three different clustering algorithms: farthest neighbor,
+nearest neighbor, and UPGMA (average neighbor) [@sokal1958statistical].
 
 These clustering algorithms act on a distance matrix that is either provided by
 the user or generated via a function that will calculate a distance from
@@ -181,31 +175,32 @@ We utilize data from the microbe *Phytophthora infestans* to show how the
 `mlg.filter` function collapses multilocus genotypes with Bruvo's distance
 assuming a genome addition model [@bruvo2004simple]. *P. infestans* is the
 causal agent of potato late blight originating from Mexico that spread to Europe
-in the mid 19th century [@goss2014irish; @yoshida2013rise]. *P.
-infestans* reproduces both clonally and sexually. The clonal lineages of *P.
-infestans* have been formally defined into 18 separate clonal lineages using a
-combination of various molecular methods including AFLP and microsatellite
-markers [@lees2006novel; @li2013efficient]. For these data, we used `mlg.filter` to detect all of
-the distance thresholds at which 18 multilocus lineages would be resolved. We
-used these thresholds to define multilocus lineages and create contingency
-tables and dendrograms to determine how well the multilocus lineages were
-detected.
+in the mid 19th century [@goss2014irish; @yoshida2013rise]. *P. infestans*
+reproduces both clonally and sexually. The clonal lineages of *P. infestans*
+have been formally defined into 18 separate clonal lineages using a combination
+of various molecular methods including AFLP and microsatellite markers
+[@lees2006novel; @li2013efficient]. For these data, we used `mlg.filter` to
+detect all of the distance thresholds at which 18 multilocus lineages would be
+resolved. We used these thresholds to define multilocus lineages and create
+contingency tables and dendrograms to determine how well the multilocus lineages
+were detected.
 
 For the *P. infestans* population, the three algorithms were able to detect 18
 multilocus lineages at different distance thresholds (Fig. 2). Contingency
 tables between the described multilocus genotypes and the genotypes defined by
 distance show that most of the 18 lineages were resolved, except for US-8, which
-is polytomic (Table 1). 
+is polytomic (Table 1).
 
 <!-- ## Demonstration data: Simulated data {-} -->
 
-We utilized simulated data to evaluate the effect of sequencing error and missing data on MLG calling. We constructed the data using the `glSim` function in *adegenet*
-[@jombart2011adegenet] to obtain a SNP data set for demonstration. Two diploid
-data sets were created, each with 10k SNPs (25% structured into two groups) and
-200 samples with 10 ancestral populations of even sizes. Clones were created in
-one data set by marking each sample with a unique identifier and then randomly
-sampling with replacement. It is well documented that reduced-representation
-sequencing can introduce several erroneous calls and missing data
+We utilized simulated data to evaluate the effect of sequencing error and
+missing data on MLG calling. We constructed the data using the `glSim` function
+in *adegenet* [@jombart2011adegenet] to obtain a SNP data set for demonstration.
+Two diploid data sets were created, each with 10k SNPs (25% structured into two
+groups) and 200 samples with 10 ancestral populations of even sizes. Clones were
+created in one data set by marking each sample with a unique identifier and then
+randomly sampling with replacement. It is well documented that reduced-
+representation sequencing can introduce several erroneous calls and missing data
 [@mastretta2015restriction]. To reflect this, we mutated SNPs at a rate of 10%
 and inserted an average of 10% missing data for each sample after clones were
 created, ensuring that no two sequences were alike. The number of mutations and
@@ -260,8 +255,8 @@ with 10,000 trials as implemented in the R package *igraph* version 0.7.1
 utilizing genetic distance as edge weights and number of samples in each MLG as
 vertex weights [@csardi2006igraph; @rosvall2008maps].
 
-To evaluate the results, we compared the number, size, and entropy ($H$) of
-the resulting communities as we expect a highly clonal organism with low genetic
+To evaluate the results, we compared the number, size, and entropy ($H$) of the
+resulting communities as we expect a highly clonal organism with low genetic
 diversity to result in a few, large communities. We also created contingency
 tables of the community assignments with the defined populations and used those
 to calculate entropy using Shannon's index with the function `diversity` from
@@ -274,7 +269,9 @@ The infoMAP algorithm revealed 63 communities with a maximum community size of
 communities with a maximum community size of 26 and $H = 4.65$ for the minimum
 spanning tree. The entropy across years was greatly decreased for all
 populations with the reticulate network compared to the minimum spanning tree
-(Fig. 3). Note that the reticulated network (Fig. 3B) showed patterns corresponding with those resulting from a discriminant analysis of principal components (Fig. 3D) [@jombart2010discriminant].
+(Fig. 3). Note that the reticulated network (Fig. 3B) showed patterns
+corresponding with those resulting from a discriminant analysis of principal
+components (Fig. 3D) [@jombart2010discriminant].
 
 Graph walking of the reticulated minimum spanning network of *P. ramorum* by the
 infoMAP algorithm revealed 16 communities with a maximum community size of 13
@@ -299,15 +296,16 @@ support for clades in hierarchical clustering.
 
 Data in genind and genpop objects are represented as matrices with individuals
 in rows and alleles in columns [@Jombart_2008]. This gives the advantage of
-being able to use R's matrix algebra capabilities to efficiently calculate genetic
-distance. Unfortunately, this also means that bootstrapping is a non-trivial
-task as all alleles at a single locus need to be sampled together. To remedy
-this, we have created an internal S4 class called "bootgen", which extends the
-internal "gen" class from *adegenet*. This class can be created from any genind,
-genclone, or genpop object, and allows loci to be sampled with replacement. To
-further facilitate bootstrapping, a function called `aboot`, which stands for
-"any boot", is introduced that will bootstrap any genclone, genind, or genpop
-object with any genetic distance that can be calculated from it.
+being able to use R's matrix algebra capabilities to efficiently calculate
+genetic distance. Unfortunately, this also means that bootstrapping is a non-
+trivial task as all alleles at a single locus need to be sampled together. To
+remedy this, we have created an internal S4 class called "bootgen", which
+extends the internal "gen" class from *adegenet*. This class can be created from
+any genind, genclone, or genpop object, and allows loci to be sampled with
+replacement. To further facilitate bootstrapping, a function called `aboot`,
+which stands for "any boot", is introduced that will bootstrap any genclone,
+genind, or genpop object with any genetic distance that can be calculated from
+it.
 
 To demonstrate calculating a dendrogram with bootstrap support, we used the
 *poppr* function `aboot` on population allelic frequencies derived from the data
@@ -417,26 +415,26 @@ to duplicated genotypes that may or may not represent different samples
 to a population hierarchy to accurately reflect the biology of the organism.
 Traditional data structures for population genetic data in most analysis tools
 allow for only one level of hierarchical definition. The investigator thus had
-to provide the data set for analysis at each hierarchical level. 
+to provide the data set for analysis at each hierarchical level.
 
 To facilitate handling hierarchical and mutlilocus genotypic metadata, *poppr*
 version 1.1 introduced a new S4 data object called "genclone", extending
-*adegenet*'s "genind" object (Kamvar and Grünwald, unpublished). The genclone object formalized the definitions of
-multilocus genotypes and population hierarchies by adding two slots called "mlg"
-and "hierarchy" that carried a numeric vector and a data frame, respectively.
-These new slots allow for increased efficiency and ease of use by allowing these
-metadata to travel with the genetic data. The hierarchy slot in particular
-contains a data frame where each column represents a separate hierarchical
-level. This is then used to set the population factor of the data by supplying a
-hierarchical formula containing one or more column names of the data frame in
-the hierarchy slot.
+*adegenet*'s "genind" object (Kamvar and Grünwald, unpublished). The genclone
+object formalized the definitions of multilocus genotypes and population
+hierarchies by adding two slots called "mlg" and "hierarchy" that carried a
+numeric vector and a data frame, respectively. These new slots allow for
+increased efficiency and ease of use by allowing these metadata to travel with
+the genetic data. The hierarchy slot in particular contains a data frame where
+each column represents a separate hierarchical level. This is then used to set
+the population factor of the data by supplying a hierarchical formula containing
+one or more column names of the data frame in the hierarchy slot.
 
-The functionality represented by the hierarchy slot has now been migrated from the  *poppr* to the
-*adegenet* package version 2.0 to allow hierarchical analysis in *adegenet*,
-*poppr*, and other dependent packages. The prior *poppr* `hierarchy` slot and
-methods have now been renamed `strata` in *adegenet*. A short example of the
-utility of these methods can be seen in the code segment under
-**Bootstrapping**, above. This migration provides end users with a broader
+The functionality represented by the hierarchy slot has now been migrated from
+the  *poppr* to the *adegenet* package version 2.0 to allow hierarchical
+analysis in *adegenet*, *poppr*, and other dependent packages. The prior *poppr*
+`hierarchy` slot and methods have now been renamed `strata` in *adegenet*. A
+short example of the utility of these methods can be seen in the code segment
+under **Bootstrapping**, above. This migration provides end users with a broader
 ability to analyze data hierarchically in R across packages.
 
 # Availability {-}
@@ -455,7 +453,10 @@ install_github("grunwaldlab/poppr@2.0-rc")
 ```
 
 Several population genetics packages in R are currently going through a major
-upgrade following the 2015 R hackathon on population genetics i(https://github.com/NESCent/r-popgen-hackathon) and have not yet been updated in CRAN. We will upload *poppr* 2.0 to CRAN once all other reverse dependent packages have been updated.
+upgrade following the 2015 R hackathon on population genetics
+i(https://github.com/NESCent/r-popgen-hackathon) and have not yet been updated
+in CRAN. We will upload *poppr* 2.0 to CRAN once all other reverse dependent
+packages have been updated.
 
 # Discussion {-}
 
@@ -513,8 +514,15 @@ requests on our repository at https://github.com/grunwaldlab/poppr/issues.
 
 # Acknowledgements {-}
 
-<!-- anybody else to thank? -->
-We thank Ignazio Carbone for discussions on the index of association and Thibaut Jombart for allowing us to incorporate the `strata` slot anr relted methds in *adegenet*. We also thank all the members of the 2015 R hackathon on population genetics in Durham, NC for their advice and input (https://github.com/NESCent/r-popgen-hackathon). This work was supported in part by US Department of Agriculture (USDA) Agricultural Research Service Grant 5358-22000-039-00D, USDA APHIS, the USDA-ARS Floriculture Nursery Initiative, and the USDA-Forest Service Forest Health Monitoring Program.
+We thank Ignazio Carbone for discussions on the index of association; David
+Cooke, Sanmohan Baby, and Jens Gr\onbech Hansen for beta testing; and Thibaut
+Jombart for allowing us to incorporate the `strata` slot and related methods in
+*adegenet*. We also thank all the members of the 2015 R hackathon on population
+genetics in Durham, NC for their advice and input (https://github.com/NESCent/r
+-popgen-hackathon). This work was supported in part by US Department of
+Agriculture (USDA) Agricultural Research Service Grant 5358-22000-039-00D, USDA
+APHIS, the USDA-ARS Floriculture Nursery Initiative, and the USDA-Forest Service
+Forest Health Monitoring Program.
 
 # Figures and Tables {-}
 
@@ -682,8 +690,8 @@ par(mar = c(5, 4, 4, 2) + 0.1)
 layout(matrix(1))
 ```
 
-**Table 1** Contingency table comparing multilocus lineages assigned based on average
-neighbor clustering (columns) vs. multilocus lineages defined in
+**Table 1** Contingency table comparing multilocus lineages assigned based on
+average neighbor clustering (columns) vs. multilocus lineages defined in
 @li2013efficient and @lees2006novel.
 
 ```{r pinf_table, echo = FALSE, message = FALSE, results='asis'}
