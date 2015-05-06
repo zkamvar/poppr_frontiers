@@ -5,4 +5,5 @@ main_article/*.html
 README.html
 LETTER.html
 All_rubi.vcf
-main_article/poppr_frontiers_files/figure-latex/*
+main_article/poppr_frontiers_files/figure-latex/*pdf
+main_article/poppr_frontiers_files/figure-latex/*tiff
