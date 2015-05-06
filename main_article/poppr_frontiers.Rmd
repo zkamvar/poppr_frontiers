@@ -368,9 +368,7 @@ scaling with increasing number of loci. This metric is typically applied to
 traditional dominant and co-dominant markers such as AFLPs, SNPs, or
 microsatellite markers. With the advent of high throughput sequencing, SNP data
 is now available in a genome-wide context and in very large matrices
-including thousands of SNPs.<!-- This doesn't make sense in this context -->
-Thus, the likelihood of finding mutations within two individuals of a given
-clone increases and tools are needed for defining clone boundaries.<!----> For
+including thousands of SNPs. For
 this reason, we  devised two approaches using the index of association for large
 numbers of markers typical for population genomic studies. Both functions
 utilize *adegenet*'s "genlight" object class, which efficiently stores 8 binary
@@ -423,7 +421,7 @@ to provide the data set for analysis at each hierarchical level.
 
 To facilitate handling hierarchical and mutlilocus genotypic metadata, *poppr*
 version 1.1 introduced a new S4 data object called "genclone", extending
-*adegenet*'s "genind" object (Kamvar and Gr\"unwald, unpublished). The genclone object formalized the definitions of
+*adegenet*'s "genind" object (Kamvar and Grünwald, unpublished). The genclone object formalized the definitions of
 multilocus genotypes and population hierarchies by adding two slots called "mlg"
 and "hierarchy" that carried a numeric vector and a data frame, respectively.
 These new slots allow for increased efficiency and ease of use by allowing these
