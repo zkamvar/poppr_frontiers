@@ -512,7 +512,7 @@ genetics in Durham, NC for their advice and input
 (https://github.com/NESCent/r-popgen-hackathon). This work was supported in part
 by US Department of Agriculture (USDA) Agricultural Research Service Grant
 5358-22000-039-00D, USDA APHIS, the USDA-ARS Floriculture Nursery Initiative,
-and the USDA-Forest Service Forest Health Monitoring Program.
+and the USDA-Forest Service Forest Health Monitoring Program (to NJG).
 
 # Conflict of Interest Statement {-}
 
@@ -520,7 +520,7 @@ The authors declare no observable conflict of interest.
 
 # Author Contributions {-}
 
-ZK and JB wrote, tested, and maintained the code. ZK and NG wrote the manuscript.
+ZK and JB wrote and tested the code. ZK maintains the code. ZK and NJG conceived, discussed implications, and wrote the manuscript. NJG coordinated the collaborative effort.
 
 # Figures and Tables {-}
 
