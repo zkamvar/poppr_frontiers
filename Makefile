@@ -15,14 +15,18 @@ build_template:
 ver_two_deps:
 	R --slave -e 'devtools::install_github(c("thibautjombart/adegenet", "emmanuelparadis/pegas/pegas", "KlausVigo/phangorn"))';
 
-uni2tex:
+build_manuscript:
+	cd main_article; \
+	R --slave -e 'rmarkdown::render("poppr_frontiers.Rmd")'
+
+uni2tex: build_manuscript
 	cd main_article; \
 	python convert_pandoc_latex.py poppr_frontiers.tex poppr_frontiers_unicode.tex;
 
 pdf2eps: 
 	sh pdf2eps.sh
 
-epstex: pdf2eps uni2tex
+epstex: uni2tex
 	cd main_article; \
 	perl -p -i -e 's/(Figure-\d)-1+?\}/$$1.eps\}/' poppr_frontiers_unicode.tex
 
