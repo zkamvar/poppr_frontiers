@@ -1,5 +1,7 @@
 boot: inst_deps ver_two_deps inst_poppr_two build_template
 
+all: unitex pdf2eps tex clean
+
 inst_deps:
 	R --slave -e 'install.packages(c("ape", "knitr", "rmarkdown", "animation", "devtools"), repos = "http://cran.at.r-project.org")'; \
 
