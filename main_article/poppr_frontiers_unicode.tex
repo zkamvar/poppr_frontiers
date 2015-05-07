@@ -620,25 +620,21 @@ for defining boundaries in clonal lineages, our tool provides a means of
 exploring the potential MLG or MLL boundary space.
 
 Minimum spanning networks are a useful tool to analyze the relationships
-between individuals in a population because each node represents an
-observed sample and they can have multiple edges (as opposed to
-bifurcating dendrograms where only tips represent samples). Minimum
-spanning networks by default are constructed without loops, but for
-clonal organisms, this often results in a minimum spanning network that
-becomes a chain, implying that the clones were derived in a progressive
-and linear fashion. This presents but one potential scenario for clonal
-organisms, but does not account for any other biologically relevant
-process. Reticulations in the minimum spanning networks allow for a
-representation of uncertainty that goes along with clonal organisms. The
-current implementation in \emph{poppr} has been successfully used in
+between individuals in a population because it reduces the complexity of
+a distance matrix to the connections that are strongest. By default,
+these networks are drawn without reticulations, but for clonal organisms
+where many of the connections between samples are equivalent, the
+minimum spanning network appears as a chain and reduces the information
+that can be communicated. This is problematic because the ability to
+detect population structure with a simplistic minimum spanning network
+is limited. Adding reticulation into the minimum spanning network thus
+presents all equivalent connections and allows population structure to
+be more readily detectable. As shown in Fig. 3 population structure is
+apparent both visually and by graph community detection algorithms such
+as the infoMAP algorithm (Rosvall and Bergstrom, 2008). Additionally,
+the current implementation in \emph{poppr} has been successfully used in
 analyses such as reconstruction of the \emph{P. ramorum} epidemic in
-Curry County, OR (Kamvar et al., 2014a, 2015). Reticulated networks also
-allow for the application of graph community detection algorithms such
-as the infoMAP algorithm (Rosvall and Bergstrom, 2008). As shown in the
-\emph{P. ramorum} and H3N2 data, while it is possible to utilize these
-graph walking algorithms on non-reticulate minimum spanning trees, the
-results derived from these are limited to explain populations derived
-from serial cloning events.
+Curry County, OR (Kamvar et al., 2014a, 2015).
 
 \emph{Poppr} 2.0 is open source and available on GitHub. Members of the
 community are invited to contribute by raising issues or pull requests
@@ -669,7 +665,6 @@ The authors declare no observable conflict of interest.
 
 ZK and JB wrote, tested, and maintained the code. ZK and NG wrote the
 manuscript.
-
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
 
@@ -1055,6 +1050,7 @@ variants to calculate a distribution of \(\bar{r}_d\) for the clonal
 mean, with whiskers extending out to 1.5 times the interquartile range.
 The median is indicated by the center line. \textbf{(A)} and
 \textbf{(B)} are plotted on the same y-axis.
+
 
 \end{document}
 

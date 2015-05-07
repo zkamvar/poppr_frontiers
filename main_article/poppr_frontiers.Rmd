@@ -510,6 +510,26 @@ application of graph community detection algorithms such as the infoMAP
 algorithm [@rosvall2008maps]. 
  -->
 
+
+Minimum spanning networks are a useful tool to analyze the relationships between
+individuals in a population because it reduces the complexity of a distance
+matrix to the connections that are strongest. By default, these networks are
+drawn without reticulations, but for clonal organisms where many of the
+connections between samples are equivalent, the minimum spanning network appears
+as a chain and reduces the information that can be communicated. This is
+problematic because the ability to detect population structure with a simplistic
+minimum spanning network is limited. Adding reticulation into the minimum
+spanning network thus presents all equivalent connections and allows population
+structure to be more readily detectable. As shown in Fig. 3 population structure
+is apparent both visually and by graph community detection algorithms such as
+the infoMAP algorithm [@rosvall2008maps]. Additionally, the current
+implementation in *poppr* has been successfully used in analyses such as
+reconstruction of the *P. ramorum* epidemic in Curry County, OR
+[@kamvar2014sudden; @kamvar2015spatial].
+
+
+
+<!-- 
 Minimum spanning networks are a useful tool to analyze the relationships between
 individuals in a population because each node represents an observed sample and
 they can have multiple edges (as opposed to bifurcating dendrograms where only
@@ -527,7 +547,7 @@ application of graph community detection algorithms such as the infoMAP
 algorithm [@rosvall2008maps]. As shown in the *P. ramorum* and H3N2 data, while
 it is possible to utilize these graph walking algorithms on non-reticulate
 minimum spanning trees, the results derived from these are limited to explain
-populations derived from serial cloning events.
+populations derived from serial cloning events. -->
 
 *Poppr* 2.0 is open source and available on GitHub. Members of the community are
 invited to contribute by raising issues or pull requests on our repository at
