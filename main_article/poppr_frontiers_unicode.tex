@@ -670,6 +670,147 @@ The authors declare no observable conflict of interest.
 ZK and JB wrote, tested, and maintained the code. ZK and NG wrote the
 manuscript.
 
+\section*{Figures and Tables}\label{figures-and-tables}
+\addcontentsline{toc}{section}{Figures and Tables}
+
+\subsection*{Figure 1}\label{figure-1}
+\addcontentsline{toc}{subsection}{Figure 1}
+
+\includegraphics{poppr_frontiers_files/custom_figures/Figure-1.eps}
+
+\subsection*{Figure 2}\label{figure-2}
+\addcontentsline{toc}{subsection}{Figure 2}
+
+\begin{CodeChunk}
+
+\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/Figure-2.eps} \end{CodeChunk}
+
+\subsection*{Figure 3}\label{figure-3}
+\addcontentsline{toc}{subsection}{Figure 3}
+
+\includegraphics{poppr_frontiers_files/custom_figures/Figure-3.eps}
+
+\subsection*{Figure 4}\label{figure-4}
+\addcontentsline{toc}{subsection}{Figure 4}
+
+\begin{CodeChunk}
+
+\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/Figure-4.eps} \end{CodeChunk}
+
+\subsection*{Figure 5}\label{figure-5}
+\addcontentsline{toc}{subsection}{Figure 5}
+
+\begin{CodeChunk}
+
+\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/Figure-5.eps} \end{CodeChunk}
+
+\subsection*{Figure 6}\label{figure-6}
+\addcontentsline{toc}{subsection}{Figure 6}
+
+\begin{CodeChunk}
+
+\includegraphics[width=85mm,height=60mm]{poppr_frontiers_files/figure-latex/Figure-6.eps} \end{CodeChunk}
+
+\textbf{Table 1} Contingency table comparing multilocus lineages
+assigned based on average neighbor clustering (columns) vs.~multilocus
+lineages defined in Li et al. (2013) and Lees et al. (2006).
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccccccccccccccccccc}
+  \hline
+ & 3 & 4 & 5 & 6 & 8 & 10 & 12 & 15 & 16 & 17 & 18 & 20 & 21 & 22 & 24 & 25 & 27 & 28 \\ 
+  \hline
+B & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . \\ 
+  C & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . \\ 
+  D.1 & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . \\ 
+  D.2 & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . \\ 
+  EU-13 & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . \\ 
+  EU-4 & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . \\ 
+  EU-5 & . & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . & . & . \\ 
+  EU-8 & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-11 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 \\ 
+  US-12 & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-14 & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-17 & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . \\ 
+  US-20 & 2 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-21 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 & . \\ 
+  US-22 & . & . & . & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . \\ 
+  US-23 & . & . & . & . & . & . & . & 3 & . & . & . & . & . & . & . & . & . & . \\ 
+  US-24 & . & . & . & . & 3 & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+  US-8 & . & . & 1 & 1 & . & 2 & . & . & . & . & . & . & . & . & . & . & . & . \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\section*{Figure Legends}\label{figure-legends}
+\addcontentsline{toc}{section}{Figure Legends}
+
+\textbf{Figure 1} Diagrammatic representation of the three clustering
+algorithms implemented in \texttt{mlg.filter}. (\textbf{A-C}) Represent
+different clustering algorithms on the same imaginary network with a
+threshold of 0.451. Edge weights are represented in arbitrary units
+noted by the line thickness and numerical values next to the lines. All
+outer angles are 90 degrees, so the un-labeled edge weights can be
+obtained with simply geometry. Colored circles represent clusters of
+genotypes. (\textbf{A}) Farthest neighbor clustering does not cluster
+nodes B and C because nodes A and C are more than a distance of 0.451
+apart. (\textbf{B}) UPGMA (average neighbor) clustering clusters nodes
+A, B, and C together because the average distance between them and C is
+\textless{} 0.451. (\textbf{C}) Nearest neighbor clustering clusters all
+nodes together because the minimum distance between them is always
+\textless{} 0.451.
+
+\textbf{Figure 2} Graphical representation of three different clustering
+algorithms collapsing multilocus genotypes for 12 SSR loci from
+\emph{Phytophthora infestans} representing 18 clonal lineages. The
+horizontal axis is Bruvo's genetic distance assuming the genome addition
+model. The vertical axis represents the number of multilocus lineages
+observed. Each point shows the threshold at which one would observe a
+given number of multilocus genotypes. The horizontal black line
+represents 18 multilocus genotypes and vertical dashed lines mark the
+thresholds used to collapse the multilocus genotypes into 18 multilocus
+lineages.
+
+\textbf{Figure 3} (\textbf{A-B}) Minimum spanning networks of the
+hemagglutinin (HA) segment of H3N2 viral DNA from the \emph{adegenet}
+package representing flu epidemics from 2001 to 2006 without
+reticulation (\textbf{A}) and with reticulation (\textbf{B}) (Jombart,
+2008; Jombart et al., 2010). Each node represents a unique multilocus
+genotype, colors represent epidemic year, and edge color represents
+absolute genetic distance. (\textbf{C}) Shannon entropy values for
+population assignments compared with communities determined by the
+infoMAP algorithm on (\textbf{A}) and (\textbf{B}). (\textbf{D}) Graphic
+reproduced from Jombart et al. (2010) showing that the 2006 epidemic
+does not cluster neatly with the other years.
+
+\textbf{Figure 4} UPGMA dendrogram generated from Nei's genetic distance
+on 15 breeds of \emph{Bos taurus} (BT) or \emph{Bos indicus} (BI) from
+Africa (AF) or France (FR). These data are from Lalo{\"{e}} et al. (2007).
+Node labels represent bootstrap support \(>50\%\) out of 1,000 bootstrap
+replicates.
+
+\textbf{Figure 5} Genotype accumulation curve for 694 isolates of the
+peach brown rot pathogen, \emph{Monilinia fructicola} genotyped over 13
+loci from Everhart and Scherm (2015). The horizontal axis represents the
+number of loci randomly sampled without replacement up to \(n - 1\)
+loci, the vertical axis shows the number of multilocus genotypes
+observed, up to 262, the number of unique multilocus genotypes in the
+data set. The red dashed line represents 90\% of the total observed
+multilocus genotypes. A trendline (blue) has been added using the
+\emph{ggplot2} function \texttt{stat\_smooth}.
+
+\textbf{Figure 6} \textbf{(A)} Sliding window analysis of the
+standardized index of association (\(\bar{r}_d\)) across a simulated
+\(1.1 \times 10^4\) nt chromosome containing 1,100 variants among 100
+individuals. Each window analyzed variants within 500nt chunks. The
+black line refers to the clonal and the blue line to the sexual
+populations. \textbf{(B)} boxplots showing 100 random samples of 50
+variants to calculate a distribution of \(\bar{r}_d\) for the clonal
+(red) and sexual (blue) populations. Each box is centered around the
+mean, with whiskers extending out to 1.5 times the interquartile range.
+The median is indicated by the center line. \textbf{(A)} and
+\textbf{(B)} are plotted on the same y-axis.
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
@@ -913,148 +1054,6 @@ Yoshida, K., Schuenemann, V. J., Cano, L. M., Pais, M., Mishra, B.,
 Sharma, R., Lanz, C., Martin, F. N., Kamoun, S., Krause, J., et al.
 (2013). The rise and fall of the phytophthora infestans lineage that
 triggered the irish potato famine. \emph{Elife} 2, e00731.
-
-\section*{Figures and Tables}\label{figures-and-tables}
-\addcontentsline{toc}{section}{Figures and Tables}
-
-\subsection*{Figure 1}\label{figure-1}
-\addcontentsline{toc}{subsection}{Figure 1}
-
-\includegraphics{poppr_frontiers_files/custom_figures/Figure-1.eps}
-
-\subsection*{Figure 2}\label{figure-2}
-\addcontentsline{toc}{subsection}{Figure 2}
-
-\begin{CodeChunk}
-
-\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/Figure-2.eps} \end{CodeChunk}
-
-\subsection*{Figure 3}\label{figure-3}
-\addcontentsline{toc}{subsection}{Figure 3}
-
-\includegraphics{poppr_frontiers_files/custom_figures/Figure-3.eps}
-
-\subsection*{Figure 4}\label{figure-4}
-\addcontentsline{toc}{subsection}{Figure 4}
-
-\begin{CodeChunk}
-
-\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/Figure-4.eps} \end{CodeChunk}
-
-\subsection*{Figure 5}\label{figure-5}
-\addcontentsline{toc}{subsection}{Figure 5}
-
-\begin{CodeChunk}
-
-\includegraphics[width=85mm,height=85mm]{poppr_frontiers_files/figure-latex/Figure-5.eps} \end{CodeChunk}
-
-\subsection*{Figure 6}\label{figure-6}
-\addcontentsline{toc}{subsection}{Figure 6}
-
-\begin{CodeChunk}
-
-\includegraphics[width=85mm,height=60mm]{poppr_frontiers_files/figure-latex/Figure-6.eps} \end{CodeChunk}
-
-\textbf{Table 1} Contingency table comparing multilocus lineages
-assigned based on average neighbor clustering (columns) vs.~multilocus
-lineages defined in Li et al. (2013) and Lees et al. (2006).
-
-\begin{table}[ht]
-\centering
-\begin{tabular}{ccccccccccccccccccc}
-  \hline
- & 3 & 4 & 5 & 6 & 8 & 10 & 12 & 15 & 16 & 17 & 18 & 20 & 21 & 22 & 24 & 25 & 27 & 28 \\ 
-  \hline
-B & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . \\ 
-  C & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . \\ 
-  D.1 & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . \\ 
-  D.2 & . & . & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . \\ 
-  EU-13 & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . \\ 
-  EU-4 & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . \\ 
-  EU-5 & . & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . & . & . \\ 
-  EU-8 & . & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-11 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 \\ 
-  US-12 & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-14 & . & . & . & . & . & 1 & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-17 & . & . & . & . & . & . & . & . & . & . & . & 1 & . & . & . & . & . & . \\ 
-  US-20 & 2 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-21 & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & . & 2 & . \\ 
-  US-22 & . & . & . & . & . & . & . & . & . & . & . & . & 2 & . & . & . & . & . \\ 
-  US-23 & . & . & . & . & . & . & . & 3 & . & . & . & . & . & . & . & . & . & . \\ 
-  US-24 & . & . & . & . & 3 & . & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-  US-8 & . & . & 1 & 1 & . & 2 & . & . & . & . & . & . & . & . & . & . & . & . \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-\section*{Figure Legends}\label{figure-legends}
-\addcontentsline{toc}{section}{Figure Legends}
-
-\textbf{Figure 1} Diagrammatic representation of the three clustering
-algorithms implemented in \texttt{mlg.filter}. (\textbf{A-C}) Represent
-different clustering algorithms on the same imaginary network with a
-threshold of 0.451. Edge weights are represented in arbitrary units
-noted by the line thickness and numerical values next to the lines. All
-outer angles are 90 degrees, so the un-labeled edge weights can be
-obtained with simply geometry. Colored circles represent clusters of
-genotypes. (\textbf{A}) Farthest neighbor clustering does not cluster
-nodes B and C because nodes A and C are more than a distance of 0.451
-apart. (\textbf{B}) UPGMA (average neighbor) clustering clusters nodes
-A, B, and C together because the average distance between them and C is
-\textless{} 0.451. (\textbf{C}) Nearest neighbor clustering clusters all
-nodes together because the minimum distance between them is always
-\textless{} 0.451.
-
-\textbf{Figure 2} Graphical representation of three different clustering
-algorithms collapsing multilocus genotypes for 12 SSR loci from
-\emph{Phytophthora infestans} representing 18 clonal lineages. The
-horizontal axis is Bruvo's genetic distance assuming the genome addition
-model. The vertical axis represents the number of multilocus lineages
-observed. Each point shows the threshold at which one would observe a
-given number of multilocus genotypes. The horizontal black line
-represents 18 multilocus genotypes and vertical dashed lines mark the
-thresholds used to collapse the multilocus genotypes into 18 multilocus
-lineages.
-
-\textbf{Figure 3} (\textbf{A-B}) Minimum spanning networks of the
-hemagglutinin (HA) segment of H3N2 viral DNA from the \emph{adegenet}
-package representing flu epidemics from 2001 to 2006 without
-reticulation (\textbf{A}) and with reticulation (\textbf{B}) (Jombart,
-2008; Jombart et al., 2010). Each node represents a unique multilocus
-genotype, colors represent epidemic year, and edge color represents
-absolute genetic distance. (\textbf{C}) Shannon entropy values for
-population assignments compared with communities determined by the
-infoMAP algorithm on (\textbf{A}) and (\textbf{B}). (\textbf{D}) Graphic
-reproduced from Jombart et al. (2010) showing that the 2006 epidemic
-does not cluster neatly with the other years.
-
-\textbf{Figure 4} UPGMA dendrogram generated from Nei's genetic distance
-on 15 breeds of \emph{Bos taurus} (BT) or \emph{Bos indicus} (BI) from
-Africa (AF) or France (FR). These data are from Lalo{\"{e}} et al. (2007).
-Node labels represent bootstrap support \(>50\%\) out of 1,000 bootstrap
-replicates.
-
-\textbf{Figure 5} Genotype accumulation curve for 694 isolates of the
-peach brown rot pathogen, \emph{Monilinia fructicola} genotyped over 13
-loci from Everhart and Scherm (2015). The horizontal axis represents the
-number of loci randomly sampled without replacement up to \(n - 1\)
-loci, the vertical axis shows the number of multilocus genotypes
-observed, up to 262, the number of unique multilocus genotypes in the
-data set. The red dashed line represents 90\% of the total observed
-multilocus genotypes. A trendline (blue) has been added using the
-\emph{ggplot2} function \texttt{stat\_smooth}.
-
-\textbf{Figure 6} \textbf{(A)} Sliding window analysis of the
-standardized index of association (\(\bar{r}_d\)) across a simulated
-\(1.1 \times 10^4\) nt chromosome containing 1,100 variants among 100
-individuals. Each window analyzed variants within 500nt chunks. The
-black line refers to the clonal and the blue line to the sexual
-populations. \textbf{(B)} boxplots showing 100 random samples of 50
-variants to calculate a distribution of \(\bar{r}_d\) for the clonal
-(red) and sexual (blue) populations. Each box is centered around the
-mean, with whiskers extending out to 1.5 times the interquartile range.
-The median is indicated by the center line. \textbf{(A)} and
-\textbf{(B)} are plotted on the same y-axis.
 
 
 \end{document}

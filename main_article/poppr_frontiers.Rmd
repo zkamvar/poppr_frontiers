@@ -573,8 +573,8 @@ ssr    <- c(3, 3, 2, 3, 3, 2, 2, 3, 3, 3, 3, 3)
 x      <- as.genclone(pinf)
 fstats <- filter_stats(x, bruvo.dist, plot = TRUE, replen = ssr, loss = FALSE, nclone = 18)
 title(main = expression(paste(italic("P. infestans"), " reference isolates (12 SSR loci)")))
-thresh18 <- fstats$average$thresholds[nInd(x) - 18] + .Machine$double.eps^0.5
-z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, loss = FALSE, stats = "MLGS")
+thresh18 <- fstats$average$thresholds[nInd(x) - 19] + .Machine$double.eps^0.5
+z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, loss = FALSE, stats = "MLGS", algorithm = "average")
 ```
 
 ## Figure 3 {-}
