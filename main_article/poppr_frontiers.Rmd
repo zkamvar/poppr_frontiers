@@ -464,23 +464,36 @@ packages have been updated.
 
 # Discussion {-}
 
-Given low cost and high throughput of current sequencing technologies we are entering a new era of population genetics where large SNP data sets with thousands of markers are becoming available for large populations in a genome-wide context. This data provides new possibilities and challenges for population genetic analyses. We provide novel tools that enable analysis of this data in R with a particular emphasis on clonal organisms. 
+Given low cost and high throughput of current sequencing technologies we are
+entering a new era of population genetics where large SNP data sets with
+thousands of markers are becoming available for large populations in a genome-
+wide context. This data provides new possibilities and challenges for population
+genetic analyses. We provide novel tools that enable analysis of this data in R
+with a particular emphasis on clonal organisms.
 
 Particularly useful is the implementation of $\bar{r}_d$ in a genomic context
 [@Agapow_2001]. Random sampling of loci across the genome can give an expected
 distribution of $\bar{r}_d$, which is expected to have a mean of zero for
-panmictic populations. This metric is not affected by the number of loci sampled, is model free, and has the ability to detect population structure. $\bar{r}_d$ is also implemented for sliding window analyses that are useful to detect candidate regions of linkage disequilibrium for further analysis.
+panmictic populations. This metric is not affected by the number of loci
+sampled, is model free, and has the ability to detect population structure.
+$\bar{r}_d$ is also implemented for sliding window analyses that are useful to
+detect candidate regions of linkage disequilibrium for further analysis.
 
 Clustering multilocus genotypes into multilocus lineages based on genetic
-distances is a non-trivial task given large SNP data sets. Moreover, this has not previously been
-implemented for genomic data for clonal populations. Clonal assignment has previously been
-available in the programs \textsc{GenClone} and \textsc{Genodive} for classical markers
-[@arnaud2007standardizing; @meirmans2004genotype]. Our method with `mlg.filter`
-builds upon this idea and allows the user to choose between three different
-approaches for clustering MLGs. The choice of clustering algorithm has an impact on the
-data (Fig 1, 2), where for example a genetic distance cutoff of 0.1 would be the difference between 14
-multilocus lineages (MLLs) and 17 MLLs for nearest neighbor and UPGMA clustering, respectively (Fig. 2). The option to choose the clustering algorithm gives the user the ability to
-choose what is biologically relevant to their populations. While there is not one optimal procedure for defining boundaries in clonal lineages, our tool provides a means of exploring the potential MLG or MLL boundary space. 
+distances is a non-trivial task given large SNP data sets. Moreover, this has
+not previously been implemented for genomic data for clonal populations. Clonal
+assignment has previously been available in the programs \textsc{GenClone} and
+\textsc{Genodive} for classical markers [@arnaud2007standardizing;
+@meirmans2004genotype]. Our method with `mlg.filter` builds upon this idea and
+allows the user to choose between three different approaches for clustering
+MLGs. The choice of clustering algorithm has an impact on the data (Fig 1, 2),
+where for example a genetic distance cutoff of 0.1 would be the difference
+between 14 multilocus lineages (MLLs) and 17 MLLs for nearest neighbor and UPGMA
+clustering, respectively (Fig. 2). The option to choose the clustering algorithm
+gives the user the ability to choose what is biologically relevant to their
+populations. While there is not one optimal procedure for defining boundaries in
+clonal lineages, our tool provides a means of exploring the potential MLG or MLL
+boundary space.
 
 Minimum spanning networks are a useful tool to analyze the relationships between
 individuals in a population, because it reduces the complexity of a distance
@@ -520,7 +533,9 @@ The authors declare no observable conflict of interest.
 
 # Author Contributions {-}
 
-ZK and JB wrote and tested the code. ZK maintains the code. ZK and NJG conceived, discussed implications, and wrote the manuscript. NJG coordinated the collaborative effort.
+ZNK and JCB wrote and tested the code. ZNK maintains the code. ZNK and NJG
+conceived, discussed implications, and wrote the manuscript. NJG coordinated the
+collaborative effort.
 
 # Figures and Tables {-}
 
