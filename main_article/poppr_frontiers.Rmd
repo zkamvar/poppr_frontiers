@@ -464,31 +464,12 @@ packages have been updated.
 
 # Discussion {-}
 
-<!-- 
-ZHIAN COMMENTS:
-
-genetics is more appropriate for the first sentence.
-
-rd sliding window needs a transition before. Added "Thus"
-
-RE minimum spanning networks:
-
-You have completely changed the meaning of that paragraph meaning that I didn't write it correctly in the first place. Main points: 
-
-non-reticulate minimum spanning networks form chains with clonal organisms, but does not reveal the whole story. 
-
-Graph walking algorithms can be applied to both reticulate and non-reticulate, but they are much more successful at detecting community structure in reticulate networks.
-
-ZHIAN: Please rewrite to reinstante meaning. The pagrpah was dense and confou nding before, hence my edits. But we need to be correct. So please reedit it to make sense!
-
- -->
-
-Given low cost and high throughput of current sequencing technologies we are entering a new era of population genetics where large SNP data sets with thousands of markers are becoming available for large populations in an genome-wide context. This data provides new possibilities and challenges for population genetic analyses. We provide novel tools that enable analysis of this data in R with a particular emphasis on clonal organisms. 
+Given low cost and high throughput of current sequencing technologies we are entering a new era of population genetics where large SNP data sets with thousands of markers are becoming available for large populations in a genome-wide context. This data provides new possibilities and challenges for population genetic analyses. We provide novel tools that enable analysis of this data in R with a particular emphasis on clonal organisms. 
 
 Particularly useful is the implementation of $\bar{r}_d$ in a genomic context
 [@Agapow_2001]. Random sampling of loci across the genome can give an expected
 distribution of $\bar{r}_d$, which is expected to have a mean of zero for
-panmictic populations. This metric is not affected by the number of loci sampled, is model free, and has the ability to detect population structure. Thus, $\bar{r}_d$ is also implemented for sliding window analyses that are useful to detect candidate regions of linkage disequilibrium for further analysis.
+panmictic populations. This metric is not affected by the number of loci sampled, is model free, and has the ability to detect population structure. $\bar{r}_d$ is also implemented for sliding window analyses that are useful to detect candidate regions of linkage disequilibrium for further analysis.
 
 Clustering multilocus genotypes into multilocus lineages based on genetic
 distances is a non-trivial task given large SNP data sets. Moreover, this has not previously been
@@ -496,23 +477,13 @@ implemented for genomic data for clonal populations. Clonal assignment has previ
 available in the programs \textsc{GenClone} and \textsc{Genodive} for classical markers
 [@arnaud2007standardizing; @meirmans2004genotype]. Our method with `mlg.filter`
 builds upon this idea and allows the user to choose between three different
-approaches for clustering MLGs. As diagrammed in Fig. 1 and demonstrated in Fig.
-2, it is clear that the choice of clustering algorithm has an impact on the
-data, where for example a genetic distance cutoff of 0.1 would be the difference between 14
+approaches for clustering MLGs. The choice of clustering algorithm has an impact on the
+data (Fig 1, 2), where for example a genetic distance cutoff of 0.1 would be the difference between 14
 multilocus lineages (MLLs) and 17 MLLs for nearest neighbor and UPGMA clustering, respectively (Fig. 2). The option to choose the clustering algorithm gives the user the ability to
 choose what is biologically relevant to their populations. While there is not one optimal procedure for defining boundaries in clonal lineages, our tool provides a means of exploring the potential MLG or MLL boundary space. 
 
-<!-- 
-Reticulation of minimum spanning networks provides improved ability to resolve relationships, particularly for clonal populations. For clonal organisms, non-reticulate minimum spanning networks can be thought off as a chain, implying
-that the clones are derived in a progressive and linear fashion by accumulation of mutations within a clone. The current implementation in *poppr* has been successfully used in analyses such as reconstruction of the *P. ramorum* epidemic in Oregon forests
-[@kamvar2014sudden; @kamvar2015spatial]. Reticulated networks allow for the
-application of graph community detection algorithms such as the infoMAP
-algorithm [@rosvall2008maps]. 
- -->
-
-
 Minimum spanning networks are a useful tool to analyze the relationships between
-individuals in a population because it reduces the complexity of a distance
+individuals in a population, because it reduces the complexity of a distance
 matrix to the connections that are strongest. By default, these networks are
 drawn without reticulations, but for clonal organisms where many of the
 connections between samples are equivalent, the minimum spanning network appears
@@ -526,28 +497,6 @@ the infoMAP algorithm [@rosvall2008maps]. Additionally, the current
 implementation in *poppr* has been successfully used in analyses such as
 reconstruction of the *P. ramorum* epidemic in Curry County, OR
 [@kamvar2014sudden; @kamvar2015spatial].
-
-
-
-<!-- 
-Minimum spanning networks are a useful tool to analyze the relationships between
-individuals in a population because each node represents an observed sample and
-they can have multiple edges (as opposed to bifurcating dendrograms where only
-tips represent samples). Minimum spanning networks by default are constructed
-without loops, but for clonal organisms, this often results in a minimum
-spanning network that becomes a chain, implying that the clones were derived in
-a progressive and linear fashion. This presents but one potential scenario for
-clonal organisms, but does not account for any other biologically relevant
-process. Reticulations in the minimum spanning networks allow for a
-representation of uncertainty that goes along with clonal organisms. The current
-implementation in *poppr* has been successfully used in analyses such as
-reconstruction of the *P. ramorum* epidemic in Curry County, OR
-[@kamvar2014sudden; @kamvar2015spatial]. Reticulated networks also allow for the
-application of graph community detection algorithms such as the infoMAP
-algorithm [@rosvall2008maps]. As shown in the *P. ramorum* and H3N2 data, while
-it is possible to utilize these graph walking algorithms on non-reticulate
-minimum spanning trees, the results derived from these are limited to explain
-populations derived from serial cloning events. -->
 
 *Poppr* 2.0 is open source and available on GitHub. Members of the community are
 invited to contribute by raising issues or pull requests on our repository at
