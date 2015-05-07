@@ -479,6 +479,8 @@ non-reticulate minimum spanning networks form chains with clonal organisms, but 
 
 Graph walking algorithms can be applied to both reticulate and non-reticulate, but they are much more successful at detecting community structure in reticulate networks.
 
+ZHIAN: Please rewrite to reinstante meaning. The pagrpah was dense and confou nding before, hence my edits. But we need to be correct. So please reedit it to make sense!
+
  -->
 
 Given low cost and high throughput of current sequencing technologies we are entering a new era of population genetics where large SNP data sets with thousands of markers are becoming available for large populations in an genome-wide context. This data provides new possibilities and challenges for population genetic analyses. We provide novel tools that enable analysis of this data in R with a particular emphasis on clonal organisms. 
