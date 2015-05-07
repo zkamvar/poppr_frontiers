@@ -545,10 +545,30 @@ all of the features described here is located at
 to install \emph{adegenet} 2.0 before installing \emph{poppr}. It can be
 found at \url{https://github.com/thibautjombart/adegenet}. Both of these
 can be installed via the R package \emph{devtools} (Wickham and Chang,
-2015):
+2015).
+
+\subsection*{Requirements}\label{requirements}
+\addcontentsline{toc}{subsection}{Requirements}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  R version 3.0 or better
+\item
+  A C compiler. For windows, this can be obtained via Rtools
+  (\url{http://cran.r-project.org/bin/windows/Rtools/}). On OSX, this
+  can be obtained via Xcode. For parallel support, gcc version 4.6 or
+  better is needed.
+\end{itemize}
+
+\subsection*{Installation}\label{installation}
+\addcontentsline{toc}{subsection}{Installation}
+
+From within R, \emph{poppr} can be installed via:
 
 \begin{CodeChunk}
 \begin{CodeInput}
+install.packages("devtools")
 library("devtools")
 install_github("thibautjombart/adegenet")
 install_github("grunwaldlab/poppr@2.0-rc")

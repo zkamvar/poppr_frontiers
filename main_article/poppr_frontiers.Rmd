@@ -437,9 +437,21 @@ features described here is located at
 https://github.com/grunwaldlab/poppr/tree/2.0-rc. It is necessary to install
 *adegenet* 2.0 before installing *poppr*. It can be found at
 https://github.com/thibautjombart/adegenet. Both of these can be installed via
-the R package *devtools* [@wickham2015devtools]:
+the R package *devtools* [@wickham2015devtools].
+
+## Requirements {-}
+
+ - R version 3.0 or better
+ - A C compiler. For windows, this can be obtained via Rtools
+   (http://cran.r-project.org/bin/windows/Rtools/). On OSX, this can be obtained
+   via Xcode. For parallel support, gcc version 4.6 or better is needed.
+
+## Installation {-}
+
+From within R, *poppr* can be installed via:
 
 ```{r, eval = FALSE}
+install.packages("devtools")
 library("devtools")
 install_github("thibautjombart/adegenet")
 install_github("grunwaldlab/poppr@2.0-rc")
