@@ -221,7 +221,7 @@ of the data.
 Out of the 100 simulations run, we found that across all methods, detection of
 duplicated samples had $\sim$ 98% true positive fraction and $\sim$ 0.8% false
 positive fraction indicating that this method is robust to simulated
-populations.
+populations (supplementary information).
 
 ## Minimum Spanning Networks with Reticulation {-}
 
@@ -358,15 +358,14 @@ standardized in 2001 as $\bar{r}_d$ by @Agapow_2001 to address the issue of
 scaling with increasing number of loci. This metric is typically applied to
 traditional dominant and co-dominant markers such as AFLPs, SNPs, or
 microsatellite markers. With the advent of high throughput sequencing, SNP data
-is now available in a genome-wide context and in very large matrices
-including thousands of SNPs. For
-this reason, we  devised two approaches using the index of association for large
-numbers of markers typical for population genomic studies. Both functions
-utilize *adegenet*'s "genlight" object class, which efficiently stores 8 binary
-alleles in a single byte [@jombart2011adegenet]. As calculation of the
-$\bar{r}_d$ requires distance matrices of absolute number of differences, we
-utilize a function that calculates these distances directly from the compressed
-data called `bitwise.dist`.
+is now available in a genome-wide context and in very large matrices including
+thousands of SNPs. For this reason, we  devised two approaches using the index
+of association for large numbers of markers typical for population genomic
+studies. Both functions utilize *adegenet*'s "genlight" object class, which
+efficiently stores 8 binary alleles in a single byte [@jombart2011adegenet]. As
+calculation of the $\bar{r}_d$ requires distance matrices of absolute number of
+differences, we utilize a function that calculates these distances directly from
+the compressed data called `bitwise.dist`.
 
 The first approach is a sliding window analysis implemented in the function
 `win.ia`. It utilizes the position of markers in the genome to calculate
@@ -573,7 +572,9 @@ ssr    <- c(3, 3, 2, 3, 3, 2, 2, 3, 3, 3, 3, 3)
 x      <- as.genclone(pinf)
 fstats <- filter_stats(x, bruvo.dist, plot = TRUE, replen = ssr, loss = FALSE, nclone = 18)
 title(main = expression(paste(italic("P. infestans"), " reference isolates (12 SSR loci)")))
-thresh18 <- fstats$average$thresholds[nInd(x) - 19] + .Machine$double.eps^0.5
+# Getting the threshold for average neighbor beyond which 18 MLGs would be
+# contracted. This is the number of multilocus genotypes minus 18.
+thresh18 <- fstats$average$thresholds[nmll(x) - nPop(x)] + .Machine$double.eps^0.5
 z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, loss = FALSE, stats = "MLGS", algorithm = "average")
 ```
 
