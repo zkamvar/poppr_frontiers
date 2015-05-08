@@ -120,7 +120,7 @@ horizontal transmission in leukemia of clams [@metzger2015horizontal], study of
 the vector-mediated parent-to-offspring transmission in an avian malaria-like
 parasite [@chakarov2015apparent], and characterization of the emergence of the
 invasive forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population].
-It has also been used to implement real-time, online shinyR based tools for
+It has also been used to implement real-time, online R based tools for
 visualizing relationships among unknown MLGs in reference databases  (http
 ://phytophthora-id.org/) [@grunwald2011phytophthora].
 
