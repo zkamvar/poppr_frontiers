@@ -58,7 +58,7 @@ analysis of clonal populations. In this paper we provide several significant
 extensions to \textit{poppr} with a focus on large, genome-wide SNP data.
 Specifically, we provide several new functionalities including the new function
 \texttt{mlg.filter} to define clone boundaries allowing for inspection and
-definition of what is a clonal lineage, a sliding-window analysis of the index
+definition of what is a clonal lineage, minimum spanning networks with reticulation, a sliding-window analysis of the index
 of association, modular bootstrapping of any genetic distance, and analyses
 across any level of hierarchies.
 
@@ -443,8 +443,8 @@ the R package *devtools* [@wickham2015devtools].
 ## Requirements {-}
 
  - R version 3.0 or better
- - A C compiler. For windows, this can be obtained via Rtools
-   (http://cran.r-project.org/bin/windows/Rtools/). On OSX, this can be obtained
+ - A C compiler. For windows, it can be obtained via Rtools
+   (http://cran.r-project.org/bin/windows/Rtools/). On OSX, it can be obtained
    via Xcode. For parallel support, gcc version 4.6 or better is needed.
 
 ## Installation {-}
@@ -503,14 +503,14 @@ matrix to the connections that are strongest. By default, these networks are
 drawn without reticulations, but for clonal organisms where many of the
 connections between samples are equivalent, the minimum spanning network appears
 as a chain and reduces the information that can be communicated. This is
-problematic because the ability to detect population structure with a simplistic
+problematic because the ability to detect population structure with one instance of a
 minimum spanning network is limited. Adding reticulation into the minimum
 spanning network thus presents all equivalent connections and allows population
-structure to be more readily detectable. As shown in Fig. 3 population structure
+structure to be more readily detectable. As shown in Fig. 3, population structure
 is apparent both visually and by graph community detection algorithms such as
 the infoMAP algorithm [@rosvall2008maps]. Additionally, the current
 implementation in *poppr* has been successfully used in analyses such as
-reconstruction of the *P. ramorum* epidemic in Curry County, OR
+reconstruction of the *P. ramorum* epidemic in Oregon forests
 [@kamvar2014sudden; @kamvar2015spatial].
 
 *Poppr* 2.0 is open source and available on GitHub. Members of the community are
@@ -526,8 +526,7 @@ Jombart for allowing us to incorporate the `strata` slot and related methods in
 genetics in Durham, NC for their advice and input 
 (https://github.com/NESCent/r-popgen-hackathon). This work was supported in part
 by US Department of Agriculture (USDA) Agricultural Research Service Grant
-5358-22000-039-00D, USDA APHIS, the USDA-ARS Floriculture Nursery Initiative,
-and the USDA-Forest Service Forest Health Monitoring Program (to NJG).
+5358-22000-039-00D, USDA National Institute of Food and Agriculture Grant 2011-68004-30154, USDA APHIS, the USDA-ARS Floriculture Nursery Initiative, and the USDA-Forest Service Forest Health Monitoring Program (to NJG).
 
 # Conflict of Interest Statement {-}
 
