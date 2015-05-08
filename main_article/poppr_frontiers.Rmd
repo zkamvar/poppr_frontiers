@@ -222,7 +222,7 @@ of the data.
 Out of the 100 simulations run, we found that across all methods, detection of
 duplicated samples had $\sim$ 98% true positive fraction and $\sim$ 0.8% false
 positive fraction indicating that this method is robust to simulated
-populations (supplementary information[^1]).
+populations (supplementary materials[^1]).
 
 ## Minimum Spanning Networks with Reticulation {-}
 
@@ -274,7 +274,7 @@ with a maximum community size of 7 and $H = 2.96$. In the ability to predict
 Hunter Creek as belonging to a single community, the reticulated network was
 successful whereas the minimum spanning tree separated one genotype from that
 community. The entropy for the reticulated network was lower for all populations
-except for the coast population (supplementary information[^1]).
+except for the coast population (supplementary materials[^1]).
 
 ## Bootstrapping {-}
 
