@@ -116,9 +116,10 @@ analysis of clonal populations. In this paper we provide several significant
 extensions to \textit{poppr} with a focus on large, genome-wide SNP data.
 Specifically, we provide several new functionalities including the new function
 \texttt{mlg.filter} to define clone boundaries allowing for inspection and
-definition of what is a clonal lineage, a sliding-window analysis of the index
-of association, modular bootstrapping of any genetic distance, and analyses
-across any level of hierarchies.
+definition of what is a clonal lineage, minimum spanning networks with
+reticulation, a sliding-window analysis of the index of association, modular
+bootstrapping of any genetic distance, and analyses across any level of
+hierarchies.
 
 \tiny
  \keyFont{ \section{Keywords:} clonality, population genomics, bootstrap, index of association, hierarchical analysis, sliding window}
@@ -170,24 +171,24 @@ boundaries.
 
 The research community using the R statistical and computing language (R
 Core Team, 2015) has developed a plethora of new resources for
-population genetic analysis (Paradis, 2010; Jombart, 2008). R is
-particularly appealing because all code is open source and functions can
-be evaluated and modified by any user. Recently, we introduced the R
-package \emph{poppr} specifically developed for analysis of clonal
-populations (Kamvar et al., 2014b). \emph{Poppr} previously introduced
-several novel features including the ability to conduct a hierarchical
-analysis across unlimited hierarchies, test for linkage association,
-graph minimum spanning networks or provide bootstrap support for Bruvo's
-distance in resulting trees. \emph{Poppr} has been rapidly adopted and
-applied to a range of studies including for example horizontal
-transmission in leukemia of clams (Metzger et al., 2015), study of the
-vector-mediated parent-to-offspring transmission in an avian
-malaria-like parasite (Chakarov et al., 2015), and characterization of
-the emergence of the invasive forest pathogen \emph{Hymenoscyphus
-pseudoalbidus} (Gross et al., 2014). It has also been used to implement
-real-time, online shinyR based tools for visualizing relationships among
-unknown MLGs in reference databases (http ://phytophthora-id.org/)
-(Gr{\"{u}}nwald et al., 2011).
+population genetic analysis. R is particularly appealing because all
+code is open source and functions can be evaluated and modified by any
+user. Recently, we introduced the R package \emph{poppr} specifically
+developed for analysis of clonal populations (Kamvar et al., 2014b).
+\emph{Poppr} previously introduced several novel features including the
+ability to conduct a hierarchical analysis across unlimited hierarchies,
+test for linkage association, graph minimum spanning networks or provide
+bootstrap support for Bruvo's distance in resulting trees. \emph{Poppr}
+has been rapidly adopted and applied to a range of studies including for
+example horizontal transmission in leukemia of clams (Metzger et al.,
+2015), study of the vector-mediated parent-to-offspring transmission in
+an avian malaria-like parasite (Chakarov et al., 2015), and
+characterization of the emergence of the invasive forest pathogen
+\emph{Hymenoscyphus pseudoalbidus} (Gross et al., 2014). It has also
+been used to implement real-time, online R based tools for visualizing
+relationships among unknown MLGs in reference
+databases\\(\url{http://phytophthora-id.org/}) (Gr{\"{u}}nwald et al.,
+2011).
 
 Here, we introduce \emph{poppr} 2.0, which provides a major update to
 \emph{poppr} (Kamvar et al., 2014b) including novel tools for analysis
@@ -296,10 +297,10 @@ thresholds that collapsed less than 50\% of the data.
 Out of the 100 simulations run, we found that across all methods,
 detection of duplicated samples had \(\sim\) 98\% true positive fraction
 and \(\sim\) 0.8\% false positive fraction indicating that this method
-is robust to simulated populations (supplementary information)\footnote{Supplementary
+is robust to simulated populations (supplementary materials\footnote{Supplementary
   data available at
   \url{https://github.com/grunwaldlab/supplementary-poppr-2.0}; DOI:
-  \href{http://dx.doi.org/10.5281/zenodo.17424}{10.5281/zenodo.17424}}.
+  \href{http://dx.doi.org/10.5281/zenodo.17424}{10.5281/zenodo.17424}}).
 
 \subsection*{Minimum Spanning Networks with
 Reticulation}\label{minimum-spanning-networks-with-reticulation}
@@ -360,10 +361,10 @@ and \(H = 2.96\). In the ability to predict Hunter Creek as belonging to
 a single community, the reticulated network was successful whereas the
 minimum spanning tree separated one genotype from that community. The
 entropy for the reticulated network was lower for all populations except
-for the coast population (supplementary information)\footnote{Supplementary
+for the coast population (supplementary materials\footnote{Supplementary
   data available at
   \url{https://github.com/grunwaldlab/supplementary-poppr-2.0}; DOI:
-  \href{http://dx.doi.org/10.5281/zenodo.17424}{10.5281/zenodo.17424}}.
+  \href{http://dx.doi.org/10.5281/zenodo.17424}{10.5281/zenodo.17424}}).
 
 \subsection*{Bootstrapping}\label{bootstrapping}
 \addcontentsline{toc}{subsection}{Bootstrapping}
@@ -551,7 +552,10 @@ all of the features described here is located at
 to install \emph{adegenet} 2.0 before installing \emph{poppr}. It can be
 found at \url{https://github.com/thibautjombart/adegenet}. Both of these
 can be installed via the R package \emph{devtools} (Wickham and Chang,
-2015).
+2015). More information and example code can be found in the
+supplementary materials\footnote{Supplementary data available at
+  \url{https://github.com/grunwaldlab/supplementary-poppr-2.0}; DOI:
+  \href{http://dx.doi.org/10.5281/zenodo.17424}{10.5281/zenodo.17424}}.
 
 \subsection*{Requirements}\label{requirements}
 \addcontentsline{toc}{subsection}{Requirements}
@@ -561,10 +565,10 @@ can be installed via the R package \emph{devtools} (Wickham and Chang,
 \item
   R version 3.0 or better
 \item
-  A C compiler. For windows, this can be obtained via Rtools
-  (\url{http://cran.r-project.org/bin/windows/Rtools/}). On OSX, this
-  can be obtained via Xcode. For parallel support, gcc version 4.6 or
-  better is needed.
+  A C compiler. For windows, it can be obtained via Rtools
+  (\url{http://cran.r-project.org/bin/windows/Rtools/}). On OSX, it can
+  be obtained via Xcode. For parallel support, gcc version 4.6 or better
+  is needed.
 \end{itemize}
 
 \subsection*{Installation}\label{installation}
@@ -632,15 +636,15 @@ these networks are drawn without reticulations, but for clonal organisms
 where many of the connections between samples are equivalent, the
 minimum spanning network appears as a chain and reduces the information
 that can be communicated. This is problematic because the ability to
-detect population structure with a simplistic minimum spanning network
-is limited. Adding reticulation into the minimum spanning network thus
-presents all equivalent connections and allows population structure to
-be more readily detectable. As shown in Fig. 3 population structure is
-apparent both visually and by graph community detection algorithms such
-as the infoMAP algorithm (Rosvall and Bergstrom, 2008). Additionally,
-the current implementation in \emph{poppr} has been successfully used in
-analyses such as reconstruction of the \emph{P. ramorum} epidemic in
-Curry County, OR (Kamvar et al., 2014a, 2015).
+detect population structure with one instance of a minimum spanning
+network is limited. Adding reticulation into the minimum spanning
+network thus presents all equivalent connections and allows population
+structure to be more readily detectable. As shown in Fig. 3, population
+structure is apparent both visually and by graph community detection
+algorithms such as the infoMAP algorithm (Rosvall and Bergstrom, 2008).
+Additionally, the current implementation in \emph{poppr} has been
+successfully used in analyses such as reconstruction of the \emph{P.
+ramorum} epidemic in Oregon forests (Kamvar et al., 2014a, 2015).
 
 \emph{Poppr} 2.0 is open source and available on GitHub. Members of the
 community are invited to contribute by raising issues or pull requests
@@ -656,9 +660,10 @@ and related methods in \emph{adegenet}. We also thank all the members of
 the 2015 R hackathon on population genetics in Durham, NC for their
 advice and input (\url{https://github.com/NESCent/r-popgen-hackathon}).
 This work was supported in part by US Department of Agriculture (USDA)
-Agricultural Research Service Grant 5358-22000-039-00D, USDA APHIS, the
-USDA-ARS Floriculture Nursery Initiative, and the USDA-Forest Service
-Forest Health Monitoring Program (to NJG).
+Agricultural Research Service Grant 5358-22000-039-00D, USDA National
+Institute of Food and Agriculture Grant 2011-68004-30154, USDA APHIS,
+the USDA- ARS Floriculture Nursery Initiative, and the USDA-Forest
+Service Forest Health Monitoring Program (to NJG).
 
 \section*{Conflict of Interest
 Statement}\label{conflict-of-interest-statement}
@@ -874,9 +879,6 @@ O'Hara, R. B., Simpson, G. L., Solymos, P., Stevens, M. H. H., and
 Wagner, H. (2015). \emph{Vegan: Community ecology package}. Available
 at: \url{http://CRAN.R-project.org/package=vegan}.
 
-Paradis, E. (2010). Pegas: an R package for population genetics with an
-integrated--modular approach. \emph{Bioinformatics} 26, 419--420.
-
 Prevosti, A., Oca{\~{n}}a, J., and Alonso, G. (1975). Distances between
 populations of \emph{Drosophila subobscura}, based on chromosome
 arrangement frequencies. \emph{Theoretical and Applied Genetics} 45,
@@ -915,6 +917,7 @@ Yoshida, K., Schuenemann, V. J., Cano, L. M., Pais, M., Mishra, B.,
 Sharma, R., Lanz, C., Martin, F. N., Kamoun, S., Krause, J., et al.
 (2013). The rise and fall of the \emph{Phytophthora infestans} lineage
 that triggered the Irish potato famine. \emph{Elife} 2, e00731.
+
 
 \section*{Figures and Tables}\label{figures-and-tables}
 \addcontentsline{toc}{section}{Figures and Tables}

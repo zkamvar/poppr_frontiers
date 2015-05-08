@@ -58,9 +58,10 @@ analysis of clonal populations. In this paper we provide several significant
 extensions to \textit{poppr} with a focus on large, genome-wide SNP data.
 Specifically, we provide several new functionalities including the new function
 \texttt{mlg.filter} to define clone boundaries allowing for inspection and
-definition of what is a clonal lineage, minimum spanning networks with reticulation, a sliding-window analysis of the index
-of association, modular bootstrapping of any genetic distance, and analyses
-across any level of hierarchies.
+definition of what is a clonal lineage, minimum spanning networks with
+reticulation, a sliding-window analysis of the index of association, modular
+bootstrapping of any genetic distance, and analyses across any level of
+hierarchies.
 
 \tiny
  \keyFont{ \section{Keywords:} clonality, population genomics, bootstrap, index of association, hierarchical analysis, sliding window}
@@ -107,9 +108,10 @@ clone is in large SNP data sets and novel tools are required for definition of
 clone boundaries.
 
 The research community using the R statistical and computing language [@R] has
-developed a plethora of new resources for population genetic analysis. R is particularly appealing because all code is open source and
-functions can be evaluated and modified by any user. Recently, we introduced the
-R package *poppr* specifically developed for analysis of clonal populations
+developed a plethora of new resources for population genetic analysis. R is
+particularly appealing because all code is open source and functions can be
+evaluated and modified by any user. Recently, we introduced the R package
+*poppr* specifically developed for analysis of clonal populations
 [@kamvar2014poppr]. *Poppr* previously introduced several novel features
 including the ability to conduct a hierarchical analysis across unlimited
 hierarchies, test for linkage association, graph minimum spanning networks or
@@ -120,8 +122,8 @@ the vector-mediated parent-to-offspring transmission in an avian malaria-like
 parasite [@chakarov2015apparent], and characterization of the emergence of the
 invasive forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population].
 It has also been used to implement real-time, online R based tools for
-visualizing relationships among unknown MLGs in reference databases  (http
-://phytophthora-id.org/) [@grunwald2011phytophthora].
+visualizing relationships among unknown MLGs in reference databases  
+(http://phytophthora-id.org/) [@grunwald2011phytophthora].
 
 Here, we introduce *poppr* 2.0, which provides a major update to *poppr*
 [@kamvar2014poppr] including novel tools for analysis of clonal populations
@@ -170,8 +172,6 @@ on genetic distance (Fig. 1B). This algorithm will cluster by creating a
 representative sample per cluster and joining clusters if these representative
 samples are closer than the given threshold.
 
-<!-- ## Demonstration data: *P. infestans* {-} -->
-
 We utilize data from the microbe *Phytophthora infestans* to show how the
 `mlg.filter` function collapses multilocus genotypes with Bruvo's distance
 assuming a genome addition model [@bruvo2004simple]. *P. infestans* is the
@@ -191,8 +191,6 @@ multilocus lineages at different distance thresholds (Fig. 2). Contingency
 tables between the described multilocus genotypes and the genotypes defined by
 distance show that most of the 18 lineages were resolved, except for US-8, which
 is polytomic (Table 1).
-
-<!-- ## Demonstration data: Simulated data {-} -->
 
 We utilized simulated data to evaluate the effect of sequencing error and
 missing data on MLG calling. We constructed the data using the `glSim` function
@@ -437,7 +435,8 @@ features described here is located at
 https://github.com/grunwaldlab/poppr/tree/2.0-rc. It is necessary to install
 *adegenet* 2.0 before installing *poppr*. It can be found at
 https://github.com/thibautjombart/adegenet. Both of these can be installed via
-the R package *devtools* [@wickham2015devtools]. More information can be found in the supplementary materials[^1].
+the R package *devtools* [@wickham2015devtools]. More information and example
+code can be found in the supplementary materials[^1].
 
 ## Requirements {-}
 
@@ -519,13 +518,15 @@ https://github.com/grunwaldlab/poppr/issues.
 # Acknowledgements {-}
 
 We thank Ignazio Carbone for discussions on the index of association; David
-Cooke, Sanmohan Baby, and Jens Hansen for beta testing; and Thibaut
-Jombart for allowing us to incorporate the `strata` slot and related methods in
-*adegenet*. We also thank all the members of the 2015 R hackathon on population
-genetics in Durham, NC for their advice and input 
+Cooke, Sanmohan Baby, and Jens Hansen for beta testing; and Thibaut Jombart for
+allowing us to incorporate the `strata` slot and related methods in *adegenet*.
+We also thank all the members of the 2015 R hackathon on population genetics in
+Durham, NC for their advice and input 
 (https://github.com/NESCent/r-popgen-hackathon). This work was supported in part
 by US Department of Agriculture (USDA) Agricultural Research Service Grant
-5358-22000-039-00D, USDA National Institute of Food and Agriculture Grant 2011-68004-30154, USDA APHIS, the USDA-ARS Floriculture Nursery Initiative, and the USDA-Forest Service Forest Health Monitoring Program (to NJG).
+5358-22000-039-00D, USDA National Institute of Food and Agriculture Grant
+2011-68004-30154, USDA APHIS, the USDA- ARS Floriculture Nursery Initiative, and
+the USDA-Forest Service Forest Health Monitoring Program (to NJG).
 
 # Conflict of Interest Statement {-}
 
