@@ -209,7 +209,7 @@ As highlighted in previous work, clone correction is an important
 component of population genetic analysis of organisms that are known to
 reproduce asexually (Kamvar et al., 2014b; Milgroom, 1996; Gr\"{u}nwald et
 al., 2003). This method is a partial correction for bias that affects
-metrics that rely on allele frequencies assuming panmixia. It was
+metrics that rely on allele frequencies assuming panmixia and was
 initially designed for data with only a handful of markers. With the
 advent of large-scale sequencing and reduced- representation libraries,
 it has become easier to sequence tens of thousands of markers from
@@ -227,7 +227,7 @@ nearest neighbor, and UPGMA (average neighbor) (Sokal, 1958).
 
 These clustering algorithms act on a distance matrix that is either
 provided by the user or generated via a function that will calculate a
-distance from genclone objects such as \texttt{bruvo.dist}, which in
+distance from genetic data such as \texttt{bruvo.dist}, which in
 particular applies to any level of ploidy (Bruvo et al., 2004). All
 algorithms have been implemented in C and utilize the OpenMP framework
 for optional parallel processing (Dagum and Menon, 1998). Default is the
@@ -296,7 +296,10 @@ thresholds that collapsed less than 50\% of the data.
 Out of the 100 simulations run, we found that across all methods,
 detection of duplicated samples had \(\sim\) 98\% true positive fraction
 and \(\sim\) 0.8\% false positive fraction indicating that this method
-is robust to simulated populations (supplementary information).
+is robust to simulated populations (supplementary information)\footnote{Supplementary
+  data available at
+  \url{https://github.com/grunwaldlab/supplementary-poppr-2.0}; DOI:
+  \href{http://dx.doi.org/10.5281/zenodo.17424}{10.5281/zenodo.17424}}.
 
 \subsection*{Minimum Spanning Networks with
 Reticulation}\label{minimum-spanning-networks-with-reticulation}
@@ -357,7 +360,10 @@ and \(H = 2.96\). In the ability to predict Hunter Creek as belonging to
 a single community, the reticulated network was successful whereas the
 minimum spanning tree separated one genotype from that community. The
 entropy for the reticulated network was lower for all populations except
-for the coast population (supplementary information).
+for the coast population (supplementary information)\footnote{Supplementary
+  data available at
+  \url{https://github.com/grunwaldlab/supplementary-poppr-2.0}; DOI:
+  \href{http://dx.doi.org/10.5281/zenodo.17424}{10.5281/zenodo.17424}}.
 
 \subsection*{Bootstrapping}\label{bootstrapping}
 \addcontentsline{toc}{subsection}{Bootstrapping}
@@ -667,250 +673,6 @@ ZNK and JCB wrote and tested the code. ZNK maintains the code. ZNK and
 NJG conceived, discussed implications, and wrote the manuscript. NJG
 coordinated the collaborative effort.
 
-\section*{References}\label{references}
-\addcontentsline{toc}{section}{References}
-
-Agapow, P.-M., and Burt, A. (2001). Indices of multilocus linkage
-disequilibrium. \emph{Molecular Ecology Notes} 1, 101--102.
-doi:\href{http://dx.doi.org/10.1046/j.1471-8278.2000.00014.x}{10.1046/j.1471-8278.2000.00014.x}.
-
-Anderson, J. B., and Kohn, L. M. (1995). Clonality in soilborne,
-plant-pathogenic fungi. \emph{Annual review of phytopathology} 33,
-369--391.
-
-Arnaud-Hanod, S., Duarte, C. M., Alberto, F., and Serr{\~{a}}o, E. A.
-(2007). Standardizing methods to address clonality in population
-studies. \emph{Molecular Ecology} 16, 5115--5139.
-
-Brown, A., Feldman, M., and Nevo, E. (1980). Multilocus structure of
-natural populations of \emph{Hordeum spontaneum}. \emph{Genetics} 96,
-523--536. Available at:
-\url{http://www.genetics.org/content/96/2/523.abstract}.
-
-Bruvo, R., Michiels, N. K., D'Souza, T. G., and Schulenburg, H. (2004).
-A simple method for the calculation of microsatellite genotype distances
-irrespective of ploidy level. \emph{Molecular Ecology} 13, 2101--2106.
-
-Chakarov, N., Linke, B., Boerner, M., Goesmann, A., Kr{\"{u}}ger, O., and
-Hoffman, J. I. (2015). Apparent vector-mediated parent-to-offspring
-transmission in an avian malaria-like parasite. \emph{Molecular ecology}
-24, 1355--1363.
-
-Cooke, D. E., Cano, L. M., Raffaele, S., Bain, R. A., Cooke, L. R.,
-Etherington, G. J., Deahl, K. L., Farrer, R. A., Gilroy, E. M., Goss, E.
-M., et al. (2012). Genome analyses of an aggressive and invasive lineage
-of the Irish potato famine pathogen. \emph{PLoS pathogens} 8, e1002940.
-
-Csardi, G., and Nepusz, T. (2006). The igraph software package for
-complex network research. \emph{InterJournal} Complex Systems, 1695.
-Available at: \url{http://igraph.org}.
-
-Dagum, L., and Menon, R. (1998). OpenMP: An industry standard API for
-shared-memory programming. \emph{Computational Science \& Engineering,
-IEEE} 5, 46--55.
-
-Davey, J. W., and Blaxter, M. L. (2010). RADSeq: Next-generation
-population genetics. \emph{Briefings in Functional Genomics} 9,
-416--423.
-doi:\href{http://dx.doi.org/10.1093/bfgp/elq031}{10.1093/bfgp/elq031}.
-
-Davey, J. W., Hohenlohe, P. A., Etter, P. D., Boone, J. Q., Catchen, J.
-M., and Blaxter, M. L. (2011). Genome-wide genetic marker discovery and
-genotyping using next-generation sequencing. \emph{Nature Reviews
-Genetics} 12, 499--510.
-
-Dobzhansky, T. (1973). Nothing in biology makes sense except in the
-light of evolution. \emph{The American Biology Teacher} 75, 87--91.
-
-Elshire, R. J., Glaubitz, J. C., Sun, Q., Poland, J. A., Kawamoto, K.,
-Buckler, E. S., and Mitchell, S. E. (2011). A robust, simple
-genotyping-by-sequencing (GBS) approach for high diversity species.
-\emph{PloS one} 6, e19379.
-
-Everhart, S., and Scherm, H. (2015). Fine-scale genetic structure of
-\emph{Monilinia fructicola} during brown rot epidemics within individual
-peach tree canopies. \emph{Phytopathology} 105, 542--549.
-
-Excoffier, L., Smouse, P. E., and Quattro, J. M. (1992). Analysis of
-molecular variance inferred from metric distances among DNA haplotypes:
-Application to human mitochondrial DNA restriction data. \emph{Genetics}
-131, 479--491.
-
-Falush, D., Stephens, M., and Pritchard, J. K. (2003). Inference of
-population structure using multilocus genotype data: Linked loci and
-correlated allele frequencies. \emph{Genetics} 164, 1567--1587.
-Available at: \url{http://www.genetics.org/content/164/4/1567.abstract}.
-
-Goss, E. M., Larsen, M., Chastagner, G. A., Givens, D. R., and
-Gr{\"{u}}nwald, N. J. (2009). Population genetic analysis infers migration
-pathways of \emph{Phytophthora ramorum} in US nurseries. \emph{PLoS
-pathogens} 5, e1000583.
-
-Goss, E. M., Tabima, J. F., Cooke, D. E., Restrepo, S., Fry, W. E.,
-Forbes, G. A., Fieland, V. J., Cardenas, M., and Gr{\"{u}}nwald, N. J.
-(2014). The Irish potato famine pathogen \emph{Phytophthora infestans}
-originated in central Mexico rather than the Andes. \emph{Proceedings of
-the National Academy of Sciences} 111, 8791--8796.
-
-Goudet, J. (2005). Hierfstat, a package for R to compute and test
-hierarchical F-statistics. \emph{Molecular Ecology Notes} 5, 184--186.
-
-Gross, A., Hosoya, T., and Queloz, V. (2014). Population structure of
-the invasive forest pathogen \emph{Hymenoscyphus pseudoalbidus}.
-\emph{Molecular ecology} 23, 2943--2960.
-
-Gr\"{u}nwald, N. J., and Goss, E. M. (2011). Evolution and population
-genetics of exotic and re-emerging pathogens: Novel tools and
-approaches. \emph{Annual Review of Phytopathology} 49, 249--267.
-
-Gr{\"{u}}nwald, N. J., and Hoheisel, G.-A. (2006). Hierarchical analysis of
-diversity, selfing, and genetic differentiation in populations of the
-oomycete \emph{Aphanomyces euteiches}. \emph{Phytopathology} 96,
-1134--1141.
-
-Gr\"{u}nwald, N. J., Goodwin, S. B., Milgroom, M. G., and Fry, W. E. (2003).
-Analysis of genotypic diversity data for populations of microorganisms.
-\emph{Phytopathology} 93, 738--46. Available at:
-\url{http://apsjournals.apsnet.org/doi/abs/10.1094/PHYTO.2003.93.6.738}.
-
-Gr{\"{u}}nwald, N. J., Martin, F. N., Larsen, M. M., Sullivan, C. M., Press,
-C. M., Coffey, M. D., Hansen, E. M., and Parke, J. L. (2011).
-Phytophthora-iD. org: A sequence-based phytophthora identification tool.
-\emph{Plant Disease} 95, 337--342.
-
-Jombart, T. (2008). Adegenet: a R package for the multivariate analysis
-of genetic markers. \emph{Bioinformatics} 24, 1403--1405.
-doi:\href{http://dx.doi.org/10.1093/bioinformatics/btn129}{10.1093/bioinformatics/btn129}.
-
-Jombart, T., and Ahmed, I. (2011). Adegenet 1.3-1: New tools for the
-analysis of genome-wide SNP data. \emph{Bioinformatics} 27, 3070--3071.
-
-Jombart, T., Devillard, S., and Balloux, F. (2010). Discriminant
-analysis of principal components: A new method for the analysis of
-genetically structured populations. \emph{BMC genetics} 11, 94.
-
-Kamvar, Z. N., Larsen, M. M., Kanaskie, A. M., Hansen, E. M., and
-Gr\"{u}nwald, N. J. (2015). Spatial and temporal analysis of populations of
-the sudden oak death pathogen in Oregon forests. \emph{Phytopathology},
-in press.
-
-Kamvar, Z. N., Larsen, M. M., Kanaskie, A. M., Hansen, E. M., and
-Gr\"{u}nwald, N. J. (2014a). Sudden\_Oak\_Death\_in\_Oregon\_Forests:
-Spatial and temporal population dynamics of the sudden oak death
-epidemic in Oregon Forests.
-doi:\href{http://dx.doi.org/10.5281/zenodo.13007}{10.5281/zenodo.13007}.
-
-Kamvar, Z. N., Tabima, J. F., and Gr{\"{u}}nwald, N. J. (2014b). Poppr: An R
-package for genetic analysis of populations with clonal, partially
-clonal, and/or sexual reproduction. \emph{PeerJ} 2, e281.
-
-Lalo{\"{e}}, D., Jombart, T., Dufour, A.-B., and Moazami-Goudarzi, K.
-(2007). Consensus genetic structuring and typological value of markers
-using multiple co-inertia analysis. \emph{Genetics Selection Evolution}
-39, 1--23.
-
-Lees, A., Wattier, R., Shaw, D., Sullivan, L., Williams, N., and Cooke,
-D. (2006). Novel microsatellite markers for the analysis of
-\emph{Phytophthora infestans} populations. \emph{Plant Pathology} 55,
-311--319.
-
-Li, Y., Cooke, D. E., Jacobsen, E., and Lee, T. van der (2013).
-Efficient multiplex simple sequence repeat genotyping of the oomycete
-plant pathogen \emph{Phytophthora infestans}. \emph{Journal of
-microbiological methods} 92, 316--322.
-
-Linde, C., Zhan, J., and McDonald, B. (2002). Population structure of
-\emph{Mycosphaerella graminicola}: From lesions to continents.
-\emph{Phytopathology} 92, 946--955.
-
-Luikart, G., England, P. R., Tallmon, D., Jordan, S., and Taberlet, P.
-(2003). The power and promise of population genomics: From genotyping to
-genome typing. \emph{Nature Reviews Genetics} 4, 981--994.
-
-Mantel, N. (1967). The detection of disease clustering and a generalized
-regression approach. \emph{Cancer research} 27, 209--220.
-
-Mastretta-Yanes, A., Arrigo, N., Alvarez, N., Jorgensen, T. H.,
-Pi{\~{n}}ero, D., and Emerson, B. (2015). Restriction site-associated DNA
-sequencing, genotyping error estimation and de novo assembly
-optimization for population genetic inference. \emph{Molecular ecology
-resources} 15, 28--41.
-
-McDonald, B. A., and Linde, C. (2002). The population genetics of plant
-pathogens and breeding strategies for durable resistance.
-\emph{Euphytica} 124, 163--180.
-doi:\href{http://dx.doi.org/10.1023/A:1015678432355}{10.1023/A:1015678432355}.
-
-Meirmans, P. G., and Van Tienderen, P. H. (2004). GENOTYPE and GENODIVE:
-Two programs for the analysis of genetic diversity of asexual organisms.
-\emph{Molecular Ecology Notes} 4, 792--794.
-
-Metzger, M. J., Reinisch, C., Sherry, J., and Goff, S. P. (2015).
-Horizontal transmission of clonal cancer cells causes leukemia in
-soft-shell clams. \emph{Cell} 161, 255--263.
-
-Michalakis, Y., and Excoffier, L. (1996). A generic estimation of
-population subdivision using distances between alleles with special
-reference for microsatellite loci. \emph{Genetics} 142, 1061--1064.
-
-Milgroom, M. G. (1996). Recombination and the multilocus structure of
-fungal populations. \emph{Annual review of phytopathology} 34, 457--477.
-
-Milgroom, M. G., Levin, S. A., and Fry, W. E. (1989). Population
-genetics theory and fungicide resistance. \emph{Plant disease
-epidemiology} 2, 340--367.
-
-Nei, M. (1973). Analysis of gene diversity in subdivided populations.
-\emph{Proceedings of the National Academy of Sciences} 70, 3321--3323.
-
-Oksanen, J., Blanchet, F. G., Kindt, R., Legendre, P., Minchin, P. R.,
-O'Hara, R. B., Simpson, G. L., Solymos, P., Stevens, M. H. H., and
-Wagner, H. (2015). \emph{Vegan: Community ecology package}. Available
-at: \url{http://CRAN.R-project.org/package=vegan}.
-
-Paradis, E. (2010). Pegas: an R package for population genetics with an
-integrated--modular approach. \emph{Bioinformatics} 26, 419--420.
-
-Prevosti, A., Oca{\~{n}}a, J., and Alonso, G. (1975). Distances between
-populations of \emph{Drosophila subobscura}, based on chromosome
-arrangement frequencies. \emph{Theoretical and Applied Genetics} 45,
-231--241.
-
-R Core Team (2015). \emph{R: A language and environment for statistical
-computing}. Vienna, Austria: R Foundation for Statistical Computing
-Available at: \url{http://www.R-project.org/}.
-
-Rosvall, M., and Bergstrom, C. T. (2008). Maps of random walks on
-complex networks reveal community structure. \emph{Proceedings of the
-National Academy of Sciences} 105, 1118--1123.
-
-Shannon, C. (2001). A mathematical theory of communication. \emph{ACM
-SIGMOBILE Mobile Computing and Communications Review} 5, 3--55.
-Available at:
-\url{http://cm.bell-labs.com/cm/ms/what/shannonday/shannon1948.pdf}.
-
-Smith, J. M., Smith, N. H., O'Rourke, M., and Spratt, B. G. (1993). How
-clonal are bacteria? \emph{Proceedings of the National Academy of
-Sciences} 90, 4384--4388.
-doi:\href{http://dx.doi.org/10.1073/pnas.90.10.4384}{10.1073/pnas.90.10.4384}.
-
-Sokal, R. R. (1958). A statistical method for evaluating systematic
-relationships. \emph{Univ Kans Sci Bull} 38, 1409--1438.
-
-Taylor, J. W., and Fisher, M. C. (2003). Fungal multilocus sequence
-typing --- it's not just for bacteria. \emph{Current opinion in
-microbiology} 6, 351--356.
-
-Wickham, H., and Chang, W. (2015). \emph{Devtools: Tools to make
-developing R packages easier}. Available at:
-\url{http://CRAN.R-project.org/package=devtools}.
-
-Yoshida, K., Schuenemann, V. J., Cano, L. M., Pais, M., Mishra, B.,
-Sharma, R., Lanz, C., Martin, F. N., Kamoun, S., Krause, J., et al.
-(2013). The rise and fall of the phytophthora infestans lineage that
-triggered the irish potato famine. \emph{Elife} 2, e00731.
-
-
 \section*{Figures and Tables}\label{figures-and-tables}
 \addcontentsline{toc}{section}{Figures and Tables}
 
@@ -1052,6 +814,250 @@ variants to calculate a distribution of \(\bar{r}_d\) for the clonal
 mean, with whiskers extending out to 1.5 times the interquartile range.
 The median is indicated by the center line. \textbf{(A)} and
 \textbf{(B)} are plotted on the same y-axis.
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+Agapow, P.-M., and Burt, A. (2001). Indices of multilocus linkage
+disequilibrium. \emph{Molecular Ecology Notes} 1, 101--102.
+doi:\href{http://dx.doi.org/10.1046/j.1471-8278.2000.00014.x}{10.1046/j.1471-8278.2000.00014.x}.
+
+Anderson, J. B., and Kohn, L. M. (1995). Clonality in soilborne,
+plant-pathogenic fungi. \emph{Annual review of phytopathology} 33,
+369--391.
+
+Arnaud-Hanod, S., Duarte, C. M., Alberto, F., and Serr{\~{a}}o, E. A.
+(2007). Standardizing methods to address clonality in population
+studies. \emph{Molecular Ecology} 16, 5115--5139.
+
+Brown, A., Feldman, M., and Nevo, E. (1980). Multilocus structure of
+natural populations of \emph{Hordeum spontaneum}. \emph{Genetics} 96,
+523--536. Available at:
+\url{http://www.genetics.org/content/96/2/523.abstract}.
+
+Bruvo, R., Michiels, N. K., D'Souza, T. G., and Schulenburg, H. (2004).
+A simple method for the calculation of microsatellite genotype distances
+irrespective of ploidy level. \emph{Molecular Ecology} 13, 2101--2106.
+
+Chakarov, N., Linke, B., Boerner, M., Goesmann, A., Kr{\"{u}}ger, O., and
+Hoffman, J. I. (2015). Apparent vector-mediated parent-to-offspring
+transmission in an avian malaria-like parasite. \emph{Molecular ecology}
+24, 1355--1363.
+
+Cooke, D. E., Cano, L. M., Raffaele, S., Bain, R. A., Cooke, L. R.,
+Etherington, G. J., Deahl, K. L., Farrer, R. A., Gilroy, E. M., Goss, E.
+M., et al. (2012). Genome analyses of an aggressive and invasive lineage
+of the Irish potato famine pathogen. \emph{PLoS pathogens} 8, e1002940.
+
+Csardi, G., and Nepusz, T. (2006). The igraph software package for
+complex network research. \emph{InterJournal} Complex Systems, 1695.
+Available at: \url{http://igraph.org}.
+
+Dagum, L., and Menon, R. (1998). OpenMP: An industry standard API for
+shared-memory programming. \emph{Computational Science \& Engineering,
+IEEE} 5, 46--55.
+
+Davey, J. W., and Blaxter, M. L. (2010). RADSeq: Next-generation
+population genetics. \emph{Briefings in Functional Genomics} 9,
+416--423.
+doi:\href{http://dx.doi.org/10.1093/bfgp/elq031}{10.1093/bfgp/elq031}.
+
+Davey, J. W., Hohenlohe, P. A., Etter, P. D., Boone, J. Q., Catchen, J.
+M., and Blaxter, M. L. (2011). Genome-wide genetic marker discovery and
+genotyping using next-generation sequencing. \emph{Nature Reviews
+Genetics} 12, 499--510.
+
+Dobzhansky, T. (1973). Nothing in biology makes sense except in the
+light of evolution. \emph{The American Biology Teacher} 75, 87--91.
+
+Elshire, R. J., Glaubitz, J. C., Sun, Q., Poland, J. A., Kawamoto, K.,
+Buckler, E. S., and Mitchell, S. E. (2011). A robust, simple
+genotyping-by-sequencing (GBS) approach for high diversity species.
+\emph{PloS one} 6, e19379.
+
+Everhart, S., and Scherm, H. (2015). Fine-scale genetic structure of
+\emph{Monilinia fructicola} during brown rot epidemics within individual
+peach tree canopies. \emph{Phytopathology} 105, 542--549.
+
+Excoffier, L., Smouse, P. E., and Quattro, J. M. (1992). Analysis of
+molecular variance inferred from metric distances among DNA haplotypes:
+Application to human mitochondrial DNA restriction data. \emph{Genetics}
+131, 479--491.
+
+Falush, D., Stephens, M., and Pritchard, J. K. (2003). Inference of
+population structure using multilocus genotype data: Linked loci and
+correlated allele frequencies. \emph{Genetics} 164, 1567--1587.
+Available at: \url{http://www.genetics.org/content/164/4/1567.abstract}.
+
+Goss, E. M., Larsen, M., Chastagner, G. A., Givens, D. R., and
+Gr{\"{u}}nwald, N. J. (2009). Population genetic analysis infers migration
+pathways of \emph{Phytophthora ramorum} in US nurseries. \emph{PLoS
+pathogens} 5, e1000583.
+
+Goss, E. M., Tabima, J. F., Cooke, D. E., Restrepo, S., Fry, W. E.,
+Forbes, G. A., Fieland, V. J., Cardenas, M., and Gr{\"{u}}nwald, N. J.
+(2014). The Irish potato famine pathogen \emph{Phytophthora infestans}
+originated in central Mexico rather than the Andes. \emph{Proceedings of
+the National Academy of Sciences} 111, 8791--8796.
+
+Goudet, J. (2005). Hierfstat, a package for R to compute and test
+hierarchical F-statistics. \emph{Molecular Ecology Notes} 5, 184--186.
+
+Gross, A., Hosoya, T., and Queloz, V. (2014). Population structure of
+the invasive forest pathogen \emph{Hymenoscyphus pseudoalbidus}.
+\emph{Molecular ecology} 23, 2943--2960.
+
+Gr\"{u}nwald, N. J., and Goss, E. M. (2011). Evolution and population
+genetics of exotic and re-emerging pathogens: Novel tools and
+approaches. \emph{Annual Review of Phytopathology} 49, 249--267.
+
+Gr{\"{u}}nwald, N. J., and Hoheisel, G.-A. (2006). Hierarchical analysis of
+diversity, selfing, and genetic differentiation in populations of the
+oomycete \emph{Aphanomyces euteiches}. \emph{Phytopathology} 96,
+1134--1141.
+
+Gr\"{u}nwald, N. J., Goodwin, S. B., Milgroom, M. G., and Fry, W. E. (2003).
+Analysis of genotypic diversity data for populations of microorganisms.
+\emph{Phytopathology} 93, 738--46. Available at:
+\url{http://apsjournals.apsnet.org/doi/abs/10.1094/PHYTO.2003.93.6.738}.
+
+Gr{\"{u}}nwald, N. J., Martin, F. N., Larsen, M. M., Sullivan, C. M., Press,
+C. M., Coffey, M. D., Hansen, E. M., and Parke, J. L. (2011).
+Phytophthora-ID. org: a sequence-based \emph{Phytophthora}
+identification tool. \emph{Plant Disease} 95, 337--342.
+
+Jombart, T. (2008). Adegenet: a R package for the multivariate analysis
+of genetic markers. \emph{Bioinformatics} 24, 1403--1405.
+doi:\href{http://dx.doi.org/10.1093/bioinformatics/btn129}{10.1093/bioinformatics/btn129}.
+
+Jombart, T., and Ahmed, I. (2011). Adegenet 1.3-1: New tools for the
+analysis of genome-wide SNP data. \emph{Bioinformatics} 27, 3070--3071.
+
+Jombart, T., Devillard, S., and Balloux, F. (2010). Discriminant
+analysis of principal components: A new method for the analysis of
+genetically structured populations. \emph{BMC genetics} 11, 94.
+
+Kamvar, Z. N., Larsen, M. M., Kanaskie, A. M., Hansen, E. M., and
+Gr\"{u}nwald, N. J. (2015). Spatial and temporal analysis of populations of
+the sudden oak death pathogen in Oregon forests. \emph{Phytopathology},
+in press.
+
+Kamvar, Z. N., Larsen, M. M., Kanaskie, A. M., Hansen, E. M., and
+Gr\"{u}nwald, N. J. (2014a). Sudden\_Oak\_Death\_in\_Oregon\_Forests:
+Spatial and temporal population dynamics of the sudden oak death
+epidemic in Oregon Forests.
+doi:\href{http://dx.doi.org/10.5281/zenodo.13007}{10.5281/zenodo.13007}.
+
+Kamvar, Z. N., Tabima, J. F., and Gr{\"{u}}nwald, N. J. (2014b). Poppr: An R
+package for genetic analysis of populations with clonal, partially
+clonal, and/or sexual reproduction. \emph{PeerJ} 2, e281.
+
+Lalo{\"{e}}, D., Jombart, T., Dufour, A.-B., and Moazami-Goudarzi, K.
+(2007). Consensus genetic structuring and typological value of markers
+using multiple co-inertia analysis. \emph{Genetics Selection Evolution}
+39, 1--23.
+
+Lees, A., Wattier, R., Shaw, D., Sullivan, L., Williams, N., and Cooke,
+D. (2006). Novel microsatellite markers for the analysis of
+\emph{Phytophthora infestans} populations. \emph{Plant Pathology} 55,
+311--319.
+
+Li, Y., Cooke, D. E., Jacobsen, E., and Lee, T. van der (2013).
+Efficient multiplex simple sequence repeat genotyping of the oomycete
+plant pathogen \emph{Phytophthora infestans}. \emph{Journal of
+microbiological methods} 92, 316--322.
+
+Linde, C., Zhan, J., and McDonald, B. (2002). Population structure of
+\emph{Mycosphaerella graminicola}: From lesions to continents.
+\emph{Phytopathology} 92, 946--955.
+
+Luikart, G., England, P. R., Tallmon, D., Jordan, S., and Taberlet, P.
+(2003). The power and promise of population genomics: From genotyping to
+genome typing. \emph{Nature Reviews Genetics} 4, 981--994.
+
+Mantel, N. (1967). The detection of disease clustering and a generalized
+regression approach. \emph{Cancer research} 27, 209--220.
+
+Mastretta-Yanes, A., Arrigo, N., Alvarez, N., Jorgensen, T. H.,
+Pi{\~{n}}ero, D., and Emerson, B. (2015). Restriction site-associated DNA
+sequencing, genotyping error estimation and de novo assembly
+optimization for population genetic inference. \emph{Molecular ecology
+resources} 15, 28--41.
+
+McDonald, B. A., and Linde, C. (2002). The population genetics of plant
+pathogens and breeding strategies for durable resistance.
+\emph{Euphytica} 124, 163--180.
+doi:\href{http://dx.doi.org/10.1023/A:1015678432355}{10.1023/A:1015678432355}.
+
+Meirmans, P. G., and Van Tienderen, P. H. (2004). GENOTYPE and GENODIVE:
+Two programs for the analysis of genetic diversity of asexual organisms.
+\emph{Molecular Ecology Notes} 4, 792--794.
+
+Metzger, M. J., Reinisch, C., Sherry, J., and Goff, S. P. (2015).
+Horizontal transmission of clonal cancer cells causes leukemia in
+soft-shell clams. \emph{Cell} 161, 255--263.
+
+Michalakis, Y., and Excoffier, L. (1996). A generic estimation of
+population subdivision using distances between alleles with special
+reference for microsatellite loci. \emph{Genetics} 142, 1061--1064.
+
+Milgroom, M. G. (1996). Recombination and the multilocus structure of
+fungal populations. \emph{Annual review of phytopathology} 34, 457--477.
+
+Milgroom, M. G., Levin, S. A., and Fry, W. E. (1989). Population
+genetics theory and fungicide resistance. \emph{Plant disease
+epidemiology} 2, 340--367.
+
+Nei, M. (1973). Analysis of gene diversity in subdivided populations.
+\emph{Proceedings of the National Academy of Sciences} 70, 3321--3323.
+
+Oksanen, J., Blanchet, F. G., Kindt, R., Legendre, P., Minchin, P. R.,
+O'Hara, R. B., Simpson, G. L., Solymos, P., Stevens, M. H. H., and
+Wagner, H. (2015). \emph{Vegan: Community ecology package}. Available
+at: \url{http://CRAN.R-project.org/package=vegan}.
+
+Paradis, E. (2010). Pegas: an R package for population genetics with an
+integrated--modular approach. \emph{Bioinformatics} 26, 419--420.
+
+Prevosti, A., Oca{\~{n}}a, J., and Alonso, G. (1975). Distances between
+populations of \emph{Drosophila subobscura}, based on chromosome
+arrangement frequencies. \emph{Theoretical and Applied Genetics} 45,
+231--241.
+
+R Core Team (2015). \emph{R: A language and environment for statistical
+computing}. Vienna, Austria: R Foundation for Statistical Computing
+Available at: \url{http://www.R-project.org/}.
+
+Rosvall, M., and Bergstrom, C. T. (2008). Maps of random walks on
+complex networks reveal community structure. \emph{Proceedings of the
+National Academy of Sciences} 105, 1118--1123.
+
+Shannon, C. (2001). A mathematical theory of communication. \emph{ACM
+SIGMOBILE Mobile Computing and Communications Review} 5, 3--55.
+Available at:
+\url{http://cm.bell-labs.com/cm/ms/what/shannonday/shannon1948.pdf}.
+
+Smith, J. M., Smith, N. H., O'Rourke, M., and Spratt, B. G. (1993). How
+clonal are bacteria? \emph{Proceedings of the National Academy of
+Sciences} 90, 4384--4388.
+doi:\href{http://dx.doi.org/10.1073/pnas.90.10.4384}{10.1073/pnas.90.10.4384}.
+
+Sokal, R. R. (1958). A statistical method for evaluating systematic
+relationships. \emph{Univ Kans Sci Bull} 38, 1409--1438.
+
+Taylor, J. W., and Fisher, M. C. (2003). Fungal multilocus sequence
+typing --- it's not just for bacteria. \emph{Current opinion in
+microbiology} 6, 351--356.
+
+Wickham, H., and Chang, W. (2015). \emph{Devtools: Tools to make
+developing R packages easier}. Available at:
+\url{http://CRAN.R-project.org/package=devtools}.
+
+Yoshida, K., Schuenemann, V. J., Cano, L. M., Pais, M., Mishra, B.,
+Sharma, R., Lanz, C., Martin, F. N., Kamoun, S., Krause, J., et al.
+(2013). The rise and fall of the \emph{Phytophthora infestans} lineage
+that triggered the Irish potato famine. \emph{Elife} 2, e00731.
+
 
 \end{document}
 

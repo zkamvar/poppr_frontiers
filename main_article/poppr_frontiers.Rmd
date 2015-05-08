@@ -39,6 +39,8 @@ csl: frontiers.csl
 bibliography: citations.bib
 ---
 
+[^1]: Supplementary data available at https://github.com/grunwaldlab/supplementary-poppr-2.0; DOI: [10.5281/zenodo.17424](http://dx.doi.org/10.5281/zenodo.17424)
+
 <!--
 Note: Everything in the abstract needs to be in latex format.
 -->
@@ -138,7 +140,7 @@ As highlighted in previous work, clone correction is an important component of
 population genetic analysis of organisms that are known to reproduce asexually
 [@kamvar2014poppr; @milgroom1996recombination; @grunwald2003analysis]. This
 method is a partial correction for bias that affects metrics that rely on allele
-frequencies assuming panmixia. It was initially designed for data with only a
+frequencies assuming panmixia and was initially designed for data with only a
 handful of markers. With the advent of large-scale sequencing and reduced-
 representation libraries, it has become easier to sequence tens of thousands of
 markers from hundreds of individuals [@elshire2011robust; @davey2011genome;
@@ -154,7 +156,7 @@ nearest neighbor, and UPGMA (average neighbor) [@sokal1958statistical].
 
 These clustering algorithms act on a distance matrix that is either provided by
 the user or generated via a function that will calculate a distance from
-genclone objects such as `bruvo.dist`, which in particular applies to any level
+genetic data such as `bruvo.dist`, which in particular applies to any level
 of ploidy [@bruvo2004simple]. All algorithms have been implemented in C and
 utilize the OpenMP framework for optional parallel processing
 [@dagum1998openmp]. Default is the conservative farthest neighbor algorithm
@@ -221,7 +223,7 @@ of the data.
 Out of the 100 simulations run, we found that across all methods, detection of
 duplicated samples had $\sim$ 98% true positive fraction and $\sim$ 0.8% false
 positive fraction indicating that this method is robust to simulated
-populations (supplementary information).
+populations (supplementary information)[^1].
 
 ## Minimum Spanning Networks with Reticulation {-}
 
@@ -273,7 +275,7 @@ with a maximum community size of 7 and $H = 2.96$. In the ability to predict
 Hunter Creek as belonging to a single community, the reticulated network was
 successful whereas the minimum spanning tree separated one genotype from that
 community. The entropy for the reticulated network was lower for all populations
-except for the coast population (supplementary information).
+except for the coast population (supplementary information)[^1].
 
 ## Bootstrapping {-}
 
@@ -700,7 +702,7 @@ boxplot(data.frame(clonal = clone.samp, sexual = sex.samp),
         cex.lab = 1.5,
         cex.axis = 1.5,
         cex.main = 1.5)
-legend("topright", legend = "", pch = "B", cex = 2, xjust = 2, yjust = 1, bty =   "n")
+legend("topright", legend = "", pch = "B", cex = 2, xjust = 2, yjust = 1, bty = "n")
 par(mar = c(5, 4, 4, 2) + 0.1)
 layout(matrix(1))
 ```
@@ -744,13 +746,12 @@ used to collapse the multilocus genotypes into 18 multilocus lineages.
 **Figure 3** (**A-B**) Minimum spanning networks of the hemagglutinin (HA)
 segment of H3N2 viral DNA from the *adegenet* package representing flu epidemics
 from 2001 to 2006 without reticulation (**A**) and with reticulation (**B**)
-[@Jombart_2008;
-@jombart2010discriminant]. Each node represents a unique multilocus genotype,
-colors represent epidemic year, and edge color represents absolute genetic
-distance. (**C**) Shannon entropy values for population assignments compared
-with communities determined by the infoMAP algorithm on (**A**) and (**B**).
-(**D**) Graphic reproduced from @jombart2010discriminant showing that the 2006
-epidemic does not cluster neatly with the other years.
+[@Jombart_2008; @jombart2010discriminant]. Each node represents a unique
+multilocus genotype, colors represent epidemic year, and edge color represents
+absolute genetic distance. (**C**) Shannon entropy values for population
+assignments compared with communities determined by the infoMAP algorithm on
+(**A**) and (**B**). (**D**) Graphic reproduced from @jombart2010discriminant
+showing that the 2006 epidemic does not cluster neatly with the other years.
 
 **Figure 4** UPGMA dendrogram generated from Nei's genetic distance on 15 breeds
 of *Bos taurus* (BT) or *Bos indicus* (BI) from Africa (AF) or France (FR).

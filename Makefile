@@ -1,6 +1,6 @@
 boot: inst_deps ver_two_deps inst_poppr_two build_template
 
-all: unitex pdf2eps tex clean
+all: unitex pdf2eps tex
 
 inst_deps:
 	R --slave -e 'install.packages(c("ape", "knitr", "rmarkdown", "animation", "devtools"), repos = "http://cran.at.r-project.org")'; \
@@ -34,9 +34,11 @@ epstex: uni2tex
 
 unitex: epstex
 
-tex:
+final_pdf:
 	cd main_article; \
 	latexmk -pdf -quiet poppr_frontiers_unicode.tex;
+
+tex: final_pdf clean
 
 clean: 
 	cd main_article; \
