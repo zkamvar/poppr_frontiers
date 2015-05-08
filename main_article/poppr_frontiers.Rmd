@@ -107,8 +107,7 @@ clone is in large SNP data sets and novel tools are required for definition of
 clone boundaries.
 
 The research community using the R statistical and computing language [@R] has
-developed a plethora of new resources for population genetic analysis [@pegas;
-@Jombart_2008]. R is particularly appealing because all code is open source and
+developed a plethora of new resources for population genetic analysis. R is particularly appealing because all code is open source and
 functions can be evaluated and modified by any user. Recently, we introduced the
 R package *poppr* specifically developed for analysis of clonal populations
 [@kamvar2014poppr]. *Poppr* previously introduced several novel features
