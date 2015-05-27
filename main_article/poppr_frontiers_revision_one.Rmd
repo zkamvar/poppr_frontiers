@@ -753,7 +753,7 @@ multilocus genotype, colors represent epidemic year, and edge color represents
 absolute genetic distance. (**C**) Shannon entropy values for population
 assignments compared with communities determined by the infoMAP algorithm on
 (**A**) and (**B**). (**D**) Graphic reproduced from @jombart2010discriminant
-showing that the 2006 epidemic does not cluster neatly with the other years.
+showing that the 2006 epidemic does not cluster neatly with the other years via Discriminant Analysis of Principal Components. Horizontal axis represents the first discriminant component. Vertical axis represents the second discriminant component. 
 
 **Figure 4** UPGMA dendrogram generated from Nei's genetic distance on 15 breeds
 of *Bos taurus* (BT) or *Bos indicus* (BI) from Africa (AF) or France (FR).
