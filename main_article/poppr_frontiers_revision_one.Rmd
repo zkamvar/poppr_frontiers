@@ -1,0 +1,783 @@
+---
+title: "Novel R tools for analysis of genome-wide population genetic data with emphasis on clonality"
+runtitle: "Novel R tools for population genomics"
+author:
+  - name: Zhian N. Kamvar
+    affiliation: '1'
+    etal: Kamvar
+  - name: Jonah C. Brooks
+    affiliation: '2'
+  - name: Niklaus J. Grünwald
+    affiliation: '1,3'
+    email: grunwaln@science.oregonstate.edu
+    institution: Horticultural Crops Research Laboratory USDA ARS
+    street: 3420 NW Orchard Ave.
+    city: Corvallis
+    state: OR
+    zip: 97330
+affiliation:
+  - id: '1'
+    department: Botany and Plant Pathology
+    institution: Oregon State University
+    city: Corvallis
+    state: OR
+    country: USA
+  - id: '2' 
+    department: College of Electrical Engineering and Computer Science
+    institution: Oregon State University
+    city: Corvallis
+    state: OR
+    country: USA
+  - id: '3' 
+    department: Horticultural Crops Research Laboratory
+    institution: USDA-Agricultural Research Service
+    city: Corvallis
+    state: OR
+    country: USA
+output: FrontiersTemplate::frontiers_article
+csl: frontiers.csl
+bibliography: citations.bib
+---
+
+[^1]: Supplementary data available at https://github.com/grunwaldlab/supplementary-poppr-2.0; DOI: [10.5281/zenodo.17424](http://dx.doi.org/10.5281/zenodo.17424)
+
+<!--
+Note: Everything in the abstract needs to be in latex format.
+-->
+
+\begin{abstract}
+
+To gain a detailed understanding of how plant microbes evolve and adapt to
+hosts, pesticides, and other factors, knowledge of the population dynamics and
+evolutionary history of populations is crucial. Plant pathogen populations are
+often clonal or partially clonal which requires different analytical tools. With
+the advent of high throughput sequencing technologies, obtaining genome-wide
+population genetic data has become easier than ever before. We previously
+contributed the R package \textit{poppr} specifically addressing issues with
+analysis of clonal populations. In this paper we provide several significant
+extensions to \textit{poppr} with a focus on large, genome-wide SNP data.
+Specifically, we provide several new functionalities including the new function
+\texttt{mlg.filter} to define clone boundaries allowing for inspection and
+definition of what is a clonal lineage, minimum spanning networks with
+reticulation, a sliding-window analysis of the index of association, modular
+bootstrapping of any genetic distance, and analyses across any level of
+hierarchies.
+
+\tiny
+ \keyFont{ \section{Keywords:} clonality, population genomics, bootstrap, index of association, hierarchical analysis, sliding window}
+\end{abstract}
+
+
+# Introduction {-}
+
+To paraphrase Dobzhansky, nothing in the field of plant-microbe interactions
+makes sense except in the light of population genetics [@dobzhansky2013nothing].
+Genetic forces such as selection and drift act on alleles in a population. Thus,
+a true understanding of how plant pathogens emerge, evolve and adapt to crops,
+fungicides, or other factors, can only be elucidated in the context of
+population level phenomena given the demographic history of populations
+[@Mcdonald2002;
+@grunwald2011evolution; @milgroom1989population]. The field of population
+genetics, in the era of whole genome resequencing, provides unprecedented power
+to describe the evolutionary history and population processes that drive
+coevolution between pathogens and hosts. This powerful field thus critically
+enables effective deployment of R genes, design of pathogen informed plant
+resistance breeding programs, and implementation of fungicide rotations that
+minimize emergence of resistance.
+
+Most computational tools for population genetics are based on concepts developed
+for sexual model organisms. Populations that reproduce clonally or are polyploid
+are thus difficult to characterize using classical population genetic tools
+because theoretical assumptions underlying the theory are violated. Yet, many
+plant pathogen populations are at least partially clonal if not completely
+clonal [@milgroom1996recombination; @anderson1995clonality]. Thus, development
+of tools for analysis of clonal or polyploid populations is needed.
+
+Genotyping by sequencing and whole genome resequencing provide the unprecedented
+ability to identify thousands of single nucleotide polymorphisms (SNPs) in
+populations [@elshire2011robust; @luikart2003power; @davey2011genome]. With
+traditional marker data (e.g., SSR, AFLP) a clone was typically defined as a
+unique multilocus genotype (MLG) [@grunwald2006hierarchical; @Falush01082003;
+@goss2009population; @cooke2012genome; @taylor2003fungal]. Availability of large
+SNP data sets provides new challenges for data analysis. These data are based on
+reduced representation libraries and high throughput sequencing with moderate
+sequencing depth which invariably results in substantial missing data, error in
+SNP calling due to sequencing error, lack of read depth or other sources of
+spurious allele calls [@mastretta2015restriction]. It is thus not clear what a
+clone is in large SNP data sets and novel tools are required for definition of
+clone boundaries.
+
+The research community using the R statistical and computing language [@R] has
+developed a plethora of new resources for population genetic analysis. R is
+particularly appealing because all code is open source and functions can be
+evaluated and modified by any user. Recently, we introduced the R package
+*poppr* specifically developed for analysis of clonal populations
+[@kamvar2014poppr]. *Poppr* previously introduced several novel features
+including the ability to conduct a hierarchical analysis across unlimited
+hierarchies, test for linkage association, graph minimum spanning networks or
+provide bootstrap support for Bruvo's distance in resulting trees. *Poppr* has
+been rapidly adopted and applied to a range of studies including for example
+horizontal transmission in leukemia of clams [@metzger2015horizontal], study of
+the vector-mediated parent-to-offspring transmission in an avian malaria-like
+parasite [@chakarov2015apparent], and characterization of the emergence of the
+invasive forest pathogen *Hymenoscyphus pseudoalbidus* [@gross2014population].
+It has also been used to implement real-time, online R based tools for
+visualizing relationships among unknown MLGs in reference databases  
+(http://phytophthora-id.org/) [@grunwald2011phytophthora].
+
+Here, we introduce *poppr* 2.0, which provides a major update to *poppr*
+[@kamvar2014poppr] including novel tools for analysis of clonal populations
+specifically addressing large SNP data. Significant novel tools include
+functions for calculating clone boundaries and collapsing individuals into
+clonal groups based on a user-specified genetic distance threshold, sliding
+window analyses, genotype accumulation curves, reticulations in minimum spanning
+networks, and bootstrapping for any genetic distance.
+
+# Implementations and Examples {-}
+
+## Clonal identification {-}
+
+As highlighted in previous work, clone correction is an important component of
+population genetic analysis of organisms that are known to reproduce asexually
+[@kamvar2014poppr; @milgroom1996recombination; @grunwald2003analysis]. This
+method is a partial correction for bias that affects metrics that rely on allele
+frequencies assuming panmixia and was initially designed for data with only a
+handful of markers. With the advent of large-scale sequencing and reduced-
+representation libraries, it has become easier to sequence tens of thousands of
+markers from hundreds of individuals [@elshire2011robust; @davey2011genome;
+@davey2010rad]. With this larger number of markers, the genetic resolution is
+much greater, but the chance of genotyping error is also greatly increased and
+missing data is frequent [@mastretta2015restriction]. Taking this fact and
+occasional somatic mutations into account, it would be impossible to separate
+true clones from independent individuals by just comparing what MLGs are
+different. We introduce a new method for collapsing unique multilocus genotypes
+determined by naive string comparison into multilocus lineages utilizing any
+genetic distance given three different clustering algorithms: farthest neighbor,
+nearest neighbor, and UPGMA (Unweighted Pair Group Method with Arithmetic Mean, aka average neighbor) [@sokal1958statistical].
+
+These clustering algorithms act on a distance matrix that is either provided by
+the user or generated via a function that will calculate a distance from
+genetic data such as `bruvo.dist`, which in particular applies to any level
+of ploidy [@bruvo2004simple]. All algorithms have been implemented in C and
+utilize the OpenMP framework for optional parallel processing
+[@dagum1998openmp]. Default is the conservative farthest neighbor algorithm
+(Fig. 1A), which will only cluster samples together if all samples in the
+cluster are at a distance less than the given threshold. By contrast, the
+nearest neighbor algorithm will have a chaining effect that will cluster samples
+akin to adding links on a chain where a sample can be included in a cluster if
+all of the samples have at least one connection below a given threshold (Fig.
+1C). The UPGMA, or average neighbor clustering algorithm is the one most
+familiar to biologists as it is often used to generate ultra-metric trees based
+on genetic distance (Fig. 1B). This algorithm will cluster by creating a
+representative sample per cluster and joining clusters if these representative
+samples are closer than the given threshold.
+
+We utilize data from the microbe *Phytophthora infestans* to show how the
+`mlg.filter` function collapses multilocus genotypes with Bruvo's distance
+assuming a genome addition model [@bruvo2004simple]. *P. infestans* is the
+causal agent of potato late blight originating from Mexico that spread to Europe
+in the mid 19th century [@goss2014irish; @yoshida2013rise]. *P. infestans*
+reproduces both clonally and sexually. The clonal lineages of *P. infestans*
+have been formally defined into 18 separate clonal lineages using a combination
+of various molecular methods including AFLP and microsatellite markers
+[@lees2006novel; @li2013efficient]. For these data, we used `mlg.filter` to
+detect all of the distance thresholds at which 18 multilocus lineages would be
+resolved. We used these thresholds to define multilocus lineages and create
+contingency tables and dendrograms to determine how well the multilocus lineages
+were detected.
+
+For the *P. infestans* population, the three algorithms were able to detect 18
+multilocus lineages at different distance thresholds (Fig. 2). Contingency
+tables between the described multilocus genotypes and the genotypes defined by
+distance show that most of the 18 lineages were resolved, except for US-8, which
+is polytomic (Table 1).
+
+We utilized simulated data to evaluate the effect of sequencing error and
+missing data on MLG calling. We constructed the data using the `glSim` function
+in *adegenet* [@jombart2011adegenet] to obtain a SNP data set for demonstration.
+Two diploid data sets were created, each with 10k SNPs (25% structured into two
+groups) and 200 samples with 10 ancestral populations of even sizes. Clones were
+created in one data set by marking each sample with a unique identifier and then
+randomly sampling with replacement. It is well documented that reduced-
+representation sequencing can introduce several erroneous calls and missing data
+[@mastretta2015restriction]. To reflect this, we mutated SNPs at a rate of 10%
+and inserted an average of 10% missing data for each sample after clones were
+created, ensuring that no two sequences were alike. The number of mutations and
+missing data per sample were determined by sampling from a Poisson distribution
+with $\lambda = 1000$. After pooling, 20% of the data set was randomly sampled
+for analysis. Genetic distance was obtained with the function `bitwise.dist`,
+which calculates the fraction of different sites between samples equivalent to
+Provesti's distance, counting missing data as equivalent in comparison
+[@prevosti1975distances].
+
+All three filtering algorithms were run with a threshold of 1, returning a
+numeric vector of length $n - 1$ where each element represented a threshold at
+which two samples/clusters would join. Since each data set would have varying
+distances between samples, the clonal boundary threshold was defined as the
+midpoint of the largest gap between two thresholds that collapsed less than 50%
+of the data.
+
+Out of the 100 simulations run, we found that across all methods, detection of
+duplicated samples had $\sim$ 98% true positive fraction and $\sim$ 0.8% false
+positive fraction indicating that this method is robust to simulated
+populations (supplementary materials[^1]).
+
+## Minimum Spanning Networks with Reticulation {-}
+
+In its original iteration, *poppr* introduced minimum spanning networks that
+were based on the *igraph* function `minimum.spanning.tree` [@csardi2006igraph].
+This algorithm produces a minimum spanning tree with no reticulations where
+nodes represent individual MLGs. In other minimum spanning network programs,
+reticulation is obtained by calculating the minimum spanning tree several times
+and returning the set of all edges included in the trees. Due to the way
+*igraph* has implemented Prim's algorithm, it is not possible to utilize this
+strategy, thus we implemented an internal C function to walk the space of
+minimum spanning trees based on genetic distance to connect groups of nodes with
+edges of equal weight.
+
+To demonstrate the utility of minimum spanning networks with reticulation, we
+used two clonal data sets: the H3N2 flu virus data from the *adegenet* package
+using years of each epidemic as the population factor, and *Phytophthora
+ramorum* data from Nurseries and Oregon forests [@jombart2010discriminant;
+@kamvar2014sudden]. Minimum spanning networks were created with and without
+reticulation using the *poppr* functions `diss.dist` and `bruvo.msn` for the
+H3N2 and *P. ramorum* data, respectively [@kamvar2014poppr; @bruvo2004simple].
+To detect mlg clusters, the infoMAP community detection algorithm was applied
+with 10,000 trials as implemented in the R package *igraph* version 0.7.1
+utilizing genetic distance as edge weights and number of samples in each MLG as
+vertex weights [@csardi2006igraph; @rosvall2008maps].
+
+To evaluate the results, we compared the number, size, and entropy ($H$) of the
+resulting communities as we expect a highly clonal organism with low genetic
+diversity to result in a few, large communities. We also created contingency
+tables of the community assignments with the defined populations and used those
+to calculate entropy using Shannon's index with the function `diversity` from
+the R package *vegan* version 2.2-1 [@oksanen2015vegan;
+@shannon2001mathematical]. A low entropy indicates presence of a few large
+communities whereas high entropy indicates presence of many small communities.
+
+The infoMAP algorithm revealed 63 communities with a maximum community size of
+77 and $H = 3.56$ for the reticulate network of the H3N2 data and 117
+communities with a maximum community size of 26 and $H = 4.65$ for the minimum
+spanning tree. The entropy across years was greatly decreased for all
+populations with the reticulate network compared to the minimum spanning tree
+(Fig. 3). Note that the reticulated network (Fig. 3B) showed patterns
+corresponding with those resulting from a discriminant analysis of principal
+components (Fig. 3D) [@jombart2010discriminant].
+
+Graph walking of the reticulated minimum spanning network of *P. ramorum* by the
+infoMAP algorithm revealed 16 communities with a maximum community size of 13
+and $H = 2.60$. The un-reticulated minimum spanning tree revealed 20 communities
+with a maximum community size of 7 and $H = 2.96$. In the ability to predict
+Hunter Creek as belonging to a single community, the reticulated network was
+successful whereas the minimum spanning tree separated one genotype from that
+community. The entropy for the reticulated network was lower for all populations
+except for the coast population (supplementary materials[^1]).
+
+## Bootstrapping {-}
+
+Assessing population differentiation through methods such as $G_{st}$, AMOVA,
+and Mantel tests relies on comparing samples within and across populations
+[@nei1973analysis; @excoffier1992analysis; @mantel1967detection]. Confidence in
+distance metrics is related to the confidence in the markers to accurately
+represent the diversity of the data. Especially true with microsatellite
+markers, a single hyper-diverse locus can make a population appear to have more
+diversity based on genetic distance. Using a bootstrapping procedure of randomly
+sampling loci with replacement when calculating a distance matrix provides
+support for clades in hierarchical clustering.
+
+Data in genind and genpop objects are represented as matrices with individuals
+in rows and alleles in columns [@Jombart_2008]. This gives the advantage of
+being able to use R's matrix algebra capabilities to efficiently calculate
+genetic distance. Unfortunately, this also means that bootstrapping is a non-
+trivial task as all alleles at a single locus need to be sampled together. To
+remedy this, we have created an internal S4 class called "bootgen", which
+extends the internal "gen" class from *adegenet*. This class can be created from
+any genind, genclone, or genpop object, and allows loci to be sampled with
+replacement. To further facilitate bootstrapping, a function called `aboot`,
+which stands for "any boot", is introduced that will bootstrap any genclone,
+genind, or genpop object with any genetic distance that can be calculated from
+it.
+
+To demonstrate calculating a dendrogram with bootstrap support, we used the
+*poppr* function `aboot` on population allelic frequencies derived from the data
+set `microbov` in the *adegenet* package with 1000 bootstrap replicates
+[@Jombart_2008; @laloe2007consensus]. The resulting dendrogram shows bootstrap
+support values $>50\%$ (Fig. 4) and used the following code:
+
+```{r, microboot, eval = FALSE}
+library("poppr")
+data("microbov", package = "adegenet") 
+strata(microbov) <- data.frame(other(microbov)) 
+setPop(microbov) <- ~coun/spe/breed 
+bov_pop <- genind2genpop(microbov) 
+
+set.seed(20150428)
+pop_tree <- aboot(bov_pop, sample = 1000, cutoff = 50)
+```
+
+## Genotype Accumulation Curve {-}
+
+Analysis of population genetics of clonal organisms often borrows from
+ecological methods such as analysis of diversity within populations
+[@milgroom1996recombination; @arnaud2007standardizing; @grunwald2003analysis].
+When choosing markers for analysis, it is important to make sure that the
+observed diversity in your sample will not appreciably increase if an additional
+marker is added [@arnaud2007standardizing]. This concept is analogous to a
+species accumulation curve, obtained by rarefaction. The genotype accumulation
+curve in *poppr* is implemented in the function `genotype_curve`. The curve is
+constructed by randomly sampling $x$ loci and counting the number of observed
+MLGs. This repeated $r$ times for 1 locus up to $n-1$ loci, creating $n-1$
+distributions of observed MLGs.
+
+The following code example demonstrates the genotype accumulation curve for data
+from @everhart2014fine showing that these data reach a small plateau and have a
+greatly decreased variance with 12 markers, indicating that there are enough
+markers such that adding more markers to the analysis will not create very many
+new genotypes (Fig. 5). 
+
+```{r, monilinia_curve, eval = FALSE}
+library("poppr")
+library("ggplot2")
+data("monpop", package = "poppr")
+
+set.seed(20150428)
+genotype_curve(monpop, sample = 1000)
+p <- last_plot() + theme_bw()   # get the last plot
+p + geom_smooth(aes(group = 1)) # plot with a trendline
+```
+
+## Index of association {-}
+
+The index of association ($I_A$) is a measure of multilocus linkage
+disequilibrium that is most often used to detect clonal reproduction within
+organisms that have the ability to reproduce via sexual or asexual processes
+[@brown1980multilocus; @smith1993how; @milgroom1996recombination]. It was
+standardized in 2001 as $\bar{r}_d$ by @Agapow_2001 to address the issue of
+scaling with increasing number of loci. This metric is typically applied to
+traditional dominant and co-dominant markers such as AFLPs, SNPs, or
+microsatellite markers. With the advent of high throughput sequencing, SNP data
+is now available in a genome-wide context and in very large matrices including
+thousands of SNPs. For this reason, we  devised two approaches using the index
+of association for large numbers of markers typical for population genomic
+studies. Both functions utilize *adegenet*'s "genlight" object class, which
+efficiently stores 8 binary alleles in a single byte [@jombart2011adegenet]. As
+calculation of the $\bar{r}_d$ requires distance matrices of absolute number of
+differences, we utilize a function that calculates these distances directly from
+the compressed data called `bitwise.dist`.
+
+The first approach is a sliding window analysis implemented in the function
+`win.ia`. It utilizes the position of markers in the genome to calculate
+$\bar{r}_d$ among any number of SNPs found within a user-specified windowed
+region. It is important that this calculation utilize $\bar{r}_d$ as the number
+of loci will be different within each window [@Agapow_2001]. This approach would
+be suited for a quick calculation of linkage disequilibrium across the genome
+that can detect potential hotspots of LD that could be investigated further with
+more computationally intensive methods assuming that the number of samples <<
+the number of loci.
+
+As it would necessarily focus on loci within a short section of the genome that
+may or may not be recombining, a sliding window approach would not be good for
+utilizing $\bar{r}_d$ as a test for clonal reproduction. A remedy for this is
+implemented in the function `samp.ia`, which will randomly sample $m$ loci,
+calculate $\bar{r}_d$, and repeat $r$ times, thus creating a distribution of
+expected values of $\bar{r}_d$.
+
+To demonstrate the sliding window and random sampling of $\bar{r}_d$ with
+respect to clonal populations, we simulated two populations containing 1,100
+neutral SNPs for 100 diploid individuals under the same initial seed. One
+population had individuals randomly sampled with replacement, representing the
+clonal population. After sampling, both populations had 5% random error and 1%
+missing data independently propagated across all samples. On average, we
+obtained a higher value of $\bar{r}_d$ for the clonal population compared to the
+sexual population for both methods (Fig. 6).
+
+
+## Data format updates: population strata and hierarchies {-}
+<!-- ## Change in definition of population Strata and Hierarchies {-} -->
+
+Assessments of population structure through methods such as hierarchical
+$F_{st}$ [@goudet2005hierfstat] and AMOVA [@michalakis1996generic] require
+hierarchical sampling of populations across space or time [@linde2002population;
+@everhart2014fine; @grunwald2006hierarchical]. With clonal organisms, basic
+practice has been to clone-censor data to avoid downward bias in diversity due
+to duplicated genotypes that may or may not represent different samples
+[@milgroom1996recombination]. This correction should be performed with respect
+to a population hierarchy to accurately reflect the biology of the organism.
+Traditional data structures for population genetic data in most analysis tools
+allow for only one level of hierarchical definition. The investigator thus had
+to provide the data set for analysis at each hierarchical level.
+
+To facilitate handling hierarchical and mutlilocus genotypic metadata, *poppr*
+version 1.1 introduced a new S4 data object called "genclone", extending
+*adegenet*'s "genind" object (Kamvar and Grünwald, unpublished). The genclone
+object formalized the definitions of multilocus genotypes and population
+hierarchies by adding two slots called "mlg" and "hierarchy" that carried a
+numeric vector and a data frame, respectively. These new slots allow for
+increased efficiency and ease of use by allowing these metadata to travel with
+the genetic data. The hierarchy slot in particular contains a data frame where
+each column represents a separate hierarchical level. This is then used to set
+the population factor of the data by supplying a hierarchical formula containing
+one or more column names of the data frame in the hierarchy slot.
+
+The functionality represented by the hierarchy slot has now been migrated from
+the  *poppr* to the *adegenet* package version 2.0 to allow hierarchical
+analysis in *adegenet*, *poppr*, and other dependent packages. The prior *poppr*
+`hierarchy` slot and methods have now been renamed `strata` in *adegenet*. A
+short example of the utility of these methods can be seen in the code segment
+under **Bootstrapping**, above. This migration provides end users with a broader
+ability to analyze data hierarchically in R across packages.
+
+# Availability {-}
+
+As of this writing, the *poppr* R package version 2.0 containing all of the
+features described here is located at
+https://github.com/grunwaldlab/poppr/tree/2.0-rc. It is necessary to install
+*adegenet* 2.0 before installing *poppr*. It can be found at
+https://github.com/thibautjombart/adegenet. Both of these can be installed via
+the R package *devtools* [@wickham2015devtools]. More information and example
+code can be found in the supplementary materials[^1].
+
+## Requirements {-}
+
+ - R version 3.0 or better
+ - A C compiler. For windows, it can be obtained via Rtools
+   (http://cran.r-project.org/bin/windows/Rtools/). On OSX, it can be obtained
+   via Xcode. For parallel support, gcc version 4.6 or better is needed.
+
+## Installation {-}
+
+From within R, *poppr* can be installed via:
+
+```{r, eval = FALSE}
+install.packages("devtools")
+library("devtools")
+install_github("thibautjombart/adegenet")
+install_github("grunwaldlab/poppr@2.0-rc")
+```
+
+Several population genetics packages in R are currently going through a major
+upgrade following the 2015 R hackathon on population genetics
+(https://github.com/NESCent/r-popgen-hackathon) and have not yet been updated
+in CRAN. We will upload *poppr* 2.0 to CRAN once all other reverse dependent
+packages have been updated.
+
+# Discussion {-}
+
+Given low cost and high throughput of current sequencing technologies we are
+entering a new era of population genetics where large SNP data sets with
+thousands of markers are becoming available for large populations in a genome-
+wide context. This data provides new possibilities and challenges for population
+genetic analyses. We provide novel tools that enable analysis of this data in R
+with a particular emphasis on clonal organisms.
+
+Particularly useful is the implementation of $\bar{r}_d$ in a genomic context
+[@Agapow_2001]. Random sampling of loci across the genome can give an expected
+distribution of $\bar{r}_d$, which is expected to have a mean of zero for
+panmictic populations. This metric is not affected by the number of loci
+sampled, is model free, and has the ability to detect population structure.
+$\bar{r}_d$ is also implemented for sliding window analyses that are useful to
+detect candidate regions of linkage disequilibrium for further analysis.
+
+Clustering multilocus genotypes into multilocus lineages based on genetic
+distances is a non-trivial task given large SNP data sets. Moreover, this has
+not previously been implemented for genomic data for clonal populations. Clonal
+assignment has previously been available in the programs \textsc{GenClone} and
+\textsc{Genodive} for classical markers [@arnaud2007standardizing;
+@meirmans2004genotype]. Our method with `mlg.filter` builds upon this idea and
+allows the user to choose between three different approaches for clustering
+MLGs. The choice of clustering algorithm has an impact on the data (Fig 1, 2),
+where for example a genetic distance cutoff of 0.1 would be the difference
+between 14 multilocus lineages (MLLs) and 17 MLLs for nearest neighbor and UPGMA
+clustering, respectively (Fig. 2). The option to choose the clustering algorithm
+gives the user the ability to choose what is biologically relevant to their
+populations. While there is not one optimal procedure for defining boundaries in
+clonal lineages, our tool provides a means of exploring the potential MLG or MLL
+boundary space.
+
+Minimum spanning networks are a useful tool to analyze the relationships between
+individuals in a population, because it reduces the complexity of a distance
+matrix to the connections that are strongest. By default, these networks are
+drawn without reticulations, but for clonal organisms where many of the
+connections between samples are equivalent, the minimum spanning network appears
+as a chain and reduces the information that can be communicated. This is
+problematic because the ability to detect population structure with one instance of a
+minimum spanning network is limited. Adding reticulation into the minimum
+spanning network thus presents all equivalent connections and allows population
+structure to be more readily detectable. As shown in Fig. 3, population structure
+is apparent both visually and by graph community detection algorithms such as
+the infoMAP algorithm [@rosvall2008maps]. Additionally, the current
+implementation in *poppr* has been successfully used in analyses such as
+reconstruction of the *P. ramorum* epidemic in Oregon forests
+[@kamvar2014sudden; @kamvar2015spatial].
+
+*Poppr* 2.0 is open source and available on GitHub. Members of the community are
+invited to contribute by raising issues or pull requests on our repository at
+https://github.com/grunwaldlab/poppr/issues.
+
+# Acknowledgements {-}
+
+We thank Ignazio Carbone for discussions on the index of association; David
+Cooke, Sanmohan Baby, and Jens Hansen for beta testing; and Thibaut Jombart for
+allowing us to incorporate the `strata` slot and related methods in *adegenet*.
+We also thank all the members of the 2015 R hackathon on population genetics in
+Durham, NC for their advice and input 
+(https://github.com/NESCent/r-popgen-hackathon). This work was supported in part
+by US Department of Agriculture (USDA) Agricultural Research Service Grant
+5358-22000-039-00D, USDA National Institute of Food and Agriculture Grant
+2011-68004-30154, USDA APHIS, the USDA- ARS Floriculture Nursery Initiative, and
+the USDA-Forest Service Forest Health Monitoring Program (to NJG).
+
+# Conflict of Interest Statement {-}
+
+The authors declare no observable conflict of interest. 
+
+# Author Contributions {-}
+
+ZNK and JCB wrote and tested the code. ZNK maintains the code. ZNK and NJG
+conceived, discussed implications, and wrote the manuscript. NJG coordinated the
+collaborative effort.
+
+# Figures and Tables {-}
+
+## Figure 1 {-}
+
+![Fig 1](poppr_frontiers_files/custom_figures/Figure-1.eps)
+
+## Figure 2 {-}
+
+```{r, Figure-2, echo = FALSE, message = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 4*1.25, fig.height = 4*1.25, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+source("../Rscripts/my_functions.R")
+library('poppr')
+library('ape')
+library('phangorn')
+library('animation')
+infdat <- RCurl::getURL("https://raw.githubusercontent.com/grunwaldlab/phytophthora_id/master/shiny-server/www/genoid_infestans/reduced_database.txt.csv")
+infdat <- read.table(text = infdat, head = TRUE)
+pinf   <- df2genind(infdat[-c(1,2)], sep = "/", ploidy = 3, ind.names = infdat[[1]], pop = infdat[[2]])
+ssr    <- c(3, 3, 2, 3, 3, 2, 2, 3, 3, 3, 3, 3)
+x      <- as.genclone(pinf)
+fstats <- filter_stats(x, bruvo.dist, plot = TRUE, replen = ssr, loss = FALSE, nclone = 18)
+title(main = expression(paste(italic("P. infestans"), " reference isolates (12 SSR loci)")))
+# Getting the threshold for average neighbor beyond which 18 MLGs would be
+# contracted. This is the number of multilocus genotypes minus 18.
+thresh18 <- fstats$average$thresholds[nmll(x) - nPop(x)] + .Machine$double.eps^0.5
+z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, loss = FALSE, stats = "MLGS", algorithm = "average")
+```
+
+## Figure 3 {-}
+
+![Fig. 3](poppr_frontiers_files/custom_figures/Figure-3.eps)
+
+
+## Figure 4 {-}
+
+```{r, Figure-4, cache = TRUE, results = "hide", ref.label = "microboot", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+
+```
+
+## Figure 5 {-}
+
+```{r, Figure-5, cache = TRUE, results = "hide", ref.label = "monilinia_curve", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+
+```
+
+## Figure 6 {-}
+
+```{r, Figure-6, echo = FALSE, out.height = "60mm", out.width = "85mm", fig.width = 5, fig.height = 3.333, fig.keep = "last", dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+clone.ia <- c(0.00657391971000822, 0.00475038591717665, 0.00590697833268689, 
+0.00177109538039166, 0.00784047946321868, 0.0054449176789628, 
+0.0034546641854964, 0.00201826415448331, 0.00813373673459406, 
+0.00672417961410611, 0.00480721235398328, 0.00678500928464932, 
+0.00794412919608892, 0.00655265902625263, 0.00519412099605239, 
+0.00482666549041363, 0.00423481235959196, 0.00977692824280489, 
+0.00887914416454708, 0.00929758009021998, 0.00982107516784088, 
+0.00892714984879962)
+sex.ia <- c(-0.00036111463745087, -0.00161082157856051, 0.000646301300361051, 
+-0.000783599448513505, -0.000737780755565264, 0.000345913597362971, 
+-1.43896254450503e-05, -0.000989197741085604, 0.00255348821129859, 
+0.00103618415132276, -0.000842900319607663, 9.24300295566038e-05, 
+0.000615350863052257, -0.00077139583620435, 0.00032983201971487, 
+0.000427158402985452, -0.000117896610909437, -0.00126718088379165, 
+0.000529034858988589, -0.00012689674046699, 0.000696255806013379, 
+0.000663363086076998)
+clone.samp <- c(0.00632861048999706, 0.00914692937059781, 0.00742536655158692, 
+0.00668329853544795, 0.00720545495292513, 0.00733672460513193, 
+0.0080186836230314, 0.00711072817363178, 0.00574811763286552, 
+0.00849504382348648, 0.00471342593732664, 0.00604892392614153, 
+0.00521896306866073, 0.00757710837879371, 0.00754563727322633, 
+0.00598843561721921, 0.00710024298943594, 0.0076408940681613, 
+0.00708728873791223, 0.00604539431537726, 0.00820632001992656, 
+0.00841068904620641, 0.00749259079456895, 0.00600081961291675, 
+0.00622896395706401, 0.00616076687370083, 0.00763140807396407, 
+0.00669704785627272, 0.00622838814191165, 0.00668332304254092, 
+0.00583454743092967, 0.00657826155469276, 0.00887376815440011, 
+0.00653043169785223, 0.00755662057903646, 0.00705010375212121, 
+0.00629273725017878, 0.00403389391826934, 0.00555778124386409, 
+0.00548893752908144, 0.00465647428519383, 0.00702369016968394, 
+0.00584676717809641, 0.00608124677373714, 0.00514554860090783, 
+0.00436114818913669, 0.0110038025615558, 0.00542899041821009, 
+0.00749573870544197, 0.00499858919124297, 0.00601238108768518, 
+0.00730108029128839, 0.0104499610180998, 0.00673576469588864, 
+0.00635255962844188, 0.00598974682916921, 0.00622943290318429, 
+0.00895157418903745, 0.00620992608054681, 0.00840395137846986, 
+0.00571893973376678, 0.00488767924305443, 0.00673386928625181, 
+0.00756152396929008, 0.00735454303225401, 0.00494309656921466, 
+0.00619410900058801, 0.00792887753178358, 0.00598612752693761, 
+0.00673607889203824, 0.0125520167627048, 0.00711551950570241, 
+0.00827124457317368, 0.00660905558060048, 0.00643699033860447, 
+0.00568725422392584, 0.00630931240883171, 0.00802263623074963, 
+0.00575473729630672, 0.00777583270330511, 0.00391109460764202, 
+0.0094605331532468, 0.00670936667988155, 0.00636499683250824, 
+0.00553730280815435, 0.00681757953522922, 0.007453208543266, 
+0.00515534729318351, 0.00752084577808077, 0.0074697901409256, 
+0.00578618609119282, 0.00854034992114197, 0.00477352366996742, 
+0.00845665012056458, 0.00397644760812699, 0.00710332362003871, 
+0.00461391803906252, 0.00715497767086719, 0.00573424430649623, 
+0.00801828814503475)
+sex.samp <- c(-0.000264538753712546, -0.000295000260035365, 0.00134333120697102, 
+-0.000955162745400988, 0.000663872609007013, -0.000653744141798943, 
+-0.000428207525699347, 0.000484289734576452, -0.00128123286292334, 
+-0.00109112266253403, 0.00022785508558106, -0.00187763116790907, 
+-0.000559133589751296, -0.000699686232183252, -0.000436767844580703, 
+0.000605195539164965, 0.000482531383989642, -5.89962059631426e-05, 
+-0.00113421763758812, -0.00084071497107149, -6.19938874395348e-06, 
+-0.000101165528343958, -0.0006433868610825, -0.000243698919358893, 
+-0.000412130068720061, -0.000678618763611806, -3.50611025042561e-05, 
+-0.00092276116641767, -0.00156076870964816, -0.000886829624477937, 
+-0.000975860785019162, 0.000549366699042183, -0.000252761945833242, 
+-0.00120870779024921, 0.000667837336000959, -0.00168042683870455, 
+0.000945297734547412, -0.00123729046843062, -0.00188097986000766, 
+0.00119776343605818, -0.00213180280701359, -0.000635782836527547, 
+7.26338184584863e-05, 0.00123784582043821, 0.00118377659132195, 
+-9.96272485030665e-06, -0.000222800925546671, -0.00148279058115459, 
+0.000501917860998556, -0.000863627262414899, 0.000608171192534742, 
+-0.000270004012017364, 0.00189378104017935, -0.000324353413012184, 
+0.000138299337951723, 0.000685626560904123, -0.00044350439299096, 
+0.000860134087124239, -0.000802307025436672, -1.41180920108337e-05, 
+0.000543894173822976, -0.000722218139987394, -0.000718263211298214, 
+-0.000944868755721595, -0.000143214585288078, -0.000474700003192888, 
+0.000625426543802346, 0.000730555906433412, 0.000378829491693727, 
+-0.00120650684287378, 0.00419410181368378, 0.000601800214464396, 
+1.93903661853142e-05, -0.000251226378332408, -0.000531922109577247, 
+2.98943049379775e-05, 1.91538813546609e-05, 0.000376970615081186, 
+-0.0010864353812743, -0.000450218668588059, -0.00111877905854524, 
+0.00076385192073754, -9.27917574229775e-05, 0.000909436489432395, 
+-0.0011022196374561, 0.000473076891642042, 0.000254371615191439, 
+-0.00282089321039196, 0.000828835455976463, 0.00123855421366658, 
+-0.000818199074994733, 0.000718822337534977, -0.00038790723590351, 
+0.00115056252955884, -9.43691021290241e-05, 8.05005035017881e-05, 
+-0.000470057220293319, 0.00133054039232377, -0.00226350119173052, 
+-0.000475112331848688)
+
+cols <- RColorBrewer::brewer.pal(3, "Set1")
+names(cols) <- c("clone", "sex", "not used")
+par(mar = c(5, 4, 4, 2) + 0.1)
+ylims <- range(clone.samp, sex.samp, sex.ia, clone.ia)
+lay <- layout(matrix(c(1, 1, 1, 2), nrow = 1, byrow = TRUE))
+plot(clone.ia, type = "l", main = "Sliding Window\n500nt",
+     ylab = "Index of Association", xlab = "Window",
+     cex.lab = 1.5,
+     cex.axis = 1.5,
+     cex.main = 1.5,
+     col = cols["clone"],
+     ylim = ylims)
+lines(sex.ia, col = cols["sex"])
+abline(h = mean(sex.ia), lty = 2, col = cols["sex"])
+abline(h = mean(clone.ia), lty = 2, col = cols["clone"])
+legend("top", lty = 1, col = cols, bty = "n",
+       legend = c("clonal pop.", "sexual pop."), cex = 1.5)
+legend("topleft", legend = "", pch = "A", cex = 2, xjust = -1, yjust = -1, 
+       bty = "n")
+par(mar = c(5.1, 0, 4.1, 2.1))
+boxplot(data.frame(clonal = clone.samp, sexual = sex.samp), 
+        ylim = ylims, 
+        ylab = NA, 
+        yaxt = "n", 
+        border = cols,
+        xpd = TRUE,
+        main = "Random\n50nt",
+        las = 2,
+        cex.lab = 1.5,
+        cex.axis = 1.5,
+        cex.main = 1.5)
+legend("topright", legend = "", pch = "B", cex = 2, xjust = 2, yjust = 1, bty = "n")
+par(mar = c(5, 4, 4, 2) + 0.1)
+layout(matrix(1))
+```
+
+**Table 1** Contingency table comparing multilocus lineages (MLL) defined in @li2013efficient and @lees2006novel (rows) to MLLs inferred from Bruvo's genetic distance (columns) at a threshold of `r round(thresh18, 2)` with the average neighbor algorithm [@bruvo2004simple; @sokal1958statistical]. Values in the table represent the number of times any given inferred MLL matches with a previously defined MLL. For example, in our original data set, there were three genotypes previously defined as the US-24 MLL. All three genotypes were also determined to cluster into a single MLL by filtering. In contrast, US-8 was determined to cluster into three different MLLs by filtering. 
+
+```{r pinf_table, echo = FALSE, message = FALSE, results='asis'}
+library("xtable")
+
+res <- table(pop(x), z, dnn = NULL)
+res[res == 0] <- "."
+bold.rows <- function(x) paste0("\\textbf{", x, "}")
+print.xtable(xtable(res, align = c("l|", rep("c", ncol(res)))), 
+             comment = FALSE, 
+             hline.after = c(0, nrow(res)),
+             sanitize.rownames.function = bold.rows,
+             sanitize.colnames.function = bold.rows)
+```
+
+# Figure Legends {-}
+
+**Figure 1** Diagrammatic representation of the three clustering algorithms
+implemented in `mlg.filter`. (**A-C**) Represent different clustering algorithms
+on the same imaginary network with a threshold of 0.451. Edge weights are
+represented in arbitrary units noted by the line thickness and numerical values
+next to the lines. All outer angles are 90 degrees, so the un-labeled edge
+weights can be obtained with simply geometry. Colored circles represent clusters
+of genotypes. (**A**) Farthest neighbor clustering does not cluster nodes B and
+C because nodes A and C are more than a distance of 0.451 apart. (**B**) UPGMA
+(average neighbor) clustering clusters nodes A, B, and C together because the
+average distance between them and  C is < 0.451. (**C**) Nearest neighbor
+clustering clusters all nodes together because the minimum distance between them
+is always < 0.451.
+
+**Figure 2** Graphical representation of three different clustering algorithms
+collapsing multilocus genotypes for 12 SSR loci from *Phytophthora infestans*
+representing 18 clonal lineages. The horizontal axis is Bruvo's genetic distance
+assuming the genome addition model. The vertical axis represents the number of
+multilocus lineages observed. Each point shows the threshold at which one would
+observe a given number of multilocus genotypes. The horizontal black line
+represents 18 multilocus genotypes and vertical dashed lines mark the thresholds
+used to collapse the multilocus genotypes into 18 multilocus lineages.
+
+**Figure 3** (**A-B**) Minimum spanning networks of the hemagglutinin (HA)
+segment of H3N2 viral DNA from the *adegenet* package representing flu epidemics
+from 2001 to 2006 without reticulation (**A**) and with reticulation (**B**)
+[@Jombart_2008; @jombart2010discriminant]. Each node represents a unique
+multilocus genotype, colors represent epidemic year, and edge color represents
+absolute genetic distance. (**C**) Shannon entropy values for population
+assignments compared with communities determined by the infoMAP algorithm on
+(**A**) and (**B**). (**D**) Graphic reproduced from @jombart2010discriminant
+showing that the 2006 epidemic does not cluster neatly with the other years.
+
+**Figure 4** UPGMA dendrogram generated from Nei's genetic distance on 15 breeds
+of *Bos taurus* (BT) or *Bos indicus* (BI) from Africa (AF) or France (FR).
+These data are from @laloe2007consensus. Node labels represent bootstrap support
+$>50\%$ out of 1,000 bootstrap replicates.
+
+**Figure 5** Genotype accumulation curve for 694 isolates of the peach brown rot
+pathogen, *Monilinia fructicola* genotyped over 13 loci from @everhart2014fine.
+The horizontal axis represents the number of loci randomly sampled without
+replacement up to $n - 1$ loci, the vertical axis shows the number of multilocus
+genotypes observed, up to 262, the number of unique multilocus genotypes in the
+data set. The red dashed line represents 90% of the total observed multilocus
+genotypes. A trendline (blue) has been added using the *ggplot2* function
+`stat_smooth`.
+
+**Figure 6** **(A)** Sliding window analysis of the standardized index of
+association ($\bar{r}_d$) across a simulated $1.1 \times 10^4$ nt chromosome
+containing 1,100 variants among 100 individuals. Each window analyzed variants
+within 500nt chunks. The black line refers to the clonal and the blue line to
+the sexual populations. **(B)** boxplots showing 100 random samples of 50
+variants to calculate a distribution of $\bar{r}_d$ for the clonal (red) and
+sexual (blue) populations. Each box is centered around the mean, with whiskers
+extending out to 1.5 times the interquartile range. The median is indicated by
+the center line. **(A)** and **(B)** are plotted on the same y-axis.
+
+
+# References {-}
