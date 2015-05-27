@@ -16,7 +16,9 @@
 
 2. move tables and figures to the bottom of the manuscript.
 
-3. run `make tex`. This will make the final latex document called poppr_frontiers_unicode.pdf
+3. run `make difftex`. This will create a diff file between the original and revision.
+
+4. run `make final_pdf` This will make the final latex document called poppr_frontiers_unicode.pdf
 
 # Files and Directories
 

@@ -153,7 +153,8 @@ true clones from independent individuals by just comparing what MLGs are
 different. We introduce a new method for collapsing unique multilocus genotypes
 determined by naive string comparison into multilocus lineages utilizing any
 genetic distance given three different clustering algorithms: farthest neighbor,
-nearest neighbor, and UPGMA (Unweighted Pair Group Method with Arithmetic Mean, aka average neighbor) [@sokal1958statistical].
+nearest neighbor, and Unweighted Pair Group Method with Arithmetic Mean (UPGMA, 
+average neighbor) [@sokal1958statistical].
 
 These clustering algorithms act on a distance matrix that is either provided by
 the user or generated via a function that will calculate a distance from
