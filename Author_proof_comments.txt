@@ -1,0 +1,74 @@
+Q1 Confirm that the first name and surname of all the authors have been identified correctly in the front page and citation text.
+
+Confirmed.
+
+
+Q2 Please ask the following authors to register with Frontiers (at https://www.frontiersin.org/Registration/Register.aspx) if they would like their names on the article abstract page and PDF to be linked to a Frontiers profile. Please ensure to register the authors before submitting the proof corrections. Non-registered authors will have the default profile image displayed by their name on the article page.
+“Jonah C. Brooks.”
+
+Confirmed.
+
+Q3 If you decide to use previously published, copyrighted figures in your article, please keep in mind that it is your responsibility as author to obtain the appropriate permissions and licences and to follow any citation instructions requested by third-party rights holders. If obtaining the reproduction rights involves the payment of a fee, these charges are to be paid by the authors.
+
+No previously published figures were utilized in this publication. Previously published and openly available data sets were used to create figures. 
+
+Q4 Ensure that all the figures, tables and captions are correct.
+
+L 268-269: Please change "simply geometry" to "simple geometry"
+L 760 : Please change "The black line refers to the clonal" to "The red line refers to the clonal"
+
+Q5 Verify that all the equations and special characters are displayed correctly.
+
+L 600 - 602: Please change lines so that code can run successfully:
+
+Current:
+strata(microbov) <- data.frame(other
+                               (microbov))
+
+Change to:
+
+strata(microbov) <- data.frame(other(
+                               microbov))
+
+L 667 - 670 : Please move comments to lines above code, creating two extra lines. This will ensure that the code can be run if the reader copies and pastes the code from the pdf.:
+
+Current:
+p <- last_plot() + theme_bw() # get the 
+                              last plot
+p + geom_smooth(aes(group = 1)) # plot with
+                                a trendline
+
+Change to:
+
+# get the last plot
+p <- last_plot() + theme_bw() 
+# plot with a trendline
+p + geom_smooth(aes(group = 1)) 
+
+
+Q6 Ensure to add all grant numbers and funding information, as after publication this is no longer possible.
+
+Dr. Grünwald can verify this.
+
+
+Q7 Please provide the volume number for “Csardi and Nepusz, 2006.”
+
+Vol. number 5
+
+
+Q8 Please provide the volume number and page range for the following references.
+“Kamvar et al., 2015; Kamvar et al., 2014a.”
+
+Kamvar et al. 2015: in press. This will be in the July issue, Volume number 105.
+Kamvar et al. 2014a: No volume number or page numbers.
+
+Q9 Please provide doi for the following references.
+“Csardi and Nepusz, 2006; Falush et al. 2003; Kamvar et al., 2015; Kamvar et al., 2014a.”
+
+Csardi and Nepusz, 2006: No doi exists for this paper
+Falush et al. 2003: Unable to find DOI. Here's web address: http://www.genetics.org/content/164/4/1567.full
+Kamvar et al., 2015: 10.1094/PHYTO-12-14-0350-FI
+Kamvar et al., 2014a: 10.5281/zenodo.17424
+
+
+
