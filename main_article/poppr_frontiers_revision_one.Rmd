@@ -573,13 +573,13 @@ z <- mlg.filter(x, threshold = thresh18, distance = bruvo.dist, replen = ssr, lo
 
 ## Figure 4 {-}
 
-```{r, Figure-4, cache = TRUE, results = "hide", ref.label = "microboot", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, Figure-4, cache = FALSE, results = "hide", ref.label = "microboot", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 
 ```
 
 ## Figure 5 {-}
 
-```{r, Figure-5, cache = TRUE, results = "hide", ref.label = "monilinia_curve", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
+```{r, Figure-5, cache = FALSE, results = "hide", ref.label = "monilinia_curve", echo = FALSE, out.height = "85mm", out.width = "85mm", fig.width = 5, fig.height = 5, fig.keep = "last", message = FALSE, dev = c("pdf", "tiff"), dpi = 1200, dev.args = list(tiff = list(compression = 'lzw'))}
 
 ```
 
