@@ -6,5 +6,5 @@ for i in $PDFS
 do
 	eps=$(echo $i | rev | cut -b 7- | rev)".eps";
 	echo $eps;
-	gs -q -dNOCACHE -dNOPAUSE -dBATCH -dSAFER -sDEVICE=epswrite -sOutputFile=$eps $i
+	gs -q -dNOCACHE -dNOPAUSE -dBATCH -dSAFER -sDEVICE=eps2write -sOutputFile=$eps $i
 done
